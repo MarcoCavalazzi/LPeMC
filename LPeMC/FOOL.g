@@ -1,19 +1,19 @@
 grammar FOOL;
 
 @header{
-import java.util.ArrayList;
-import java.util.HashMap;
+	import java.util.ArrayList;
+	import java.util.HashMap;
 }
 
 @lexer::members {
-int lexicalErrors=0;
+  int lexicalErrors=0;
 }
 
 @members{
-private ArrayList<HashMap<String,STentry>>  symTable = new ArrayList<HashMap<String,STentry>>();
-private int nestingLevel = -1;
-//livello ambiente con dichiarazioni piu' esterno � 0 (prima posizione ArrayList) invece che 1 (slides)
-//il "fronte" della lista di tabelle � symTable.get(nestingLevel)
+	private ArrayList<HashMap<String,STentry>>  symTable = new ArrayList<HashMap<String,STentry>>();
+	private int nestingLevel = -1;
+	//livello ambiente con dichiarazioni piu' esterno � 0 (prima posizione ArrayList) invece che 1 (slides)
+	//il "fronte" della lista di tabelle � symTable.get(nestingLevel)
 }
 
 /*------------------------------------------------------------------
@@ -36,66 +36,72 @@ prog	returns [Node ast]
 	;
     
 declist	returns [ArrayList<Node> astlist]
-	: {$astlist= new ArrayList<Node>() ;
-	   int offset=-2;}
-	        (
-            VAR i=ID COLON t=type ASS e=exp SEMIC
-              {VarNode v = new VarNode($i.text,$t.ast,$e.ast);
-               $astlist.add(v);
-               HashMap<String,STentry> hm = symTable.get(nestingLevel);
-               if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  )
-                 {System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
-                  System.exit(0);}  
-              }  
-          | 
-            FUN i=ID COLON t=basic
-              {//inserimento di ID nella symtable
-               FunNode f = new FunNode($i.text,$t.ast);
-               $astlist.add(f);
-               HashMap<String,STentry> hm = symTable.get(nestingLevel);
-               STentry entry = new STentry(nestingLevel,offset--);
-               if ( hm.put($i.text,entry) != null ){
-                  System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
-                  System.exit(0);
+	: {
+	    $astlist= new ArrayList<Node>() ;
+	    int offset=-2;
+	  }
+    (
+       VAR i=ID COLON t=type ASS e=exp SEMIC
+       {
+          VarNode v = new VarNode($i.text,$t.ast,$e.ast);
+          $astlist.add(v);
+          HashMap<String,STentry> hm = symTable.get(nestingLevel);
+          if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  )
+          {
+            System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
+            System.exit(0);
+          }
+       }
+     |
+       FUN i=ID COLON t=basic
+         {  
+            //inserimento di ID nella symtable
+	          FunNode f = new FunNode($i.text,$t.ast);
+	          $astlist.add(f);
+	          HashMap<String,STentry> hm = symTable.get(nestingLevel);
+	          STentry entry = new STentry(nestingLevel,offset--);
+	          if ( hm.put($i.text,entry) != null ){
+	             System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
+	             System.exit(0);
+	          }
+	          //creare una nuova hashmap per la symTable
+	          nestingLevel++;
+	          HashMap<String,STentry> hmn = new HashMap<String,STentry> ();
+	          symTable.add(hmn);
+         }
+         LPAR { ArrayList<Node> parTypes = new ArrayList<Node>(); int paroffset=1; } 
+           (fid=ID COLON fty=type
+             {
+             parTypes.add($fty.ast); 
+             ParNode fpar = new ParNode($fid.text,$fty.ast);
+             f.addPar(fpar);
+             if ( hmn.put($fid.text,new STentry(nestingLevel,$fty.ast,paroffset++)) != null  )
+               {System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
+                System.exit(0);}
+             }
+             (COMMA id=ID COLON ty=type
+               {
+               parTypes.add($ty.ast); 
+               ParNode par = new ParNode($id.text,$ty.ast);
+               f.addPar(par);
+               if ( hmn.put($id.text,new STentry(nestingLevel,$ty.ast,paroffset++)) != null  )
+                 {System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
+                  System.exit(0);}
                }
-               //creare una nuova hashmap per la symTable
-               nestingLevel++;
-               HashMap<String,STentry> hmn = new HashMap<String,STentry> ();
-               symTable.add(hmn);
-              }
-              LPAR { ArrayList<Node> parTypes = new ArrayList<Node>(); int paroffset=1; } 
-                (fid=ID COLON fty=type
-                  {
-                  parTypes.add($fty.ast); 
-                  ParNode fpar = new ParNode($fid.text,$fty.ast);
-                  f.addPar(fpar);
-                  if ( hmn.put($fid.text,new STentry(nestingLevel,$fty.ast,paroffset++)) != null  )
-                    {System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
-                     System.exit(0);}
-                  }
-                  (COMMA id=ID COLON ty=type
-                    {
-                    parTypes.add($ty.ast); 
-                    ParNode par = new ParNode($id.text,$ty.ast);
-                    f.addPar(par);
-                    if ( hmn.put($id.text,new STentry(nestingLevel,$ty.ast,paroffset++)) != null  )
-                      {System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
-                       System.exit(0);}
-                    }
-                  )*
-                )? 
-              RPAR {entry.addType( new ArrowTypeNode(parTypes, $t.ast) );} 
-              (LET d=declist IN {f.addDec($d.astlist);})? e=exp
-              {//chiudere scope
-	              symTable.remove(nestingLevel--);
-	              f.addBody($e.ast);
-              } SEMIC
-          )+
+             )*
+           )? 
+         RPAR {entry.addType( new ArrowTypeNode(parTypes, $t.ast) );} 
+         (LET d=declist IN {f.addDec($d.astlist);})? e=exp
+         {//chiudere scope
+          symTable.remove(nestingLevel--);
+          f.addBody($e.ast);
+         } SEMIC
+     )+
 	;
 
 type	returns [Node ast]
-  :       b=basic | ARROW {$ast=new ArrowTypeNode();} 
-          ;
+  :       b=basic | ARROW {$ast=new ArrowTypeNode();}
+  ;
 
 basic returns [Node ast]
   :       INT  {$ast=new IntTypeNode();}
@@ -163,11 +169,10 @@ value	returns [Node ast]
  	;	 
 
 factor returns [Node ast]
-       : f = value {$ast = $f.ast;}  
- 
+       : f = value {$ast = $f.ast;}
       ( EQ  l=value {$ast = new EqualNode($ast,$l.ast);}
       | GR l=value {$ast = new GreaterOrEqualNode($ast,$l.ast);}
-      | LE l=value {$ast = new LessOrEqualNode($ast,$l.ast);}        
+      | LE l=value {$ast = new LessOrEqualNode($ast,$l.ast);}
     )*
   ; 
 
