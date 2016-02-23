@@ -30,7 +30,7 @@ prog	returns [Node ast]
             }
           d=dec IN e=exp SEMIC 
             {symTable.remove(nestingLevel--);
-             $ast = new LetInNode($d.astlist,$e.ast) ;} 
+             $ast = new LetInNode($d.astlist,$e.ast) ;}
 	;
 
 dec	returns [ArrayList<Node> astlist]
@@ -91,7 +91,7 @@ dec	returns [ArrayList<Node> astlist]
           )+
 	;
 	
-type	returns [Node ast]
+type	returns [Node ast]:
           basic | arrow;
 
 basic returns [Node ast]
@@ -123,7 +123,7 @@ value	returns [Node ast]
 	    )*
  	;	 	
  	
-fatt	returns [Node ast]
+fatt returns [Node ast]
 	: n=NAT   
 	  {$ast= new NatNode(Integer.parseInt($n.text));}  
 	| TRUE 
