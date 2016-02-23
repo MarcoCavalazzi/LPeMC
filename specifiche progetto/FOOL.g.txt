@@ -1,0 +1,114 @@
+grammar FOOL;
+
+/*------------------------------------------------------------------
+ * GRAMMAR RULES
+ *------------------------------------------------------------------*/
+
+prog 	: expr SEMIC                        
+        | LET cllist declist IN expr SEMIC
+        ;
+
+cllist  : (CLASS ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )? RPAR    
+              CLPAR
+                 (FUN ID COLON basic LPAR (ID COLON type (COMMA ID COLON type)* )? RPAR
+	            (LET (VAR ID COLON basic ASS expr SEMIC)* IN )? expr 
+        	  SEMIC)*                
+              CRPAR)*
+        ; 
+
+declist : (
+            (   VAR ID COLON type ASS expr
+              | FUN ID COLON basic LPAR (ID COLON type (COMMA ID COLON type)* )? RPAR (LET declist IN)? expr 
+            ) SEMIC 
+          )*
+        ;
+
+expr	: term 
+          (   PLUS term  
+            | MINUS term 
+            | OR t2=term    
+          ) * 
+        ;  
+
+term	: factor 
+  	  (   MULT factor 
+  	    | DIV  factor 
+  	    | AND  factor 
+  	  )*
+  	;
+  	
+factor  : value 
+  	  (   EQ value 
+	    | GR value 
+	    | LE value 
+	  )*
+	;    	
+  	
+value	: INTEGER 
+	| TRUE      
+	| FALSE       
+	| NULL	    
+	| NEW ID LPAR (expr (COMMA expr)* )? RPAR         
+	| IF expr THEN CLPAR expr CRPAR ELSE CLPAR expr CRPAR     
+	| NOT LPAR expr RPAR 
+	| PRINT LPAR expr RPAR      
+        | LPAR expr RPAR  
+	| ID ( LPAR (expr (COMMA expr)* )? RPAR 
+	     | DOT ID LPAR (expr (COMMA expr)* )? RPAR )?	   
+        ; 
+               
+type    :  basic | arrow 
+        ;
+
+basic   : INT     		      
+        | BOOL  		      	
+ 	| ID                        
+ 	;  
+ 	  
+arrow 	: LPAR (type (COMMA type)* )? RPAR ARROW basic 
+ 	;          
+		  
+/*------------------------------------------------------------------
+ * LEXER RULES
+ *------------------------------------------------------------------*/
+
+PLUS  	: '+' ;
+MINUS   : '-' ;
+MULT    : '*' ;
+DIV 	: '/' ;
+LPAR	: '(' ;
+RPAR	: ')' ;
+CLPAR	: '{' ;
+CRPAR	: '}' ;
+SEMIC 	: ';' ;
+COLON   : ':' ; 
+COMMA	: ',' ;
+DOT	: '.' ;
+OR	: '||';
+AND	: '&&';
+NOT	: 'not' ;
+GR	: '>=' ;
+LE	: '<=' ;
+EQ	: '==' ;	
+ASS	: '=' ;
+TRUE	: 'true' ;
+FALSE	: 'false' ;
+IF	: 'if' ;
+THEN	: 'then';
+ELSE	: 'else' ;
+PRINT	: 'print' ;
+LET     : 'let' ;	
+IN      : 'in' ;	
+VAR     : 'var' ;
+FUN	: 'fun' ; 
+CLASS	: 'class' ; 
+EXTENDS : 'extends' ;	
+NEW 	: 'new' ;	
+NULL    : 'null' ;	  
+INT	: 'int' ;
+BOOL	: 'bool' ;
+ARROW   : '->' ; 	
+INTEGER : (('1'..'9')('0'..'9')*) | '0' ; 
+ID  	: ('a'..'z'|'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')* ;
+WHITESP : ( '\t' | ' ' | '\r' | '\n' )+    { $channel=HIDDEN; } ;
+

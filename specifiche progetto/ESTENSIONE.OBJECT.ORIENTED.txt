@@ -1,0 +1,250 @@
+
+ELEMENTI SINTATTICI NUOVI
+
+** dichiarazioni **
+class ID [extends ID] (..campi dichiarati come parametri..) { 
+  .. metodi dichiarati come funzioni .. 
+}
+
+** espressioni **
+ID1.ID2(..) 
+new ID(..)
+null
+(dove ID e' un ID di classe)
+
+** tipi **
+ID 
+(dove ID è ID di una classe)
+considerato come tipo "basic"
+
+NOTE
+
+- per semplicità classi sono dichiarate solo nell'ambiente globale e all'inizio
+- per semplicità non prevedere deallocazione oggetti da heap
+
+LAYOUTS 
+
+- layout oggetti in HEAP (metodi: offset singolo anche se hanno tipo funzionale!)
+
+[PRIMA POSIZIONE LIBERA HEAP]        <- $hp subito dopo allocazione oggetto
+addr ultimo (m-esimo) metodo         [offset m-1]
+.
+.
+addr primo metodo dichiarato         [offset 0] <- object pointer
+valore primo campo dichiarato        [offset -1]
+.
+.
+valore ultimo (n-esimo) campo        [offset -n] 
+
+nota: la parte relativa ai metodi è la dispatch table vista a lezione
+
+- layout AR (funzioni/amb globle) invariato rispetto a estensione Higher-order
+
+nota: in caso di AR di un metodo, il suo Access Link (AL) contiene l'object pointer
+
+FUNZIONAMENTO PARSER
+
+**Virtual Table**
+
+mentre il parser è dentro alla dichiarazione di una classe, la Symbol Table per il livello corrispondente (livello 1 da noi) deve includere anche le STentry per i simboli (metodi e campi) ereditati su cui non è stato fatto overriding: tale tabella viene chiamata Virtual Table 
+
+**Class Table**
+
+oltre a Symbol Table multilivello uso anche una Class Table: 
+mappa nomi di classi in informazioni sugli elementi dichiarati al suo interno ed ereditati 
+che serve per:
+-preservare le dichiarazioni interne ad una classe una volta che il parser
+ ha concluso la dichiarazione di una classe
+-renderle accedibili anche in seguito tramite il nome della classe 
+ (es calcolo Virtual Table)
+-mantenere in forma aggregata le info di dichiarazione degli elementi di una classe e di      quelle da cui eredita al netto dell'overriding (elementi virtuali, es la Virtual Table)
+
+la Class Table è da gestire in aggiunta alle Symbol Tables: la Symbol Table di livello 0 comunque include STentry anche per i nomi delle classi
+
+**gestione Class Table/Virtual Table**
+
+all'ingresso nella dichiarazione di una classe:
+- nella Class Table viene aggiunto il nome della classe mappato ad una nuova entry  
+  (CTentry): essa viene creata vuota, se non si eredita; viene creata copiando le info       
+  dall'interno della CTentry della classe da cui si eredita, altrimenti (si deve copiare il  
+  CONTENUTO di ogni struttura dati al suo interno e non semplicemente il riferimento)
+- viene creato un nuovo livello e la relativa Symbol Table (anzichè creata vuota) viene 
+  settata alla Virtual Table contenuta dentro la nuova CTentry
+
+la CTentry creata viene aggiornata in tutte le sue parti tutte le volte che si incontra la   
+dichiarazione di un campo (parametro della classe) o di un metodo
+
+**dettagli Class Table**
+
+HashMap<String,CTentry> classTable
+mappa ID di classi in Class Table entries
+
+CTentry:
+
+HashMap<String,STentry> vTable   virtual table che mappa simboli dichiarati dentro la 
+                                 classe o ereditati (se non hanno subito overriding)
+                                 in loro STentry
+int offsetFields                 offset (<=-1) da usare per un nuovo field                                                                                  (decrementati)
+int offsetMethods                offset (>=0) da usare per nuovo metodo
+                                 (incrementati)
+ArrayList<Node> allFields        tutti i figli virtuali che sono campi 
+                                 ordinati in base al loro offset, cioè 
+                                 indice array è: -(offset campo)-1
+ArrayList<Node> allMethods       tutti i figli virtuali che sono metodi 
+                                 ordinati in base al loro offset, cioè
+                                 indice array è: offset metodo
+
+**Abstract Syntax Tree**
+
+- Dichiarazioni
+ClassNode 
+(mettere i figli metodi in campo "methods" e i figli campi in campo "fields" in ordine
+di apparizione)
+MethodNode
+FieldNode
+(implementano DecNode oltre ai vecchi VarNode,FunNode,ParNode)
+
+- Espressioni (in corrispondenza a nuovi elementi sintattici che usano ID):
+IdNode         ID  
+CallNode       ID()
+ClassCallNode  ID.ID() 
+NewNode        new ID()
+EmptyNode      null
+
+- Tipi
+ClassTypeNode (contiene l'ID della classe come campo)
+EmptyTypeNode (tipo di null, non in AST ma restituito da typeCheck() di EmptyNode)
+
+**variazioni symbol table**
+
+creata durante il parsing delle dichiarazioni (offset calcolato diversamente
+per campi/metodi e per parametri/variabili/funzioni in base al rispettivo layout) 
+
+contenuto STentry invariato a parte:
+-aggiunta flag Boolean isMethod
+(per distinguere ID di funzioni da ID di metodi)
+-per nomi di classi mettere "null" come tipo
+
+**super type**
+
+HashMap<String,String> superType
+mappa ID di classi in ID di classe super
+
+viene creata durante il parsing e viene passata a FOOLlib
+(basta passare il suo riferimento all'inizio)
+
+FOOLlib:
+campo e metodo per memorizzare la funzione superType
+(da usare in isSubtype() durante il typeChecking)
+HashMap<String,String> superType
+putSuperType()
+
+**decorazione nodi tramite Symbol Table/Class Table**
+
+la sintassi mi consente di distinguere:
+- ID che sono sicuramente nomi di classi
+per essi si accede alla Class Table e si recupera direttamente
+la relativa CTentry inserita dalla dichiarazione della classe ID
+- ID che sono generici identificatori 
+per essi si accede alla Symbol Table/Virtual Table multilivello
+e si recupera la relativa STentry inserita dalla dichiarazione dell'ID
+discendendo i livelli (codice invariato rispetto a quanto visto a lezione)
+
+-IdNode         ID  
+-CallNode       ID()
+invariati: STentry dell'ID in campo "entry"
+
+-ClassCallNode  ID1.ID2() 
+STentry dell'ID1 in campo "entry"
+STentry dell'ID2 in campo "methodEntry"
+(ID2 cercato in vTable della CTentry della classe del tipo di ID1)
+
+-NewNode        new ID()
+CTentry della classe ID in campo "entry"
+
+-ClassNode      class ID1 [extends ID2].....
+CTentry della classe ID1 in campo "classEntry" 
+CTentry della classe ID2 in campo "superEntry"
+
+TYPE-CHECKING
+
+FOOLlib 
+isSubtype()
+estensione di quello funzionale considerando:
+- un tipo classe ClassTypeNode sottotipo di un altro tramite la funzione superType memorizzata
+- un tipo EmptyTypeNode sottotipo di un qualsiasi tipo classe ClassTypeNode
+
+** Dichiarazioni **
+-ClassNode
+si richiama sui figli che sono metodi
+in caso di ereditarietà controlla che l'overriding sia di campi che di metodi 
+sia corretto usando i campi allFields e allMethods delle CTentry in classEntry e superEntry
+(per semplicità controllare che tutti i campi ed i metodi del padre abbiano tipo 
+corretto nel figlio anche se, in realtà, non è avvenuto alcun overriding):
+il controllo avviene recuperando i tipi tramite il metodo getSymType() sui nodi in 
+allFields e allMethods e invocando poi isSubtype()
+
+** Espressioni **
+-IdNode         ID  
+controlla che non sia un metodo o il nome di una classe (tipo "null")
+
+-ClassCallNode  ID.ID() 
+-NewNode        new ID()
+controllano tipi argomenti parametri analogamente a Callnode
+(in caso di NewNode recupera i tipi tramite campo allFields della CTentry)
+
+-EmptyNode      null
+ritorna tipo EmptyTypeNode
+
+CODE-GENERATION
+
+** Dichiarazioni **
+
+le dichiarazioni di classi/loro elementi non generano codice che alloca nello
+stack (come per variabili/funzioni): l'allocazione viene fatta da "new" nello heap
+
+-ClassNode
+genera etichette nuove per tutti i figli metodi 
+(in suo campo "methods")
+e li inserisce in un loro campo "label"
+e poi si richiama su ciascuno di essi 
+(torna codice vuoto)
+
+-MethodNode
+genera codice del metodo (invariato rispetto a funzioni)
+e lo inserisce in FOOLlib con putCode()
+usando l'etichetta nel suo campo "label"
+(torna codice vuoto)
+
+** Espressioni **
+-IdNode         ID
+invariato rispetto a higher-order
+(indipendentemente che acceda ad AR in stack o ad oggetto in heap
+comunque prendo il valore che c'è all'offset della STentry)
+
+-CallNode       ID()
+se ID non è ID di metodo: invariato rispetto a higher-order
+se ID è ID di metodo: invariato rispetto a codice visto a lezione
+
+-ClassCallNode  ID1.ID2() 
+recupera valore dell'ID1 (object pointer) dall'AR dove è dichiarato 
+con meccanismo usuale di risalita catena statica e lo usa:
+per settare nuovo Access Link AL e 
+per recuperare (tramite offset) l'indirizzo del metodo a cui saltare
+
+-NewNode        new ID()
+prima: si richiama su *tutti* i parametri (che mettono il loro valore sullo stack)
+poi: alloca un nuovo oggetto in HEAP (con layout visto) riempiendolo,
+per i campi, con i valori sullo stack e, per i metodi (dispatch table), con le etichette memorizzate nel campo label dei nodi in allMethods della sua CTentry
+(il codice generato deve far si che alla fine rimanga sullo stack l'object pointer 
+che punta alla posizione di riferimento descritta nel layout degli oggetti)
+
+caso particolare: per classe ID senza campi ne' metodi (nemmeno ereditati)
+allocare uno spazio di grandezza 1 a cui punta l'object pointer messo sullo stack
+(se non si alloca nulla due oggetti creati possono essere == tra loro)
+
+-EmptyNode      null
+mette sullo stack il valore -1 (sicuramente diverso da indirizzo di ogni oggetto creato)
+
+-EqualNode
+invariato (in caso di tipi classe controlla uguaglianza degli object pointer)

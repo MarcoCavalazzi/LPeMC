@@ -1,0 +1,90 @@
+ELEMENTI SINTATTICI NUOVI
+
+tipi in dichiarazioni (non-terminale "type") ora includono:
+- tipi di base (non-terminle "basic"): bool e int 
+- tipi funzionali (non-terminale "arrow"): 
+    un "basic" come tipo di ritorno e 
+    tipi (possibilmente funzionali) "type" per i parametri
+
+LAYOUTS 
+
+- layout AR (funzioni/amb globle)
+invariato ma ora qualsiasi ID con tipo funzionale (vero ID di funzione oppure
+ID di variabile o parametro di tipo funzione) occupa un offset doppio:
+[a offset messo in symbol table  ] FP ad AR dichiarazione funzione
+[a offset messo in symbol table-1] indir funzione (per invocazione suo codice)
+
+FUNZIONAMENTO PARSER
+
+**Abstract Syntax Tree**
+
+- Dichiarazioni
+interfaccia DecNode con metodo getSymType() che implementano tutte:
+VarNode,FunNode,ParNode
+getSymType() su un DecNode deve essere implementato in modo che ritorni il tipo 
+messo in Symbol Table (per FunNode prevedere un campo symType dove memorizzarlo)
+
+- Tipi
+per i tipi "arrow" creare degli ArrowTypeNode 
+(che risulteranno possibilmente annidati nei parametri)
+
+**symbol table**
+
+STentry:
+invariata (ora, oltre ai nomi di funzione, anche nomi di 
+variabili/parametri potranno avere tipo funzionale ArrowTypeNode)
+
+TYPE-CHECKING
+
+** FOOLlib gestione tipi **
+
+isSubtype()
+ora deve gestire (oltre a "bool" sottotipo di "int") tipi funzionali in base alla 
+-relazione di co-varianza sul tipo di ritorno
+-relazione di contro-varianza sul tipo dei parametri
+
+** Espressioni **
+-IdNode      
+ora ammettere anche un ID con tipo funzionale!
+
+-EqualNode
+non consentire l'uso di sotto-espressioni con tipi funzionali
+
+-CallNode
+check invariato: il tipo deve essere funzionale
+(nome di funzione o var/par di tipo funzionale)
+
+CODE-GENERATION
+
+** Dichiarazioni **
+-FunNode
+due cose sono messe nello stack:
+1. FP a questo AR (in reg $fp)
+2. (a offset-1) indir di f
+
+codice della funzione:
+in caso tra i parametri o le dichiarazioni vi siano ID di tipo 
+funzionale (usare getSymType() su DecNode) si devono de-allocare
+due cose dallo stack (con due "pop")
+
+-VarNode
+invariato
+(ritorna codice generato da sua inizializzazione 
+che allocherà due cose nello stack)
+
+** Espressioni **
+-IdNode      
+ora ammettere anche un ID con tipo funzionale!
+se il tipo è funzionale (perchè nome di funzione o var/par di tipo funzionale) 
+due cose sono messe nello stack recuperandole come valori dall'AR dove è
+dichiarato l'ID con meccanismo usuale di risalita catena statica:
+1. FP ad AR dichiarazione funzione
+2. (a offset-1) indir funzione
+
+-CallNode
+il tipo deve essere funzionale (perchè nome di funzione o var/par di tipo funzionale)
+due cose sono recuperate come valori dall'AR dove è dichiarato l'ID 
+con meccanismo usuale di risalita catena statica:
+- FP ad AR dichiarazione funzione (usato per settare nuovo Access Link AL)
+- (a offset-1) indir di funzione (usato per saltare a codice funzione)
+
