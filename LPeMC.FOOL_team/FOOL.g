@@ -92,9 +92,15 @@ dec	returns [ArrayList<Node> astlist]
 	;
 	
 type	returns [Node ast]
+          basic | arrow;
+
+basic returns [Node ast]
   :       INT  {$ast=new IntTypeNode();}
         | BOOL {$ast=new BoolTypeNode();} 
+        | ID {$ast=new IdNode();}
 	;	
+
+arrow returns [ArrowTypeNode ast]: LPAR (type(COMMA type)*)? RPAR ARROW basic;
 	 
 exp	returns [Node ast]
  	: f=term {$ast= $f.ast;}
@@ -149,11 +155,13 @@ fatt	returns [Node ast]
 	  )? 	
  	; 
 
+/*
 type: basic | arrow;
 basic: INT | BOOL | ID ;
 
 arrow: LPAR (type(COMMA type)*)? RPAR ARROW basic;
-  	
+*/
+ 	
 /*------------------------------------------------------------------
  * LEXER RULES
  *------------------------------------------------------------------*/
