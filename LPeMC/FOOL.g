@@ -150,22 +150,23 @@ value	returns [Node ast]
        ELSE CLPAR z=exp CRPAR 
     {$ast= new IfNode($x.ast,$y.ast,$z.ast);}   
   | NOT LPAR  x=exp RPAR  
-  {$ast = new NotNode($x.ast);}
-    
+    {$ast = new NotNode($x.ast);}
   | PRINT LPAR e=exp RPAR 
     {$ast= new PrintNode($e.ast);}
-        
   |  i=ID 
     {//cercare la dichiarazione
-    int j=nestingLevel;
-    STentry entry=null; 
-    while (j>=0 && entry==null)
-      entry=(symTable.get(j--)).get($i.text);
-    if (entry==null)
-      {System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
-       System.exit(0);}               
-    $ast= new IdNode($i.text,entry,nestingLevel);}  
-    ( LPAR {ArrayList<Node> argList = new ArrayList<Node>();} 
+	    int j=nestingLevel;
+	    STentry entry=null; 
+	    while (j>=0 && entry==null)
+	      entry=(symTable.get(j--)).get($i.text);
+	    if (entry==null){
+	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
+	       System.exit(0);
+	    }               
+	    $ast= new IdNode($i.text,entry,nestingLevel);
+    }
+    (
+      LPAR { ArrayList<Node> argList = new ArrayList<Node>(); } 
       (fa=exp {argList.add($fa.ast);}
         (COMMA a=exp {argList.add($a.ast);})* 
       )?       
@@ -175,8 +176,9 @@ value	returns [Node ast]
  	;	 
 
 factor returns [Node ast]
-       : f = value {$ast = $f.ast;}
-      ( EQ  l=value {$ast = new EqualNode($ast,$l.ast);}
+    : f = value {$ast = $f.ast;}
+    (
+        EQ l=value {$ast = new EqualNode($ast,$l.ast);}
       | GR l=value {$ast = new GreaterOrEqualNode($ast,$l.ast);}
       | LE l=value {$ast = new LessOrEqualNode($ast,$l.ast);}
     )*
