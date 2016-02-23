@@ -69,36 +69,39 @@ declist	returns [ArrayList<Node> astlist]
          symTable.add(hmn);
        }
        LPAR { ArrayList<Node> parTypes = new ArrayList<Node>(); int paroffset=1; } 
+       (
+         fid=ID COLON fty=type
+         {
+	          parTypes.add($fty.ast); 
+	          ParNode fpar = new ParNode($fid.text,$fty.ast);
+	          f.addPar(fpar);
+	          if ( hmn.put($fid.text,new STentry(nestingLevel,$fty.ast,paroffset++)) != null  ){
+	             System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
+	             System.exit(0);
+	          }
+         }
          (
-           fid=ID COLON fty=type
-           {
-	           parTypes.add($fty.ast); 
-	           ParNode fpar = new ParNode($fid.text,$fty.ast);
-	           f.addPar(fpar);
-	           if ( hmn.put($fid.text,new STentry(nestingLevel,$fty.ast,paroffset++)) != null  ){
-	              System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
-	              System.exit(0);
-	           }
-           }
-           (
-             COMMA id=ID COLON ty=type
-             {
-	             parTypes.add($ty.ast); 
-	             ParNode par = new ParNode($id.text,$ty.ast);
-	             f.addPar(par);
-	             if ( hmn.put($id.text,new STentry(nestingLevel,$ty.ast,paroffset++)) != null  ){
-	                System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
-	                System.exit(0);
-	             }
-             }
-           )*
-         )? 
-         RPAR { entry.addType( new ArrowTypeNode(parTypes, $t.ast) ); } 
-         ( LET d=declist IN {f.addDec($d.astlist);} )? e=exp
-         {//chiudere scope
-	          symTable.remove(nestingLevel--);
-	          f.addBody($e.ast);
-         } SEMIC
+	          COMMA id=ID COLON ty=type
+	          {
+		           parTypes.add($ty.ast); 
+		           ParNode par = new ParNode($id.text,$ty.ast);
+		           f.addPar(par);
+		           if ( hmn.put($id.text,new STentry(nestingLevel,$ty.ast,paroffset++)) != null  ){
+		              System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
+		              System.exit(0);
+		           }
+	          }
+         )*
+       )? 
+       RPAR { entry.addType( new ArrowTypeNode(parTypes, $t.ast) ); } 
+       (
+          LET d=declist IN {f.addDec($d.astlist);} 
+       )?
+       e=exp
+       {//chiudere scope
+          symTable.remove(nestingLevel--);
+          f.addBody($e.ast);
+       } SEMIC
      )+
 	;
 
@@ -115,23 +118,23 @@ basic returns [Node ast]
 /*type: basic | arrow;
 basic: INT | BOOL | ID ;*/
 arrow returns [ArrowTypeNode ast]: 
-LPAR (type(COMMA type)*)? RPAR ARROW basic;
+LPAR ( type(COMMA type)* )? RPAR ARROW basic;
 	 
 exp	returns [Node ast]
  	: f=term {$ast= $f.ast;}
  	    (
- 	    PLUS l=term {$ast= new PlusNode ($ast,$l.ast);}
- 	    MINUS l=term {$ast= new MinusNode ($ast,$l.ast);}
- 	    OR l=term {$ast= new OrNode ($ast,$l.ast);}
+	 	    PLUS l=term {$ast= new PlusNode ($ast,$l.ast);}
+	 	    MINUS l=term {$ast= new MinusNode ($ast,$l.ast);}
+	 	    OR l=term {$ast= new OrNode ($ast,$l.ast);}
  	    )*
  	;
  	
 term returns [Node ast]
 	: f=factor {$ast= $f.ast;}
 	    (
-	    MULT l=factor {$ast= new MultNode ($ast,$l.ast);}
-	    DIV l=factor {$ast= new DivNode ($ast,$l.ast);}
-	    AND l=factor {$ast= new AndNode ($ast,$l.ast);}
+		    MULT l=factor {$ast= new MultNode ($ast,$l.ast);}
+		    DIV l=factor {$ast= new DivNode ($ast,$l.ast);}
+		    AND l=factor {$ast= new AndNode ($ast,$l.ast);}
 	    )*
 	;
 
