@@ -149,6 +149,10 @@ fatt	returns [Node ast]
 	  )? 	
  	; 
 
+type: basic | arrow;
+basic: INT | BOOL | ID ;
+
+arrow: LPAR (type(COMMA type)*)? RPAR ARROW basic;
   	
 /*------------------------------------------------------------------
  * LEXER RULES
