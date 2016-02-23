@@ -46,55 +46,58 @@ declist	returns [ArrayList<Node> astlist]
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
-          if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  )
-          {
+          if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  ){
             System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
             System.exit(0);
           }
        }
-     |
+       |
        FUN i=ID COLON t=basic
-         {  
-            //inserimento di ID nella symtable
-	          FunNode f = new FunNode($i.text,$t.ast);
-	          $astlist.add(f);
-	          HashMap<String,STentry> hm = symTable.get(nestingLevel);
-	          STentry entry = new STentry(nestingLevel,offset--);
-	          if ( hm.put($i.text,entry) != null ){
-	             System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
-	             System.exit(0);
-	          }
-	          //creare una nuova hashmap per la symTable
-	          nestingLevel++;
-	          HashMap<String,STentry> hmn = new HashMap<String,STentry> ();
-	          symTable.add(hmn);
+       {  
+          //inserimento di ID nella symtable
+         FunNode f = new FunNode($i.text,$t.ast);
+         $astlist.add(f);
+         HashMap<String,STentry> hm = symTable.get(nestingLevel);
+         STentry entry = new STentry(nestingLevel,offset--);
+         if ( hm.put($i.text,entry) != null ){
+            System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
+            System.exit(0);
          }
-         LPAR { ArrayList<Node> parTypes = new ArrayList<Node>(); int paroffset=1; } 
-           (fid=ID COLON fty=type
+         //creare una nuova hashmap per la symTable
+         nestingLevel++;
+         HashMap<String,STentry> hmn = new HashMap<String,STentry> ();
+         symTable.add(hmn);
+       }
+       LPAR { ArrayList<Node> parTypes = new ArrayList<Node>(); int paroffset=1; } 
+         (
+           fid=ID COLON fty=type
+           {
+	           parTypes.add($fty.ast); 
+	           ParNode fpar = new ParNode($fid.text,$fty.ast);
+	           f.addPar(fpar);
+	           if ( hmn.put($fid.text,new STentry(nestingLevel,$fty.ast,paroffset++)) != null  ){
+	              System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
+	              System.exit(0);
+	           }
+           }
+           (
+             COMMA id=ID COLON ty=type
              {
-             parTypes.add($fty.ast); 
-             ParNode fpar = new ParNode($fid.text,$fty.ast);
-             f.addPar(fpar);
-             if ( hmn.put($fid.text,new STentry(nestingLevel,$fty.ast,paroffset++)) != null  )
-               {System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
-                System.exit(0);}
+	             parTypes.add($ty.ast); 
+	             ParNode par = new ParNode($id.text,$ty.ast);
+	             f.addPar(par);
+	             if ( hmn.put($id.text,new STentry(nestingLevel,$ty.ast,paroffset++)) != null  ){
+	                System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
+	                System.exit(0);
+	             }
              }
-             (COMMA id=ID COLON ty=type
-               {
-               parTypes.add($ty.ast); 
-               ParNode par = new ParNode($id.text,$ty.ast);
-               f.addPar(par);
-               if ( hmn.put($id.text,new STentry(nestingLevel,$ty.ast,paroffset++)) != null  )
-                 {System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
-                  System.exit(0);}
-               }
-             )*
-           )? 
-         RPAR {entry.addType( new ArrowTypeNode(parTypes, $t.ast) );} 
-         (LET d=declist IN {f.addDec($d.astlist);})? e=exp
+           )*
+         )? 
+         RPAR { entry.addType( new ArrowTypeNode(parTypes, $t.ast) ); } 
+         ( LET d=declist IN {f.addDec($d.astlist);} )? e=exp
          {//chiudere scope
-          symTable.remove(nestingLevel--);
-          f.addBody($e.ast);
+	          symTable.remove(nestingLevel--);
+	          f.addBody($e.ast);
          } SEMIC
      )+
 	;
