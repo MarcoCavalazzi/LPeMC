@@ -34,7 +34,19 @@ prog	returns [Node ast]
               $ast = new LetInNode($d.astlist,$e.ast) ;
             } 
 	;
-    
+
+cllist returns [ArrayList<Node> astlist]   // Proabilmente restituisce una lista di CallNode
+   : {
+	     $astlist= new ArrayList<Node>() ;
+	     int offset=-2;
+	   }
+	   (CLASS ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )? RPAR
+	     CLPAR
+	       (FUN ID COLON basic LPAR (ID COLON type (COMMA ID COLON type)* )? RPAR
+	       (LET (VAR ID COLON basic ASS exp SEMIC)* IN )? exp SEMIC)* 
+      CRPAR)*
+   ;
+        
 declist	returns [ArrayList<Node> astlist]
 	: {
 	    $astlist= new ArrayList<Node>() ;
@@ -181,7 +193,6 @@ factor returns [Node ast]
   ; 
 
 /*
-
 
 arrow: LPAR (type(COMMA type)*)? RPAR ARROW basic;
 */
