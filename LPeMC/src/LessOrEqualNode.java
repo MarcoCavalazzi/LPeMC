@@ -1,21 +1,19 @@
 
-public class GreaterOrEqualNode implements Node {
+public class LessOrEqualNode implements Node {
 
-    private Node left;
+	private Node left;
     private Node right;
-	
-	public GreaterOrEqualNode(Node l, Node r) {
+    
+    public LessOrEqualNode(Node l, Node r) {
 		left = l;
 		right = r;
 	    }
-
-	
-	@Override
+    
+   	@Override
 	public String toPrint(String s) {
-		return s+"GreaterOrEqual"   + 
+		return s+"LessOrEqualNode"   + 
 				left.toPrint(s+"  ")+   
-        	    right.toPrint(s+"  "); 
-		
+        	    right.toPrint(s+"  "); 		
 	}
 
 	@Override
@@ -28,14 +26,13 @@ public class GreaterOrEqualNode implements Node {
 	    }
 	    return new BoolTypeNode();
 	}
-
 	@Override
-	public String codeGeneration() { //bgr for >=, l'ho creato da 0 dal file SVM.g, ho aggiunto in ExecuteVM la corrispondente definizione, mentre in SVMParser.java ho aggiunto il necessario riferimento come public static final int
+	public String codeGeneration(){ //bless per <=
 		String l1=FOOLlib.freshLabel();
 		String l2=FOOLlib.freshLabel();
 		return left.codeGeneration()+
 			   right.codeGeneration()+
-			   "bgr "+l1+"\n"+
+			   "bless "+l1+"\n"+
 			   "push 0\n"+
 			   "b "+l2+"\n"+
 			   l1+":\n"+
@@ -43,5 +40,4 @@ public class GreaterOrEqualNode implements Node {
 			   l2+":\n";
 	}
 	
-
 }

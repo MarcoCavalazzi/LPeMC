@@ -175,8 +175,8 @@ factor returns [Node ast]
     : f = value {$ast = $f.ast;}
     (
         EQ l=value {$ast = new EqualNode($ast,$l.ast);}
-      | GR l=value {$ast = new GreaterOrEqualNode($ast,$l.ast);}
-      | LE l=value {$ast = new LessOrEqualNode($ast,$l.ast);}
+      | GR l=value {$ast = new GreaterOrEqualNode($ast,$l.ast);} //GreaterOrEqualNode svolto
+      | LE l=value {$ast = new LessOrEqualNode($ast,$l.ast);} //LessOrEqualNode svolto
     )*
   ; 
 
