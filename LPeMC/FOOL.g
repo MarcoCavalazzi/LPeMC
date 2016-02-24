@@ -118,7 +118,7 @@ basic returns [Node ast]
 /*type: basic | arrow;
 basic: INT | BOOL | ID ;*/
 arrow returns [ArrowTypeNode ast]: 
-LPAR ( type(COMMA type)* )? RPAR ARROW basic;
+  LPAR ( type(COMMA type)* )? RPAR ARROW basic;
 	 
 exp	returns [Node ast]
  	: f=term {$ast= $f.ast;}
@@ -140,19 +140,15 @@ term returns [Node ast]
 
 value	returns [Node ast]
 	: i=INTEGER {$ast= new NatNode(Integer.parseInt($i.text));}  
-	| TRUE 
-    {$ast= new BoolNode(true);}  
-  | FALSE
-    {$ast= new BoolNode(false);} 
-  | NULL {$ast = new NullNode(null);}     
+	| TRUE  {$ast = new BoolNode(true);}  
+  | FALSE {$ast = new BoolNode(false);} 
+  | NULL  {$ast = new NullNode(null);}     
   //| NEW ID LPAR (expr (COMMA expr)* )? RPAR         
   | IF x=exp THEN CLPAR y=exp CRPAR 
        ELSE CLPAR z=exp CRPAR 
     {$ast= new IfNode($x.ast,$y.ast,$z.ast);}   
-  | NOT LPAR  x=exp RPAR  
-    {$ast = new NotNode($x.ast);}
-  | PRINT LPAR e=exp RPAR 
-    {$ast= new PrintNode($e.ast);}
+  | NOT LPAR  x=exp RPAR  {$ast = new NotNode($x.ast);}
+  | PRINT LPAR e=exp RPAR {$ast= new PrintNode($e.ast);}
   |  i=ID 
     {//cercare la dichiarazione
 	    int j=nestingLevel;
@@ -163,7 +159,7 @@ value	returns [Node ast]
 	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
 	       System.exit(0);
 	    }               
-	    $ast= new IdNode($i.text,entry,nestingLevel);
+	    $ast = new IdNode($i.text,entry,nestingLevel);
     }
     (
       LPAR { ArrayList<Node> argList = new ArrayList<Node>(); } 
@@ -234,7 +230,7 @@ cllist  : (CLASS ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )
     )*
   ;     
     
-value : 
+**value : 
     INTEGER 
   | TRUE      
   | FALSE       
@@ -248,15 +244,15 @@ value :
        | DOT ID LPAR (expr (COMMA expr)* )? RPAR )?    
         ; 
                
-type    :  basic | arrow 
+**type    :  basic | arrow 
         ;
 
-basic   : INT               
+**basic   : INT               
         | BOOL              
   | ID                        
   ;  
     
-arrow   : LPAR (type (COMMA type)* )? RPAR ARROW basic 
+**arrow   : LPAR (type (COMMA type)* )? RPAR ARROW basic 
   ;           	
  	*/
 /*------------------------------------------------------------------
