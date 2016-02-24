@@ -35,7 +35,7 @@ prog	returns [Node ast]
             } 
 	;
 
-cllist returns [ArrayList<Node> astlist]   // Proabilmente restituisce una lista di CallNode
+cllist returns [ArrayList<Node> astlist]   // Probabilmente restituisce una lista di CallNode
    : {
 	     $astlist= new ArrayList<Node>() ;
 	     int offset=-2;
