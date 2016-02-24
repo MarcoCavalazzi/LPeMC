@@ -67,7 +67,8 @@ STOREW	 : 'sw' ; 	// store in the memory cell pointed by top the value next
 LOADW	 : 'lw' ;	// load a value from the memory cell pointed by top
 BRANCH	 : 'b' ;	// jump to label
 BRANCHEQ : 'beq' ;	// jump to label if top == next
-BRANCHLESS:'bless' ;	// jump to label if top < next
+BRANCHLESS:'bless' ;	// jump to label if top <= next
+BRANCHGR : 'bgr'; // jump to label if top >= next
 JS	 : 'js' ;	// jump to instruction pointed by top of stack and store next instruction in ra
 LOADRA	 : 'lra' ;	// load from ra
 STORERA  : 'sra' ;	// store top into ra	 
