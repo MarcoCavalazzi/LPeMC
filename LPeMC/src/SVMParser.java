@@ -45,6 +45,7 @@ public class SVMParser extends Parser {
 	public static final int STOREW=29;
 	public static final int SUB=30;
 	public static final int WHITESP=31;
+	public static final int BRANCHGR=32;
 
 	// delegates
 	public Parser[] getDelegates() {
