@@ -26,6 +26,7 @@ public class DivNode implements Node {
 	
 	// Marco: Come facciamo a dire al compilatore di fare la divisione in linguaggio "assembly"? C'è direttamente il comando div
 	// Ottimo. E... come fa a capire di fare la divisione leggendo DIV?
+	//E' già stato implementato nel file SVM.g e ExecuteVM.java
 	@Override
 	public String codeGeneration() {
 		return this.left.codeGeneration() + this.right.codeGeneration() + "div\n";
