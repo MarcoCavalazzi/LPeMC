@@ -27,7 +27,7 @@ public class DivNode implements Node {
 	// Marco: Come facciamo a dire al compilatore di fare la divisione in linguaggio "assembly"? C'è direttamente il comando div
 	@Override
 	public String codeGeneration() {
-		return this.left.codeGeneration() + this.right.codeGeneration() + "div" + "\n";
+		return this.left.codeGeneration() + this.right.codeGeneration() + "div" + "\n"; 
 	}
 
 }
