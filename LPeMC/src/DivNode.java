@@ -8,7 +8,7 @@ public class DivNode implements Node {
 	    left=l;
 	    right=r;
 	}
-	  
+	
 	@Override
 	public String toPrint(String s) {
 		return s+"Div\n" + left.toPrint(s+"  ") + right.toPrint(s+"  ") ; 
@@ -25,9 +25,10 @@ public class DivNode implements Node {
 	}
 	
 	// Marco: Come facciamo a dire al compilatore di fare la divisione in linguaggio "assembly"? C'è direttamente il comando div
+	// Ottimo. E... come fa a capire di fare la divisione leggendo DIV?
 	@Override
 	public String codeGeneration() {
-		return this.left.codeGeneration() + this.right.codeGeneration() + "div" + "\n"; 
+		return this.left.codeGeneration() + this.right.codeGeneration() + "div\n";
 	}
 
 }

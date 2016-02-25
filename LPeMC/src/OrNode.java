@@ -22,6 +22,6 @@ public class OrNode implements Node {
 	   
 	  }
 	  public String codeGeneration(){
-	    return left.codeGeneration()+right.codeGeneration()+"add\n"; 
+	    return left.codeGeneration()+right.codeGeneration()+"or\n"; 
 	  }  
 }
