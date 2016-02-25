@@ -32,15 +32,17 @@ prog	returns [Node ast]
             {
               symTable.remove(nestingLevel--);
               $ast = new LetInNode($d.astlist,$e.ast) ;
-            } 
+            }
 	;
 
+// Questa funzione è necessaria solo nel caso dell'Object Oriented, giusto? Ci sono le classi! 
+// -> Dobbiamo quindi implementarla o no?
 cllist returns [ArrayList<Node> astlist]   // Probabilmente restituisce una lista di CallNode
    : {
-	     $astlist= new ArrayList<Node>() ;
+	     $astlist = new ArrayList<Node>() ;
 	     int offset=-2;
 	   }
-	   (CLASS ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )? RPAR
+	   (CLASS i=ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )? RPAR
 	     CLPAR
 	       (FUN ID COLON basic LPAR (ID COLON type (COMMA ID COLON type)* )? RPAR
 	       (LET (VAR ID COLON basic ASS exp SEMIC)* IN )? exp SEMIC)* 
@@ -49,7 +51,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente restituisce una list
         
 declist	returns [ArrayList<Node> astlist]
 	: {
-	    $astlist= new ArrayList<Node>() ;
+	    $astlist = new ArrayList<Node>() ;
 	    int offset=-2;
 	  }
     (

@@ -25,7 +25,7 @@ public class AndNode implements Node {
 	@Override
 	public String codeGeneration() {
 		// Marco: questa è la linea di codice che ho trovato in OrNode.java.
-		// Sinceramente però non capisco perché usi "add" per fare un OR e non so bnee cosa mettere per fare l'AND.
+		// Sinceramente però non capisco perché usi "add" per fare un OR e non so bene cosa mettere per fare l'AND.
 		return left.codeGeneration()+right.codeGeneration()+"add\n";
 	}
 
