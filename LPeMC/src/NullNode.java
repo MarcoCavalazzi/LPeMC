@@ -1,22 +1,23 @@
 
 public class NullNode implements Node {
 
-	@Override
-	public String toPrint(String indent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public NullNode() {
+    }
 
-	@Override
-	public Node typeCheck() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String toPrint(String s) {
+        return s+ "NullNode";
+    }
 
-	@Override
-	public String codeGeneration() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Node typeCheck() {
+        return new NullNode();
+    }
+
+    @Override //Giuseppe: penso che con -1 potrebbe anche andare, ma non sono sicuro.
+    public String codeGeneration() {
+        return "push -1" + "\n";
+    }	
+	
 
 }
