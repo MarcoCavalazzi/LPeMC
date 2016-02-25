@@ -29,15 +29,9 @@ public class AndNode implements Node {
 		// Servirà forse un "and" alla fine per l'AND e un "or" alla fine per l'OR?
 		// con mult riesco a fare: 1*0 = 0 | 1*1 = 1 | 0*0 = 0| cioè le regole per fare l'AND logico
 		//per l'OR è lo stesso ragionamento ma con add
+		
+		// Scusa se insisto. Ho capito la tua spiegazione, ma cosa dice al compilatore quando considerare il numero per intero e quando bit a bit?
 		return left.codeGeneration()+right.codeGeneration()+"and\n";
 	}
 
 }
-
-/*  
-	  public String codeGeneration(){
-	    return left.codeGeneration()+right.codeGeneration()+"add\n"; 
-	  }
-}
-
-*/
