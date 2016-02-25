@@ -18,17 +18,16 @@ public class DivNode implements Node {
 	public Node typeCheck() {
 		if (! ( FOOLlib.isSubtype(left.typeCheck(),new IntTypeNode()) &&
 	            FOOLlib.isSubtype(right.typeCheck(),new IntTypeNode()) ) ) {
-	      System.out.println("Non integers in sum");
+	      System.out.println("Non integers in div");
 	      System.exit(0);
 	    }
 	    return new IntTypeNode();
 	}
 	
-	// Marco: Come facciamo a dire al compilatore di fare la divisione in linguaggio "assembly"?
+	// Marco: Come facciamo a dire al compilatore di fare la divisione in linguaggio "assembly"? C'è direttamente il comando div
 	@Override
 	public String codeGeneration() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.left.codeGeneration() + this.right.codeGeneration() + "div" + "\n";
 	}
 
 }
