@@ -130,7 +130,9 @@ basic returns [Node ast]
 	;	
 
 /*type: basic | arrow;
-basic: INT | BOOL | ID ;*/
+basic: INT | BOOL | ID ;
+arrow: LPAR (type(COMMA type)*)? RPAR ARROW basic;
+*/
 arrow returns [ArrowTypeNode ast]: 
   LPAR ( type(COMMA type)* )? RPAR ARROW basic;
 	 
@@ -147,8 +149,8 @@ term returns [Node ast]
 	: f=factor {$ast= $f.ast;}
 	    (
 		    MULT l=factor {$ast= new MultNode ($ast,$l.ast);}
-		    DIV l=factor {$ast= new DivNode ($ast,$l.ast);}
-		    AND l=factor {$ast= new AndNode ($ast,$l.ast);}
+		    DIV  l=factor {$ast= new DivNode ($ast,$l.ast);}
+		    AND  l=factor {$ast= new AndNode ($ast,$l.ast);}
 	    )*
 	;
 
@@ -194,10 +196,6 @@ factor returns [Node ast]
     )*
   ; 
 
-/*
-
-arrow: LPAR (type(COMMA type)*)? RPAR ARROW basic;
-*/
  	
 /*------------------------------------------------------------------
  * GRAMMAR RULES

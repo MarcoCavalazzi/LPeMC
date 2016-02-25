@@ -16,7 +16,13 @@ import java.util.HashMap;
 /*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
-
+/*
+non dovremmo aggiungere nell'assembly anche le seguenti istruzioni?
+OR
+AND
+EQUAL OR GREATER
+EQUAL OR MINOR
+*/
 assembly: 
     ( PUSH e=NUMBER   {code[i++] = PUSH; 
 			                 code[i++] = Integer.parseInt($e.text);}
