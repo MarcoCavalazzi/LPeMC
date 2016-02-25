@@ -26,7 +26,7 @@ public class AndNode implements Node {
 	public String codeGeneration() {
 		// Marco: questa è la linea di codice che ho trovato in OrNode.java.
 		// Sinceramente però non capisco perché usi "add" per fare un OR e non so bene cosa mettere per fare l'AND. 
-		//errore mio, li ho confusi, sorry! in OR ci vuole ADD e in AND ci vuole MULT suppongo.
+		
 		return left.codeGeneration()+right.codeGeneration()+"mult\n";
 	}
 
