@@ -139,9 +139,9 @@ arrow returns [ArrowTypeNode ast]:
 exp	returns [Node ast]
  	: f=term {$ast= $f.ast;}
  	    (
-	 	    PLUS l=term {$ast= new PlusNode ($ast,$l.ast);}
-	 	    MINUS l=term {$ast= new MinusNode ($ast,$l.ast);}
-	 	    OR l=term {$ast= new OrNode ($ast,$l.ast);}
+	 	    PLUS l=term  {$ast = new PlusNode ($ast,$l.ast);}
+	 	    MINUS l=term {$ast = new MinusNode($ast,$l.ast);}
+	 	    OR l=term    {$ast = new OrNode   ($ast,$l.ast);}
  	    )*
  	;
  	

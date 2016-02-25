@@ -2,8 +2,8 @@ let
   var x:int = 2;
   var b:bool = true;
 in
-  
-   if( (5 - x) == 4)
+ 
+   if( (5 - x / 2) == 4)
    	then{
    		print (x && b)
    		print (x || b)
@@ -11,6 +11,10 @@ in
    		print (not(x)) 
    		}
    		
+   		
+
+
+
 /* SERBATOIO ESEMPI
 let 
   var x:int = 1;
