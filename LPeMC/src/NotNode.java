@@ -25,7 +25,7 @@ public class NotNode implements Node {
         return new BoolTypeNode();
     }
 
-    @Override
+    @Override// Marco: scusa, ma te la capisci la spiegazione del prof di questo metodo (nei commenti)?
     public String codeGeneration() {
         String lab1 = FOOLlib.freshLabel(); //il label per il not
         String lab2 = FOOLlib.freshLabel();	//label per il true
