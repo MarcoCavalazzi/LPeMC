@@ -25,7 +25,9 @@ public class NotNode implements Node {
         return new BoolTypeNode();
     }
 
-    @Override// Marco: scusa, ma te la capisci la spiegazione del prof di questo metodo (nei commenti)?
+    @Override// Marco: scusa, ma te la capisci la spiegazione del prof di questo metodo (nei commenti)? 	
+    //I commenti li ho scritti io per cercare di far capire il ragionamento fatto ma sono stato poco chiaro evidentemente,
+    //in pratica per ogni valore che mi arriva lo confronto con 1(true) se 
     public String codeGeneration() {
         String lab1 = FOOLlib.freshLabel(); //il label per il not
         String lab2 = FOOLlib.freshLabel();	//label per il true
