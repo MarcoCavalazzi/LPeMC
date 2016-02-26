@@ -159,12 +159,13 @@ value	returns [Node ast]
 	| TRUE  {$ast = new BoolNode(true);}  
   | FALSE {$ast = new BoolNode(false);} 
   | NULL  {$ast = new NullNode();}
-  //| NEW ID LPAR (expr (COMMA expr)* )? RPAR         
-  | IF x=exp THEN CLPAR y=exp CRPAR 
+  //| NEW ID LPAR (expr (COMMA expr)* )? RPAR
+  | IF LPAR x=exp RPAR THEN CLPAR y=exp CRPAR 
        ELSE CLPAR z=exp CRPAR 
     {$ast= new IfNode($x.ast,$y.ast,$z.ast);}   
   | NOT LPAR  x=exp RPAR  {$ast = new NotNode($x.ast);}
   | PRINT LPAR e=exp RPAR {$ast= new PrintNode($e.ast);}
+  | LPAR exp RPAR 
   |  i=ID 
     {//cercare la dichiarazione
 	    int j=nestingLevel;
@@ -250,7 +251,7 @@ cllist  : (CLASS ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )
   | IF expr THEN CLPAR expr CRPAR ELSE CLPAR expr CRPAR     
   | NOT LPAR expr RPAR 
   | PRINT LPAR expr RPAR      
-        | LPAR expr RPAR  
+  | LPAR expr RPAR  
   | ID ( LPAR (expr (COMMA expr)* )? RPAR 
        | DOT ID LPAR (expr (COMMA expr)* )? RPAR )?    
         ; 
