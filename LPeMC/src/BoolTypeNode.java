@@ -9,7 +9,7 @@ public class BoolTypeNode implements Node {
     
   //non utilizzato
   public Node typeCheck() {
-    return new BoolTypeNode();
+    return null;	// volendo si può restituire BoolNode(false);
   }
   
   public String codeGeneration() {
