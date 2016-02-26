@@ -5,10 +5,10 @@ in
  
    if( (5 - x / 2) == 4)
    	then{
-   		print (x && b)
-   		print (x || b)
-   		print (x - 1)
-   		print (not(x)) 
+   		print (x && b);
+   		print (x || b);
+   		print (x - 1);
+   		print (not(x)); 
    		}
    		
    		
