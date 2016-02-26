@@ -10,6 +10,10 @@ public class ArrowTypeNode implements Node {
     ret=r;
   }
     
+  public ArrowTypeNode()
+  {
+	  //costruttore vuoto temporaneo
+  }
   public String toPrint(String s) { //
 	String parlstr="";
     for (Node par:parlist)

@@ -10,6 +10,9 @@ public class IdNode implements Node {
     nl=n;	// il nesting level ci farà capire, atraverso la differenza, se l'ID trovato si riferisce ad una variabile locale o globale.
   }
   
+  public IdNode(){
+	  //costruttore vuoto temporaneo
+  }
   public String toPrint(String s) {
 	return s+"Id:" + id +" at nestlev "+ nl +"\n" + entry.toPrint(s+"  ") ;  
   }
