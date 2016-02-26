@@ -9,7 +9,7 @@ public class ArrowTypeNode implements Node {
     parlist=p;
     ret=r;
   }
-    
+       
   public ArrowTypeNode()
   {
 	  //costruttore vuoto temporaneo
