@@ -24,7 +24,7 @@ EQUAL OR GREATER
 EQUAL OR MINOR
 NOT
 */
-assembly: 
+assembly:
     ( PUSH e=NUMBER   {code[i++] = PUSH; 
 			                 code[i++] = Integer.parseInt($e.text);}
 	  | PUSH e=LABEL    {code[i++] = PUSH; //
