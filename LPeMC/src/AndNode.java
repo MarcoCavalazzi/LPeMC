@@ -30,15 +30,9 @@ public class AndNode implements Node {
 		//No, non esistono come comandi nel file SVM.g, secondo me è corretto usare mult e add 
 		// con mult riesco a fare: 1*0 = 0 | 1*1 = 1 | 0*0 = 0| cioè le regole per fare l'AND logico
 		//per l'OR è lo stesso ragionamento ma con add
+		
+		// Scusa se insisto. Ho capito la tua spiegazione, ma cosa dice al compilatore quando considerare il numero per intero e quando bit a bit?
 		return left.codeGeneration()+right.codeGeneration()+"and\n";
 	}
 
 }
-
-/*  
-	  public String codeGeneration(){
-	    return left.codeGeneration()+right.codeGeneration()+"add\n"; 
-	  }
-}
-
-*/

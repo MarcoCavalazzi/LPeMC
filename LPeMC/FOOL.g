@@ -37,7 +37,7 @@ prog	returns [Node ast]
 
 // Questa funzione è necessaria solo nel caso dell'Object Oriented, giusto? Ci sono le classi! 
 // -> Dobbiamo quindi implementarla o no?
-cllist returns [ArrayList<Node> astlist]   // Probabilmente restituisce una lista di CallNode
+cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una lista di CallNode
    : {
 	     $astlist = new ArrayList<Node>() ;
 	     int offset=-2;
@@ -119,7 +119,7 @@ declist	returns [ArrayList<Node> astlist]
      )+
 	;
 
-type	returns [Node ast]
+type returns [Node ast]
   :       b=basic | ARROW {$ast=new ArrowTypeNode();}
   ;
 
