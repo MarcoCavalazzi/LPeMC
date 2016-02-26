@@ -28,7 +28,7 @@ assembly:
     ( PUSH e=NUMBER   {code[i++] = PUSH; 
 			                 code[i++] = Integer.parseInt($e.text);}
 	  | PUSH e=LABEL    {code[i++] = PUSH; //
-	    		             labelRef.put(i++,$e.text);} 		     
+	    		             labelRef.put(i++,$e.text);}
 	  | POP		    {code[i++] = POP;}	
 	  | ADD		    {code[i++] = ADD;}
 	  | SUB		    {code[i++] = SUB;}
@@ -64,7 +64,7 @@ assembly:
  * LEXER RULES
  *------------------------------------------------------------------*/
 
-PUSH  	 : 'push' ; 	// constant in the stack
+PUSH : 'push' ; 	// constant in the stack
 POP	 : 'pop' ; 	// decreases stack pointer
 ADD	 : 'add' ;  	// add two values from the stack
 SUB	 : 'sub' ;	// add two values from the stack
