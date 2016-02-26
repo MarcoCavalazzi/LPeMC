@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g 2015-12-11 15:21:40
+// $ANTLR 3.5.2 C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g 2016-02-26 14:23:11
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -8,36 +8,48 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class FOOLLexer extends Lexer {
 	public static final int EOF=-1;
-	public static final int ASS=4;
-	public static final int BOOL=5;
-	public static final int CLPAR=6;
-	public static final int COLON=7;
-	public static final int COMMA=8;
-	public static final int COMMENT=9;
-	public static final int CRPAR=10;
-	public static final int ELSE=11;
-	public static final int EQ=12;
-	public static final int ERR=13;
-	public static final int FALSE=14;
-	public static final int FUN=15;
-	public static final int ID=16;
-	public static final int IF=17;
-	public static final int IN=18;
-	public static final int INT=19;
-	public static final int LET=20;
-	public static final int LPAR=21;
-	public static final int NAT=22;
-	public static final int PLUS=23;
-	public static final int PRINT=24;
-	public static final int RPAR=25;
-	public static final int SEMIC=26;
-	public static final int THEN=27;
-	public static final int TIMES=28;
-	public static final int TRUE=29;
-	public static final int VAR=30;
-	public static final int WHITESP=31;
+	public static final int AND=4;
+	public static final int ARROW=5;
+	public static final int ASS=6;
+	public static final int BOOL=7;
+	public static final int CLASS=8;
+	public static final int CLPAR=9;
+	public static final int COLON=10;
+	public static final int COMMA=11;
+	public static final int CRPAR=12;
+	public static final int DIV=13;
+	public static final int DOT=14;
+	public static final int ELSE=15;
+	public static final int EQ=16;
+	public static final int ERR=17;
+	public static final int EXTENDS=18;
+	public static final int FALSE=19;
+	public static final int FUN=20;
+	public static final int GR=21;
+	public static final int ID=22;
+	public static final int IF=23;
+	public static final int IN=24;
+	public static final int INT=25;
+	public static final int INTEGER=26;
+	public static final int LE=27;
+	public static final int LET=28;
+	public static final int LPAR=29;
+	public static final int MINUS=30;
+	public static final int MULT=31;
+	public static final int NEW=32;
+	public static final int NOT=33;
+	public static final int NULL=34;
+	public static final int OR=35;
+	public static final int PLUS=36;
+	public static final int PRINT=37;
+	public static final int RPAR=38;
+	public static final int SEMIC=39;
+	public static final int THEN=40;
+	public static final int TRUE=41;
+	public static final int VAR=42;
+	public static final int WHITESP=43;
 
-	int lexicalErrors=0;
+	  int lexicalErrors=0;
 
 
 	// delegates
@@ -53,15 +65,175 @@ public class FOOLLexer extends Lexer {
 	public FOOLLexer(CharStream input, RecognizerSharedState state) {
 		super(input,state);
 	}
-	@Override public String getGrammarFileName() { return "C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g"; }
+	@Override public String getGrammarFileName() { return "C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g"; }
+
+	// $ANTLR start "PLUS"
+	public final void mPLUS() throws RecognitionException {
+		try {
+			int _type = PLUS;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:272:9: ( '+' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:272:11: '+'
+			{
+			match('+'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "PLUS"
+
+	// $ANTLR start "MINUS"
+	public final void mMINUS() throws RecognitionException {
+		try {
+			int _type = MINUS;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:273:9: ( '-' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:273:11: '-'
+			{
+			match('-'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "MINUS"
+
+	// $ANTLR start "MULT"
+	public final void mMULT() throws RecognitionException {
+		try {
+			int _type = MULT;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:274:9: ( '*' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:274:11: '*'
+			{
+			match('*'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "MULT"
+
+	// $ANTLR start "DIV"
+	public final void mDIV() throws RecognitionException {
+		try {
+			int _type = DIV;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:275:7: ( '/' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:275:9: '/'
+			{
+			match('/'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "DIV"
+
+	// $ANTLR start "LPAR"
+	public final void mLPAR() throws RecognitionException {
+		try {
+			int _type = LPAR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:276:7: ( '(' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:276:9: '('
+			{
+			match('('); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "LPAR"
+
+	// $ANTLR start "RPAR"
+	public final void mRPAR() throws RecognitionException {
+		try {
+			int _type = RPAR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:277:7: ( ')' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:277:9: ')'
+			{
+			match(')'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "RPAR"
+
+	// $ANTLR start "CLPAR"
+	public final void mCLPAR() throws RecognitionException {
+		try {
+			int _type = CLPAR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:278:7: ( '{' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:278:9: '{'
+			{
+			match('{'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "CLPAR"
+
+	// $ANTLR start "CRPAR"
+	public final void mCRPAR() throws RecognitionException {
+		try {
+			int _type = CRPAR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:279:7: ( '}' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:279:9: '}'
+			{
+			match('}'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "CRPAR"
 
 	// $ANTLR start "SEMIC"
 	public final void mSEMIC() throws RecognitionException {
 		try {
 			int _type = SEMIC;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:156:7: ( ';' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:156:9: ';'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:280:9: ( ';' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:280:11: ';'
 			{
 			match(';'); 
 			}
@@ -80,8 +252,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = COLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:157:7: ( ':' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:157:9: ':'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:281:9: ( ':' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:281:11: ':'
 			{
 			match(':'); 
 			}
@@ -100,8 +272,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = COMMA;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:158:7: ( ',' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:158:9: ','
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:282:7: ( ',' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:282:9: ','
 			{
 			match(','); 
 			}
@@ -115,13 +287,138 @@ public class FOOLLexer extends Lexer {
 	}
 	// $ANTLR end "COMMA"
 
+	// $ANTLR start "DOT"
+	public final void mDOT() throws RecognitionException {
+		try {
+			int _type = DOT;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:283:5: ( '.' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:283:7: '.'
+			{
+			match('.'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "DOT"
+
+	// $ANTLR start "OR"
+	public final void mOR() throws RecognitionException {
+		try {
+			int _type = OR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:284:5: ( '||' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:284:7: '||'
+			{
+			match("||"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "OR"
+
+	// $ANTLR start "AND"
+	public final void mAND() throws RecognitionException {
+		try {
+			int _type = AND;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:285:5: ( '&&' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:285:7: '&&'
+			{
+			match("&&"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "AND"
+
+	// $ANTLR start "NOT"
+	public final void mNOT() throws RecognitionException {
+		try {
+			int _type = NOT;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:286:5: ( 'not' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:286:7: 'not'
+			{
+			match("not"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "NOT"
+
+	// $ANTLR start "GR"
+	public final void mGR() throws RecognitionException {
+		try {
+			int _type = GR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:287:5: ( '>=' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:287:7: '>='
+			{
+			match(">="); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "GR"
+
+	// $ANTLR start "LE"
+	public final void mLE() throws RecognitionException {
+		try {
+			int _type = LE;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:288:5: ( '<=' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:288:7: '<='
+			{
+			match("<="); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "LE"
+
 	// $ANTLR start "EQ"
 	public final void mEQ() throws RecognitionException {
 		try {
 			int _type = EQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:159:4: ( '==' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:159:6: '=='
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:289:5: ( '==' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:289:7: '=='
 			{
 			match("=="); 
 
@@ -141,8 +438,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = ASS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:160:5: ( '=' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:160:7: '='
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:290:5: ( '=' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:290:7: '='
 			{
 			match('='); 
 			}
@@ -156,15 +453,16 @@ public class FOOLLexer extends Lexer {
 	}
 	// $ANTLR end "ASS"
 
-	// $ANTLR start "PLUS"
-	public final void mPLUS() throws RecognitionException {
+	// $ANTLR start "TRUE"
+	public final void mTRUE() throws RecognitionException {
 		try {
-			int _type = PLUS;
+			int _type = TRUE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:161:6: ( '+' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:161:8: '+'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:291:7: ( 'true' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:291:9: 'true'
 			{
-			match('+'); 
+			match("true"); 
+
 			}
 
 			state.type = _type;
@@ -174,17 +472,18 @@ public class FOOLLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "PLUS"
+	// $ANTLR end "TRUE"
 
-	// $ANTLR start "TIMES"
-	public final void mTIMES() throws RecognitionException {
+	// $ANTLR start "FALSE"
+	public final void mFALSE() throws RecognitionException {
 		try {
-			int _type = TIMES;
+			int _type = FALSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:162:7: ( '*' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:162:9: '*'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:292:7: ( 'false' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:292:9: 'false'
 			{
-			match('*'); 
+			match("false"); 
+
 			}
 
 			state.type = _type;
@@ -194,14 +493,329 @@ public class FOOLLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "TIMES"
+	// $ANTLR end "FALSE"
 
-	// $ANTLR start "NAT"
-	public final void mNAT() throws RecognitionException {
+	// $ANTLR start "IF"
+	public final void mIF() throws RecognitionException {
 		try {
-			int _type = NAT;
+			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:163:5: ( ( ( '1' .. '9' ) ( '0' .. '9' )* ) | '0' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:293:5: ( 'if' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:293:7: 'if'
+			{
+			match("if"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "IF"
+
+	// $ANTLR start "THEN"
+	public final void mTHEN() throws RecognitionException {
+		try {
+			int _type = THEN;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:294:7: ( 'then' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:294:9: 'then'
+			{
+			match("then"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "THEN"
+
+	// $ANTLR start "ELSE"
+	public final void mELSE() throws RecognitionException {
+		try {
+			int _type = ELSE;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:295:7: ( 'else' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:295:9: 'else'
+			{
+			match("else"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "ELSE"
+
+	// $ANTLR start "PRINT"
+	public final void mPRINT() throws RecognitionException {
+		try {
+			int _type = PRINT;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:296:7: ( 'print' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:296:9: 'print'
+			{
+			match("print"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "PRINT"
+
+	// $ANTLR start "LET"
+	public final void mLET() throws RecognitionException {
+		try {
+			int _type = LET;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:297:9: ( 'let' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:297:11: 'let'
+			{
+			match("let"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "LET"
+
+	// $ANTLR start "IN"
+	public final void mIN() throws RecognitionException {
+		try {
+			int _type = IN;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:298:9: ( 'in' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:298:11: 'in'
+			{
+			match("in"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "IN"
+
+	// $ANTLR start "VAR"
+	public final void mVAR() throws RecognitionException {
+		try {
+			int _type = VAR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:299:9: ( 'var' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:299:11: 'var'
+			{
+			match("var"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "VAR"
+
+	// $ANTLR start "FUN"
+	public final void mFUN() throws RecognitionException {
+		try {
+			int _type = FUN;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:300:5: ( 'fun' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:300:7: 'fun'
+			{
+			match("fun"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "FUN"
+
+	// $ANTLR start "CLASS"
+	public final void mCLASS() throws RecognitionException {
+		try {
+			int _type = CLASS;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:301:7: ( 'class' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:301:9: 'class'
+			{
+			match("class"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "CLASS"
+
+	// $ANTLR start "EXTENDS"
+	public final void mEXTENDS() throws RecognitionException {
+		try {
+			int _type = EXTENDS;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:302:9: ( 'extends' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:302:11: 'extends'
+			{
+			match("extends"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "EXTENDS"
+
+	// $ANTLR start "NEW"
+	public final void mNEW() throws RecognitionException {
+		try {
+			int _type = NEW;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:303:7: ( 'new' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:303:9: 'new'
+			{
+			match("new"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "NEW"
+
+	// $ANTLR start "NULL"
+	public final void mNULL() throws RecognitionException {
+		try {
+			int _type = NULL;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:304:9: ( 'null' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:304:11: 'null'
+			{
+			match("null"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "NULL"
+
+	// $ANTLR start "INT"
+	public final void mINT() throws RecognitionException {
+		try {
+			int _type = INT;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:305:5: ( 'int' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:305:7: 'int'
+			{
+			match("int"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "INT"
+
+	// $ANTLR start "BOOL"
+	public final void mBOOL() throws RecognitionException {
+		try {
+			int _type = BOOL;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:306:7: ( 'bool' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:306:9: 'bool'
+			{
+			match("bool"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "BOOL"
+
+	// $ANTLR start "ARROW"
+	public final void mARROW() throws RecognitionException {
+		try {
+			int _type = ARROW;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:307:9: ( '->' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:307:11: '->'
+			{
+			match("->"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "ARROW"
+
+	// $ANTLR start "INTEGER"
+	public final void mINTEGER() throws RecognitionException {
+		try {
+			int _type = INTEGER;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:308:9: ( ( ( '1' .. '9' ) ( '0' .. '9' )* ) | '0' )
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( ((LA2_0 >= '1' && LA2_0 <= '9')) ) {
@@ -219,10 +833,10 @@ public class FOOLLexer extends Lexer {
 
 			switch (alt2) {
 				case 1 :
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:163:7: ( ( '1' .. '9' ) ( '0' .. '9' )* )
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:308:11: ( ( '1' .. '9' ) ( '0' .. '9' )* )
 					{
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:163:7: ( ( '1' .. '9' ) ( '0' .. '9' )* )
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:163:8: ( '1' .. '9' ) ( '0' .. '9' )*
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:308:11: ( ( '1' .. '9' ) ( '0' .. '9' )* )
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:308:12: ( '1' .. '9' ) ( '0' .. '9' )*
 					{
 					if ( (input.LA(1) >= '1' && input.LA(1) <= '9') ) {
 						input.consume();
@@ -232,7 +846,7 @@ public class FOOLLexer extends Lexer {
 						recover(mse);
 						throw mse;
 					}
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:163:18: ( '0' .. '9' )*
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:308:22: ( '0' .. '9' )*
 					loop1:
 					while (true) {
 						int alt1=2;
@@ -243,7 +857,7 @@ public class FOOLLexer extends Lexer {
 
 						switch (alt1) {
 						case 1 :
-							// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:
 							{
 							if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
 								input.consume();
@@ -266,7 +880,7 @@ public class FOOLLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:163:33: '0'
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:308:37: '0'
 					{
 					match('0'); 
 					}
@@ -280,347 +894,15 @@ public class FOOLLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "NAT"
-
-	// $ANTLR start "TRUE"
-	public final void mTRUE() throws RecognitionException {
-		try {
-			int _type = TRUE;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:164:6: ( 'true' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:164:8: 'true'
-			{
-			match("true"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "TRUE"
-
-	// $ANTLR start "FALSE"
-	public final void mFALSE() throws RecognitionException {
-		try {
-			int _type = FALSE;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:165:7: ( 'false' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:165:9: 'false'
-			{
-			match("false"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "FALSE"
-
-	// $ANTLR start "LPAR"
-	public final void mLPAR() throws RecognitionException {
-		try {
-			int _type = LPAR;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:166:7: ( '(' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:166:9: '('
-			{
-			match('('); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "LPAR"
-
-	// $ANTLR start "RPAR"
-	public final void mRPAR() throws RecognitionException {
-		try {
-			int _type = RPAR;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:167:6: ( ')' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:167:8: ')'
-			{
-			match(')'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "RPAR"
-
-	// $ANTLR start "CLPAR"
-	public final void mCLPAR() throws RecognitionException {
-		try {
-			int _type = CLPAR;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:168:8: ( '{' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:168:10: '{'
-			{
-			match('{'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "CLPAR"
-
-	// $ANTLR start "CRPAR"
-	public final void mCRPAR() throws RecognitionException {
-		try {
-			int _type = CRPAR;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:169:7: ( '}' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:169:9: '}'
-			{
-			match('}'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "CRPAR"
-
-	// $ANTLR start "IF"
-	public final void mIF() throws RecognitionException {
-		try {
-			int _type = IF;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:170:5: ( 'if' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:170:7: 'if'
-			{
-			match("if"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "IF"
-
-	// $ANTLR start "THEN"
-	public final void mTHEN() throws RecognitionException {
-		try {
-			int _type = THEN;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:171:7: ( 'then' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:171:9: 'then'
-			{
-			match("then"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "THEN"
-
-	// $ANTLR start "ELSE"
-	public final void mELSE() throws RecognitionException {
-		try {
-			int _type = ELSE;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:172:7: ( 'else' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:172:9: 'else'
-			{
-			match("else"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "ELSE"
-
-	// $ANTLR start "PRINT"
-	public final void mPRINT() throws RecognitionException {
-		try {
-			int _type = PRINT;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:173:7: ( 'print' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:173:9: 'print'
-			{
-			match("print"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "PRINT"
-
-	// $ANTLR start "LET"
-	public final void mLET() throws RecognitionException {
-		try {
-			int _type = LET;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:174:5: ( 'let' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:174:7: 'let'
-			{
-			match("let"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "LET"
-
-	// $ANTLR start "IN"
-	public final void mIN() throws RecognitionException {
-		try {
-			int _type = IN;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:175:4: ( 'in' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:175:6: 'in'
-			{
-			match("in"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "IN"
-
-	// $ANTLR start "VAR"
-	public final void mVAR() throws RecognitionException {
-		try {
-			int _type = VAR;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:176:5: ( 'var' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:176:7: 'var'
-			{
-			match("var"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "VAR"
-
-	// $ANTLR start "FUN"
-	public final void mFUN() throws RecognitionException {
-		try {
-			int _type = FUN;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:177:5: ( 'fun' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:177:7: 'fun'
-			{
-			match("fun"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "FUN"
-
-	// $ANTLR start "INT"
-	public final void mINT() throws RecognitionException {
-		try {
-			int _type = INT;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:178:5: ( 'int' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:178:7: 'int'
-			{
-			match("int"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "INT"
-
-	// $ANTLR start "BOOL"
-	public final void mBOOL() throws RecognitionException {
-		try {
-			int _type = BOOL;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:179:6: ( 'bool' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:179:8: 'bool'
-			{
-			match("bool"); 
-
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "BOOL"
+	// $ANTLR end "INTEGER"
 
 	// $ANTLR start "ID"
 	public final void mID() throws RecognitionException {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:181:5: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:181:7: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:309:7: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:309:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -630,7 +912,7 @@ public class FOOLLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:182:5: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:309:28: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
 			loop3:
 			while (true) {
 				int alt3=2;
@@ -641,7 +923,7 @@ public class FOOLLexer extends Lexer {
 
 				switch (alt3) {
 				case 1 :
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:
 					{
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 						input.consume();
@@ -675,10 +957,10 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = WHITESP;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:184:10: ( ( '\\t' | ' ' | '\\r' | '\\n' )+ )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:184:12: ( '\\t' | ' ' | '\\r' | '\\n' )+
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:310:9: ( ( '\\t' | ' ' | '\\r' | '\\n' )+ )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:310:11: ( '\\t' | ' ' | '\\r' | '\\n' )+
 			{
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:184:12: ( '\\t' | ' ' | '\\r' | '\\n' )+
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:310:11: ( '\\t' | ' ' | '\\r' | '\\n' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
@@ -690,7 +972,7 @@ public class FOOLLexer extends Lexer {
 
 				switch (alt4) {
 				case 1 :
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:
 					{
 					if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 						input.consume();
@@ -723,69 +1005,13 @@ public class FOOLLexer extends Lexer {
 	}
 	// $ANTLR end "WHITESP"
 
-	// $ANTLR start "COMMENT"
-	public final void mCOMMENT() throws RecognitionException {
-		try {
-			int _type = COMMENT;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:186:9: ( '/*' ( . )* '*/' )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:186:11: '/*' ( . )* '*/'
-			{
-			match("/*"); 
-
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:186:16: ( . )*
-			loop5:
-			while (true) {
-				int alt5=2;
-				int LA5_0 = input.LA(1);
-				if ( (LA5_0=='*') ) {
-					int LA5_1 = input.LA(2);
-					if ( (LA5_1=='/') ) {
-						alt5=2;
-					}
-					else if ( ((LA5_1 >= '\u0000' && LA5_1 <= '.')||(LA5_1 >= '0' && LA5_1 <= '\uFFFF')) ) {
-						alt5=1;
-					}
-
-				}
-				else if ( ((LA5_0 >= '\u0000' && LA5_0 <= ')')||(LA5_0 >= '+' && LA5_0 <= '\uFFFF')) ) {
-					alt5=1;
-				}
-
-				switch (alt5) {
-				case 1 :
-					// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:186:16: .
-					{
-					matchAny(); 
-					}
-					break;
-
-				default :
-					break loop5;
-				}
-			}
-
-			match("*/"); 
-
-			 _channel=HIDDEN; 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "COMMENT"
-
 	// $ANTLR start "ERR"
 	public final void mERR() throws RecognitionException {
 		try {
 			int _type = ERR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:188:9: ( . )
-			// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:188:11: .
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:312:9: ( . )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:312:11: .
 			{
 			matchAny(); 
 			 System.out.println("Invalid char: "+getText()); lexicalErrors++; _channel=HIDDEN; 
@@ -802,201 +1028,285 @@ public class FOOLLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:8: ( SEMIC | COLON | COMMA | EQ | ASS | PLUS | TIMES | NAT | TRUE | FALSE | LPAR | RPAR | CLPAR | CRPAR | IF | THEN | ELSE | PRINT | LET | IN | VAR | FUN | INT | BOOL | ID | WHITESP | COMMENT | ERR )
-		int alt6=28;
-		alt6 = dfa6.predict(input);
-		switch (alt6) {
+		// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:8: ( PLUS | MINUS | MULT | DIV | LPAR | RPAR | CLPAR | CRPAR | SEMIC | COLON | COMMA | DOT | OR | AND | NOT | GR | LE | EQ | ASS | TRUE | FALSE | IF | THEN | ELSE | PRINT | LET | IN | VAR | FUN | CLASS | EXTENDS | NEW | NULL | INT | BOOL | ARROW | INTEGER | ID | WHITESP | ERR )
+		int alt5=40;
+		alt5 = dfa5.predict(input);
+		switch (alt5) {
 			case 1 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:10: SEMIC
-				{
-				mSEMIC(); 
-
-				}
-				break;
-			case 2 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:16: COLON
-				{
-				mCOLON(); 
-
-				}
-				break;
-			case 3 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:22: COMMA
-				{
-				mCOMMA(); 
-
-				}
-				break;
-			case 4 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:28: EQ
-				{
-				mEQ(); 
-
-				}
-				break;
-			case 5 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:31: ASS
-				{
-				mASS(); 
-
-				}
-				break;
-			case 6 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:35: PLUS
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:10: PLUS
 				{
 				mPLUS(); 
 
 				}
 				break;
-			case 7 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:40: TIMES
+			case 2 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:15: MINUS
 				{
-				mTIMES(); 
+				mMINUS(); 
 
 				}
 				break;
-			case 8 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:46: NAT
+			case 3 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:21: MULT
 				{
-				mNAT(); 
+				mMULT(); 
 
 				}
 				break;
-			case 9 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:50: TRUE
+			case 4 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:26: DIV
 				{
-				mTRUE(); 
+				mDIV(); 
 
 				}
 				break;
-			case 10 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:55: FALSE
-				{
-				mFALSE(); 
-
-				}
-				break;
-			case 11 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:61: LPAR
+			case 5 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:30: LPAR
 				{
 				mLPAR(); 
 
 				}
 				break;
-			case 12 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:66: RPAR
+			case 6 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:35: RPAR
 				{
 				mRPAR(); 
 
 				}
 				break;
-			case 13 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:71: CLPAR
+			case 7 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:40: CLPAR
 				{
 				mCLPAR(); 
 
 				}
 				break;
-			case 14 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:77: CRPAR
+			case 8 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:46: CRPAR
 				{
 				mCRPAR(); 
 
 				}
 				break;
+			case 9 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:52: SEMIC
+				{
+				mSEMIC(); 
+
+				}
+				break;
+			case 10 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:58: COLON
+				{
+				mCOLON(); 
+
+				}
+				break;
+			case 11 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:64: COMMA
+				{
+				mCOMMA(); 
+
+				}
+				break;
+			case 12 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:70: DOT
+				{
+				mDOT(); 
+
+				}
+				break;
+			case 13 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:74: OR
+				{
+				mOR(); 
+
+				}
+				break;
+			case 14 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:77: AND
+				{
+				mAND(); 
+
+				}
+				break;
 			case 15 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:83: IF
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:81: NOT
+				{
+				mNOT(); 
+
+				}
+				break;
+			case 16 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:85: GR
+				{
+				mGR(); 
+
+				}
+				break;
+			case 17 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:88: LE
+				{
+				mLE(); 
+
+				}
+				break;
+			case 18 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:91: EQ
+				{
+				mEQ(); 
+
+				}
+				break;
+			case 19 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:94: ASS
+				{
+				mASS(); 
+
+				}
+				break;
+			case 20 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:98: TRUE
+				{
+				mTRUE(); 
+
+				}
+				break;
+			case 21 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:103: FALSE
+				{
+				mFALSE(); 
+
+				}
+				break;
+			case 22 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:109: IF
 				{
 				mIF(); 
 
 				}
 				break;
-			case 16 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:86: THEN
+			case 23 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:112: THEN
 				{
 				mTHEN(); 
 
 				}
 				break;
-			case 17 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:91: ELSE
+			case 24 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:117: ELSE
 				{
 				mELSE(); 
 
 				}
 				break;
-			case 18 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:96: PRINT
+			case 25 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:122: PRINT
 				{
 				mPRINT(); 
 
 				}
 				break;
-			case 19 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:102: LET
+			case 26 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:128: LET
 				{
 				mLET(); 
 
 				}
 				break;
-			case 20 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:106: IN
+			case 27 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:132: IN
 				{
 				mIN(); 
 
 				}
 				break;
-			case 21 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:109: VAR
+			case 28 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:135: VAR
 				{
 				mVAR(); 
 
 				}
 				break;
-			case 22 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:113: FUN
+			case 29 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:139: FUN
 				{
 				mFUN(); 
 
 				}
 				break;
-			case 23 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:117: INT
+			case 30 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:143: CLASS
+				{
+				mCLASS(); 
+
+				}
+				break;
+			case 31 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:149: EXTENDS
+				{
+				mEXTENDS(); 
+
+				}
+				break;
+			case 32 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:157: NEW
+				{
+				mNEW(); 
+
+				}
+				break;
+			case 33 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:161: NULL
+				{
+				mNULL(); 
+
+				}
+				break;
+			case 34 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:166: INT
 				{
 				mINT(); 
 
 				}
 				break;
-			case 24 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:121: BOOL
+			case 35 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:170: BOOL
 				{
 				mBOOL(); 
 
 				}
 				break;
-			case 25 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:126: ID
+			case 36 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:175: ARROW
+				{
+				mARROW(); 
+
+				}
+				break;
+			case 37 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:181: INTEGER
+				{
+				mINTEGER(); 
+
+				}
+				break;
+			case 38 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:189: ID
 				{
 				mID(); 
 
 				}
 				break;
-			case 26 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:129: WHITESP
+			case 39 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:192: WHITESP
 				{
 				mWHITESP(); 
 
 				}
 				break;
-			case 27 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:137: COMMENT
-				{
-				mCOMMENT(); 
-
-				}
-				break;
-			case 28 :
-				// C:\\Users\\Mark\\Documents\\UNI\\IngSS\\2015_2016\\eclipse\\workspace\\LPeMC.FOOL3_prof version\\FOOL.g:1:145: ERR
+			case 40 :
+				// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:1:200: ERR
 				{
 				mERR(); 
 
@@ -1007,153 +1317,196 @@ public class FOOLLexer extends Lexer {
 	}
 
 
-	protected DFA6 dfa6 = new DFA6(this);
-	static final String DFA6_eotS =
-		"\4\uffff\1\35\4\uffff\2\43\4\uffff\6\43\2\uffff\1\30\11\uffff\2\43\1\uffff"+
-		"\2\43\4\uffff\1\67\1\71\5\43\2\uffff\3\43\1\102\1\uffff\1\103\1\uffff"+
-		"\2\43\1\106\1\107\1\43\1\111\1\112\1\43\2\uffff\1\114\1\43\2\uffff\1\116"+
-		"\2\uffff\1\117\1\uffff\1\120\3\uffff";
-	static final String DFA6_eofS =
-		"\121\uffff";
-	static final String DFA6_minS =
-		"\1\0\3\uffff\1\75\4\uffff\1\150\1\141\4\uffff\1\146\1\154\1\162\1\145"+
-		"\1\141\1\157\2\uffff\1\52\11\uffff\1\165\1\145\1\uffff\1\154\1\156\4\uffff"+
-		"\2\60\1\163\1\151\1\164\1\162\1\157\2\uffff\1\145\1\156\1\163\1\60\1\uffff"+
-		"\1\60\1\uffff\1\145\1\156\2\60\1\154\2\60\1\145\2\uffff\1\60\1\164\2\uffff"+
-		"\1\60\2\uffff\1\60\1\uffff\1\60\3\uffff";
-	static final String DFA6_maxS =
-		"\1\uffff\3\uffff\1\75\4\uffff\1\162\1\165\4\uffff\1\156\1\154\1\162\1"+
-		"\145\1\141\1\157\2\uffff\1\52\11\uffff\1\165\1\145\1\uffff\1\154\1\156"+
-		"\4\uffff\2\172\1\163\1\151\1\164\1\162\1\157\2\uffff\1\145\1\156\1\163"+
-		"\1\172\1\uffff\1\172\1\uffff\1\145\1\156\2\172\1\154\2\172\1\145\2\uffff"+
-		"\1\172\1\164\2\uffff\1\172\2\uffff\1\172\1\uffff\1\172\3\uffff";
-	static final String DFA6_acceptS =
-		"\1\uffff\1\1\1\2\1\3\1\uffff\1\6\1\7\2\10\2\uffff\1\13\1\14\1\15\1\16"+
-		"\6\uffff\1\31\1\32\1\uffff\1\34\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff"+
-		"\1\31\2\uffff\1\13\1\14\1\15\1\16\7\uffff\1\32\1\33\4\uffff\1\17\1\uffff"+
-		"\1\24\10\uffff\1\26\1\27\2\uffff\1\23\1\25\1\uffff\1\11\1\20\1\uffff\1"+
-		"\21\1\uffff\1\30\1\12\1\22";
-	static final String DFA6_specialS =
-		"\1\0\120\uffff}>";
-	static final String[] DFA6_transitionS = {
-			"\11\30\2\26\2\30\1\26\22\30\1\26\7\30\1\13\1\14\1\6\1\5\1\3\2\30\1\27"+
-			"\1\10\11\7\1\2\1\1\1\30\1\4\3\30\32\25\6\30\1\25\1\24\2\25\1\20\1\12"+
-			"\2\25\1\17\2\25\1\22\3\25\1\21\3\25\1\11\1\25\1\23\4\25\1\15\1\30\1\16"+
-			"\uff82\30",
+	protected DFA5 dfa5 = new DFA5(this);
+	static final String DFA5_eotS =
+		"\2\uffff\1\43\12\uffff\2\40\1\63\2\40\1\67\11\63\24\uffff\3\63\5\uffff"+
+		"\4\63\1\116\1\120\7\63\2\uffff\1\130\1\131\4\63\1\136\1\uffff\1\137\1"+
+		"\uffff\3\63\1\143\1\144\2\63\2\uffff\1\147\1\150\1\151\1\63\2\uffff\1"+
+		"\153\2\63\2\uffff\1\63\1\157\3\uffff\1\160\1\uffff\1\63\1\162\1\163\2"+
+		"\uffff\1\63\2\uffff\1\165\1\uffff";
+	static final String DFA5_eofS =
+		"\166\uffff";
+	static final String DFA5_minS =
+		"\1\0\1\uffff\1\76\12\uffff\1\174\1\46\1\145\3\75\1\150\1\141\1\146\1\154"+
+		"\1\162\1\145\1\141\1\154\1\157\24\uffff\1\164\1\167\1\154\5\uffff\1\165"+
+		"\1\145\1\154\1\156\2\60\1\163\1\164\1\151\1\164\1\162\1\141\1\157\2\uffff"+
+		"\2\60\1\154\1\145\1\156\1\163\1\60\1\uffff\1\60\1\uffff\2\145\1\156\2"+
+		"\60\1\163\1\154\2\uffff\3\60\1\145\2\uffff\1\60\1\156\1\164\2\uffff\1"+
+		"\163\1\60\3\uffff\1\60\1\uffff\1\144\2\60\2\uffff\1\163\2\uffff\1\60\1"+
+		"\uffff";
+	static final String DFA5_maxS =
+		"\1\uffff\1\uffff\1\76\12\uffff\1\174\1\46\1\165\3\75\1\162\1\165\1\156"+
+		"\1\170\1\162\1\145\1\141\1\154\1\157\24\uffff\1\164\1\167\1\154\5\uffff"+
+		"\1\165\1\145\1\154\1\156\2\172\1\163\1\164\1\151\1\164\1\162\1\141\1\157"+
+		"\2\uffff\2\172\1\154\1\145\1\156\1\163\1\172\1\uffff\1\172\1\uffff\2\145"+
+		"\1\156\2\172\1\163\1\154\2\uffff\3\172\1\145\2\uffff\1\172\1\156\1\164"+
+		"\2\uffff\1\163\1\172\3\uffff\1\172\1\uffff\1\144\2\172\2\uffff\1\163\2"+
+		"\uffff\1\172\1\uffff";
+	static final String DFA5_acceptS =
+		"\1\uffff\1\1\1\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\17\uffff"+
+		"\2\45\1\46\1\47\1\50\1\1\1\44\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1"+
+		"\13\1\14\1\15\1\16\3\uffff\1\46\1\20\1\21\1\22\1\23\15\uffff\1\45\1\47"+
+		"\7\uffff\1\26\1\uffff\1\33\7\uffff\1\17\1\40\4\uffff\1\35\1\42\3\uffff"+
+		"\1\32\1\34\2\uffff\1\41\1\24\1\27\1\uffff\1\30\3\uffff\1\43\1\25\1\uffff"+
+		"\1\31\1\36\1\uffff\1\37";
+	static final String DFA5_specialS =
+		"\1\0\165\uffff}>";
+	static final String[] DFA5_transitionS = {
+			"\11\40\2\37\2\40\1\37\22\40\1\37\5\40\1\16\1\40\1\5\1\6\1\3\1\1\1\13"+
+			"\1\2\1\14\1\4\1\35\11\34\1\12\1\11\1\21\1\22\1\20\2\40\32\36\6\40\1\36"+
+			"\1\33\1\32\1\36\1\26\1\24\2\36\1\25\2\36\1\30\1\36\1\17\1\36\1\27\3\36"+
+			"\1\23\1\36\1\31\4\36\1\7\1\15\1\10\uff82\40",
+			"",
+			"\1\42",
 			"",
 			"",
 			"",
-			"\1\34",
 			"",
 			"",
 			"",
 			"",
-			"\1\42\11\uffff\1\41",
-			"\1\44\23\uffff\1\45",
 			"",
 			"",
 			"",
-			"",
-			"\1\52\7\uffff\1\53",
-			"\1\54",
-			"\1\55",
 			"\1\56",
 			"\1\57",
-			"\1\60",
-			"",
-			"",
-			"\1\62",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"",
-			"\1\63",
+			"\1\61\11\uffff\1\60\5\uffff\1\62",
 			"\1\64",
-			"",
 			"\1\65",
 			"\1\66",
-			"",
-			"",
-			"",
-			"",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
-			"\12\43\7\uffff\32\43\6\uffff\23\43\1\70\6\43",
-			"\1\72",
-			"\1\73",
-			"\1\74",
-			"\1\75",
-			"\1\76",
-			"",
-			"",
-			"\1\77",
+			"\1\71\11\uffff\1\70",
+			"\1\72\23\uffff\1\73",
+			"\1\74\7\uffff\1\75",
+			"\1\76\13\uffff\1\77",
 			"\1\100",
 			"\1\101",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
-			"",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
-			"",
+			"\1\102",
+			"\1\103",
 			"\1\104",
-			"\1\105",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"\1\107",
 			"\1\110",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
+			"\1\111",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"\1\112",
 			"\1\113",
-			"",
-			"",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
+			"\1\114",
 			"\1\115",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\12\63\7\uffff\32\63\6\uffff\23\63\1\117\6\63",
+			"\1\121",
+			"\1\122",
+			"\1\123",
+			"\1\124",
+			"\1\125",
+			"\1\126",
+			"\1\127",
 			"",
 			"",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\1\132",
+			"\1\133",
+			"\1\134",
+			"\1\135",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"",
+			"\1\140",
+			"\1\141",
+			"\1\142",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\1\145",
+			"\1\146",
 			"",
 			"",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\1\152",
 			"",
-			"\12\43\7\uffff\32\43\6\uffff\32\43",
+			"",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\1\154",
+			"\1\155",
 			"",
 			"",
+			"\1\156",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"",
+			"",
+			"",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"",
+			"\1\161",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
+			"",
+			"",
+			"\1\164",
+			"",
+			"",
+			"\12\63\7\uffff\32\63\6\uffff\32\63",
 			""
 	};
 
-	static final short[] DFA6_eot = DFA.unpackEncodedString(DFA6_eotS);
-	static final short[] DFA6_eof = DFA.unpackEncodedString(DFA6_eofS);
-	static final char[] DFA6_min = DFA.unpackEncodedStringToUnsignedChars(DFA6_minS);
-	static final char[] DFA6_max = DFA.unpackEncodedStringToUnsignedChars(DFA6_maxS);
-	static final short[] DFA6_accept = DFA.unpackEncodedString(DFA6_acceptS);
-	static final short[] DFA6_special = DFA.unpackEncodedString(DFA6_specialS);
-	static final short[][] DFA6_transition;
+	static final short[] DFA5_eot = DFA.unpackEncodedString(DFA5_eotS);
+	static final short[] DFA5_eof = DFA.unpackEncodedString(DFA5_eofS);
+	static final char[] DFA5_min = DFA.unpackEncodedStringToUnsignedChars(DFA5_minS);
+	static final char[] DFA5_max = DFA.unpackEncodedStringToUnsignedChars(DFA5_maxS);
+	static final short[] DFA5_accept = DFA.unpackEncodedString(DFA5_acceptS);
+	static final short[] DFA5_special = DFA.unpackEncodedString(DFA5_specialS);
+	static final short[][] DFA5_transition;
 
 	static {
-		int numStates = DFA6_transitionS.length;
-		DFA6_transition = new short[numStates][];
+		int numStates = DFA5_transitionS.length;
+		DFA5_transition = new short[numStates][];
 		for (int i=0; i<numStates; i++) {
-			DFA6_transition[i] = DFA.unpackEncodedString(DFA6_transitionS[i]);
+			DFA5_transition[i] = DFA.unpackEncodedString(DFA5_transitionS[i]);
 		}
 	}
 
-	protected class DFA6 extends DFA {
+	protected class DFA5 extends DFA {
 
-		public DFA6(BaseRecognizer recognizer) {
+		public DFA5(BaseRecognizer recognizer) {
 			this.recognizer = recognizer;
-			this.decisionNumber = 6;
-			this.eot = DFA6_eot;
-			this.eof = DFA6_eof;
-			this.min = DFA6_min;
-			this.max = DFA6_max;
-			this.accept = DFA6_accept;
-			this.special = DFA6_special;
-			this.transition = DFA6_transition;
+			this.decisionNumber = 5;
+			this.eot = DFA5_eot;
+			this.eof = DFA5_eof;
+			this.min = DFA5_min;
+			this.max = DFA5_max;
+			this.accept = DFA5_accept;
+			this.special = DFA5_special;
+			this.transition = DFA5_transition;
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( SEMIC | COLON | COMMA | EQ | ASS | PLUS | TIMES | NAT | TRUE | FALSE | LPAR | RPAR | CLPAR | CRPAR | IF | THEN | ELSE | PRINT | LET | IN | VAR | FUN | INT | BOOL | ID | WHITESP | COMMENT | ERR );";
+			return "1:1: Tokens : ( PLUS | MINUS | MULT | DIV | LPAR | RPAR | CLPAR | CRPAR | SEMIC | COLON | COMMA | DOT | OR | AND | NOT | GR | LE | EQ | ASS | TRUE | FALSE | IF | THEN | ELSE | PRINT | LET | IN | VAR | FUN | CLASS | EXTENDS | NEW | NULL | INT | BOOL | ARROW | INTEGER | ID | WHITESP | ERR );";
 		}
 		@Override
 		public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
@@ -1161,37 +1514,45 @@ public class FOOLLexer extends Lexer {
 			int _s = s;
 			switch ( s ) {
 					case 0 : 
-						int LA6_0 = input.LA(1);
+						int LA5_0 = input.LA(1);
 						s = -1;
-						if ( (LA6_0==';') ) {s = 1;}
-						else if ( (LA6_0==':') ) {s = 2;}
-						else if ( (LA6_0==',') ) {s = 3;}
-						else if ( (LA6_0=='=') ) {s = 4;}
-						else if ( (LA6_0=='+') ) {s = 5;}
-						else if ( (LA6_0=='*') ) {s = 6;}
-						else if ( ((LA6_0 >= '1' && LA6_0 <= '9')) ) {s = 7;}
-						else if ( (LA6_0=='0') ) {s = 8;}
-						else if ( (LA6_0=='t') ) {s = 9;}
-						else if ( (LA6_0=='f') ) {s = 10;}
-						else if ( (LA6_0=='(') ) {s = 11;}
-						else if ( (LA6_0==')') ) {s = 12;}
-						else if ( (LA6_0=='{') ) {s = 13;}
-						else if ( (LA6_0=='}') ) {s = 14;}
-						else if ( (LA6_0=='i') ) {s = 15;}
-						else if ( (LA6_0=='e') ) {s = 16;}
-						else if ( (LA6_0=='p') ) {s = 17;}
-						else if ( (LA6_0=='l') ) {s = 18;}
-						else if ( (LA6_0=='v') ) {s = 19;}
-						else if ( (LA6_0=='b') ) {s = 20;}
-						else if ( ((LA6_0 >= 'A' && LA6_0 <= 'Z')||LA6_0=='a'||(LA6_0 >= 'c' && LA6_0 <= 'd')||(LA6_0 >= 'g' && LA6_0 <= 'h')||(LA6_0 >= 'j' && LA6_0 <= 'k')||(LA6_0 >= 'm' && LA6_0 <= 'o')||(LA6_0 >= 'q' && LA6_0 <= 's')||LA6_0=='u'||(LA6_0 >= 'w' && LA6_0 <= 'z')) ) {s = 21;}
-						else if ( ((LA6_0 >= '\t' && LA6_0 <= '\n')||LA6_0=='\r'||LA6_0==' ') ) {s = 22;}
-						else if ( (LA6_0=='/') ) {s = 23;}
-						else if ( ((LA6_0 >= '\u0000' && LA6_0 <= '\b')||(LA6_0 >= '\u000B' && LA6_0 <= '\f')||(LA6_0 >= '\u000E' && LA6_0 <= '\u001F')||(LA6_0 >= '!' && LA6_0 <= '\'')||(LA6_0 >= '-' && LA6_0 <= '.')||LA6_0=='<'||(LA6_0 >= '>' && LA6_0 <= '@')||(LA6_0 >= '[' && LA6_0 <= '`')||LA6_0=='|'||(LA6_0 >= '~' && LA6_0 <= '\uFFFF')) ) {s = 24;}
+						if ( (LA5_0=='+') ) {s = 1;}
+						else if ( (LA5_0=='-') ) {s = 2;}
+						else if ( (LA5_0=='*') ) {s = 3;}
+						else if ( (LA5_0=='/') ) {s = 4;}
+						else if ( (LA5_0=='(') ) {s = 5;}
+						else if ( (LA5_0==')') ) {s = 6;}
+						else if ( (LA5_0=='{') ) {s = 7;}
+						else if ( (LA5_0=='}') ) {s = 8;}
+						else if ( (LA5_0==';') ) {s = 9;}
+						else if ( (LA5_0==':') ) {s = 10;}
+						else if ( (LA5_0==',') ) {s = 11;}
+						else if ( (LA5_0=='.') ) {s = 12;}
+						else if ( (LA5_0=='|') ) {s = 13;}
+						else if ( (LA5_0=='&') ) {s = 14;}
+						else if ( (LA5_0=='n') ) {s = 15;}
+						else if ( (LA5_0=='>') ) {s = 16;}
+						else if ( (LA5_0=='<') ) {s = 17;}
+						else if ( (LA5_0=='=') ) {s = 18;}
+						else if ( (LA5_0=='t') ) {s = 19;}
+						else if ( (LA5_0=='f') ) {s = 20;}
+						else if ( (LA5_0=='i') ) {s = 21;}
+						else if ( (LA5_0=='e') ) {s = 22;}
+						else if ( (LA5_0=='p') ) {s = 23;}
+						else if ( (LA5_0=='l') ) {s = 24;}
+						else if ( (LA5_0=='v') ) {s = 25;}
+						else if ( (LA5_0=='c') ) {s = 26;}
+						else if ( (LA5_0=='b') ) {s = 27;}
+						else if ( ((LA5_0 >= '1' && LA5_0 <= '9')) ) {s = 28;}
+						else if ( (LA5_0=='0') ) {s = 29;}
+						else if ( ((LA5_0 >= 'A' && LA5_0 <= 'Z')||LA5_0=='a'||LA5_0=='d'||(LA5_0 >= 'g' && LA5_0 <= 'h')||(LA5_0 >= 'j' && LA5_0 <= 'k')||LA5_0=='m'||LA5_0=='o'||(LA5_0 >= 'q' && LA5_0 <= 's')||LA5_0=='u'||(LA5_0 >= 'w' && LA5_0 <= 'z')) ) {s = 30;}
+						else if ( ((LA5_0 >= '\t' && LA5_0 <= '\n')||LA5_0=='\r'||LA5_0==' ') ) {s = 31;}
+						else if ( ((LA5_0 >= '\u0000' && LA5_0 <= '\b')||(LA5_0 >= '\u000B' && LA5_0 <= '\f')||(LA5_0 >= '\u000E' && LA5_0 <= '\u001F')||(LA5_0 >= '!' && LA5_0 <= '%')||LA5_0=='\''||(LA5_0 >= '?' && LA5_0 <= '@')||(LA5_0 >= '[' && LA5_0 <= '`')||(LA5_0 >= '~' && LA5_0 <= '\uFFFF')) ) {s = 32;}
 						if ( s>=0 ) return s;
 						break;
 			}
 			NoViableAltException nvae =
-				new NoViableAltException(getDescription(), 6, _s, input);
+				new NoViableAltException(getDescription(), 5, _s, input);
 			error(nvae);
 			throw nvae;
 		}
