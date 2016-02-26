@@ -17,11 +17,12 @@ import java.util.HashMap;
  * PARSER RULES
  *------------------------------------------------------------------*/
 /*
-non dovremmo aggiungere nell'assembly anche le seguenti istruzioni?
+non dovremmo aggiungere qui anche le seguenti istruzioni?
 OR
 AND
 EQUAL OR GREATER
 EQUAL OR MINOR
+NOT
 */
 assembly: 
     ( PUSH e=NUMBER   {code[i++] = PUSH; 
