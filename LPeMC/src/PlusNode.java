@@ -14,8 +14,7 @@ public class PlusNode implements Node {
   }
   
   public Node typeCheck() {
-    if (! ( FOOLlib.isSubtype(left.typeCheck(),new IntTypeNode()) &&
-            FOOLlib.isSubtype(right.typeCheck(),new IntTypeNode()) ) ) {
+    if (! ( FOOLlib.isSubtype(left.typeCheck(),new IntTypeNode())  &&  FOOLlib.isSubtype(right.typeCheck(),new IntTypeNode()) ) ) {
       System.out.println("Non integers in sum");
       System.exit(0);
     }

@@ -1,3 +1,15 @@
 - AND
 - OR
 - negli if() ora da il risultato solo se c'è un booleano come risultato dell'espressione al suo interno. Quindi if(2-1) non va avanti.
+
+- il seguente codice da errore in corrispondenza del primo ";", si aspetta una "}". 
+L'ultimo ";" va bene, ma i primi due no. Toglierli semplicemente crea un altro errore: mismatched input 'print' expecting CRPAR
+Per ora funziona solo se si usa una sola delle due istruzioni e senza ";" 
+if(2&&5)
+then{
+	print(2);
+	print(1);
+}else{
+	print(0)
+};
+

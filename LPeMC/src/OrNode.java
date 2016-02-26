@@ -9,19 +9,19 @@ public class OrNode implements Node {
 	    right=r;
 	  }
 	  public String toPrint(String s){
-	    return s+ "OrNode["+left.toPrint(s)+","
-	                      +right.toPrint(s)+"]";
+	    return s+ "OrNode"+left.toPrint(s)+","+right.toPrint(s);
 	  }
 	  public Node typeCheck(){
-	    if (!(FOOLlib.isSubtype(left,new BoolTypeNode())) ||  
-	        (FOOLlib.isSubtype(right,new BoolTypeNode())))
+		// Type checking. Se ci sono due sottotipi di BOOL va avanti, altrimenti si ferma.
+	    if (! (FOOLlib.isSubtype(left,new BoolTypeNode()))  &&  (FOOLlib.isSubtype(right,new BoolTypeNode())) ){
+	    	System.out.println("Non BOOL in OR operation");
 	    	System.exit(0);
+	    }
 	    
 	    return new BoolTypeNode();
-	     
-	   
 	  }
+	  
 	  public String codeGeneration(){
-	    return left.codeGeneration()+right.codeGeneration()+"or\n"; 
-	  }  
+		  return left.codeGeneration()+right.codeGeneration()+"add\n"; 
+	  }
 }

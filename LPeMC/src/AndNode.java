@@ -10,12 +10,14 @@ public class AndNode implements Node {
 	
 	@Override
 	public String toPrint(String s) {
-		return s+ "OrNode["+left.toPrint(s)+","+right.toPrint(s)+"]";
+		return s+ "AndNode["+left.toPrint(s)+","+right.toPrint(s)+"]";
 	}
 
 	@Override
 	public Node typeCheck() {
-		if (!(FOOLlib.isSubtype(left,new BoolTypeNode()))  ||  (FOOLlib.isSubtype(right,new BoolTypeNode()))){
+		// Type checking. Se ci sono due sottotipi di BOOL va avanti, altrimenti si ferma.
+		if (! (FOOLlib.isSubtype(left,new BoolTypeNode()))  &&  (FOOLlib.isSubtype(right,new BoolTypeNode())) ){
+			System.out.println("Non BOOL in AND operation");
 		    System.exit(0);
 		}
 		
@@ -32,7 +34,7 @@ public class AndNode implements Node {
 		//per l'OR è lo stesso ragionamento ma con add
 		
 		// Scusa se insisto. Ho capito la tua spiegazione, ma cosa dice al compilatore quando considerare il numero per intero e quando bit a bit?
-		return left.codeGeneration()+right.codeGeneration()+"and\n";
+		return left.codeGeneration()+right.codeGeneration()+"mult\n";
 	}
 
 }

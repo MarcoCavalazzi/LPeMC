@@ -1,5 +1,7 @@
-let 
-  var x:int = 1;
-  var b:bool = true;
-in
-  print (if (b) then { x+1 } else { x+2 });
+if(2&&5)
+then{
+	print(2)
+	print(1)
+}else{
+	print(0)
+};
