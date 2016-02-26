@@ -119,7 +119,7 @@ declist	returns [ArrayList<Node> astlist]
      )+
 	;
 
-type	returns [Node ast]
+type returns [Node ast]
   :       b=basic | ARROW {$ast=new ArrowTypeNode();}
   ;
 

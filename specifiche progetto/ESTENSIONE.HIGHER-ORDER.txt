@@ -1,7 +1,7 @@
 ELEMENTI SINTATTICI NUOVI
 
-tipi in dichiarazioni (non-terminale "type") ora includono:
-- tipi di base (non-terminle "basic"): bool e int 
+Tipi in dichiarazioni (non-terminale "type") ora includono:
+- tipi di base (non-terminale "basic"): bool e int 
 - tipi funzionali (non-terminale "arrow"): 
     un "basic" come tipo di ritorno e 
     tipi (possibilmente funzionali) "type" per i parametri
