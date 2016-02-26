@@ -22,7 +22,7 @@ public class OrNode implements Node {
 	  }
 	  
 	  public String codeGeneration(){
-	    String l1=FOOLlib.freshLabel(); 
+	    String l1=FOOLlib.freshLabel();
 	    String l2=FOOLlib.freshLabel();
 	    return left.codeGeneration() + "push 1\n"
 		     + "beq " + l1 + "\n" + right.codeGeneration()

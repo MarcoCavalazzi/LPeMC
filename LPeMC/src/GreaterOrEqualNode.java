@@ -28,19 +28,20 @@ public class GreaterOrEqualNode implements Node {
 	    }
 	    return new BoolTypeNode();
 	}
-
+	
+	// E' uguale al LessOrEqualNode. Cambia solo l'ordine degli elementi nello stack.
 	@Override
 	public String codeGeneration() { //bgr for >=, l'ho creato da 0 dal file SVM.g, ho aggiunto in ExecuteVM la corrispondente definizione, mentre in SVMParser.java ho aggiunto il necessario riferimento come public static final int
 		String l1=FOOLlib.freshLabel();
 		String l2=FOOLlib.freshLabel();
-		return left.codeGeneration()+
-			   right.codeGeneration()+
-			   "bgr "+l1+"\n"+
-			   "push 0\n"+
-			   "b "+l2+"\n"+
-			   l1+":\n"+
-			   "push 1\n"+
-			   l2+":\n";
+		return    right.codeGeneration()+
+			      left.codeGeneration()+
+			      "bless "+l1+"\n"+
+			      "push 0\n"+
+			      "b "+l2+"\n"+
+			      l1+":\n"+
+			      "push 1\n"+
+			      l2+":\n";
 	}
 	
 

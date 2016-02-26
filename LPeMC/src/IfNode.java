@@ -17,7 +17,8 @@ public class IfNode implements Node {
   }
   
   public Node typeCheck() {
-    if (!(FOOLlib.isSubtype(cond.typeCheck(),new BoolTypeNode()))) {
+    if (!(FOOLlib.isSubtype(new BoolTypeNode(), cond.typeCheck()))) {	// metodo che controlerà che il primo elemento sie di un tipo che è uguale al secondo oppure è un suo sottotipo. 
+    	// Quindi accetterà: BOOL E BOOL, INT e INT, BOOL e INT.
       System.out.println("non boolean condition in if");
       System.exit(0);
     }
