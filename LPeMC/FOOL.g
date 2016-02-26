@@ -120,7 +120,7 @@ declist	returns [ArrayList<Node> astlist]
 	;
 
 type returns [Node ast]
-  :       b=basic | ARROW {$ast=new ArrowTypeNode();}
+  :       b=basic {$ast = $b.ast;} | ARROW {$ast=new ArrowTypeNode();}
   ;
 
 basic returns [Node ast]
@@ -140,8 +140,8 @@ exp	returns [Node ast]
  	: f=term {$ast= $f.ast;}
  	    (
 	 	    PLUS l=term  {$ast = new PlusNode ($ast,$l.ast);}
-	 	    MINUS l=term {$ast = new MinusNode($ast,$l.ast);}
-	 	    OR l=term    {$ast = new OrNode   ($ast,$l.ast);}
+	 	    | MINUS l=term {$ast = new MinusNode($ast,$l.ast);}
+	 	    | OR l=term    {$ast = new OrNode   ($ast,$l.ast);}
  	    )*
  	;
  	
@@ -149,8 +149,8 @@ term returns [Node ast]
 	: f=factor {$ast= $f.ast;}
 	    (
 		    MULT l=factor {$ast= new MultNode ($ast,$l.ast);}
-		    DIV  l=factor {$ast= new DivNode ($ast,$l.ast);}
-		    AND  l=factor {$ast= new AndNode ($ast,$l.ast);}
+		    | DIV  l=factor {$ast= new DivNode ($ast,$l.ast);}
+		    | AND  l=factor {$ast= new AndNode ($ast,$l.ast);}
 	    )*
 	;
 
