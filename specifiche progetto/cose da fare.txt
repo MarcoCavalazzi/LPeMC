@@ -13,4 +13,4 @@ then{
 Anche nel quicksort.fool non mette più di una istruzione per ogni then{} e else{}
 
 
-- non si sa perché funzioni il typechecking del NotNode, ma funziona. 
+- non si sa perché funzioni il typechecking del NotNode, ma funziona.

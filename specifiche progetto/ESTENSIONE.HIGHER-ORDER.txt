@@ -8,7 +8,7 @@ Tipi in dichiarazioni (non-terminale "type") ora includono:
 
 LAYOUTS 
 
-- layout AR (funzioni/amb globle)
+- layout AR (funzioni/amb globale)  (AR = Activation Record)
 invariato ma ora qualsiasi ID con tipo funzionale (vero ID di funzione oppure
 ID di variabile o parametro di tipo funzione) occupa un offset doppio:
 [a offset messo in symbol table  ] FP ad AR dichiarazione funzione
