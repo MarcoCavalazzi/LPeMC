@@ -10,7 +10,7 @@ public class AndNode implements Node {
 	
 	@Override
 	public String toPrint(String s) {
-		return s+ "AndNode["+left.toPrint(s)+","+right.toPrint(s)+"]";
+		return s+ "AndNode\n"+left.toPrint(s)+" "+right.toPrint(s)+" ";
 	}
 
 	@Override

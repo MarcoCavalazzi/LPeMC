@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArrowTypeNode implements Node {
 
@@ -29,12 +30,45 @@ public class ArrowTypeNode implements Node {
     return parlist;
   }
 
-  //non utilizzato
+  //vedi callnode
   public Node typeCheck () {
-    return null;
+	  
+	  ArrowTypeNode t = (ArrowTypeNode) ret;
+	  ArrayList<Node> p = t.getParList();
+	  //Giuseppe:non credo sia corretto questo punto ma non saprei come farlo.
+	  if (this.parlist.size() != p.size()) {
+		    System.out
+			    .println("ArrowTypes Typecheck Error: Wrong Number of Parameters!");
+		    System.exit(0);
+		} else {
+		    for (int i = 0; i < parlist.size(); i++) {
+			if (!FOOLlib.isSubtype(parlist.get(i), p.get(i))) {
+			    System.out
+				    .println("ArrowTypes Typecheck Error: Wrong Type of Parameters!");
+			    System.exit(0);
+			}
+		    }
+		}
+		// Restituisco il valore del parametro di ritorno
+		return t.getRet();
+	    
   }
   
   public String codeGeneration() {
 		return "";
   }
+
+public Object getParTypes() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+public Node getRetType() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+
+
+
 }  

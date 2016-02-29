@@ -9,7 +9,7 @@ public class OrNode implements Node {
 	    right=r;
 	  }
 	  public String toPrint(String s){
-	    return s+ "OrNode"+left.toPrint(s)+","+right.toPrint(s);
+	    return s+ "OrNode\n"+left.toPrint(s)+","+right.toPrint(s);
 	  }
 	  public Node typeCheck(){
 		// Type checking. Se ci sono due sottotipi di BOOL va avanti, altrimenti si ferma.

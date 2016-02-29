@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class FunNode implements Node {
+public class FunNode implements Node, DecNode {
 
   private String id;
   private Node type; 
@@ -91,5 +91,11 @@ public class FunNode implements Node {
     }  
     return null;
   }
+
+@Override
+public Node getSymType() {
+	
+	return type;
+}
   
 }  

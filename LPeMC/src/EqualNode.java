@@ -16,7 +16,9 @@ public class EqualNode implements Node {
   public Node typeCheck() {	  
 	Node l = left.typeCheck();
     Node r = right.typeCheck();
-    if (! ( FOOLlib.isSubtype(l,r) || FOOLlib.isSubtype(r,l) ) ) {
+    if (! ( FOOLlib.isSubtype(l,r) || FOOLlib.isSubtype(r,l) )
+    	||( FOOLlib.isSubtype(l, new ArrowTypeNode()) //da controllare
+    	||( FOOLlib.isSubtype(r, new ArrowTypeNode())) ) ) {
       System.out.println("Incompatible types in equal");
       System.exit(0);
     }

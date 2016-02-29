@@ -10,10 +10,16 @@ public class FOOLlib {
   
   //valuta se il tipo "a" e' <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
   public static boolean isSubtype (Node a, Node b) {
-    return a.getClass().equals(b.getClass()) ||
-    	   ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode) ); //
+	  if((a instanceof ArrowTypeNode) && (b instanceof ArrowTypeNode))
+	  {
+		  return ( ((ArrowTypeNode) a).getParTypes().equals(((ArrowTypeNode) b).getRetType()));
+	  }
+	  
+    return a.getClass().equals(b.getClass())
+    		|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)  		  		   
+    	       ); //
   } 
-  
+  //non ho idea se vada bene
   public static String freshLabel() {
 	return "label"+(labCount++);	  
   }
