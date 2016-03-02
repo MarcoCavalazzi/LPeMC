@@ -3,7 +3,7 @@ public class STentry {
   private int nl;		// nesting level
   private Node type;
   private int offset;	// per poter leggere il valore scelto a partire dal fp.
- 
+  private Node dec;
   public STentry (int n, int o)
   {nl=n;
    offset=o;}
@@ -12,6 +12,13 @@ public class STentry {
   {nl=n;
    type=t;
    offset=o;}
+  
+  public STentry (Node d, int n, Node t,int os)
+  {dec=d;
+   nl=n;
+   type=t;
+   offset=os;}
+  
    
   public void addType (Node t)
   {type=t;}

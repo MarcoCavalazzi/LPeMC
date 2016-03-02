@@ -13,9 +13,16 @@ public class FunNode implements Node, DecNode {
     type=t;
   }
   
+  
   public void addDec (ArrayList<Node> d) {
 	  declist=d;
   }  
+  
+  public void addDecBody(ArrayList<Node> d, Node b)
+  {
+	  declist = d;
+	  body = b;
+  }
   
   public void addBody(Node b){
 	  body=b;
@@ -59,6 +66,33 @@ public class FunNode implements Node, DecNode {
 	for(Node dec:parlist){
 		popPar += "pop\n";
 	}
+	String popArrowTypeNode = "";
+	if(getSymType() instanceof ArrowTypeNode)
+	{
+		popArrowTypeNode += "pop\n" + "pop\n";
+	}
+	
+	for(int i=0; i < parlist.size();i++)
+	{
+		if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
+		{
+			popArrowTypeNode += "pop\n" + "pop\n";
+			break;
+		}
+	
+	}
+	if(popArrowTypeNode == "")
+	{
+		for(int i=0; i < declist.size();i++)
+		{
+			if(((DecNode)declist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+			{
+				popArrowTypeNode += "pop\n" + "pop\n";
+				break;
+			}
+		}
+	}
+	
 	
 	FOOLlib.putCode(
 	    funl+":\n"+
@@ -66,15 +100,16 @@ public class FunNode implements Node, DecNode {
 	    "lra\n"+
 		decCode+	// codice delle dichiarazioni
 		body.codeGeneration()+
-		"srv\n"+
-		popDec+
-		"sra\n"+
+		"srv\n"+	//salvo il risultato in un registro 
+		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
+		//popArrowTypeNode+
+		"sra\n"+    //salvo il return address
 		"pop\n"+	// pop dell'AL
-		popPar+
+		popPar+     //pop dei parametri che ho in parlist
 		"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 		"lrv\n"+
 		"lra\n"+
-		"js\n"
+		"js\n"      //js salta all'indirizzo che è in cima allo stack
     );
 	
 	return "push "+funl+"\n";

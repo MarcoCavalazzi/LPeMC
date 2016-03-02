@@ -10,7 +10,8 @@ public class ArrowTypeNode implements Node {
     parlist=p;
     ret=r;
   }
-       
+  
+  
   public ArrowTypeNode()
   {
 	  //costruttore vuoto temporaneo
@@ -26,13 +27,17 @@ public class ArrowTypeNode implements Node {
     return ret;
   }
   
+  public ArrayList<Node> getPar () { //
+	    return parlist;
+	  }
+  
   public ArrayList<Node> getParList () { //
     return parlist;
   }
 
   //vedi callnode
   public Node typeCheck () {
-	  
+	  /*
 	  ArrowTypeNode t = (ArrowTypeNode) ret;
 	  ArrayList<Node> p = t.getParList();
 	  //Giuseppe:non credo sia corretto questo punto ma non saprei come farlo.
@@ -51,22 +56,16 @@ public class ArrowTypeNode implements Node {
 		}
 		// Restituisco il valore del parametro di ritorno
 		return t.getRet();
-	    
+	    */
+	  
+	  return new ArrowTypeNode(parlist,ret);
   }
   
   public String codeGeneration() {
 		return "";
   }
 
-public Object getParTypes() {
-	// TODO Auto-generated method stub
-	return null;
-}
 
-public Node getRetType() {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 
 

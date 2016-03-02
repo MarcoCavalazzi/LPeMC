@@ -38,7 +38,10 @@ public class CallNode implements Node {
      } 
   // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
      for (int i=0; i<parlist.size(); i++) 
-       if ( !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), p.get(i)) ) ) {
+       if (
+    		  // !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), p.get(i)) ) 
+    		   !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
+    		   ) {
          System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
          System.exit(0);
        } 
@@ -66,7 +69,7 @@ public class CallNode implements Node {
 	  			"lfp\n"+
 	  			getAR+
 	  			"add\n"+
-	  			"lw\n"+		// reupera indirizzo
+	  			"lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
 	  			"js\n";		// salto
   }
     

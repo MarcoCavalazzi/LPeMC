@@ -1,19 +1,11 @@
-let 
-  var x:int = 2;
-  var b:bool = true;
-in
- 
-   if( (5 - x / 2) == 4)
-   	then{
-   		print (x && b);
-   		print (x || b);
-   		print (x - 1);
-   		print (not(x)); 
-   		}
-   		
-   		
+let
+ 	fun g:int(i:int) i+1;
+	fun f:int (n:int, z:(int)->int) z(n)+2;
+ in
+ 	print (f(1,g));
 
-
+	
+in print(test2(10,test,6));
 
 /* SERBATOIO ESEMPI
 let 
