@@ -75,7 +75,7 @@ public class FunNode implements Node, DecNode {
 		popArrowTypeNode = "pop\n" + "pop\n";
 	}
 	// Marco: aggiunto controllo if per evitare di inserire più "pop" del dovuto e convertiti tutti gli assegnamenti di popArrowTypeNode da "+=" a "=".
-	if(popArrowTypeNode == "")
+	if(popArrowTypeNode == "")	// If popArrowTypeNode is still ""...
 	{
 		for(int i=0; i < parlist.size();i++)
 		{
@@ -87,7 +87,7 @@ public class FunNode implements Node, DecNode {
 		
 		}
 	}
-	if(popArrowTypeNode == "")
+	if(popArrowTypeNode == "")	// If popArrowTypeNode is still ""...
 	{
 		for(int i=0; i < declist.size();i++)
 		{
