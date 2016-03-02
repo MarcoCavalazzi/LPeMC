@@ -57,6 +57,8 @@ public class FunNode implements Node, DecNode {
 		decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
 	}
 	
+	// Marco: Scusate l'ignoranza, ma vorrei capire meglio il funzionamento di FunNode:
+	// Qui di seguito a/ggiungiamo già dei "pop", dobbiamo forse togliere questi due cicli su "declist" e "parlist" visto che facciamo già il controllo con i 2 "pop" extra (vedi più sotto)?
 	String popDec = "";
 	for(Node dec:declist){
 		popDec += "pop\n";
@@ -66,20 +68,24 @@ public class FunNode implements Node, DecNode {
 	for(Node dec:parlist){
 		popPar += "pop\n";
 	}
+	
 	String popArrowTypeNode = "";
 	if(getSymType() instanceof ArrowTypeNode)
 	{
-		popArrowTypeNode += "pop\n" + "pop\n";
+		popArrowTypeNode = "pop\n" + "pop\n";
 	}
-	
-	for(int i=0; i < parlist.size();i++)
+	// Marco: aggiunto controllo if per evitare di inserire più "pop" del dovuto e convertiti tutti gli assegnamenti di popArrowTypeNode da "+=" a "=".
+	if(popArrowTypeNode == "")
 	{
-		if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
+		for(int i=0; i < parlist.size();i++)
 		{
-			popArrowTypeNode += "pop\n" + "pop\n";
-			break;
+			if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
+			{
+				popArrowTypeNode = "pop\n" + "pop\n";
+				break;
+			}
+		
 		}
-	
 	}
 	if(popArrowTypeNode == "")
 	{
@@ -87,7 +93,7 @@ public class FunNode implements Node, DecNode {
 		{
 			if(((DecNode)declist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popArrowTypeNode += "pop\n" + "pop\n";
+				popArrowTypeNode = "pop\n" + "pop\n";
 				break;
 			}
 		}
@@ -102,7 +108,7 @@ public class FunNode implements Node, DecNode {
 		body.codeGeneration()+
 		"srv\n"+	//salvo il risultato in un registro 
 		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
-		//popArrowTypeNode+
+		popArrowTypeNode+
 		"sra\n"+    //salvo il return address
 		"pop\n"+	// pop dell'AL
 		popPar+     //pop dei parametri che ho in parlist
