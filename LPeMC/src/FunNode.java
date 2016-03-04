@@ -49,19 +49,20 @@ public class FunNode implements Node, DecNode {
   
 // Per capire questa funzione vedi file "progettiamo il nostro layout" nell'esercitazione 12_04.
   public String codeGeneration() {
-	
+	String decCode = "";
+	String popDec = "";
 	String funl=FOOLlib.freshFunLabel();
 	
-	String decCode = "";
-	for(Node dec:declist){
-		decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
+	if(declist != null){
+		for(Node dec:declist){
+			decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
 	}
+						
 	
-	String popDec = "";
 	for(Node dec:declist){
 		popDec += "pop\n";
 	}
-	
+						}
 	String popPar = "";
 	for(Node dec:parlist){
 		popPar += "pop\n";
@@ -81,6 +82,7 @@ public class FunNode implements Node, DecNode {
 		}
 	
 	}
+	/*
 	if(popArrowTypeNode == "")
 	{
 		for(int i=0; i < declist.size();i++)
@@ -92,10 +94,10 @@ public class FunNode implements Node, DecNode {
 			}
 		}
 	}
-	
+	*/
 	
 	FOOLlib.putCode(
-	    funl+":\n"+
+	    "\n"+funl+":\n"+
 		"cfp\n"+	// setta il registro $fp
 	    "lra\n"+
 		decCode+	// codice delle dichiarazioni

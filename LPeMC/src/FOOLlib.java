@@ -20,7 +20,7 @@ public class FOOLlib {
 		  ret2 = isSubtype(b, ((ArrowTypeNode)a).getPar().get(i));
 		  */
 		 // return ( ((ArrowTypeNode) a).getPar().equals(((ArrowTypeNode) b).getRet()));
-		  return ret;
+		  return ret = true;
 	  }
 	  
     return a.getClass().equals(b.getClass())

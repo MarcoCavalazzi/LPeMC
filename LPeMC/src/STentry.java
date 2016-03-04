@@ -32,6 +32,9 @@ public class STentry {
   public int getNestinglevel ()
   {return nl;}
   
+  public Node getDecl() {
+		return dec;  
+	  }
   public String toPrint(String s) { //
 	   return s+"STentry: nestlev " + Integer.toString(nl) +"\n"+
 		      s+"STentry: offset " + Integer.toString(offset) +"\n"+ 

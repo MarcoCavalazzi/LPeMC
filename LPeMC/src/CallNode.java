@@ -39,8 +39,8 @@ public class CallNode implements Node {
   // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
      for (int i=0; i<parlist.size(); i++) 
        if (
-    		  // !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), p.get(i)) ) 
-    		   !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
+    		   !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), p.get(i)) ) 
+    		  // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
     		   ) {
          System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
          System.exit(0);
@@ -52,7 +52,7 @@ public class CallNode implements Node {
 	  // fp al frame del chiamante e poi i parametri in ordine inverso
 	  // -> ciclo di creazione di una stringa
 	  String parCode = "";	// codice per la prima parte dell'activation record (vedi file "progettiamo il nostro layout" nell'esercitazione 12_04).
-	  for(int i=parlist.size()-1; i>=0; i++){
+	  for(int i=parlist.size()-1; i>=0; i--){
 		  parCode += parlist.get(i).codeGeneration();
 	  }
 	  

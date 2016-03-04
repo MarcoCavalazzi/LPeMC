@@ -55,6 +55,7 @@ declist	returns [ArrayList<Node> astlist]
 	    int offset=-2;
 	  }
     (
+     (
        VAR i=ID COLON t=type ASS e=exp SEMIC
        {
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
@@ -67,7 +68,7 @@ declist	returns [ArrayList<Node> astlist]
           }
        }
        |
-       FUN i=ID COLON b=basic
+       FUN i=ID COLON t=basic
        {  
           //inserimento di ID nella symtable
          FunNode f = new FunNode($i.text,$t.ast);
@@ -110,15 +111,14 @@ declist	returns [ArrayList<Node> astlist]
          )*
        )? 
        RPAR { entry.addType( new ArrowTypeNode(parTypes, $t.ast) ); } 
-       (
-          LET d=declist IN 
+       ( LET d=declist IN )?
           //{f.addDec($d.astlist);} 
-       )?
        e=exp
        {//chiudere scope
           symTable.remove(nestingLevel--);
           f.addDecBody($d.astlist, $e.ast);//abbiamo cambiato add body con addDecBody (dichiarazione dei parametri ed espressione del corpo della funzione
-       } SEMIC
+       } 
+      ) SEMIC
      )+
 	;
 
