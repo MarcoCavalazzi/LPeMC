@@ -58,7 +58,7 @@ public class FunNode implements Node, DecNode {
 			decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
 	}
 						
-	
+	 
 	for(Node dec:declist){
 		popDec += "pop\n";
 	}
