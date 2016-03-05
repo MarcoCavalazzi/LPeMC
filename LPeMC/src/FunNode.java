@@ -53,7 +53,7 @@ public class FunNode implements Node, DecNode {
 	String popDec = "";
 	String funl=FOOLlib.freshFunLabel();
 	
-	if(declist != null){
+	if(declist != null){//aggiunto il controllo se la nostra declist non risulti vuota
 		for(Node dec:declist){
 			decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
 	}
