@@ -56,16 +56,16 @@ public class FunNode implements Node, DecNode {
 	if(declist != null){//aggiunto il controllo se la nostra declist non risulti vuota
 		for(Node dec:declist){
 			decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
+		}
+		
+		// Marco: Scusate l'ignoranza, ma vorrei capire meglio il funzionamento di FunNode:
+		// Qui di seguito aggiungiamo già dei "pop", dobbiamo forse togliere questi due cicli su "declist" e "parlist" visto che facciamo già il controllo con i 2 "pop" extra (vedi più sotto)?
+		
+		for(Node dec:declist){
+			popDec += "pop\n";
+		}
 	}
-
 	
-	// Marco: Scusate l'ignoranza, ma vorrei capire meglio il funzionamento di FunNode:
-	// Qui di seguito a/ggiungiamo già dei "pop", dobbiamo forse togliere questi due cicli su "declist" e "parlist" visto che facciamo già il controllo con i 2 "pop" extra (vedi più sotto)?
-	
-	for(Node dec:declist){
-		popDec += "pop\n";
-	}
-						}
 	String popPar = "";
 	for(Node dec:parlist){
 		popPar += "pop\n";
@@ -102,13 +102,32 @@ public class FunNode implements Node, DecNode {
 		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
 		popArrowTypeNode+
 		"sra\n"+    //salvo il return address
-		"pop\n"+	// pop dell'AL
+		"pop\n"+	// pop dell'AL (access link)
 		popPar+     //pop dei parametri che ho in parlist
 		"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 		"lrv\n"+
 		"lra\n"+
-		"js\n"      //js salta all'indirizzo che è in cima allo stack
+		"js\n"      //js salta all'indirizzo che è in cima allo stack e salva la prossima istruzione in ra.
     );
+	/* codice del progetto funzionante:
+	//inserisco la serie di istruzioni della funzione che poi verranno utilizzate
+    //nel letinNode
+    FOOLlib.putFunCode(
+    				"\n"+funl+":\n"+
+                    "cfp\n"+ //aggiorniamo il frame pointer
+                    "lra\n"+ //carichiamo il return address
+                    decCode+ //preparo le dichiarazioni locali della funzione
+                    body.codeGeneration()+ //eseguo il corpo della funzione
+                    "srv\n"+ //gestisco il return value(registro)
+                    popDec+ //carico le dichiarazioni locali della funzione
+                    "sra\n"+ //ci salviamo il return address
+                    "pop\n"+ //butto via l'access link
+                    popPar+  //prelievo dei i parametri
+                    "sfp\n"+ //memorizzo il frame pointer a cui ero arrivato
+                    "lrv\n"+ //mi preparo a ritornare
+                    "lra\n"+ //ritorno all'AR precedente
+                    "js\n"
+                   );*/
 	
 	return "push "+funl+"\n";
   }
