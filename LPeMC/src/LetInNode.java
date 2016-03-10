@@ -14,7 +14,7 @@ public class LetInNode implements Node {
 	String declstr="";
     for (Node dec:declist)
       declstr+=dec.toPrint(s+"  ");
-	return s+"LetIn\n" + declstr + exp.toPrint(s+"  ") ; 
+	return s+"Let\n" + declstr +"In\n"+ exp.toPrint(s+"  ") +"EndLetIn"; 
   }
   
   public Node typeCheck () {
