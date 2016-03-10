@@ -1,0 +1,31 @@
+LAYOUT AR FUNZIONI IN SLIDES:
+
+CL:address (fp) di AR chiamante
+valore ultimo (m-esimo) parametro         [offset m-1]
+.
+.
+valore primo parametro                    [offset   1]
+AL: address (fp) di AR dichiarazione (cioè di dove la funzione è dichiarata)	   <- $fp in codice body della funz
+Return Address                           
+Valore prima var dichiarata 		  [offset -2]
+Valore seconda var 			  [offset -3]
+.
+.
+Valore (n-esima) var 			[offset -(n+1)]
+
+
+
+
+La posizione migliore per l'AL è la posizione 0, così evitiamo di dover sommare ogni volta un offset.
+Quindi "Valore primo parametro" andrà all'offset 1.
+----------
+
+LAYOUT AR AMBIENTE GLOBALE:
+
+[SOTTO INIZIA LO STACK]      <- $fp (settato a valore iniziale di $sp)
+Return address fittizio	(0)	(serve per uniformare gli offsets, così la prima var avrà offset-2 indipendentemente che sia nell'amb. locale o globale)
+valore prima var dichiarata  [offset -2]
+valore seconda var           [offset -3]
+.
+.
+valore ultima (n-esima) var  [offset -n]
