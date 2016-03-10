@@ -51,6 +51,7 @@ public class FunNode implements Node, DecNode {
   public String codeGeneration() {
 	String decCode = "";
 	String popDec = "";
+	String popParNode = "";
 	String funl=FOOLlib.freshFunLabel();
 	
 	if(declist != null){//aggiunto il controllo se la nostra declist non risulti vuota
@@ -79,13 +80,27 @@ public class FunNode implements Node, DecNode {
 	// Marco: aggiunto controllo if per evitare di inserire più "pop" del dovuto e convertiti tutti gli assegnamenti di popArrowTypeNode da "+=" a "=".
 	
 /*
-	if(popArrowTypeNode == "")	
+	if(popVarNode == "")	
 	{
 		for(int i=0; i < declist.size();i++)
 		{
-			if(((DecNode)declist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+			if(((VarNode)declist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popArrowTypeNode = "pop\n" + "pop\n";
+				popVarNode = "pop\n" + "pop\n";
+				break;
+			}
+		}
+	}
+	*/
+	//////DUBBIO!!!!//////
+	/*
+	if(popParNode == "")	
+	{
+		for(int i=0; i < parlist.size();i++)
+		{
+			if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+			{
+				popParNode += "pop"+"\n" + "pop"+"\n";
 				break;
 			}
 		}
@@ -93,17 +108,19 @@ public class FunNode implements Node, DecNode {
 	*/
 	
 	FOOLlib.putCode(
-	    "\n"+funl+":\n"+
-		"cfp\n"+	// setta il registro $fp
-	    "lra\n"+
+	    "\n"+funl+":\n"+		
+		"cfp\n"+	// setta il registro $fp / copy stack pointer into frame pointer
+	    "lra\n"+   // load from ra sullo stack
 		decCode+	// codice delle dichiarazioni
 		body.codeGeneration()+
 		"srv\n"+	//salvo il risultato in un registro 
-		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
-		//popArrowTypeNode+
+		//popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
+		//popVarNode+
+		
 		"sra\n"+    //salvo il return address
 		"pop\n"+	// pop dell'AL (access link)
 		popPar+     //pop dei parametri che ho in parlist
+		//popParNode+ dubbio!!
 		"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 		"lrv\n"+
 		"lra\n"+

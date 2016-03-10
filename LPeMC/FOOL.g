@@ -37,18 +37,161 @@ prog	returns [Node ast]
 
 // Questa funzione è necessaria solo nel caso dell'Object Oriented, giusto? Ci sono le classi! 
 // -> Dobbiamo quindi implementarla o no?
+/*
 cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una lista di CallNode
    : {
 	     $astlist = new ArrayList<Node>() ;
 	     int offset=-2;
 	   }
-	   (CLASS i=ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )? RPAR
+	   (CLASS cid=ID 
+	   {
+	      ClassNode Obj = new ClassNode($cid.text);
+	      $astlist.add(Obj);
+                  HashMap<String,STentry> hm = symTable.get(nestingLevel);
+                  STentry entryCl = new STentry(Obj,nestingLevel);
+                  if ( hm.put($cid.text,entryCl) != null  )
+                  {
+                    System.out.println("Class id "+$cid.text+" at line "+$cid.line+" already declared");
+                     System.exit(0); 
+                  }
+                  //creare una nuova hashmap per la symTable
+                  nestingLevel++;
+                  HashMap<String,STentry> hmn = new HashMap<String,STentry> ();
+                  symTable.add(hmn);
+       }
+       
+       
+	        
+	     (EXTENDS cidext=ID
+	     {
+	        HashMap<String,STentry> hmSuper = symTable.get(nestingLevel-1);
+	         int j=nestingLevel;
+            STentry entry=null;
+            // verifico che la classe estesa sia già stata dichiarata in precedenza 
+            while (j>=0 && entry==null){
+               entry=(symTable.get(j--)).get($cidext.text);
+            }
+                  
+            if(entry == null){
+            System.out.println("Class id "+$cidext.text+" at line "+$cidext.line+" not declared");
+                 System.exit(0);
+            }
+            Obj.addSuperClass(entry.getDecl()); 
+                
+	     })? LPAR 
+	     {
+                ArrayList<Node> ConstrPar = new ArrayList<Node>();
+                int clParOffset = 1;
+       }
+	     (p1=ID COLON t1=basic 
+	     {
+	        ConstrPar.add($t1.ast);
+          ParNode Objpar = new ParNode($p1.text,$t1.ast,$cid.text);
+          Obj.addPar(Objpar);
+          FOOLlib.addParTuple($cid.text, $p1.text, FOOLlib.getParamRealOffset(Obj, $p1.text));
+          if ( hmn.put($p1.text,new STentry(Objpar,nestingLevel,$t1.ast,FOOLlib.getParamRealOffset(Obj, $p1.text))) != null  )
+           {
+            System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared");
+            System.exit(0); 
+           }
+	     }
+	     (COMMA pn=ID COLON tn=basic
+	     {
+	        ConstrPar.add($tn.ast);
+          ParNode Objparn = new ParNode($pn.text,$tn.ast,$cid.text);
+          Obj.addPar(Objparn);
+          //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
+          FOOLlib.addParTuple($cid.text, $pn.text, FOOLlib.getParamRealOffset(Obj, $pn.text));
+          if ( hmn.put($pn.text,new STentry(Objparn,nestingLevel,$tn.ast,FOOLlib.getParamRealOffset(Obj, $pn.text))) != null  )
+          {
+            System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
+             System.exit(0); 
+          }
+	     }
+	     )* )? RPAR
+	     {
+	        entryCl.addType( new ArrowTypeNode(ConstrPar, Obj) );
+	     }
 	     CLPAR
-	       (FUN ID COLON basic LPAR (ID COLON type (COMMA ID COLON type)* )? RPAR
-	       (LET (VAR ID COLON basic ASS exp SEMIC)* IN )? exp SEMIC)* 
+	       (FUN mid=ID COLON retm=basic
+	        {
+	            /* creazione del nodo del metodo e set a true del flag indicante che si
+              è all'interno di un metodo di classe */
+              /*
+              isInMethod = true;
+                    //inserimento di ID nella symtable
+                    FunNode f = new FunNode($mid.text,$retm.ast);
+                    $astlist.add(f);
+                    HashMap<String,STentry> hmc = symTable.get(nestingLevel);
+                    //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
+                    //FOOLlib.addMethodTuple($mid.text, $cid.text, FOOLlib.getMethodRealOffset(Obj,$mid.text));
+                    STentry entry = new STentry(f,nestingLevel,FOOLlib.getMethodRealOffset(Obj,$mid.text));
+                    if ( hmc.put($mid.text,entry) != null  )
+                    {
+                      System.out.println("Method id "+$mid.text+" at line "+$mid.line+" already declared");
+                       System.exit(0); 
+                    }
+                    //creare una nuova hashmap per la symTable
+                    nestingLevel++;
+                    HashMap<String,STentry> hmnc = new HashMap<String,STentry> ();
+                    symTable.add(hmnc);
+	        } 
+	       LPAR 
+	       {
+	          ArrayList<Node> parTypes = new ArrayList<Node>();
+            int parOffset = 1;
+	       }
+	       (mp1=ID COLON mpt1=type 
+	       {
+	          parTypes.add($mpt1.ast);
+            ParNode fpar = new ParNode($mp1.text,$mpt1.ast);
+            f.addPar(fpar);
+            if ( hmnc.put($mp1.text,new STentry(fpar,nestingLevel,$mpt1.ast,parOffset++)) != null  )
+            {
+              System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
+               System.exit(0); 
+            }
+	       }
+	       (COMMA mpn=ID COLON mptn=type
+	       {
+	          parTypes.add($mptn.ast);
+            ParNode par = new ParNode($mpn.text,$mptn.ast);
+            f.addPar(par);
+            if ( hmnc.put($mpn.text,new STentry(par,nestingLevel,$mptn.ast,parOffset++)) != null  )
+            {
+              System.out.println("Parameter id "+$mpn.text+" at line "+$mpn.line+" already declared");
+               System.exit(0); 
+            }
+	       })* )? RPAR
+	       {
+	          entry.addType( new ArrowTypeNode(parTypes , $retm.ast) );
+            ArrayList<Node> letInMethodList = new ArrayList<Node>();
+	       }
+	       (LET {int innerOs = -2; }
+	       (VAR vid=ID COLON vt=basic ASS ve=exp
+	       {
+	          VarNode v = new VarNode($vid.text,$vt.ast,$ve.ast);
+            letInMethodList.add(v); 
+            HashMap<String,STentry> hmv = symTable.get(nestingLevel);
+            if ( hmv.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOs--)) != null  )
+            {
+              System.out.println("Var id "+$vid.text+" at line "+$vid.line+" already declared");
+                System.exit(0); 
+              } 
+          }
+	        SEMIC)* IN )? vine=exp
+	        {
+	            //chiudere scope
+              symTable.remove(nestingLevel--);
+              f.addDecBody(letInMethodList,$vine.ast);
+              //aggiungo il metodo alla classe
+              Obj.addMethod(f);
+              isInMethod = false;
+	        }
+	         SEMIC)* 
       CRPAR)*
    ;
-        
+     */   
 declist	returns [ArrayList<Node> astlist]
 	: {
 	    $astlist = new ArrayList<Node>() ;
@@ -74,8 +217,8 @@ declist	returns [ArrayList<Node> astlist]
          FunNode f = new FunNode($i.text,$t.ast);
          $astlist.add(f);
          HashMap<String,STentry> hm = symTable.get(nestingLevel);
-        // STentry entry = new STentry(nestingLevel,offset--);
-           STentry entry = new STentry(nestingLevel,f,offset--);
+         STentry entry = new STentry(nestingLevel,offset--);
+         //STentry entry = new STentry(nestingLevel,f,offset-=2);
          if ( hm.put($i.text,entry) != null ){
             System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
             System.exit(0);
@@ -91,7 +234,14 @@ declist	returns [ArrayList<Node> astlist]
          {
 	          parTypes.add($fty.ast); 
 	          ParNode fpar = new ParNode($fid.text,$fty.ast);
+	          /*
+	          if($fty.ast instanceof ArrowTypeNode)
+	          {
+	            paroffset++;
+	          } 
+	          */
 	          f.addPar(fpar);
+	                             
 	          if ( hmn.put($fid.text,new STentry(fpar,nestingLevel,$fty.ast,paroffset++)) != null  ){
 	             System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
 	             System.exit(0);
@@ -102,6 +252,12 @@ declist	returns [ArrayList<Node> astlist]
 	          {
 		           parTypes.add($ty.ast); 
 		           ParNode par = new ParNode($id.text,$ty.ast);
+		          /*
+		           if($fty.ast instanceof ArrowTypeNode)
+		            {
+		              paroffset++;
+                } 
+                */
 		           f.addPar(par);
 		           if ( hmn.put($id.text,new STentry(par,nestingLevel,$ty.ast,paroffset++)) != null  ){
 		              System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");

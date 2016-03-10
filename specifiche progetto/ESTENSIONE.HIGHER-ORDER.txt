@@ -7,7 +7,7 @@ Tipi in dichiarazioni (non-terminale "type") ora includono:
     tipi (possibilmente funzionali) "type" per i parametri
 
 LAYOUTS 
-
+ 
 - layout AR (funzioni/amb globale)  (AR = Activation Record)
 invariato ma ora qualsiasi ID con tipo funzionale (vero ID di funzione oppure
 ID di variabile o parametro di tipo funzione) occupa un offset doppio:
@@ -15,7 +15,7 @@ ID di variabile o parametro di tipo funzione) occupa un offset doppio:
 [a offset messo in symbol table-1] indir funzione (per invocazione suo codice)
 
 FUNZIONAMENTO PARSER
-
+ 
 **Abstract Syntax Tree**
 
 - Dichiarazioni
@@ -60,8 +60,8 @@ CODE-GENERATION
 ** Dichiarazioni **
 -FunNode
 due cose sono messe nello stack:
-1. FP a questo AR (in reg $fp)
-2. (a offset-1) indir di f
+1. FP a questo AR (in reg $fp)     //cfp
+2. (a offset-1) indir di f        //?lfp
 
 codice della funzione:
 in caso tra i parametri o le dichiarazioni vi siano ID di tipo 
