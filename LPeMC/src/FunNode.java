@@ -79,21 +79,21 @@ public class FunNode implements Node, DecNode {
 	}
 	// Marco: aggiunto controllo if per evitare di inserire più "pop" del dovuto e convertiti tutti gli assegnamenti di popArrowTypeNode da "+=" a "=".
 	
-/*
-	if(popVarNode == "")	
+
+	if(popDec == "" && declist!=null)	
 	{
 		for(int i=0; i < declist.size();i++)
 		{
 			if(((VarNode)declist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popVarNode = "pop\n" + "pop\n";
+				popDec = "pop\n" + "pop\n";
 				break;
 			}
 		}
 	}
-	*/
+	
 	//////DUBBIO!!!!//////
-	/*
+	
 	if(popParNode == "")	
 	{
 		for(int i=0; i < parlist.size();i++)
@@ -105,7 +105,8 @@ public class FunNode implements Node, DecNode {
 			}
 		}
 	}
-	*/
+	
+	
 	
 	FOOLlib.putCode(
 	    "\n"+funl+":\n"+		
@@ -115,12 +116,13 @@ public class FunNode implements Node, DecNode {
 		body.codeGeneration()+
 		"srv\n"+	//salvo il risultato in un registro 
 		//popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
-		//popVarNode+
+		
 		
 		"sra\n"+    //salvo il return address
 		"pop\n"+	// pop dell'AL (access link)
 		popPar+     //pop dei parametri che ho in parlist
-		//popParNode+ dubbio!!
+		popParNode+ //dubbio!!
+		popDec+
 		"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 		"lrv\n"+
 		"lra\n"+

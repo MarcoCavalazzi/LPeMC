@@ -60,6 +60,21 @@ public class CallNode implements Node {
 	  for(int i=0; i<nl-entry.getNestinglevel(); i++){
 		  getAR += "lw\n";
 	  }
+	  /*
+	  String popParNode = "";
+	  if(popParNode == "")	
+		{
+			for(int i=0; i < parlist.size();i++)
+			{
+				if((parlist.get(i)) instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+				{
+					popParNode += "pop"+"\n" + "pop"+"\n";
+					break;
+				}
+			}
+		}
+		*/
+		
 	  
 	  return "lfp\n"+		// CL
 	  			parCode+	// parametri
@@ -67,7 +82,8 @@ public class CallNode implements Node {
 	  			getAR+		// AL ;
 	  			"push "+entry.getOffset()+"\n"+
 	  			"lfp\n"+
-	  			getAR+
+	  			getAR+  // 
+	  			//popParNode+
 	  			"add\n"+
 	  			"lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
 	  			"js\n";		// salto

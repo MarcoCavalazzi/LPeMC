@@ -2,13 +2,12 @@ push 0
 push function0
 push function1
 lfp
-push -2
+push -3
 lfp
 add
 lw
-push 1
 lfp
-push -3
+push -2
 lfp
 add
 lw
@@ -20,14 +19,18 @@ halt
 function0:
 cfp
 lra
-push 1
+lfp
+push 2
+lfp
+push 3
 lfp
 add
 lw
-push 1
-add
+js
 srv
 sra
+pop
+pop
 pop
 pop
 sfp
@@ -39,22 +42,13 @@ js
 function1:
 cfp
 lra
-lfp
 push 1
 lfp
 add
 lw
-lfp
-push 2
-lfp
-add
-lw
-js
-push 2
-add
+print
 srv
 sra
-pop
 pop
 pop
 sfp

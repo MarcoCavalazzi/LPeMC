@@ -203,6 +203,11 @@ declist	returns [ArrayList<Node> astlist]
        {
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
+          if($t.ast instanceof ArrowTypeNode)
+            {
+                offset-=2;
+            }
+          
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
           
           if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  ){
@@ -234,12 +239,13 @@ declist	returns [ArrayList<Node> astlist]
          {
 	          parTypes.add($fty.ast); 
 	          ParNode fpar = new ParNode($fid.text,$fty.ast);
-	          /*
+	          
 	          if($fty.ast instanceof ArrowTypeNode)
-	          {
-	            paroffset++;
-	          } 
-	          */
+            {
+              paroffset+=2;
+              System.out.println("Parameter id "+$fid.text+" è di tipo funzionale");
+            } 
+	          
 	          f.addPar(fpar);
 	                             
 	          if ( hmn.put($fid.text,new STentry(fpar,nestingLevel,$fty.ast,paroffset++)) != null  ){
@@ -252,12 +258,11 @@ declist	returns [ArrayList<Node> astlist]
 	          {
 		           parTypes.add($ty.ast); 
 		           ParNode par = new ParNode($id.text,$ty.ast);
-		          /*
-		           if($fty.ast instanceof ArrowTypeNode)
+		          if($fty.ast instanceof ArrowTypeNode)
 		            {
-		              paroffset++;
+		              paroffset+=2;
+		              System.out.println("Parameter id "+$id.text+" è di tipo funzionale:");
                 } 
-                */
 		           f.addPar(par);
 		           if ( hmn.put($id.text,new STentry(par,nestingLevel,$ty.ast,paroffset++)) != null  ){
 		              System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
@@ -337,7 +342,62 @@ value	returns [Node ast]
 	| TRUE  {$ast = new BoolNode(true);}  
   | FALSE {$ast = new BoolNode(false);} 
   | NULL  {$ast = new NullNode();}
-  //| NEW ID LPAR (expr (COMMA expr)* )? RPAR
+ /* | NEW i=ID
+    {
+ //incremento il contatore delle istanze(identificatore univoco)
+      nNewClass++;
+      int j=nestingLevel;
+      STentry entry=null; 
+      //cercare la dichiarazione
+      while (j>=0 && entry==null){
+        entry=(symTable.get(j--)).get($i.text);
+      }
+      
+      if (entry==null)
+       { 
+          System.out.println("Type "+$i.text+" at line "+$i.line+" not declared");
+          System.exit(0); 
+       }               
+       
+      //memorizzo la nuova istanza della classe nell'apposita lista
+      FOOLlib.setInstanceClass($i.text);
+    } 
+      LPAR
+      {
+        ArrayList<Node> argList = new ArrayList<Node>();
+      }
+       (fa=exp
+       {
+         argList.add($fa.ast);
+       }
+        (COMMA a=exp
+        {
+          argList.add($a.ast);
+        }
+        )* )? 
+        {
+          //creo il nuovo nodo che istanzia la classe
+          CallClassNode c= new CallClassNode($i.text,entry,argList,nNewClass);
+          $ast=c;
+          /*
+            se l'istanza della classe è all'interno di un metodo viene inserito il nodo relativo a tale istanza
+            all'interno della lista contenente i nodi delle chiamate ai costruttori effettuate all'interno di metodi
+            di classe, altrimenti viene aggiunto tale nodo alla lista contenente i nodi delle istanze effettuate
+            fuori dai metodi di classe. Se si è in un metodo di classe viene incrementato anche il numero relativo 
+            alle istanze effettuate all'interno di metodi di classe, altrimenti viene incrementato il contatore delle
+            istanze create fuori da metodi di classe
+            */
+            /*
+          if(!isInMethod) {
+                nNewNotMethodClass++;
+                callClassNodeNotInMethod.add(c);
+            } else {
+                nNewInMethodClass++;
+                callClassNodeInMethod.add(c);
+            }
+        }
+        RPAR
+        */
   | IF LPAR x=exp RPAR THEN CLPAR y=exp CRPAR 
        ELSE CLPAR z=exp CRPAR 
     {$ast= new IfNode($x.ast,$y.ast,$z.ast);}   
@@ -353,17 +413,120 @@ value	returns [Node ast]
 	    if (entry==null){
 	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
 	       System.exit(0);
-	    }               
+	    } 	                  
 	    $ast = new IdNode($i.text,entry,nestingLevel);
+	    
+	    //inizia la parte OO
+	    /*
+	    String classInputName = "";
+                 if(entry != null){
+                   if(entry.getDecl() instanceof ParNode){
+                if( ((ParNode)entry.getDecl()).isParClass()){
+                    //System.out.println("SETTING " + $i.text + " PARNODE " + initJ);
+                classInputName =((ParNode)entry.getDecl()).getClassName();
+                //System.out.println("CLASS OF PAR " + classInputName + " name " + className);
+            }
+             }
+                 }
+                 
+                 //System.out.println("PARSER ENTRY DECL " + entry.getDecl() + " -> "  +$i.text + " OS " + entry.getOffset() + " CLNAME " + classInputName);
+                 //System.out.println("Id "+$i.text+" at line "+$i.line + "   - j: " +j + " - nl: " + nestingLevel);
+                 if (entry==null){
+                  System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
+                    // System.exit(0); 
+                 }    
+                 //$ast= new IdNode($i.text,entry,nestingLevel-(j+1), classInputName, classFieldName,className);
+                 //System.out.println("PARSER Id "+$i.text+" ENTRY " + entry.getOffset());
+                 //System.out.println(outClass);
+                 $ast= new IdNode($i.text,entry,nestingLevel-(j+1), classInputName, outClass);
+                 //fine parte OO
+                 */
+                 
     }
     (
       LPAR { ArrayList<Node> argList = new ArrayList<Node>(); } 
       (fa=exp {argList.add($fa.ast);}
-        (COMMA a=exp {argList.add($a.ast);})* 
-      )?       
-      RPAR {$ast=new CallNode($i.text,entry,argList,nestingLevel);}
-    )?  
-   // |  DOT ID LPAR (expr (COMMA expr)* )? RPAR )?    
+        (COMMA a=exp {argList.add($a.ast);})
+        *)? 
+      RPAR    
+      {
+        $ast=new CallNode($i.text,entry,argList,nestingLevel-(j+1));
+      }    
+      
+    /*  
+    |  DOT cmid=ID
+    {
+      int k=nestingLevel;
+                 int h=nestingLevel;
+                 STentry entryM=null;
+                 STentry entryRealCl = null;
+                 
+                 String clName = ((ClassTypeNode)entry.getType()).getName();
+                 //System.out.println("Class Name: "+clName);
+                 
+                 /*
+                 ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
+                 */
+                 /*
+                 while (h>=0 && entryRealCl==null){
+                  entryRealCl=(symTable.get(h--)).get(clName);
+                  //System.out.println("Found 1 ciclo:" +$i.text+" at line "+$i.line + " j="+j + "     nl: " + nestingLevel);
+                  //found=true;
+                 }
+                 
+                 /*
+                 ricerca dell'entry del metodo all'interno della classe relativa ad esso trovata in precedenza
+                 
+                 k = entryRealCl.getNestingLevel() + 1;
+                 //System.out.println("N Real Cl: " + k + " clName: " + clName + " -> " + $i.text + " " + $i.line);
+                 while (k>=0 && entryM==null){
+                  entryM=(symTable.get(k--)).get($cmid.text);
+                  //System.out.println("Found 1 ciclo:" +$i.text+" at line "+$i.line + " j="+j + "     nl: " + nestingLevel);
+                  //found=true;
+                 }
+                 if (entryM==null){
+                  System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
+                    System.exit(0); 
+                 }
+                 
+                 /*                
+                 STentry entryCl=(symTable.get(k)).get(clName);
+                 if(entryCl == null){
+                  ArrayList<String> clh = FOOLlib.getClassHierarchy(clName);
+                  for(int p = 0; p < clh.size(); p++){
+                    int f=nestingLevel;
+                    //System.out.println("Cur Class: " + clh.get(p));
+                    if(FOOLlib.getMethodTuple($cmid.text, clh.get(p)) != null) {
+                    while (f>=0 && entryCl==null){
+                       entryCl=(symTable.get(f--)).get(clh.get(p));
+                       //System.out.println("Found :" +f);
+                       //found=true;
+                    }
+                    break;
+                  }
+                  }
+                 }
+                 
+    }
+     LPAR
+     {
+        ArrayList<Node> mArgList = new ArrayList<Node>();
+     }
+     (cmex1=exp
+     {
+        mArgList.add($cmex1.ast);
+     }
+     (COMMA cmexn=exp
+     {
+        mArgList.add($cmexn.ast);
+     }
+     )* )? 
+     {
+        $ast=new CallMethodNode($cmid.text, entryM, entryRealCl, mArgList, $i.text);
+     }
+     
+     */
+     )?    
  	;	 
 
 factor returns [Node ast]
