@@ -100,7 +100,7 @@ public class FunNode implements Node, DecNode {
 		body.codeGeneration()+
 		"srv\n"+	//salvo il risultato in un registro 
 		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
-		popArrowTypeNode+
+		//popArrowTypeNode+
 		"sra\n"+    //salvo il return address
 		"pop\n"+	// pop dell'AL (access link)
 		popPar+     //pop dei parametri che ho in parlist
