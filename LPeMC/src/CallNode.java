@@ -32,7 +32,7 @@ public class CallNode implements Node {
      }
    //parlist sono i figli del CallNode
      ArrayList<Node> p = t.getParList();	// otteniamo la lista dei tipi dei parametri formali
-     if ( !(p.size() == parlist.size()) ) {	// controlliamo che il numero dei parametri formali sia uguale al numero di aprametri passati in input.
+     if ( !(p.size() == parlist.size()) ) {	// controlliamo che il numero dei parametri formali sia uguale al numero di parametri passati in input.
        System.out.println("Wrong number of parameters in the invocation of "+id);
        System.exit(0);
      } 
