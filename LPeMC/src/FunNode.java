@@ -60,7 +60,8 @@ public class FunNode implements Node, DecNode {
 		}
 		
 		// Marco: Scusate l'ignoranza, ma vorrei capire meglio il funzionamento di FunNode:
-		// Qui di seguito aggiungiamo già dei "pop", dobbiamo forse togliere questi due cicli su "declist" e "parlist" visto che facciamo già il controllo con i 2 "pop" extra (vedi più sotto)?
+		// Qui di seguito aggiungiamo già dei "pop", 
+		//  dobbiamo forse togliere questi due cicli su "declist" e "parlist" visto che facciamo già il controllo con i 2 "pop" extra (vedi più sotto)?
 		
 		for(Node dec:declist){
 			popDec += "pop\n";
@@ -100,7 +101,7 @@ public class FunNode implements Node, DecNode {
 		{
 			if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popParNode += "pop"+"\n" + "pop"+"\n";
+				popParNode = "pop\n" + "pop\n";
 				break;
 			}
 		}
