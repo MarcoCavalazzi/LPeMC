@@ -19,21 +19,23 @@ public class ExecuteVM {
     
     public ExecuteVM(int[] code) {
     	// Codice di Debug che visualizza il codice del programma in linguaggio macchina.
+        System.out.println("Generated code:");
         System.out.println("----------------------");
-        int zerosCounter = 0;
-        for(int i=0;i<code.length;i++){
-            System.out.println(code[i]);
-            if(code[i] == 0){
-            	zerosCounter++;
-            }else{
-            	zerosCounter=0;
-            }
-        	if(zerosCounter >= 3)
-        		break;
+        for(int i=0; i<code.length; i++){
+        	if(code[i] != 25){// 25 = PUSH
+        		if(code[i]==0)
+        			break;
+        		System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
+        	}else{
+        		System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
+        		System.out.println(code[++i]);
+        	}
         }
-        System.out.println("----------------------");
+        // 3 consecutive zeros will show when the code is terminated.
+        System.out.println("\nWe will now display the instructions of the code step by step. Together we display the state of the Stack (as \"stack pointer: stack value\").\nOnly the part of the Stack that contains useful values will be printed.");
+        // After this, in the Console, we will show the stack and the state of the pointers for every step of the code during its execution.
         
-        // Costruttore
+        // Constructor
         this.code = code;
     }
     
@@ -144,7 +146,7 @@ public class ExecuteVM {
     } 
     
     private void dumpInstruction(){
-        System.out.println("----------------------------");
+    	System.out.println("----------------------------");
         System.out.print("- INSTRUCTION: "+ k++ + " - ");
         System.out.println(SVMParser.tokenNames[code[ip]]);
         System.out.println("* SP: "+ sp);
