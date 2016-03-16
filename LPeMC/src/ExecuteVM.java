@@ -154,8 +154,8 @@ public class ExecuteVM {
         	int tempIp = ip+1;
         	System.out.println(" "+code[tempIp]);
         }
-        System.out.println("  * SP: "+ sp);
-        System.out.println("  * IP: "+ ip);
+        System.out.println("  * SP: "+ sp +"\tFP: "+ fp +"\tIP: "+ ip);
+        System.out.println("  * RA:"+ ra +"\tRV: "+rv);
         dumpStack();
     }
     
