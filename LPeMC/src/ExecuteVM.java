@@ -129,18 +129,11 @@ public class ExecuteVM {
       }
     } 
     
-    private void dumpStack(){   
-     
-     System.out.println("--------------");
-     for(int i=memory.length-1; i>=sp; i--){
-         /*if(memory[i]!=0){
-             if(memory[i] < SVMParser.tokenNames.length && memory[i]>=0){
-                 System.out.println(i+" "+SVMParser.tokenNames[memory[i]]);
-             }else{*/
-                 System.out.println(i+": "+memory[i]);
-             /*}
-         }*/
-     }
+    private void dumpStack(){
+      System.out.println("--------------");
+      for(int i=memory.length-1; i>=sp; i--){
+         System.out.println(i+": "+memory[i]);
+      }
     }
     
     private int pop() {
