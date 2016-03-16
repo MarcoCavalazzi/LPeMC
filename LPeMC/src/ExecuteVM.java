@@ -15,15 +15,34 @@ public class ExecuteVM {
     private int fp = MEMSIZE;
     private int hp = 0;
     
-    private int k=0;
+    private int k=1;
     
     public ExecuteVM(int[] code) {
-      this.code = code;
+    	// Codice di Debug che visualizza il codice del programma in linguaggio macchina.
+        System.out.println("----------------------");
+        int zerosCounter = 0;
+        for(int i=0;i<code.length;i++){
+            System.out.println(code[i]);
+            if(code[i] == 0){
+            	zerosCounter++;
+            }else{
+            	zerosCounter=0;
+            }
+        	if(zerosCounter >= 3)
+        		break;
+        }
+        System.out.println("----------------------");
+        
+        // Costruttore
+        this.code = code;
     }
     
     public void cpu() {
       while ( true ) {
+          dumpInstruction();
         int bytecode = code[ip++]; // fetch
+        
+        
         int arg1,arg2;
         switch ( bytecode ) {
           case SVMParser.PUSH:
@@ -120,18 +139,24 @@ public class ExecuteVM {
          case SVMParser.HALT :
             return;
         }
+        
+      }
+    } 
+    
+    private void dumpInstruction(){
         System.out.println("----------------------------");
         System.out.print("- INSTRUCTION: "+ k++ + " - ");
         System.out.println(SVMParser.tokenNames[code[ip]]);
         System.out.println("* SP: "+ sp);
+        System.out.println("* IP: "+ ip);
         dumpStack();
-      }
-    } 
+    }
+    
     
     private void dumpStack(){
       System.out.println("--------------");
       for(int i=memory.length-1; i>=sp; i--){
-         System.out.println(i+": "+memory[i]);
+          System.out.println(i+": "+memory[i]);
       }
     }
     
