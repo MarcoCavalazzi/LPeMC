@@ -24,14 +24,13 @@ public class ExecuteVM {
         for(int i=0; i<code.length; i++){
         	if(code[i] != 25){// 25 = PUSH
         		if(code[i]==0)
-        			break;
+        			break;	// This control avoids to associate <invalid> strings to values that belong to the PUSH commands.
         		System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
         	}else{
         		System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
         		System.out.println(code[++i]);
         	}
         }
-        // 3 consecutive zeros will show when the code is terminated.
         System.out.println("\nWe will now display the instructions of the code step by step. Together we display the state of the Stack (as \"stack pointer: stack value\").\nOnly the part of the Stack that contains useful values will be printed.");
         // After this, in the Console, we will show the stack and the state of the pointers for every step of the code during its execution.
         
@@ -41,10 +40,9 @@ public class ExecuteVM {
     
     public void cpu() {
       while ( true ) {
-          dumpInstruction();
+          dumpInstruction();	// Debug statement.
+          
         int bytecode = code[ip++]; // fetch
-        
-        
         int arg1,arg2;
         switch ( bytecode ) {
           case SVMParser.PUSH:
@@ -148,7 +146,14 @@ public class ExecuteVM {
     private void dumpInstruction(){
     	System.out.println("----------------------------");
         System.out.print("- INSTRUCTION: "+ k++ + " - ");
-        System.out.println(SVMParser.tokenNames[code[ip]]);
+        String command = SVMParser.tokenNames[code[ip]];
+        if(command != "PUSH"){
+        	System.out.println(command);
+        }else{
+        	System.out.print(command);
+        	int tempIp = ip+1;
+        	System.out.println(" "+code[tempIp]);
+        }
         System.out.println("* SP: "+ sp);
         System.out.println("* IP: "+ ip);
         dumpStack();
