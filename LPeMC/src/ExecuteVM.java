@@ -1,3 +1,5 @@
+import com.sun.org.apache.bcel.internal.generic.Instruction;
+
 public class ExecuteVM {
     
     public static final int CODESIZE = 10000;
@@ -12,6 +14,8 @@ public class ExecuteVM {
     private int sp = MEMSIZE;
     private int fp = MEMSIZE;
     private int hp = 0;
+    
+    private int k=0;
     
     public ExecuteVM(int[] code) {
       this.code = code;
@@ -72,11 +76,11 @@ public class ExecuteVM {
             if (arg1 <= arg2) ip = address;
             break;
           case SVMParser.BRANCHGR: 
-        	  address = code[ip++];
+              address = code[ip++];
               arg2=pop();
               arg1=pop();
               if (arg1 >= arg2) ip = address;
-        	  break;
+              break;
             
           case SVMParser.JS :
             address = pop();
@@ -114,10 +118,30 @@ public class ExecuteVM {
             System.out.println((sp<MEMSIZE)?memory[sp]:"Empty stack!");
             break;
          case SVMParser.HALT :
+            //dumpStack();
             return;
         }
+        System.out.println("----------------------------");
+        System.out.print("- INSTRUCTION: "+ k++ + " - ");
+        System.out.println(SVMParser.tokenNames[code[ip]]);
+        System.out.println("* SP: "+ sp);
+        dumpStack();
       }
     } 
+    
+    private void dumpStack(){   
+     
+     System.out.println("--------------");
+     for(int i=memory.length-1; i>=sp; i--){
+         /*if(memory[i]!=0){
+             if(memory[i] < SVMParser.tokenNames.length && memory[i]>=0){
+                 System.out.println(i+" "+SVMParser.tokenNames[memory[i]]);
+             }else{*/
+                 System.out.println(i+": "+memory[i]);
+             /*}
+         }*/
+     }
+    }
     
     private int pop() {
       return memory[sp++];
