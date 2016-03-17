@@ -95,11 +95,11 @@ public class ExecuteVM {
             if (arg1 <= arg2) ip = address;
             break;
           case SVMParser.BRANCHGR: 
-              address = code[ip++];
-              arg2=pop();
-              arg1=pop();
-              if (arg1 >= arg2) ip = address;
-              break;
+            address = code[ip++];
+            arg2=pop();
+            arg1=pop();
+            if (arg1 >= arg2) ip = address;
+            break;
             
           case SVMParser.JS :
             address = pop();
@@ -136,10 +136,10 @@ public class ExecuteVM {
          case SVMParser.PRINT :
             System.out.println((sp<MEMSIZE)?memory[sp]:"Empty stack!");
             break;
-         case SVMParser.HALT :
+         case SVMParser.HALT :	// The last command executed from the program.
+        	 System.out.println("\n_End of program_");
             return;
         }
-        
       }
     } 
     
