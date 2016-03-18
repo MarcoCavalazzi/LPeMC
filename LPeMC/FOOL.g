@@ -199,14 +199,10 @@ declist	returns [ArrayList<Node> astlist]
 	  }
     (
      (
-       VAR i=ID COLON t=type ASS e=exp SEMIC
+       VAR i=ID COLON t=type ASS e=exp
        {
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
-          if($t.ast instanceof ArrowTypeNode)
-            {
-                offset-=2;
-            }
           
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
           
@@ -277,7 +273,7 @@ declist	returns [ArrayList<Node> astlist]
        e=exp
        {//chiudere scope
           symTable.remove(nestingLevel--);
-          f.addDecBody($d.astlist, $e.ast);//abbiamo cambiato add body con addDecBody (dichiarazione dei parametri ed espressione del corpo della funzione
+          f.addDecBody($d.astlist, $e.ast);//abbiamo cambiato add body con addDecBody (dichiarazione dei parametri ed espressione del corpo della funzione)
        } 
       ) SEMIC
      )+
