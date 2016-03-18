@@ -14,7 +14,7 @@ public class LetInNode implements Node {
 	String declstr="";
     for (Node dec:declist)
       declstr+=dec.toPrint(s+"  ");
-	return s+"Let\n" + declstr +"In\n"+ exp.toPrint(s+"  ") +"EndLetIn"; 
+	return s+"Let\n" + declstr +"In\n"+ exp.toPrint(s+"  ") +"EndLetIn\n"; 
   }
   
   public Node typeCheck () {
@@ -28,7 +28,8 @@ public class LetInNode implements Node {
 	String declcode="";
 	for (Node dec:declist)
 	  declcode+=dec.codeGeneration();
-    return "push 0\n"+
+	
+	return "push 0\n"+
     	   declcode+
     	   exp.codeGeneration()+
  		   "halt\n"+
