@@ -204,6 +204,11 @@ declist	returns [ArrayList<Node> astlist]
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
           
+          if($t.ast instanceof ArrowTypeNode)
+          {
+              offset-=2;
+          }
+            
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
           
           if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  ){
