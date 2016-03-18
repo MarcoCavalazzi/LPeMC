@@ -78,16 +78,14 @@ public class FunNode implements Node, DecNode {
 	{
 		popArrowTypeNode = "pop\n" + "pop\n";
 	}
-	// Marco: aggiunto controllo if per evitare di inserire più "pop" del dovuto e convertiti tutti gli assegnamenti di popArrowTypeNode da "+=" a "=".
 	
-
 	if(popDec == "" && declist!=null)	
 	{
 		for(int i=0; i < declist.size();i++)
 		{
 			if(((VarNode)declist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popDec = "pop\n" + "pop\n";
+				popDec += "pop\n" + "pop\n";
 				break;
 			}
 		}
@@ -101,13 +99,11 @@ public class FunNode implements Node, DecNode {
 		{
 			if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popParNode = "pop\n" + "pop\n";
+				popParNode += "pop\n" + "pop\n";
 				break;
 			}
 		}
 	}
-	
-	
 	
 	FOOLlib.putCode(
 	    "\n"+funl+":\n"+		
