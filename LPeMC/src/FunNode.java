@@ -7,7 +7,7 @@ public class FunNode implements Node, DecNode {
   private ArrayList<Node> parlist = new ArrayList<Node>(); 
   private ArrayList<Node> declist; 
   private Node body;
-  
+  private boolean isClassMethod = false; //per OO
   public FunNode (String i, Node t) {
     id=i;
     type=t;
@@ -160,10 +160,20 @@ public class FunNode implements Node, DecNode {
     return null;
   }
 
-@Override
-public Node getSymType() {
+  @Override
+  public Node getSymType() {
 	
 	return type;
-}
+  }
   
+  //Funzioni per l'OO
+  
+  public boolean getClassMethodFlag() {
+	  return isClassMethod;
+  }
+  
+  public String getName() {
+	  return id;
+  }
+
 }  
