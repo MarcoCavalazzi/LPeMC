@@ -7,7 +7,7 @@ public class CallClassNode implements Node {
 	private ArrayList<Node> par = new ArrayList<Node>();
 	private int nNewClass;
 	
-	 public CallClassNode (String i, STentry e, ArrayList<Node> p,int nCl) {
+	 public CallClassNode (String i, STentry e, ArrayList<Node> p, int nCl) {
 	   id=i;
 	   st=e;
 	   par = p;
@@ -24,7 +24,7 @@ public class CallClassNode implements Node {
 
 	
 	public Node typeCheck() {
-		/*
+		
 		 ArrowTypeNode classAtn = (ArrowTypeNode)((ClassNode)((ArrowTypeNode)st.getType()).getRet()).typeCheck();
 		  if(classAtn.getPar().size() != par.size()) {
 			  System.out.println("Wrong parameter's number for constructor of " + id);
@@ -38,8 +38,8 @@ public class CallClassNode implements Node {
 			  }
 		  }
 		  return new ClassTypeNode(((ClassNode)classAtn.getRet()).getName());
-		  */
-		return null;
+		  
+		
 	}
 
 	
@@ -94,8 +94,8 @@ public class CallClassNode implements Node {
 	}
 
 	 public String getClassName(){
-		  	//return ((ClassNode)((ArrowTypeNode)st.getType()).getRet()).getName();
-	  return null;
+		 return ((ClassNode)((ArrowTypeNode)st.getType()).getRet()).getName();
+	  
 	 }
 	 
 	 

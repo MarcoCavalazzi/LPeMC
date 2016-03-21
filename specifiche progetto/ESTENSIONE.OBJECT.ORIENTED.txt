@@ -1,3 +1,7 @@
+Classi aggiornate: STentry, ParNode, FOOLlib, IDNode, FunNode
+
+Classi aggiunte: ClassNode, ClassTypeNode, CallMethodNode, CallClassNode, AttributeTuple
+
 
 ELEMENTI SINTATTICI NUOVI
 
