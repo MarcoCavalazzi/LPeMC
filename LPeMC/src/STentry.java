@@ -28,6 +28,11 @@ public class STentry {
    type=t;
    offset=os;}
   
+  public STentry (Node d, int n)
+  {
+	  dec = d;
+	  nl = n;
+  }
    
   public void addType (Node t)
   {type=t;}

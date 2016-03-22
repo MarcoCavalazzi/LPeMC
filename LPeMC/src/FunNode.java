@@ -175,5 +175,9 @@ public class FunNode implements Node, DecNode {
   public String getName() {
 	  return id;
   }
-
+  
+  public void setInMethod()
+  {
+	  isClassMethod = true;
+  }
 }  

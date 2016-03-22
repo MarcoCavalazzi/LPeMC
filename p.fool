@@ -1,0 +1,8 @@
+let
+  class I (i:int) {
+    fun getInt:int () i;
+  }
+  var z:I = new I(5);
+    
+in
+  print(z.getInt());  

@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-public class CallClassNode implements Node {
+public class ClassCallNode implements Node {
 
 	private String id;
 	private STentry st; 
 	private ArrayList<Node> par = new ArrayList<Node>();
 	private int nNewClass;
 	
-	 public CallClassNode (String i, STentry e, ArrayList<Node> p, int nCl) {
+	 public ClassCallNode (String i, STentry e, ArrayList<Node> p, int nCl) {
 	   id=i;
 	   st=e;
 	   par = p;

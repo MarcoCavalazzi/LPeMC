@@ -35,7 +35,7 @@ public class FOOLlib {
   private static String classCode = "";
   private static String curFunClassName;
   private static int lastClassSize = 0;
-  private static LinkedHashMap<String, CallClassNode> varsAndCallClassNode = new LinkedHashMap<String, CallClassNode>();
+  private static LinkedHashMap<String, ClassCallNode> varsAndCallClassNode = new LinkedHashMap<String, ClassCallNode>();
   private static ArrayList<String> realVarType = new ArrayList<String>();
   private static int varAndCallIndex = 0;
   private static String lastVarNameForClass;
@@ -141,7 +141,7 @@ public class FOOLlib {
 	  classCode = "";
 	  curFunClassName = "";
 	  lastClassSize = 0;
-	  varsAndCallClassNode = new LinkedHashMap<String, CallClassNode>();
+	  varsAndCallClassNode = new LinkedHashMap<String, ClassCallNode>();
 	  realVarType = new ArrayList<String>();
 	  varAndCallIndex = 0;
 	  lastVarNameForClass = "";
@@ -168,7 +168,7 @@ public class FOOLlib {
    * @param varName : nome della variabile
    * @param ccn : nodo del costruttore
    */
-  public static void putVarAndCallClassNode(String varName, CallClassNode ccn) {
+  public static void putVarAndCallClassNode(String varName, ClassCallNode ccn) {
 	  //System.out.println("Putting " + varName + " with ccn: " + ccn.getClassName());
 	  varsAndCallClassNode.put(varName, ccn);
   }
