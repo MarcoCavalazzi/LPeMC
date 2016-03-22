@@ -7,11 +7,11 @@ public class ClassCallNode implements Node {
 	private ArrayList<Node> par = new ArrayList<Node>();
 	private int nNewClass;
 	
-	 public ClassCallNode (String i, STentry e, ArrayList<Node> p, int nCl) {
+	 public ClassCallNode (String i, STentry e, ArrayList<Node> p) {
 	   id=i;
 	   st=e;
 	   par = p;
-	   nNewClass = nCl;
+	   
 	}
 	public String toPrint(String s) {
 		

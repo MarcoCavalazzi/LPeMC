@@ -15,8 +15,10 @@ public class NewNode implements Node{
 
 	@Override
 	public Node typeCheck() {
-		return entry.getType();
+		//return entry.getType();
+	return null;
 	}
+	
 
 	@Override
 	public String codeGeneration() {

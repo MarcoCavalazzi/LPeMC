@@ -375,7 +375,7 @@ value	returns [Node ast]
           System.exit(0); 
        }      
          CTentry ctentry = classTable.get($i.text);      
-        $ast = new NewNode($i.text,ctentry);
+         $ast = new NewNode($i.text,ctentry);
       //memorizzo la nuova istanza della classe nell'apposita lista
      // FOOLlib.setInstanceClass($i.text);
     } 
@@ -394,7 +394,7 @@ value	returns [Node ast]
         )* )? 
         { 
           //creo il nuovo nodo che istanzia la classe
-         // CallClassNode c= new CallClassNode($i.text,entry,argList,nNewClass);
+            //ClassCallNode c= new ClassCallNode($i.text,entry,argList,nNewClass);
          // $ast=c;
           /*
             se l'istanza della classe è all'interno di un metodo viene inserito il nodo relativo a tale istanza
@@ -427,6 +427,7 @@ value	returns [Node ast]
 	    STentry entry=null; 
 	    while (j>=0 && entry==null)
 	      entry=(symTable.get(j--)).get($i.text);
+	      
 	    if (entry==null){
 	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
 	       System.exit(0);
@@ -434,14 +435,16 @@ value	returns [Node ast]
 	    $ast = new IdNode($i.text,entry,nestingLevel);
 	    
 	    //inizia la parte OO
-	    /*
+	    
 	    String classInputName = "";
                  if(entry != null){
-                   if(entry.getDecl() instanceof ParNode){
-                if( ((ParNode)entry.getDecl()).isParClass()){
+                 if(entry.getDecl() instanceof ParNode){
+                 if( ((ParNode)entry.getDecl()).isParClass()){
                     //System.out.println("SETTING " + $i.text + " PARNODE " + initJ);
                 classInputName =((ParNode)entry.getDecl()).getClassName();
                 //System.out.println("CLASS OF PAR " + classInputName + " name " + className);
+                
+                
             }
              }
                  }
@@ -457,7 +460,7 @@ value	returns [Node ast]
                  //System.out.println(outClass);
                  $ast= new IdNode($i.text,entry,nestingLevel-(j+1), classInputName, outClass);
                  //fine parte OO
-                 */
+                
                  
     }
     (
@@ -470,7 +473,7 @@ value	returns [Node ast]
         $ast=new CallNode($i.text,entry,argList,nestingLevel-(j+1));
       }    
       
-    /*  
+      
     |  DOT cmid=ID
     {
       int k=nestingLevel;
@@ -481,17 +484,17 @@ value	returns [Node ast]
                  String clName = ((ClassTypeNode)entry.getType()).getName();
                  //System.out.println("Class Name: "+clName);
                  
-                 /*
+                 
                  ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
-                 */
-                 /*
+                 
+                 
                  while (h>=0 && entryRealCl==null){
                   entryRealCl=(symTable.get(h--)).get(clName);
                   //System.out.println("Found 1 ciclo:" +$i.text+" at line "+$i.line + " j="+j + "     nl: " + nestingLevel);
                   //found=true;
                  }
                  
-                 /*
+                 
                  ricerca dell'entry del metodo all'interno della classe relativa ad esso trovata in precedenza
                  
                  k = entryRealCl.getNestingLevel() + 1;
@@ -506,7 +509,7 @@ value	returns [Node ast]
                     System.exit(0); 
                  }
                  
-                 /*                
+                                 
                  STentry entryCl=(symTable.get(k)).get(clName);
                  if(entryCl == null){
                   ArrayList<String> clh = FOOLlib.getClassHierarchy(clName);
@@ -541,9 +544,12 @@ value	returns [Node ast]
      {
         $ast=new CallMethodNode($cmid.text, entryM, entryRealCl, mArgList, $i.text);
      }
+     RPAR
      
-     */
-     )?    
+     )? 
+     
+     | LPAR e=exp RPAR
+        {$ast= $e.ast;}   
  	;	 
 
 factor returns [Node ast]
