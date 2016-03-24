@@ -20,9 +20,9 @@ public class LetInNode implements Node {
   public String toPrint(String s) {
 	String declstr="";
 	String clliststr="";
-	
-	for(Node cl:cllist)
-		clliststr += cl.toPrint(s+"  ");
+	if(cllist != null)
+		for(Node cl:cllist)
+			clliststr += cl.toPrint(s+"  ");
   
     for (Node dec:declist)
       declstr+=dec.toPrint(s+"  ");
@@ -33,6 +33,8 @@ public class LetInNode implements Node {
     for (Node dec:declist)
       dec.typeCheck();
     return exp.typeCheck();
+    
+    
     
     
   }

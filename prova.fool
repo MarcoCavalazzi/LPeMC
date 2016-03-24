@@ -3,6 +3,7 @@ let
 	fun getMon:int() money;
     }
 in 
+	new Money(5);
 	print(1);
 
 

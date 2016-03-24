@@ -24,6 +24,7 @@ public class FunNode implements Node, DecNode {
 	  body = b;
   }
   
+
   public void addBody(Node b){
 	  body=b;
   }

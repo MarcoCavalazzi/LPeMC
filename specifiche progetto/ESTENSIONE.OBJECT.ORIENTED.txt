@@ -127,7 +127,7 @@ per campi/metodi e per parametri/variabili/funzioni in base al rispettivo layout
 contenuto STentry invariato a parte:
 -aggiunta flag Boolean isMethod
 (per distinguere ID di funzioni da ID di metodi)
--per nomi di classi mettere "null" come tipo
+-per nomi di classi mettere "null" come tipo ******da capire
 
 **super type**
 

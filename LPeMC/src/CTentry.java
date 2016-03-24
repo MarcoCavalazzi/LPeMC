@@ -27,22 +27,22 @@ public class CTentry {
 		dec = d;
 	}
 	
-	private void setMethodOffset(int offset)
+	public void setMethodOffset(int offset)
 	{
 		offsetMethods = offset;
 	}
 	
-	private void setFieldOffset(int offset)
+	public void setFieldOffset(int offset)
 	{
 		offsetFields = offset;
 	}
 	
-	private void setMethod(Node method)
+	public void setMethod(Node method)
 	{
 		allMethods.add(method);
 	}
 	
-	private void setField(Node field)
+	public void setField(Node field)
 	{
 		allFields.add(field);
 	}
