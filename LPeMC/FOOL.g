@@ -31,7 +31,7 @@ prog	returns [Node ast]
               HashMap<String,STentry> hm = new HashMap<String,STentry> ();
               symTable.add(hm);
             }
-           d=declist IN e=exp SEMIC 
+         cl=cllist  d=declist IN e=exp SEMIC 
             {
               symTable.remove(nestingLevel--);
               $ast = new LetInNode($d.astlist,$e.ast) ;
@@ -44,33 +44,38 @@ prog	returns [Node ast]
 cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una lista di CallNode
    : { 
 	     $astlist = new ArrayList<Node>() ;
-	     int offset=-2;
-	   }
+	     int offset      = -2;
+	     int classoffset = -2;
+	   } 
 	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe
 	   {
+	   
 	                ClassNode Obj = new ClassNode($cid.text);
 	                $astlist.add(Obj);
                   HashMap<String,STentry> hm = symTable.get(nestingLevel);
-                  //HashMap<String,CTentry> hmClass = classTable.get(nestingClassLevel);
+                  //HashMap<String,CTentry> hmClass = classTable.get(nestingClassLevel);                 
                   HashMap<String,STentry> vTable = new HashMap<String,STentry>();
                   STentry entryCl = new STentry(Obj,nestingLevel);
-                  CTentry ctentry = new CTentry(Obj,nestingClassLevel);
-                  if ( (hm.put($cid.text,entryCl) != null) && (vTable.put($cid.text,entryCl) != null))
+                  CTentry ctentry = new CTentry(Obj);
+                  
+                  if ( (hm.put($cid.text,entryCl) != null) && (classTable.put($cid.text,ctentry) != null))
                   {
                     System.out.println("Class id "+$cid.text+" at line "+$cid.line+" already declared");
                      System.exit(0); 
                   }
-                  //creare una nuova hashmap per la symTable
+                  //creare una nuova hashmap per la symTable                 
                   nestingLevel++;
                   nestingClassLevel++;
                   HashMap<String,STentry> hmn = new HashMap<String,STentry> (); 
                   //HashMap<String,STentry> vTable = new HashMap<String,STentry> (); 
-                  symTable.add(hmn);                  
-                  
+                  symTable.add(hmn);     
+                  virtualTable.add(vTable);             
+                 
        }
             	        
-	    /* (EXTENDS cidext=ID
+	     (EXTENDS cidext=ID
 	     {
+	     /*
 	        HashMap<String,STentry> hmSuper = symTable.get(nestingLevel-1);
 	         int j=nestingLevel;
             STentry entry=null;
@@ -84,8 +89,9 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
                  System.exit(0);
             }
             Obj.addSuperClass(entry.getDecl()); 
-                
-	     })? */
+       */ 
+	     }
+	     )? 
 	     LPAR 
 	     {
                 ArrayList<Node> ConstrPar = new ArrayList<Node>();
@@ -130,13 +136,13 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
               
                     //isInMethod = true;
                     //inserimento di ID nella symtable
-                    FunNode f = new FunNode($mid.text,$retm.ast);
-                    f.setInMethod(); //setta true isClassMethod                  
+                    MethodNode f = new MethodNode($mid.text,$retm.ast);                
                     $astlist.add(f);
                     //HashMap<String,STentry> hmc = symTable.get(nestingLevel);
                     //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
                     //FOOLlib.addMethodTuple($mid.text, $cid.text, FOOLlib.getMethodRealOffset(Obj,$mid.text));
-                    STentry entry = new STentry(nestingLevel,f,offset--);
+                    STentry entry = new STentry(nestingClassLevel,f,classoffset--);
+                    entry.setIsMethod();
                     if ( vTable.put($mid.text,entry) != null  )
                     {
                       System.out.println("Method id "+$mid.text+" at line "+$mid.line+" already declared");
@@ -296,7 +302,7 @@ declist	returns [ArrayList<Node> astlist]
           f.addDecBody($d.astlist, $e.ast);//abbiamo cambiato add body con addDecBody (dichiarazione dei parametri ed espressione del corpo della funzione)
        } 
       ) SEMIC
-     )+
+     )*
 	;
  
 type  returns [Node ast]
@@ -422,12 +428,19 @@ value	returns [Node ast]
   | LPAR exp RPAR 
   |  i=ID 
     {//cercare la dichiarazione
-	    int j=nestingLevel;
-	    STentry entry=null; 
+	    int j  = nestingLevel;
+	    int jj = nestingClassLevel;
+	    STentry entry     = null; 
+	    STentry classEntry = null;
+	    
 	    while (j>=0 && entry==null)
 	      entry=(symTable.get(j--)).get($i.text);
-	      
-	    if (entry==null){
+	         
+	    while (jj>=0 && classEntry==null){
+        classEntry=(virtualTable.get(jj--)).get($i.text);         
+        }
+        
+	    if (entry == null && classEntry == null ){
 	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
 	       System.exit(0);
 	    } 	                  
@@ -436,21 +449,21 @@ value	returns [Node ast]
 	    //inizia la parte OO
 	    
 	    String classInputName = "";
-      if(entry != null){
-        if(entry.getDecl() instanceof ParNode){
-          if( ((ParNode)entry.getDecl()).isParClass()){
+      if(classEntry != null){
+        if(classEntry.getDecl() instanceof ParNode){
+          if( ((ParNode)classEntry.getDecl()).isParClass()){
                     //System.out.println("SETTING " + $i.text + " PARNODE " + initJ);
-                classInputName =((ParNode)entry.getDecl()).getClassName();
+               // classInputName =((ParNode)classEntry.getDecl()).getClassName();
                 //System.out.println("CLASS OF PAR " + classInputName + " name " + className);               
           }
         }
       }
            //System.out.println("PARSER ENTRY DECL " + entry.getDecl() + " -> "  +$i.text + " OS " + entry.getOffset() + " CLNAME " + classInputName);
            //System.out.println("Id "+$i.text+" at line "+$i.line + "   - j: " +j + " - nl: " + nestingLevel);
-           if (entry==null){
-            System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
+           //if (entry==null){
+          //  System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
               // System.exit(0); 
-           }    
+         //  }    
            //$ast= new IdNode($i.text,entry,nestingLevel-(j+1), classInputName, classFieldName,className);
            //System.out.println("PARSER Id "+$i.text+" ENTRY " + entry.getOffset());
            //System.out.println(outClass);

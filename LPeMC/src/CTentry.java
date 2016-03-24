@@ -22,6 +22,11 @@ public class CTentry {
 		nestingLevel = nl;
 	}
 	
+	public CTentry(Node d)
+	{
+		dec = d;
+	}
+	
 	private void setMethodOffset(int offset)
 	{
 		offsetMethods = offset;
@@ -47,6 +52,7 @@ public class CTentry {
 		type = t;
 	}
 
+	
 	public String toPrint(String string) {
 		// TODO Auto-generated method stub
 		return "CTentry";
