@@ -4,7 +4,7 @@ public class ClassNode implements Node{
 	private Node sc;
 	private String name;
 	private ArrayList<Node> dec = new ArrayList<Node>();
-	private ArrayList<Node> params = new ArrayList<Node>();
+	private ArrayList<Node> fields = new ArrayList<Node>();
 	
 	public ClassNode(String id){
 		name = id;
@@ -15,9 +15,9 @@ public class ClassNode implements Node{
 	}
 
 	public String toPrint(String s) {
-		String ret = s+"Class "+name+"\n" + s + "   " + (params.size() > 0 ? " parameters:" : "") + " \n";
-	    for(int j=0;j < params.size();j++){
-	      ret += s+params.get(j).toPrint(s+" ")+"\n";
+		String ret = s+"Class "+name+"\n" + s + "   " + (fields.size() > 0 ? " parameters:" : "") + " \n";
+	    for(int j=0;j < fields.size();j++){
+	      ret += s+fields.get(j).toPrint(s+" ")+"\n";
 	    }
 
 	    if(sc != null && (sc instanceof ClassNode)){
@@ -99,12 +99,12 @@ public class ClassNode implements Node{
 		return sc;
 	}
 	
-	public void addPar(Node param){
-		params.add(param);
+	public void addField(Node f){
+		fields.add(f);
 	}
 	
 	public ArrayList<Node> getPar(){
-		return params;
+		return fields;
 	}
 
 	public ArrayList<Node> getBody(){

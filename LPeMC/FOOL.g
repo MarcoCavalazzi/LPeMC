@@ -98,16 +98,19 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     LPAR 
 	     {
                 ArrayList<Node> ConstrPar = new ArrayList<Node>();
-                int clParOffset = 1;
+                //int clParOffset = 1;
+                 int fieldOffset=1;
        }
 	     (p1=ID COLON t1=basic 
 	     {
-	        int parClassoffset=1;
+	       
 	        ConstrPar.add($t1.ast);
-          ParNode Objpar = new ParNode($p1.text,$t1.ast,$cid.text);
-          Obj.addPar(Objpar);
-          //FOOLlib.addParTuple($cid.text, $p1.text, FOOLlib.getParamRealOffset(Obj, $p1.text));
-          if ( vTable.put($p1.text,new STentry(Objpar,nestingLevel,$t1.ast,parClassoffset++)) != null  )
+          FieldNode Objfield = new FieldNode($p1.text,$t1.ast,$cid.text);
+          Obj.addField(Objfield);
+          ctentry.setFieldOffset(fieldOffset++);
+          STentry  tempEntry = new STentry(Objfield,nestingClassLevel,$t1.ast,fieldOffset);
+         
+          if ( hmn.put($p1.text,tempEntry) != null  )
            {
             System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared");
             System.exit(0); 
@@ -116,11 +119,12 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     (COMMA pn=ID COLON tn=basic
 	     {
 	        ConstrPar.add($tn.ast);
-          ParNode Objparn = new ParNode($pn.text,$tn.ast,$cid.text);
-          Obj.addPar(Objparn);
+          FieldNode ObjfieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
+          Obj.addField(ObjfieldN);
+          ctentry.setFieldOffset(fieldOffset++);
           //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
          // FOOLlib.addParTuple($cid.text, $pn.text, FOOLlib.getParamRealOffset(Obj, $pn.text));
-          if ( vTable.put($pn.text,new STentry(Objparn,nestingLevel,$tn.ast,parClassoffset++)) != null  )
+          if ( hmn.put($pn.text,new STentry(ObjfieldN,nestingClassLevel,$tn.ast,fieldOffset)) != null  )
           {
             System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
              System.exit(0); 
@@ -141,7 +145,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
                     //inserimento di ID nella symtable
                     MethodNode f = new MethodNode($mid.text,$retm.ast);                
                     $astlist.add(f);
-                    HashMap<String,STentry> hmclass = symTable.get(nestingLevel);
+                    HashMap<String,STentry> hmclass = virtualTable.get(nestingClassLevel);                    
                     //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
                     //FOOLlib.addMethodTuple($mid.text, $cid.text, FOOLlib.getMethodRealOffset(Obj,$mid.text));
                     STentry entry = new STentry(nestingClassLevel,f,classoffset--);
@@ -385,7 +389,7 @@ value	returns [Node ast]
           System.out.println("Class "+$i.text+" at line "+$i.line+" not declared");
           System.exit(0); 
        }                  
-       $ast = new NewNode($i.text,ctEntry);     
+       $ast = new NewNode($i.text,ctEntry);  //da guardare..istanzio in $ast?   
     } 
       LPAR
       {
@@ -399,11 +403,11 @@ value	returns [Node ast]
         (COMMA a=exp
         {
           argList.add($a.ast);
-          ctEntry.setField($fa.ast);
+          ctEntry.setField($a.ast);
         }
         )* )? 
         {               
-          
+          //qui ci devo fare qualcosa?
           //creo il nuovo nodo che istanzia la classe
             //ClassCallNode c= new ClassCallNode($i.text,entry,argList,nNewClass);
          // $ast=c;

@@ -1,14 +1,32 @@
 let 
-	class Money(money:int){	
-	fun getMon:int() money;
-    }
+	class Account (money:int) {
+    fun getMon:int () money;	
+   }
+   var x:Account = new Account(3);
 in 
-	new Money(5);
+	
+	
+	print(1);
+/*
+let 
+	
+    fun getMon:int (money:int) money;
+  
+in 
+	
+	print(1);
+
+let 
+	class Account (money:int) {
+    fun getMon:int () money;
+  }
+in 
+	
 	print(1);
 
 
 
-/*
+
 let
   fun g:int(i:int,j:int) i+j;
   fun h:int(i:int)i+2;
