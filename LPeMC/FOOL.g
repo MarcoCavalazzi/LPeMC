@@ -54,7 +54,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	                $astlist.add(Obj);
                   HashMap<String,STentry> hm = symTable.get(nestingLevel);
                   //HashMap<String,CTentry> hmClass = classTable.get(nestingClassLevel);                 
-                  HashMap<String,STentry> vTable = new HashMap<String,STentry>();
+                  //HashMap<String,STentry> vTable = new HashMap<String,STentry>(); //ci va?
                   STentry entryCl = new STentry(Obj,nestingLevel);
                   CTentry ctentry = new CTentry(Obj,nestingClassLevel);
                   STentry tmp  = hm.put($cid.text,entryCl);
@@ -70,7 +70,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
                   nestingLevel++;
                   nestingClassLevel++;
                   HashMap<String,STentry> hmn = new HashMap<String,STentry>(); 
-                  //HashMap<String,STentry> vTable = new HashMap<String,STentry> (); 
+                  HashMap<String,STentry> vTable = new HashMap<String,STentry> (); //sicura sta cosa?
                   symTable.add(hmn);     
                   virtualTable.add(vTable);                          
                  
@@ -182,6 +182,8 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
          //     System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
          //      System.exit(0); 
        //     }
+       
+            
 	       }
 	       (COMMA mpn=ID COLON mptn=type
 	       {
@@ -389,7 +391,7 @@ value	returns [Node ast]
           System.out.println("Class "+$i.text+" at line "+$i.line+" not declared");
           System.exit(0); 
        }                  
-       $ast = new NewNode($i.text,ctEntry);  //da guardare..istanzio in $ast?   
+       
     } 
       LPAR
       {
@@ -411,7 +413,7 @@ value	returns [Node ast]
           //creo il nuovo nodo che istanzia la classe
             //ClassCallNode c= new ClassCallNode($i.text,entry,argList,nNewClass);
          // $ast=c;
-            
+            $ast = new NewNode($i.text,ctEntry,argList);  
 //            se l'istanza della classe è all'interno di un metodo viene inserito il nodo relativo a tale istanza
 //            all'interno della lista contenente i nodi delle chiamate ai costruttori effettuate all'interno di metodi
 //            di classe, altrimenti viene aggiunto tale nodo alla lista contenente i nodi delle istanze effettuate

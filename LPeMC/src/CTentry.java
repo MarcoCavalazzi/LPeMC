@@ -59,7 +59,7 @@ public class CTentry {
 	}
 
 	public Node getType() {
-		// TODO Auto-generated method stub
+		
 		return type;
 	}
 }
