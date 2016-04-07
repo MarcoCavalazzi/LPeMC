@@ -3,13 +3,15 @@ import java.util.ArrayList;
 public class ClassCallNode implements Node {
 
 	private String id;
-	private STentry st; 
+	private STentry entry; 
+	private STentry methodEntry;
 	private ArrayList<Node> par = new ArrayList<Node>();
 	private int nNewClass;
 	
-	 public ClassCallNode (String i, STentry e, ArrayList<Node> p) {
+	 public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p) {
 	   id=i;
-	   st=e;
+	   entry=e;
+	   methodEntry = me;
 	   par = p;
 	   
 	}
@@ -24,8 +26,8 @@ public class ClassCallNode implements Node {
 
 	
 	public Node typeCheck() {
-		
-		 ArrowTypeNode classAtn = (ArrowTypeNode)((ClassNode)((ArrowTypeNode)st.getType()).getRet()).typeCheck();
+		/*
+		 ArrowTypeNode classAtn = (ArrowTypeNode)((ClassNode)((ArrowTypeNode)entry.getType()).getRet()).typeCheck();
 		  if(classAtn.getPar().size() != par.size()) {
 			  System.out.println("Wrong parameter's number for constructor of " + id);
 		}
@@ -40,6 +42,8 @@ public class ClassCallNode implements Node {
 		  return new ClassTypeNode(((ClassNode)classAtn.getRet()).getName());
 		  
 		
+		*/
+		return entry.getType();
 	}
 
 	
@@ -49,7 +53,7 @@ public class ClassCallNode implements Node {
 		  String ret = "";
 		  String parCode = "";
 		  String NameCl = "";
-		  ClassNode obj = ((ClassNode)((ArrowTypeNode)st.getType()).getRet());
+		  ClassNode obj = ((ClassNode)((ArrowTypeNode)entry.getType()).getRet());
 		  /*
 		   * generazione del codice relativa ai metodi dell'oggetto istanziato
 		   */
@@ -94,7 +98,7 @@ public class ClassCallNode implements Node {
 	}
 
 	 public String getClassName(){
-		 return ((ClassNode)((ArrowTypeNode)st.getType()).getRet()).getName();
+		 return ((ClassNode)((ArrowTypeNode)entry.getType()).getRet()).getName();
 	  
 	 }
 	 

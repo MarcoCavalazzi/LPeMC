@@ -129,7 +129,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     }
 	     )* )? RPAR
 	     {
-	        ctentry.addType( new ArrowTypeNode(ConstrPar, Obj) );
+	        ctentry.addType( new ArrowTypeNode(ConstrPar, Obj) ); //è esatto??????????
 	     }
 	     CLPAR//apri graffa
 	       (FUN mid=ID COLON retm=basic
@@ -326,7 +326,7 @@ basic returns [Node ast]
   :       INT  {$ast=new IntTypeNode();}
         | BOOL {$ast=new BoolTypeNode();} 
         | i=ID   {
-        int jj = nestingClassLevel;    
+         int jj = nestingClassLevel;    
          STentry classEntry = null;    
          while (jj>=0 && classEntry==null){
            classEntry=(symTable.get(jj--)).get($i.text);         
@@ -481,7 +481,7 @@ value	returns [Node ast]
       }
            //System.out.println("PARSER ENTRY DECL " + entry.getDecl() + " -> "  +$i.text + " OS " + entry.getOffset() + " CLNAME " + classInputName);
            //System.out.println("Id "+$i.text+" at line "+$i.line + "   - j: " +j + " - nl: " + nestingLevel);
-          System.out.println("Id "+$i.text+" at line "+$i.line + "   - j: " +j + " - nl: " + nestingLevel);
+         // System.out.println("Id "+$i.text+" at line "+$i.line + "   - j: " +j + " - nl: " + nestingLevel);
            //if (entry==null){
           //  System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
               // System.exit(0); 
@@ -508,36 +508,40 @@ value	returns [Node ast]
      RPAR      
     |  DOT cmid=ID
     {
-                 int k=nestingLevel;
-                 int h=nestingLevel;
-                 STentry entryM=null;
-                 STentry entryRealCl = null;                 
-                 String clName = ((ClassTypeNode)entry.getType()).getName();
-                 //System.out.println("Class Name: "+clName);              
-               // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
-                 
-                 
-                 while (h>=0 && entryRealCl==null){
-                  entryRealCl=(symTable.get(h--)).get(clName);
-                  //System.out.println("Found 1 ciclo:" +$i.text+" at line "+$i.line + " j="+j + "     nl: " + nestingLevel);
-                  //found=true;
-                 }
-                 
-                 
-                 //ricerca dell'entry del metodo all'interno della classe relativa ad esso trovata in precedenza
-                 
-               //  k = entryRealCl.getNestingLevel() + 1;  da reinserire
-                 //System.out.println("N Real Cl: " + k + " clName: " + clName + " -> " + $i.text + " " + $i.line);
-                 while (k>=0 && entryM==null){
-                  entryM=(symTable.get(k--)).get($cmid.text);
-                  //System.out.println("Found 1 ciclo:" +$i.text+" at line "+$i.line + " j="+j + "     nl: " + nestingLevel);
-                  //found=true;
-                 }
-                 
-                 if (entryM==null){
-                  System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
-                    System.exit(0); 
-                 }
+       int k=nestingClassLevel;
+       int h=nestingLevel;
+       STentry entryM=null;
+      // System.out.println(""+$i.text);   
+       STentry entryRealCl = null;                 
+      // String clName = ((ClassTypeNode)entry.getType()).getName();
+       //System.out.println("Class Name: "+clName);              
+     // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
+//       -ClassCallNode  ID1.ID2() 
+//        STentry dell'ID1 in campo "entry"
+//        STentry dell'ID2 in campo "methodEntry"
+//        (ID2 cercato in vTable della CTentry della classe del tipo di ID1)
+       
+       while (h>=0 && entryRealCl==null){
+        entryRealCl=(symTable.get(h--)).get($i.text);
+        //System.out.println("Found 1 ciclo:" +$i.text+" at line "+$i.line + " j="+j + "     nl: " + nestingLevel);
+        //found=true;
+       }
+       
+       
+       //ricerca dell'entry del metodo all'interno della classe relativa ad esso trovata in precedenza
+       
+     //  k = entryRealCl.getNestingLevel() + 1;  da reinserire
+       //System.out.println("N Real Cl: " + k + " clName: " + clName + " -> " + $i.text + " " + $i.line);
+       while (k>=0 && entryM==null){
+        entryM=(virtualTable.get(k--)).get($cmid.text);
+        //System.out.println("Found 1 ciclo:" +$i.text+" at line "+$i.line + " j="+j + "     nl: " + nestingLevel);
+        //found=true;
+       }
+       
+       if (entryM==null){
+        System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
+          System.exit(0); 
+       }
                  
                                 
 // commenti degli altri STentry entryCl=(symTable.get(k)).get(clName);
@@ -572,7 +576,7 @@ value	returns [Node ast]
      }
      )* )? 
      {
-        $ast=new CallMethodNode($cmid.text, entryM, entryRealCl, mArgList, $i.text);
+        $ast=new ClassCallNode($cmid.text, entryRealCl,entryM, mArgList);
      }
      RPAR    
      )? 
