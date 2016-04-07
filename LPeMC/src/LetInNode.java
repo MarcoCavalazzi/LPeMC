@@ -20,12 +20,16 @@ public class LetInNode implements Node {
   public String toPrint(String s) {
 	String declstr="";
 	String clliststr="";
+	
 	if(cllist != null)
 		for(Node cl:cllist)
 			clliststr += cl.toPrint(s+"  ");
-  
-    for (Node dec:declist)
-      declstr+=dec.toPrint(s+"  ");
+	
+	if(declist != null)
+	{	
+		for (Node dec:declist)
+			declstr+=dec.toPrint(s+"  ");
+	}
 	return s+"Let\n" + clliststr + declstr + "In\n"+ exp.toPrint(s+"  ") +"EndLetIn\n"; 
   }
   

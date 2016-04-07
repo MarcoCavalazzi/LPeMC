@@ -12,7 +12,7 @@ public class ClassTypeNode implements Node {
 	  }
 	  
 	  public String toPrint(String s) {
-	        return name;
+	        return s+"ClassTypeNode\n";
 	  }
 	  
 	  public Node typeCheck() {

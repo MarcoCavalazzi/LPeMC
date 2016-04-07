@@ -236,7 +236,7 @@ declist	returns [ArrayList<Node> astlist]
        {
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
-          
+          //System.out.println("type: "+$t.ast + "var "+$i.text);
           if($t.ast instanceof ArrowTypeNode)
           {
              offset-=2;
@@ -325,7 +325,20 @@ type  returns [Node ast]
 basic returns [Node ast]
   :       INT  {$ast=new IntTypeNode();}
         | BOOL {$ast=new BoolTypeNode();} 
-        | ID {$ast=new IdNode();}
+        | i=ID   {
+        int jj = nestingClassLevel;    
+         STentry classEntry = null;    
+         while (jj>=0 && classEntry==null){
+           classEntry=(symTable.get(jj--)).get($i.text);         
+         }       
+                  if(classEntry != null)
+                  {
+                    $ast=new ClassTypeNode($i.text);
+                    System.out.println("prova!!!!!!");
+                   }
+                  else
+                  $ast=new IdNode();
+        }
 	;	
 
 /*type: basic | arrow;
@@ -383,7 +396,7 @@ value	returns [Node ast]
     
        if(ctEntry==null)
        { 
-          System.out.println("Class "+$i.text+" at line "+$i.line+" not declared");
+          System.out.println("Class "+$i.text+" at line "+$i.line+" not declared!!!!");
           System.exit(0); 
        }                  
        
@@ -432,24 +445,26 @@ value	returns [Node ast]
   | NOT LPAR  x=exp RPAR  {$ast = new NotNode($x.ast);}
   | PRINT LPAR e=exp RPAR {$ast= new PrintNode($e.ast);}
   | LPAR exp RPAR 
-  |  i=ID 
-    {//cercare la dichiarazione
+  |  i=ID  
+    {//cercare la dichiarazione (cioè quando lo usa)
 	    int j  = nestingLevel;
 	    int jj = nestingClassLevel;
 	    STentry entry     = null; 
 	    STentry classEntry = null;
-	    
+	    System.out.println("guihkl"); 
 	    while (j>=0 && entry==null)
 	      entry=(symTable.get(j--)).get($i.text);
 	         
 	    while (jj>=0 && classEntry==null){
         classEntry=(virtualTable.get(jj--)).get($i.text);         
         }
-        
-	    if (entry == null && classEntry == null ){
-	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
+         
+	    if (entry == null ){
+	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!!!!!!!");
+	       
 	       System.exit(0);
-	    } 	                  
+	    }
+	     	   
 	    $ast = new IdNode($i.text,entry,nestingLevel);
 	    
 	    //inizia la parte OO
@@ -466,6 +481,7 @@ value	returns [Node ast]
       }
            //System.out.println("PARSER ENTRY DECL " + entry.getDecl() + " -> "  +$i.text + " OS " + entry.getOffset() + " CLNAME " + classInputName);
            //System.out.println("Id "+$i.text+" at line "+$i.line + "   - j: " +j + " - nl: " + nestingLevel);
+          System.out.println("Id "+$i.text+" at line "+$i.line + "   - j: " +j + " - nl: " + nestingLevel);
            //if (entry==null){
           //  System.out.println("Id "+$i.text+" at line "+$i.line+" not declared");
               // System.exit(0); 

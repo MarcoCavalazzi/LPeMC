@@ -1,8 +1,8 @@
 let 
-	class Account (money:int) {
-    fun getMon:int() money;	
-   }
-   var x:Account = new Account(3);
+	class Account () {
+    fun getMon:int() 1;	
+   } 
+   var x:Account = new Account();
 in 
 	print(1);
 /*
