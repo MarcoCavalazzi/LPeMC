@@ -52,6 +52,20 @@ public class CTentry {
 		type = t;
 	}
 
+	public ArrayList<Node> getFields()
+	{
+		return allFields;
+	}
+	
+	public ArrayList<Node> getMethods()
+	{
+		return allMethods;
+	}
+	
+	public void addvTable(STentry e, String s)
+	{
+		vTable.put(s,e);
+	}
 	
 	public String toPrint(String string) {
 		// TODO Auto-generated method stub

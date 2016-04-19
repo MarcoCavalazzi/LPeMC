@@ -8,6 +8,8 @@ public class ClassCallNode implements Node {
 	private ArrayList<Node> par = new ArrayList<Node>();
 	private int nNewClass;
 	
+	
+	
 	 public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p) {
 	   id=i;
 	   entry=e;
@@ -53,11 +55,11 @@ public class ClassCallNode implements Node {
 		  String ret = "";
 		  String parCode = "";
 		  String NameCl = "";
-		  ClassNode obj = ((ClassNode)((ArrowTypeNode)entry.getType()).getRet());
+		 // ClassNode obj = ((ClassNode)((ArrowTypeNode)entry.getType()).getRet());
 		  /*
 		   * generazione del codice relativa ai metodi dell'oggetto istanziato
 		   */
-		  String methods = (obj).codeGeneration();
+		  //String methods = (obj).codeGeneration();
 		  
 		  /*
 		   * memorizzo nell'heap l'identificatore dell'oggetto
@@ -91,8 +93,8 @@ public class ClassCallNode implements Node {
 		   * relativi metodi di classe
 		   */
 		  ret= NameCl+
-		 	   parCode+
-		 	   methods;
+		 	   parCode;
+		 	  // methods;
 		  
 		  return ret;
 	}

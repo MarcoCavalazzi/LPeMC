@@ -25,7 +25,7 @@ public class MethodNode implements Node, DecNode {
   public void addPar (Node p) {
     parlist.add(p);
   }  
-  
+
   public String toPrint(String s) {
 	String parlstr="";
 	if (parlist!=null)

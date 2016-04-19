@@ -5,6 +5,8 @@ public class ClassNode implements Node{
 	private String name;
 	private ArrayList<Node> dec = new ArrayList<Node>();
 	private ArrayList<Node> fields = new ArrayList<Node>();
+	private CTentry classEntry;
+	private CTentry superEntry;
 	
 	public ClassNode(String id){
 		name = id;
@@ -14,6 +16,18 @@ public class ClassNode implements Node{
 		return name;
 	}
 
+	
+	public void setSuperEntry(CTentry sE)
+	{
+		superEntry = sE;
+	}
+	
+	public void setClassEntry(CTentry cE)
+	{
+		classEntry = cE;
+	}
+	
+	
 	public String toPrint(String s) {
 		String ret = s+"Class "+name+"\n" + s + "   " + (fields.size() > 0 ? " parameters:" : "") + " \n";
 	    for(int j=0;j < fields.size();j++){

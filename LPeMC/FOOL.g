@@ -35,6 +35,7 @@ prog	returns [Node ast]
             {
               symTable.remove(nestingLevel--);
               $ast = new LetInNode($d.astlist,$cl.astlist,$e.ast) ;
+              
             }
 	;
 
@@ -46,6 +47,9 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     $astlist = new ArrayList<Node>() ;
 	     int offset      = -2;
 	     int classoffset = -2;
+	     CTentry extendedEntry = null;
+	     CTentry ctentry       = null;
+	     
 	   } 
 	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe
 	   {
@@ -54,8 +58,9 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
          HashMap<String,STentry> hm = symTable.get(nestingLevel);
          //HashMap<String,CTentry> hmClass = classTable.get(nestingClassLevel);                 
          //HashMap<String,STentry> vTable = new HashMap<String,STentry>(); //ci va?
+         
          STentry entryCl = new STentry(Obj,nestingLevel);
-         CTentry ctentry = new CTentry(Obj,nestingClassLevel);
+         ctentry = new CTentry(Obj,nestingClassLevel);
          STentry tmp  = hm.put($cid.text,entryCl);
          CTentry tmp2 = classTable.put($cid.text,ctentry);
          
@@ -75,21 +80,25 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
       }
 	    (EXTENDS cidext=ID
 	    {
-	     /*
-          HashMap<String,STentry> hmSuper = symTable.get(nestingLevel-1);
-          int j=nestingLevel;
-           STentry entry=null;
+	     
+         // HashMap<String,STentry> hmSuper = classTable.get(nestingClassLevel-1);
+           
            // verifico che la classe estesa sia già stata dichiarata in precedenza 
-           while (j>=0 && entry==null){
-              entry=(symTable.get(j--)).get($cidext.text);
-           }
+          // while (j>=0 && entry==null){
+           extendedEntry = classTable.get($cidext.text);
+          // }
                  
-           if(entry == null){
+           if(extendedEntry == null){
            System.out.println("Class id "+$cidext.text+" at line "+$cidext.line+" not declared");
                 System.exit(0);
            }
-           Obj.addSuperClass(entry.getDecl()); 
-       */ 
+           
+           
+           //Obj.addSuperClass(entry.getDecl()); 
+           Obj.setSuperEntry(extendedEntry);
+           Obj.setClassEntry(ctentry);
+           
+           
 	     }
 	     )? 
 	     LPAR 
@@ -112,6 +121,10 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared");
              System.exit(0); 
           }
+          
+          ctentry.setField(Objfield);
+          //se p1 è anche in extendedEntry.getFields non lo aggiungiamo in symbolTable
+          
 	     }
 	     (COMMA pn=ID COLON tn=basic
 	     {
@@ -126,6 +139,8 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
              System.exit(0); 
           }
+          
+          ctentry.setField(Objfield);
 	     }
 	     )* )? RPAR
 	     {
@@ -154,7 +169,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              nestingClassLevel++;
              HashMap<String,STentry> hmnc = new HashMap<String,STentry> ();
              virtualTable.add(hmnc);
-             
+             ctentry.setMethod(f);
              //creare una nuova hashmap per la symTable
              // nestingLevel++;
              // HashMap<String,STentry> hmnc = new HashMap<String,STentry> (); //hmnc è la vTable
@@ -195,6 +210,13 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	       {
 	          entry.addType( new ArrowTypeNode(parTypes , $retm.ast) );
             ArrayList<Node> letInMethodList = new ArrayList<Node>();
+            
+          
+                
+                
+            
+            
+            
 	       }
 	       (LET {int innerOs = -2; }
 	       (VAR vid=ID COLON vt=basic ASS ve=exp
@@ -223,6 +245,78 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	        }
 	        SEMIC)* 
       CRPAR)*
+      {
+          //codice per l'ereditarietà
+            if(extendedEntry != null) //se è null allora non c'è stata ereditarietà
+            {
+                boolean flag = true;   //controllo che non ci sia stato overriding
+                ArrayList<Node> fieldsExt = extendedEntry.getFields();
+                ArrayList<Node> methodsExt = extendedEntry.getMethods();
+                STentry tempEntry = null;
+                int jj = nestingClassLevel;
+                
+                
+                for(int i = 0; i < fieldsExt.size(); i ++)//controllo ogni field della classe ereditata con ogni field della classe base, i simboli senza overriding vengono aggiunti in vTable
+                {
+                  flag = true; //se e' true non c'è stato overriding, false altrimenti
+                  
+                  for(int j = 0; j < ctentry.getFields().size(); j ++)
+                  { 
+                    if(( (FieldNode) fieldsExt.get(i)).getName().equals(((FieldNode) ctentry.getFields().get(j)).getName()) )
+                    {
+                        flag = false;
+                        break;
+                    }
+                  }
+                  
+                  if(flag)                 
+                  {
+                      jj = nestingClassLevel; //perchè jj viene diminuito e quindi ad ogni iterazione va resettato
+                                       
+                      while (jj>=0 && tempEntry==null)
+                      {                         
+                          tempEntry=(virtualTable.get(jj--)).get(((FieldNode)fieldsExt.get(i)).getName());                                                        
+                          //è da aggiungere il check di tipo di parametri/metodi
+                      }
+                          ctentry.addvTable(tempEntry, ((FieldNode)fieldsExt.get(i)).getName());
+                          ctentry.setField(fieldsExt.get(i));
+                                                         
+                  }
+                
+                }
+                
+                for(int i = 0; i < methodsExt.size(); i ++) //strategia analoga ai Fields
+                {       
+                  flag = true;                                                    
+                  
+                  for(int j = 0; j < ctentry.getMethods().size(); j ++)
+                  {                                               
+                    if(( (MethodNode) methodsExt.get(i)).getName().equals(((MethodNode) ctentry.getMethods().get(j)).getName()) )
+                      {
+                         flag = false;
+                         break;
+                      } 
+                                    
+                  }
+                  
+                  if(flag)
+                  {
+                      jj = nestingClassLevel;
+                      while (jj>=0 && tempEntry==null)
+                       {                         
+                           tempEntry=(virtualTable.get(jj--)).get(((MethodNode)methodsExt.get(i)).getName());                                
+                       }
+                    
+                     
+                    //è da aggiungere il check di tipo di parametri/metodi
+                    ctentry.addvTable(tempEntry, ((MethodNode)methodsExt.get(i)).getName());
+                    ctentry.setMethod(methodsExt.get(i));
+                   } 
+                } 
+                                                    
+              } 
+              //fine codice per l'ereditarietà  
+      }
    ;
         
 declist	returns [ArrayList<Node> astlist]

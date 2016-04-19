@@ -15,6 +15,11 @@ public class IdNode implements Node {
 	  
   }
   
+  public String getName()
+  {
+	  return id;
+  }
+  
   public String toPrint(String s) {
 	return s+"Id:" + id +" at nestlev "+ nl +"\n" + entry.toPrint(s+"  ") ;  
   }

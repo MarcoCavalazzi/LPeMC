@@ -1,9 +1,15 @@
 let 
-	class Account (money:int) {
+	class Account (money:int)  {
     fun getMon:int() money;	
+	fun getPippo:int () 2;
    } 
-   var x:Account = new Account();
    
+	class TradingAcc extends Account (invested:int) {
+		fun getInv:int () invested;
+		fun getMon:int() 1;	
+    }
+
+	var x:Account = new Account();
 in 
 	print(x.getMon());
 /*
