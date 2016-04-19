@@ -209,13 +209,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	       })* )? RPAR
 	       {
 	          entry.addType( new ArrowTypeNode(parTypes , $retm.ast) );
-            ArrayList<Node> letInMethodList = new ArrayList<Node>();
-            
-          
-                
-                
-            
-            
+            ArrayList<Node> letInMethodList = new ArrayList<Node>();          
             
 	       }
 	       (LET {int innerOs = -2; }
