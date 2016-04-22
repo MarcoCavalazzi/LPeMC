@@ -662,7 +662,7 @@ value	returns [Node ast]
      }
      )* )? 
      {
-        $ast=new ClassCallNode($cmid.text, entryRealCl,entryM, mArgList);
+        $ast=new ClassCallNode($cmid.text, entryRealCl,entryM, mArgList, nestingLevel);
      }
      RPAR    
      )? 

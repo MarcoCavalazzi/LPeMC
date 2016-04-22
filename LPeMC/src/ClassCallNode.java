@@ -6,15 +6,17 @@ public class ClassCallNode implements Node {
 	private STentry entry; 
 	private STentry methodEntry;
 	private ArrayList<Node> par = new ArrayList<Node>();
-	private int nNewClass;
+	//private int nNewClass;
+	private int nl;
 	
 	
 	
-	 public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p) {
+	 public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p, int n) {
 	   id=i;
 	   entry=e;
 	   methodEntry = me;
 	   par = p;
+	   nl = n;
 	   
 	}
 	public String toPrint(String s) {
@@ -51,52 +53,74 @@ public class ClassCallNode implements Node {
 	
 	public String codeGeneration() {
 		
-		//System.out.println("Generazione CallClassNode");
-		  String ret = "";
-		  String parCode = "";
-		  String NameCl = "";
-		 // ClassNode obj = ((ClassNode)((ArrowTypeNode)entry.getType()).getRet());
-		  /*
-		   * generazione del codice relativa ai metodi dell'oggetto istanziato
-		   */
-		  //String methods = (obj).codeGeneration();
-		  
-		  /*
-		   * memorizzo nell'heap l'identificatore dell'oggetto
-		   * e mi sposto nella locazione successiva dell'heap (la prima libera)
-		   */
-		  NameCl = "push " + nNewClass + "\n" +
-				   "lhp \n" +
-				   "sw \n" +
-				   "lhp\n" +
-				   "push 1\n"+ 
-				   "lhp\n"+ //carico l'heap pointer corrente
-				   "add\n"+
-				   "shp\n";
-		  
-		  parCode = "";
-		  //System.out.println("Class " + obj.getName() + " par num: " + par.size());
-		  for(int i = 0; i < par.size() ;i++){
-				  parCode += par.get(i).codeGeneration()+
-							 "lhp\n"+
-							 "sw\n" +
-							 "push 1\n"+ 
-							 "lhp\n"+ //carico l'heap pointer corrente
-							 "add\n"+
-							 "shp\n"/*+
-							 "lhp\n"+
-							 "lw\n"*/;
+		  String parCode = "";	// codice per la prima parte dell'activation record (vedi file "progettiamo il nostro layout" nell'esercitazione 12_04).
+		  for(int i=par.size()-1; i>=0; i--){
+			  parCode += par.get(i).codeGeneration();
 		  }
-		  /*
-		   * restituzione della generazione di codice relativa all'identificatore della classe,
-		   * seguita dal codice dei suoi parametri (utilizzati nella call dell'istanza) e dei 
-		   * relativi metodi di classe
-		   */
-		  ret= NameCl+
-		 	   parCode;
-		 	  // methods;
 		  
-		  return ret;
+		  String getAR = "";
+		  for(int i=0; i< nl-methodEntry.getNestinglevel(); i++){
+			  getAR += "lw\n";
+		  }
+		
+		  return "lfp\n"+		// CL
+			parCode+	// parametri
+			"lfp\n"+	
+			getAR+		// AL ;
+			"push "+entry.getOffset()+"\n"+
+			"lfp\n"+
+			getAR+
+			"add\n"+
+			"lw\n"+		
+			"js\n";	
+		  
+//		//System.out.println("Generazione CallClassNode");
+//		  String ret = "";
+//		  String parCode = "";
+//		  String NameCl = "";
+//		 // ClassNode obj = ((ClassNode)((ArrowTypeNode)entry.getType()).getRet());
+//		  /*
+//		   * generazione del codice relativa ai metodi dell'oggetto istanziato
+//		   */
+//		  //String methods = (obj).codeGeneration();
+//		  
+//		  /*
+//		   * memorizzo nell'heap l'identificatore dell'oggetto
+//		   * e mi sposto nella locazione successiva dell'heap (la prima libera)
+//		   */
+//		  NameCl = "push " + nNewClass + "\n" +
+//				   "lhp \n" +
+//				   "sw \n" +
+//				   "lhp\n" +
+//				   "push 1\n"+ 
+//				   "lhp\n"+ //carico l'heap pointer corrente
+//				   "add\n"+
+//				   "shp\n";
+//		  
+//		  parCode = "";
+//		  //System.out.println("Class " + obj.getName() + " par num: " + par.size());
+//		  for(int i = 0; i < par.size() ;i++){
+//				  parCode += par.get(i).codeGeneration()+
+//							 "lhp\n"+
+//							 "sw\n" +
+//							 "push 1\n"+ 
+//							 "lhp\n"+ //carico l'heap pointer corrente
+//							 "add\n"+
+//							 "shp\n"/*+
+//							 "lhp\n"+
+//							 "lw\n"*/;
+//		  }
+//		  /*
+//		   * restituzione della generazione di codice relativa all'identificatore della classe,
+//		   * seguita dal codice dei suoi parametri (utilizzati nella call dell'istanza) e dei 
+//		   * relativi metodi di classe
+//		   */
+//		  ret= NameCl+
+//		 	   parCode;
+//		 	  // methods;
+//		  
+//		  return ret;
+		
 	}
 
 	 public String getClassName(){
