@@ -5,6 +5,7 @@ public class ClassNode implements Node{
 	private String name;
 	private ArrayList<Node> dec = new ArrayList<Node>();
 	private ArrayList<Node> fields = new ArrayList<Node>();
+	private ArrayList<MethodNode> methods = new ArrayList<MethodNode>();
 	private CTentry classEntry;
 	private CTentry superEntry;
 	
@@ -226,6 +227,22 @@ public class ClassNode implements Node{
 	}
 	
 	public String codeGeneration() {
-		return getMethodCodeGen();
+		
+		String methodCode="";
+		String methodLabel = "";
+		
+		for (MethodNode method:methods)
+		{
+			method.setLabel(FOOLlib.freshFunLabel());
+			methodCode += method.codeGeneration();
+		}	
+		
+		
+	//	FOOLlib.putCode(
+	//	"\n"+methodLabel+":\n"+
+	//	methodCode);
+		
+		return "";
+
 	}
 }

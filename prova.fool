@@ -6,7 +6,7 @@ let
    
 	class TradingAcc extends Account (invested:int) {
 		fun getInv:int () invested;
-		fun getMon:int() 1;	
+		fun getMon:int() 999;	
     }
 
 	var x:Account = new Account();

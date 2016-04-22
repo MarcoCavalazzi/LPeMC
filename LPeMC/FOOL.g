@@ -421,8 +421,7 @@ basic returns [Node ast]
          }       
                   if(classEntry != null)
                   {
-                    $ast=new ClassTypeNode($i.text);
-                    System.out.println("prova!!!!!!");
+                    $ast=new ClassTypeNode($i.text);                  
                    }
                   else
                   $ast=new IdNode();
@@ -539,7 +538,6 @@ value	returns [Node ast]
 	    int jj = nestingClassLevel;
 	    STentry entry     = null; 
 	    STentry classEntry = null;
-	    System.out.println("guihkl"); 
 	    while (j>=0 && entry==null)
 	      entry=(symTable.get(j--)).get($i.text);
 	         

@@ -6,6 +6,7 @@ public class MethodNode implements Node, DecNode {
   private Node type; 
   private ArrayList<Node> parlist; 
   private Node body;
+  private String label;
   
   public MethodNode (String i, Node t) {
     id=i;
@@ -38,17 +39,39 @@ public class MethodNode implements Node, DecNode {
            +body.toPrint(s+"  ") ; 
   }
   
-// Per capire questa funzione vedi file "progettiamo il nostro layout" nell'esercitazione 12_04.
+  
   public String codeGeneration() {
-	String parCode = "";
-	String funl=FOOLlib.freshFunLabel();		
+	String parCode = "";	
+	
 	String popPar = "";
+	String popParNode = "";
+	
 	for(Node dec:parlist){
 		popPar += "pop\n";
 	}
 	
+	//String popArrowTypeNode = "";
+	//if(getSymType() instanceof ArrowTypeNode)
+	//{
+	//	popArrowTypeNode = "pop\n" + "pop\n";
+	//}
+	
+	//////DUBBIO!!!!//////
+	
+	if(popParNode == "")	
+	{
+		for(int i=0; i < parlist.size();i++)
+		{
+			if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+			{
+				popParNode += "pop\n" + "pop\n";
+				break;
+			}
+		}
+	}
+	
 	FOOLlib.putCode(
-	    "\n"+funl+":\n"+		
+	    "\n"+label+":\n"+		
 		"cfp\n"+	// setta il registro $fp / copy stack pointer into frame pointer
 	    "lra\n"+   // load from ra sullo stack
 		parCode+	// codice delle dichiarazioni
@@ -63,27 +86,8 @@ public class MethodNode implements Node, DecNode {
 		"js\n"      //js salta all'indirizzo che è in cima allo stack e salva la prossima istruzione in ra.
     );
 	
-	/* codice del progetto funzionante:
-	//inserisco la serie di istruzioni della funzione che poi verranno utilizzate
-    //nel letinNode
-    FOOLlib.putFunCode(
-    				"\n"+funl+":\n"+
-                    "cfp\n"+ //aggiorniamo il frame pointer
-                    "lra\n"+ //carichiamo il return address
-                    decCode+ //preparo le dichiarazioni locali della funzione
-                    body.codeGeneration()+ //eseguo il corpo della funzione
-                    "srv\n"+ //gestisco il return value(registro)
-                    popDec+ //carico le dichiarazioni locali della funzione
-                    "sra\n"+ //ci salviamo il return address
-                    "pop\n"+ //butto via l'access link
-                    popPar+  //prelievo dei i parametri
-                    "sfp\n"+ //memorizzo il frame pointer a cui ero arrivato
-                    "lrv\n"+ //mi preparo a ritornare
-                    "lra\n"+ //ritorno all'AR precedente
-                    "js\n"
-                   );*/
 	
-	return "push "+funl+"\n";
+	return "push "+label+"\n";
   }
   
   public Node typeCheck () {
@@ -109,4 +113,7 @@ public class MethodNode implements Node, DecNode {
 	  return id;
   }
   
+  public void setLabel(String l){
+	  label = l;
+  }
 }
