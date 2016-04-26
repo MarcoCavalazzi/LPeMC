@@ -16,7 +16,7 @@ public class FieldNode implements Node, DecNode {
   }
   
   public Node typeCheck () {
-     return null;
+     return type;
   }
   
   public String codeGeneration() {

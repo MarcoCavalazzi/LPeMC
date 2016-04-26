@@ -35,6 +35,15 @@ public class IdNode implements Node {
 	  
 	//credo ci sia da aggiungere varList.getType() instance of ArrowTypeNode
     //ma come ottengo la lista dei parametri o delle variabili che possono essere di tipo funzionale?
+	if(entry.getType() instanceof ClassTypeNode)
+	{
+		if(id.equals(entry.getClassName()) || (id.equals(entry.getMethodName())))
+		{	
+			System.out.println("Id "+id+" already declared");
+			System.exit(0);	
+		}	
+	}
+	  
     return entry.getType();
   }
   

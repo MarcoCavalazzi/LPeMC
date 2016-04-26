@@ -60,6 +60,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
          //HashMap<String,STentry> vTable = new HashMap<String,STentry>(); //ci va?
          
          STentry entryCl = new STentry(Obj,nestingLevel);
+         entryCl.setClassName($cid.text);
          ctentry = new CTentry(Obj,nestingClassLevel);
          STentry tmp  = hm.put($cid.text,entryCl);
          CTentry tmp2 = classTable.put($cid.text,ctentry);
@@ -97,7 +98,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
            //Obj.addSuperClass(entry.getDecl()); 
            Obj.setSuperEntry(extendedEntry);
            Obj.setClassEntry(ctentry);
-           
+           FOOLlib.putSuperType($cid.text,$cidext.text);
            
 	     }
 	     )? 
@@ -160,7 +161,8 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
              //FOOLlib.addMethodTuple($mid.text, $cid.text, FOOLlib.getMethodRealOffset(Obj,$mid.text));
              STentry entry = new STentry(nestingClassLevel,f,classoffset--);
-             entry.setIsMethod();                  
+             entry.setIsMethod();  
+             entry.setMethodName($mid.text);           
              if ( hmclass.put($mid.text,entry) != null  )
              {
                 System.out.println("Method id "+$mid.text+" at line "+$mid.line+" already declared");
@@ -170,6 +172,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              HashMap<String,STentry> hmnc = new HashMap<String,STentry> ();
              virtualTable.add(hmnc);
              ctentry.setMethod(f);
+             Obj.setMethod(f);
              //creare una nuova hashmap per la symTable
              // nestingLevel++;
              // HashMap<String,STentry> hmnc = new HashMap<String,STentry> (); //hmnc è la vTable
@@ -495,12 +498,12 @@ value	returns [Node ast]
        (fa=exp
        {
          argList.add($fa.ast);
-         ctEntry.setField($fa.ast);
+         //ctEntry.setField($fa.ast);
        }
         (COMMA a=exp
         {
           argList.add($a.ast);
-          ctEntry.setField($a.ast);
+         // ctEntry.setField($a.ast);
         }
         )* )? 
         {               

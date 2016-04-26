@@ -9,7 +9,7 @@ let
 		fun getMon:int() 999;	
     }
 
-	var x:Account = new Account();
+	var x:TradingAcc = new TradingAcc(118);
 in 
 	print(x.getMon());
 /*

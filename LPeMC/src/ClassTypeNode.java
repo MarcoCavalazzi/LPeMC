@@ -7,7 +7,11 @@ public class ClassTypeNode implements Node {
 		  name = n;
 	  }
 	  
-	  public String getName(){
+	  public ClassTypeNode() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getName(){
 		  return name;
 	  }
 	  

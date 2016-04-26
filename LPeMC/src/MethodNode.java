@@ -45,10 +45,10 @@ public class MethodNode implements Node, DecNode {
 	
 	String popPar = "";
 	String popParNode = "";
-	
-	for(Node dec:parlist){
-		popPar += "pop\n";
-	}
+	if(parlist != null)
+		for(Node dec:parlist){
+			popPar += "pop\n";
+		}
 	
 	//String popArrowTypeNode = "";
 	//if(getSymType() instanceof ArrowTypeNode)
@@ -58,7 +58,7 @@ public class MethodNode implements Node, DecNode {
 	
 	//////DUBBIO!!!!//////
 	
-	if(popParNode == "")	
+	if(popParNode == "" && parlist!=null)	
 	{
 		for(int i=0; i < parlist.size();i++)
 		{
@@ -115,5 +115,10 @@ public class MethodNode implements Node, DecNode {
   
   public void setLabel(String l){
 	  label = l;
+  }
+  
+  public String getLabel()
+  {
+	  return label;
   }
 }

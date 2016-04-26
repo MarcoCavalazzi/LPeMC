@@ -5,7 +5,9 @@ public class STentry {
  
   private int nl;		// nesting level
   private Node type;
+  private String className = null;
   private boolean isMethod = false;
+  private String methodName= null;
   private int offset;	// per poter leggere il valore scelto a partire dal fp.
   private Node dec;
   //OO
@@ -21,7 +23,8 @@ public class STentry {
   public STentry (int n, Node t, int o)
   {nl=n;
    type=t;
-   offset=o;}
+   offset=o;
+   }
   
   public STentry (Node d, int n, Node t,int os)
   {dec=d;
@@ -102,6 +105,10 @@ public class STentry {
 	  isMethod = true;
   }
   
+  public String getClassName()
+  {
+	  return className;
+  }
   public String getInstanceClass (int index)
   {return instancesClasses.get(index);}
   
@@ -114,6 +121,20 @@ public class STentry {
   
   private void putInstanceOffset(int os) {
 	  instancesOffset.add(os);
+  }
+
+  public String getMethodName() {
+	return methodName;
+  }
+  
+  public void setMethodName(String s)
+  {
+	  methodName = s;
+  }
+  
+  public void setClassName(String s)
+  {
+	  className = s;
   }
   
 }  

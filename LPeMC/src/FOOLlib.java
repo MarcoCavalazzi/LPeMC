@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -23,6 +24,8 @@ public class FOOLlib {
   */
   public static int FALSE=0;
   
+  private static HashMap<String,String> superType = new HashMap<String,String>();
+  
   private static LinkedHashMap<String, LinkedHashMap<String, String>> dtmc = new LinkedHashMap<String, LinkedHashMap<String, String>>();
   private static LinkedHashMap<String, Integer> classIndex = new LinkedHashMap<String, Integer>();
   private static LinkedHashMap<String, String> classHierarchy = new LinkedHashMap<String, String>();
@@ -42,6 +45,37 @@ public class FOOLlib {
   
   //valuta se il tipo "a" e' <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
   public static boolean isSubtype (Node a, Node b) {
+	  
+	  if(a instanceof ClassTypeNode && b instanceof ClassTypeNode)
+	  {
+		  String tmp = "tmp";
+	  
+		  tmp = superType.get( ((ClassTypeNode) a).getName());
+	  
+		  if(tmp == superType.get( ((ClassTypeNode) b).getName()))
+		  {
+			  return true;
+		  }	  
+	  
+		  while(tmp != null)
+		  {
+			  tmp = superType.get(tmp);
+		  
+			  if(tmp == superType.get( ((ClassTypeNode) b).getName()))
+			  {
+				  return true;
+			  }
+		  
+		  }
+	  
+	      return false;
+	  }
+	  
+	  if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode)
+	  {
+		  return true;
+	  }
+	  
 	  /*
 	  boolean ret = false;
 	  boolean ret2 = false;
@@ -87,15 +121,15 @@ public class FOOLlib {
 	  }
 	  
 	  //OO ma da controllare
-	  if(a instanceof ClassTypeNode && b instanceof ClassTypeNode) {
-	    	ArrayList<String> gerarchia = getClassHierarchy(((ClassTypeNode)a).getName());
-	    	for(int i = 0; i < gerarchia.size(); i++) {
-	    		if(gerarchia.get(i).equals(((ClassTypeNode)b).getName())){
-	    			return true;
-	    		}
-	    	}
-	    	return false;
-	    }
+//	  if(a instanceof ClassTypeNode && b instanceof ClassTypeNode) {
+//	    	ArrayList<String> gerarchia = getClassHierarchy(((ClassTypeNode)a).getName());
+//	    	for(int i = 0; i < gerarchia.size(); i++) {
+//	    		if(gerarchia.get(i).equals(((ClassTypeNode)b).getName())){
+//	    			return true;
+//	    		}
+//	    	}
+//	    	return false;
+//	    }
 	  
     return a.getClass().equals(b.getClass())
     		|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)  		  		   
@@ -119,6 +153,12 @@ public class FOOLlib {
   public static String getCode() {
 	return funCode;
   }
+  
+  public static void putSuperType(String subClass, String superClass) //da gestire nel parsing
+  {
+	  superType.put(subClass, superClass);
+  }
+  
   
   //da qui in poi, funzioni per l'OO
   

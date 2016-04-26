@@ -63,7 +63,39 @@ public class ClassNode implements Node{
 		
 	    return new ArrowTypeNode (pt, this);
 	    */
-		return null;
+		
+		if(superEntry != null)//cioè se c'è ereditarietà
+		{
+			for(int i = 0; i < classEntry.allFields.size(); i++)
+			{
+				for(int j = 0; j < superEntry.allFields.size(); j++)
+					if(!FOOLlib.isSubtype(((FieldNode)classEntry.allFields.get(i)).getSymType(), 
+							((FieldNode)superEntry.allFields.get(j)).getSymType()))
+					{
+						System.out.println("Wrong field type in field "+ 
+								((FieldNode)superEntry.allFields.get(j)).getName()+" for class "+name);
+						System.exit(0);
+					}
+
+			}
+
+
+			for(int i = 0; i < classEntry.allMethods.size(); i++)
+			{
+				for(int j = 0; j < superEntry.allMethods.size(); j++)
+					if(!FOOLlib.isSubtype(((MethodNode)classEntry.allMethods.get(i)).getSymType(), 
+							((MethodNode)superEntry.allMethods.get(j)).getSymType()))
+					{
+						System.out.println("Wrong method type in method "+ 
+								((MethodNode)superEntry.allMethods.get(j)).getName()+" for class "+name);
+						System.exit(0);
+					}
+
+			}
+		}
+		//return new ClassTypeNode();
+		return null; //non siamo sicuri.
+		
 	}
 	
 	public ParNode getBodyParamByName(String name) {
@@ -226,15 +258,20 @@ public class ClassNode implements Node{
 		 
 	}
 	
+	public void setMethod(MethodNode Node)
+	{
+		methods.add(Node);
+	}
+	
 	public String codeGeneration() {
 		
-		String methodCode="";
-		String methodLabel = "";
+		//String methodCode="";
+		//String methodLabel = "";
 		
 		for (MethodNode method:methods)
 		{
 			method.setLabel(FOOLlib.freshFunLabel());
-			methodCode += method.codeGeneration();
+			method.codeGeneration();
 		}	
 		
 		

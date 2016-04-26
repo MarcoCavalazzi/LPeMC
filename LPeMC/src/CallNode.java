@@ -25,7 +25,8 @@ public class CallNode implements Node {
   
   public Node typeCheck () {  // 
 	 ArrowTypeNode t=null;
-     if (entry.getType() instanceof ArrowTypeNode) t=(ArrowTypeNode) entry.getType(); 
+     if (entry.getType() instanceof ArrowTypeNode) 
+    	 t=(ArrowTypeNode) entry.getType(); 
      else {
        System.out.println("Invocation of a non-function "+id);
        System.exit(0);

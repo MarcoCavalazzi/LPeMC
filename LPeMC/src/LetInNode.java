@@ -3,11 +3,11 @@ import java.util.ArrayList;
 public class LetInNode implements Node {
 
   private ArrayList<Node> declist;
-  private ArrayList<Node> cllist = new ArrayList<Node>();
+  private ArrayList<Node> cllist = null;
   private Node exp;
   
   public LetInNode (ArrayList<Node> d, Node e) {
-    declist=d;
+	declist=d;
     exp=e;
   }
   
@@ -34,8 +34,14 @@ public class LetInNode implements Node {
   }
   
   public Node typeCheck () {
+	  
     for (Node dec:declist)
       dec.typeCheck();
+    
+    if(cllist != null)
+    	for(Node cl:cllist)
+			  cl.typeCheck();
+    	
     return exp.typeCheck();
     
     
@@ -45,11 +51,18 @@ public class LetInNode implements Node {
   
   // Questa funzione stamperà un valore per ognuna delle dichiarazioni, mostrando lo stato dello stack.
   public String codeGeneration() {
-	String declcode="";
-	for (Node dec:declist)
+	
+	  String clcode="";
+	  if(cllist!=null){
+		  for(Node cl:cllist)
+			  clcode+=cl.codeGeneration();
+	  }
+	  String declcode="";
+	  for (Node dec:declist)
 	  declcode+=dec.codeGeneration();
 	
 	return "push 0\n"+
+		   clcode+
     	   declcode+
     	   exp.codeGeneration()+
  		   "halt\n"+
