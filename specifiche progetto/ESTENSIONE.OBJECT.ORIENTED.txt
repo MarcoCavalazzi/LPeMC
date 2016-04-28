@@ -30,6 +30,10 @@ LAYOUTS
 
 - layout oggetti in HEAP (metodi: offset singolo anche se hanno tipo funzionale!)
 
+gli addr dei metodi li abbiamo nei corrispondenti label ma come vengono inseriti nell'heap? Con shp?
+Come gestire l'Object Pointer in modo che rimanga in cima allo stack al termine della generazione di codice per NewNode?
+Di conseguenza anche come inserire, sempre nello heap, i valori dei campi (parCode è corretto così?)
+
 [PRIMA POSIZIONE LIBERA HEAP]        <- $hp subito dopo allocazione oggetto
 addr ultimo (m-esimo) metodo         [offset m-1]
 .

@@ -51,7 +51,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     CTentry ctentry       = null;
 	     
 	   } 
-	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe
+	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe //in cllist vanno solo classi o anche il resto? perchè la cod generation per i metodi ad esempio si fa da dentro ClassNode
 	   {
          ClassNode Obj = new ClassNode($cid.text);
          $astlist.add(Obj);
@@ -156,7 +156,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              //isInMethod = true;
              //inserimento di ID nella symtable
              MethodNode f = new MethodNode($mid.text,$retm.ast);                
-             $astlist.add(f);
+             //$astlist.add(f);//giusto o da commentare???
              HashMap<String,STentry> hmclass = virtualTable.get(nestingClassLevel);                    
              //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
              //FOOLlib.addMethodTuple($mid.text, $cid.text, FOOLlib.getMethodRealOffset(Obj,$mid.text));
@@ -511,7 +511,8 @@ value	returns [Node ast]
           //creo il nuovo nodo che istanzia la classe
             //ClassCallNode c= new ClassCallNode($i.text,entry,argList,nNewClass);
          // $ast=c;
-            $ast = new NewNode($i.text,ctEntry,argList);  
+            $ast = new NewNode($i.text,ctEntry,argList);
+              
 //            se l'istanza della classe è all'interno di un metodo viene inserito il nodo relativo a tale istanza
 //            all'interno della lista contenente i nodi delle chiamate ai costruttori effettuate all'interno di metodi
 //            di classe, altrimenti viene aggiunto tale nodo alla lista contenente i nodi delle istanze effettuate

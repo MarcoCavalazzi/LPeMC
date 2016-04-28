@@ -52,21 +52,28 @@ public class NewNode implements Node{
 	public String codeGeneration() {
 		String parCode = "";
 		String methodLabel = "";
+		String parSHP = "";
+		String labelSHP = "";
 		for(int i = 0; i < parlist.size(); i++)
 		{
 			parCode += parlist.get(i).codeGeneration();
+			parSHP += "shp\n";
+			
 		}
 		
 		for(int i = 0; i < entry.allMethods.size(); i++)
 		{
-			methodLabel += ((MethodNode)entry.allMethods.get(i)).getLabel() +"\n";
+			methodLabel += ((MethodNode)entry.allMethods.get(i)).getLabel() +":\n"+"hp\n";
+			labelSHP += "shp\n";
 		}
 		
 		return 
-		methodLabel+
-		"shp\n"+
-		parCode+
-		"shp\n";
+		parCode+		
+		parSHP+
+		methodLabel;
+		//labelSHP;		
+		
+		
 	}
 
 }

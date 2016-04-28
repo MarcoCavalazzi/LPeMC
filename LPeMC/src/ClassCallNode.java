@@ -46,29 +46,33 @@ public class ClassCallNode implements Node {
 		  return new ClassTypeNode(((ClassNode)classAtn.getRet()).getName());
 		  
 		
-		*/
+		 */
 		ArrowTypeNode t=null;
-	     if (methodEntry.getType() instanceof ArrowTypeNode) 
-	    	 t=(ArrowTypeNode) methodEntry.getType(); 
-	     else {
-	       System.out.println("Invocation of a non-method "+id);
-	       System.exit(0);
-	     }
+		if (methodEntry.getType() instanceof ArrowTypeNode) 
+			t=(ArrowTypeNode) methodEntry.getType(); 
+		else {
+			System.out.println("Invocation of a non-method "+id);
+			System.exit(0);
+		}
 		
-	     ArrayList<Node> p = t.getParList();	// otteniamo la lista dei tipi dei parametri formali
-	     if ( !(p.size() == par.size()) ) {	// controlliamo che il numero dei parametri formali sia uguale al numero di parametri passati in input.
-	       System.out.println("Wrong number of parameters in the invocation of "+id);
-	       System.exit(0);
-	     } 
-	  // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
-	     for (int i=0; i< par.size(); i++) 
-	       if (
-	    		   !(FOOLlib.isSubtype( (par.get(i)).typeCheck(), p.get(i)) ) 
-	    		  // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
-	    		   ) {
-	         System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
-	         System.exit(0);
-	       } 
+	     if(par != null)
+	     {
+	    	 ArrayList<Node> p = t.getParList();	// otteniamo la lista dei tipi dei parametri formali
+	    	 if ( !(p.size() == par.size()) ) {	// controlliamo che il numero dei parametri formali sia uguale al numero di parametri passati in input.
+	    		 System.out.println("Wrong number of parameters in the invocation of "+id);
+	    		 System.exit(0);
+	    	 } 
+	    	 // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
+	    	 for (int i=0; i< par.size(); i++) 
+	    		 if (
+	    				 !(FOOLlib.isSubtype( (par.get(i)).typeCheck(), p.get(i)) ) 
+	    				 // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
+	    				 ) {
+	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
+	    			 System.exit(0);
+	    		 } 
+
+	     }
 	     return t.getRet();
 	}
 
