@@ -80,57 +80,50 @@ public class ClassCallNode implements Node {
 	public String codeGeneration() {
 		
 		  String parCode = "";	// codice per la prima parte dell'activation record (vedi file "progettiamo il nostro layout" nell'esercitazione 12_04).
-//		  for(int i=par.size()-1; i>=0; i--){
-//			  parCode += par.get(i).codeGeneration();
-//		  }
+		  for(int i=par.size()-1; i>=0; i--){
+			  parCode += par.get(i).codeGeneration();
+		  }
 		  
 		  String getAR = "";
-		  for(int i=0; i< nl-methodEntry.getNestinglevel(); i++){
+		  for(int i=0; i< nl-entry.getNestinglevel(); i++){
 			  getAR += "lw\n";
 		  }
-		  String NameCl =
-				   "lhp \n" +
-				   "sw \n" +
-				   "lhp\n" +
-				   "push 1\n"+ 
-				   "lhp\n"+ //carico l'heap pointer corrente
-				   "add\n"+
-				   "shp\n";
-		  for(int i = 0; i < par.size() ;i++){
-			  parCode += par.get(i).codeGeneration()+
-						 "lhp\n"+
-						 "sw\n" +
-						 "push 1\n"+ 
-						 "lhp\n"+ //carico l'heap pointer corrente
-						 "add\n"+
-						 "shp\n"/*+
-						 "lhp\n"+
-						 "lw\n"*/;
-	  }
-		  return NameCl+parCode;
-
-//		  return "lhp\n"+		// CL
-//			 parCode+	// parametri
-//			 "lhp\n"+
-//			 getAR+
-//			 "push "+methodEntry.getOffset()+"\n"+
-//			 "lhp\n"+ //carico l'heap pointer corrente			 
-//			 "add\n"+
-//			 "lw\n"+ //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
-//	  	     "js\n";	
-//			
-			
-			
-//			"lhp\n"+	
-//			getAR+		// AL ;
-//			"push "+entry.getOffset()+"\n"+
-//			"lhp\n"+
-//			getAR+
-//			"add\n"+
-//			"lw\n"+		
-//			"js\n";	
+//		  String NameCl =
+//		   "lhp\n" +
+//		   "sw\n" +
+//		   "lhp\n" +
+//		   "push 1\n"+ 
+//		   "lhp\n"+ //carico l'heap pointer corrente
+//		   "add\n"+
+//		   "shp\n";	  
 		  
+	return  "lfp\n" + 
+			parCode+
+			"lfp\n" + 
+			"push " + (2) + "\n" +
+			"lw\n" +
+			"js\n"; 
 		  
+//		  String NameCl =
+//				   "lhp\n" +
+//				   "sw\n" +
+//				   "lhp\n" +
+//				   "push 1\n"+ 
+//				   "lhp\n"+ //carico l'heap pointer corrente
+//				   "add\n"+
+//				   "shp\n";
+//		  for(int i = 0; i < par.size() ;i++){
+//			  parCode += par.get(i).codeGeneration()+
+//						 "lhp\n"+
+//						 "sw\n" +
+//						 "push 1\n"+ 
+//						 "lhp\n"+ //carico l'heap pointer corrente
+//						 "add\n"+
+//						 "shp\n"/*+
+//						 "lhp\n"+
+//						 "lw\n"*/;
+//	  }
+		//  return NameCl+parCode;
 		  
 //		//System.out.println("Generazione CallClassNode");
 //		  String ret = "";

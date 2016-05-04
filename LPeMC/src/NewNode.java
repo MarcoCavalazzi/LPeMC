@@ -56,21 +56,25 @@ public class NewNode implements Node{
 		String labelSHP = "";
 		for(int i = 0; i < parlist.size(); i++)
 		{
-			parCode += parlist.get(i).codeGeneration();
+			parCode += parlist.get(i).codeGeneration()+"\n";
 			parSHP += "shp\n";
 			
 		}
 		
 		for(int i = 0; i < entry.allMethods.size(); i++)
 		{
-			methodLabel += ((MethodNode)entry.allMethods.get(i)).getLabel() +":\n"+"hp\n";
+			methodLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n"		
+		    +"shp\n";
+			//System.out.println("label method "+i+": "+((MethodNode)entry.allMethods.get(i)).getLabel());
 			labelSHP += "shp\n";
 		}
 		
 		return 
+		"cfp\n" + //setta $fp		 	
 		parCode+		
 		parSHP+
-		methodLabel;
+		methodLabel+
+		"sfp\n";
 		//labelSHP;		
 		
 		
