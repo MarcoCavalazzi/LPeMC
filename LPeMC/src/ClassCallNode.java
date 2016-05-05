@@ -88,89 +88,20 @@ public class ClassCallNode implements Node {
 		  for(int i=0; i< nl-entry.getNestinglevel(); i++){
 			  getAR += "lw\n";
 		  }
-//		  String NameCl =
-//		   "lhp\n" +
-//		   "sw\n" +
-//		   "lhp\n" +
-//		   "push 1\n"+ 
-//		   "lhp\n"+ //carico l'heap pointer corrente
-//		   "add\n"+
-//		   "shp\n";	  
-		  
-	return  "lfp\n" + 
-			parCode+
-			"lfp\n" + 
-			"push " + (2) + "\n" +
-			"lw\n" +
-			"js\n"; 
-		  
-//		  String NameCl =
-//				   "lhp\n" +
-//				   "sw\n" +
-//				   "lhp\n" +
-//				   "push 1\n"+ 
-//				   "lhp\n"+ //carico l'heap pointer corrente
-//				   "add\n"+
-//				   "shp\n";
-//		  for(int i = 0; i < par.size() ;i++){
-//			  parCode += par.get(i).codeGeneration()+
-//						 "lhp\n"+
-//						 "sw\n" +
-//						 "push 1\n"+ 
-//						 "lhp\n"+ //carico l'heap pointer corrente
-//						 "add\n"+
-//						 "shp\n"/*+
-//						 "lhp\n"+
-//						 "lw\n"*/;
-//	  }
-		//  return NameCl+parCode;
-		  
-//		//System.out.println("Generazione CallClassNode");
-//		  String ret = "";
-//		  String parCode = "";
-//		  String NameCl = "";
-//		 // ClassNode obj = ((ClassNode)((ArrowTypeNode)entry.getType()).getRet());
-//		  /*
-//		   * generazione del codice relativa ai metodi dell'oggetto istanziato
-//		   */
-//		  //String methods = (obj).codeGeneration();
-//		  
-//		  /*
-//		   * memorizzo nell'heap l'identificatore dell'oggetto
-//		   * e mi sposto nella locazione successiva dell'heap (la prima libera)
-//		   */
-//		  NameCl = "push " + nNewClass + "\n" +
-//				   "lhp \n" +
-//				   "sw \n" +
-//				   "lhp\n" +
-//				   "push 1\n"+ 
-//				   "lhp\n"+ //carico l'heap pointer corrente
-//				   "add\n"+
-//				   "shp\n";
-//		  
-//		  parCode = "";
-//		  //System.out.println("Class " + obj.getName() + " par num: " + par.size());
-//		  for(int i = 0; i < par.size() ;i++){
-//				  parCode += par.get(i).codeGeneration()+
-//							 "lhp\n"+
-//							 "sw\n" +
-//							 "push 1\n"+ 
-//							 "lhp\n"+ //carico l'heap pointer corrente
-//							 "add\n"+
-//							 "shp\n"/*+
-//							 "lhp\n"+
-//							 "lw\n"*/;
-//		  }
-//		  /*
-//		   * restituzione della generazione di codice relativa all'identificatore della classe,
-//		   * seguita dal codice dei suoi parametri (utilizzati nella call dell'istanza) e dei 
-//		   * relativi metodi di classe
-//		   */
-//		  ret= NameCl+
-//		 	   parCode;
-//		 	  // methods;
-//		  
-//		  return ret;
+
+		  return
+		  "lhp\n" + 
+		  parCode+
+		  "lhp\n" +
+		 // "push 3"+
+		 // "push 3"+//è da commentare
+		  "push " + (methodEntry.getOffset()+FOOLlib.objectPointer) + "\n" + //objectpointer + offset del metodo
+		  //"add\n"+//da commentare
+		 // "add\n"+//da commentare
+		  "lw\n" +
+		  "js\n"; 	// salto
+
+
 		
 	}
 

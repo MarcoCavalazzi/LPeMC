@@ -14,6 +14,8 @@ public class FOOLlib {
   
   private static String funCode="";
   
+  public static int objectPointer = 0;
+  
   //OO
   /**
   * Campo pubblico relativo alla costante true nel codice eseguibile

@@ -4,7 +4,7 @@ public class MethodNode implements Node, DecNode {
 
   private String id;
   private Node type; 
-  private ArrayList<Node> parlist; 
+  private ArrayList<Node> parlist = new ArrayList<Node>(); 
   private Node body;
   private String label;
   
@@ -40,54 +40,32 @@ public class MethodNode implements Node, DecNode {
   }
   
   
-  public String codeGeneration() {
-	String parCode = "";	
-	
-	String popPar = "";
-	String popParNode = "";
-	if(parlist != null)
-		for(Node dec:parlist){
-			popPar += "pop\n";
-		}
-	
-	//String popArrowTypeNode = "";
-	//if(getSymType() instanceof ArrowTypeNode)
-	//{
-	//	popArrowTypeNode = "pop\n" + "pop\n";
-	//}
-	
-	//////DUBBIO!!!!//////
-	
-	if(popParNode == "" && parlist!=null)	
-	{
-		for(int i=0; i < parlist.size();i++)
-		{
-			if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
-			{
-				popParNode += "pop\n" + "pop\n";
-				break;
-			}
-		}
-	}
-	
-	FOOLlib.putCode(
-	    "\n"+label+":\n"+		
-		"cfp\n"+	// setta il registro $fp / copy stack pointer into frame pointer
-	    "lra\n"+   // load from ra sullo stack
-		parCode+	// codice delle dichiarazioni
-		body.codeGeneration()+
-		"srv\n"+	//salvo il risultato in un registro 
-		"sra\n"+    //salvo il return address
-		"pop\n"+	// pop dell'AL (access link)
-		popPar+     //pop dei parametri che ho in parlist
-		"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
-		"lrv\n"+
-		"lra\n"+
-		"js\n"      //js salta all'indirizzo che è in cima allo stack e salva la prossima istruzione in ra.
-    );
-	
-	
-	return "push "+label+"\n";
+  public String codeGeneration() {	 
+		
+	  String popPar = "";
+	  if(parlist!=null)
+		  for(Node par:parlist) 
+			  popPar += "pop\n";
+
+
+
+	  FOOLlib.putCode(
+			  "\n"+label+":\n"+
+			  "cfp\n" + //setta $fp
+			  "lra\n" +			 
+			  body.codeGeneration()+ //body della funzione
+			  "srv\n" + //salvo il risultato in un registro 
+			  "sra\n" + //salvo il return address
+			  "pop\n" + //pop dell'AL
+			  popPar  + //pop dei parametri che ho in parlist
+			  "sfp\n" + //ripristino l'$fp al control link (CL) 
+			  "lrv\n" +
+			  "lra\n" +
+			  "js\n"    //js salta all'indirizzo che è in cima allo stack
+			  );
+
+	  return "push "+label+"\n";
+
   }
   
   public Node typeCheck () {

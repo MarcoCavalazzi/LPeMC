@@ -57,25 +57,52 @@ public class NewNode implements Node{
 		for(int i = 0; i < parlist.size(); i++)
 		{
 			parCode += parlist.get(i).codeGeneration()+"\n";
-			parSHP += "shp\n";
+			parCode +=  "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
+						"sw\n" +
+						"push 1\n"+ 
+						"lhp\n"+ //carico l'heap pointer corrente
+						"add\n"+
+						"shp\n";
 			
 		}
 		
 		for(int i = 0; i < entry.allMethods.size(); i++)
 		{
-			methodLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n"		
-		    +"shp\n";
+			methodLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
+		   // +"shp\n";
 			//System.out.println("label method "+i+": "+((MethodNode)entry.allMethods.get(i)).getLabel());
-			labelSHP += "shp\n";
+			methodLabel += "lhp\n"+
+							"sw\n" +
+							"push 1\n"+ 
+							"lhp\n"+ //carico l'heap pointer corrente
+							"add\n"+
+							"shp\n"	;
 		}
 		
-		return 
-		"cfp\n" + //setta $fp		 	
-		parCode+		
-		parSHP+
-		methodLabel+
-		"sfp\n";
-		//labelSHP;		
+		
+		FOOLlib.objectPointer = entry.allMethods.size();
+		
+		return 	
+				"lhp \n" +
+				"sw \n" +
+				"lhp\n" +
+				"push 1\n"+ 
+				"lhp\n"+ //carico l'heap pointer corrente
+				"add\n"+
+				"shp\n"+				
+				parCode+			
+				methodLabel;
+				//"push 3\n";
+						
+				
+//		//"lhp\n" +	
+//		parCode+			
+//		methodLabel+
+//		"push "+(entry.allMethods.size() -1)+"\n"+
+//		"shp\n";
+//		//labelSHP;	
+//		//"shp\n"; //? non ho capito come gestire l'object pointer ):   ma dov'è? abbiamo lo stack pointer e l'object? 
+			
 		
 		
 	}

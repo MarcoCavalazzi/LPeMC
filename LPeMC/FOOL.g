@@ -160,7 +160,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              HashMap<String,STentry> hmclass = virtualTable.get(nestingClassLevel);                    
              //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
              //FOOLlib.addMethodTuple($mid.text, $cid.text, FOOLlib.getMethodRealOffset(Obj,$mid.text));
-             STentry entry = new STentry(nestingClassLevel,f,classoffset--);
+             STentry entry = new STentry(nestingClassLevel,f,classoffset++);
              entry.setIsMethod();  
              entry.setMethodName($mid.text);           
              if ( hmclass.put($mid.text,entry) != null  )
@@ -173,6 +173,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
              virtualTable.add(hmnc);
              ctentry.setMethod(f);
              Obj.setMethod(f);
+             symTable.add(hmnc);
              //creare una nuova hashmap per la symTable
              // nestingLevel++;
              // HashMap<String,STentry> hmnc = new HashMap<String,STentry> (); //hmnc è la vTable
@@ -189,13 +190,43 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
             ParNode fpar = new ParNode($mp1.text,$mpt1.ast);
             System.out.println($mp1.text);
             f.addPar(fpar);
+            
+              if ( hmnc.put($mp1.text,new STentry(fpar,nestingLevel,$mpt1.ast,parOffset++)) != null  ){
+               System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
+               System.exit(0);
+               }
+            
+            /*
+            if(mpt1.text.equals("ClassTypeNode")
+            {
+             //  STentry entryCl2 = new STentry(Obj,nestingLevel);
+               entryCl.setClassName($cid.text);
+             //  ctentry = new CTentry2(Obj,nestingClassLevel);
+               STentry tmp2  = hm.put($cid.text,entryCl);
+               CTentry tmp22 = classTable.put($cid.text,ctentry);
+         
+         if (tmp2 != null && tmp22 != null)
+         {
+            System.out.println("Class id "+$cid.text+" at line "+$cid.line+" already declared");
+            System.exit(0); 
+         }                
+         //creare una nuova hashmap per la symTable      
+        
+         nestingLevel++;
+         nestingClassLevel++;
+         HashMap<String,STentry> hmn2 = new HashMap<String,STentry>(); 
+         HashMap<String,STentry> vTable2 = new HashMap<String,STentry> (); //sicura sta cosa?
+         symTable.add(hmn);
+         virtualTable.add(vTable);
+            }
+           */
             // if ( hmnc.put($mp1.text,new STentry(fpar,nestingLevel,$mpt1.ast,parOffset++)) != null  )
 	          // if ( entry.put($mp1.text,new STentry(fpar,nestingLevel,$mpt1.ast,parOffset++)) != null  )
 	          // {
 	          //     System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
 	          //     System.exit(0); 
 	          // }
-       
+	          
             
 	       }
 	       (COMMA mpn=ID COLON mptn=type
@@ -203,6 +234,10 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	          parTypes.add($mptn.ast);
             ParNode par = new ParNode($mpn.text,$mptn.ast);
             f.addPar(par);
+            if ( hmnc.put($mpn.text,new STentry(fpar,nestingLevel,$mptn.ast,parOffset++)) != null  ){
+               System.out.println("Parameter id "+$mpn.text+" at line "+$mpn.line+" already declared");
+               System.exit(0);
+               }
             // if ( hmnc.put($mpn.text,new STentry(par,nestingLevel,$mptn.ast,parOffset++)) != null  )
             // if ( entry.put($mpn.text,new STentry(par,nestingLevel,$mptn.ast,parOffset++)) != null  )
             // {
@@ -542,6 +577,7 @@ value	returns [Node ast]
 	    int jj = nestingClassLevel;
 	    STentry entry     = null; 
 	    STentry classEntry = null;
+	    
 	    while (j>=0 && entry==null)
 	      entry=(symTable.get(j--)).get($i.text);
 	         
@@ -550,8 +586,7 @@ value	returns [Node ast]
         }
          
 	    if (entry == null ){
-	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!!!!!!!");
-	       
+	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!!!!!!!");	       
 	       System.exit(0);
 	    }
 	     	   
