@@ -114,7 +114,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	        ConstrPar.add($t1.ast);
           FieldNode Objfield = new FieldNode($p1.text,$t1.ast,$cid.text);
           Obj.addField(Objfield);
-          ctentry.setFieldOffset(fieldOffset++);
+          ctentry.setFieldOffset(fieldOffset--);
           STentry  tempEntry = new STentry(Objfield,nestingClassLevel,$t1.ast,fieldOffset);
          
           if ( hmn.put($p1.text,tempEntry) != null  )
@@ -125,10 +125,11 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
           
           ctentry.setField(Objfield);
           //se p1 è anche in extendedEntry.getFields non lo aggiungiamo in symbolTable
-          
+         nestingLevel++; //06_05 non so se vada bene
 	     }
 	     (COMMA pn=ID COLON tn=basic
 	     {
+	        nestingLevel++; //06_05 non so se vada bene
 	        ConstrPar.add($tn.ast);
           FieldNode ObjfieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
           Obj.addField(ObjfieldN);
@@ -169,6 +170,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
                 System.exit(0); 
              }
              nestingClassLevel++;
+            // nestingLevel++; //06_05 non so se vada bene
              HashMap<String,STentry> hmnc = new HashMap<String,STentry> ();
              virtualTable.add(hmnc);
              ctentry.setMethod(f);

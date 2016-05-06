@@ -77,7 +77,7 @@ public class CallNode implements Node {
 		*/
 		
 	  
-	  return "lfp\n"+		// CL
+	  return   "lfp\n"+		// CL
 	  			parCode+	// parametri
 	  			"lfp\n"+	
 	  			getAR+		// AL ;
