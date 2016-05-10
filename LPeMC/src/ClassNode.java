@@ -263,6 +263,9 @@ public class ClassNode implements Node{
 		methods.add(Node);
 	}
 	
+
+	
+	
 	public String codeGeneration() {
 		
 		//String methodCode="";

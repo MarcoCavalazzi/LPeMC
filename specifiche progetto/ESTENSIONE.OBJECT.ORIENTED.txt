@@ -90,7 +90,7 @@ mappa ID di classi in Class Table entries
 CTentry:
 
 HashMap<String,STentry> vTable   virtual table che mappa simboli dichiarati dentro la 
-                                 classe o ereditati (se non hanno subito overriding)
+                                 classe o ereditati (se non hanno subito overriding ereditati)
                                  in loro STentry
 int offsetFields                 offset (<=-1) da usare per un nuovo field                                                                                  (decrementati)
 int offsetMethods                offset (>=0) da usare per nuovo metodo
@@ -115,7 +115,7 @@ FieldNode
 - Espressioni (in corrispondenza a nuovi elementi sintattici che usano ID):
 IdNode         ID  
 CallNode       ID()
-ClassCallNode  ID.ID() 
+ClassCallNode  ID.ID() //i parametri del metodo ereditati vanno messi all'inizio
 NewNode        new ID()
 EmptyNode      null
 

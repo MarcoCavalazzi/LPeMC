@@ -54,7 +54,6 @@ public class ClassCallNode implements Node {
 			System.out.println("Invocation of a non-method "+id);
 			System.exit(0);
 		}
-		
 	     if(par != null)
 	     {
 	    	 ArrayList<Node> p = t.getParList();	// otteniamo la lista dei tipi dei parametri formali
@@ -68,7 +67,7 @@ public class ClassCallNode implements Node {
 	    				 !(FOOLlib.isSubtype( (par.get(i)).typeCheck(), p.get(i)) ) 
 	    				 // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
 	    				 ) {
-	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
+	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
 	    			 System.exit(0);
 	    		 } 
 

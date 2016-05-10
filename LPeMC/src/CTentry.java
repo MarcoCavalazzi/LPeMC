@@ -27,6 +27,17 @@ public class CTentry {
 		dec = d;
 	}
 	
+	public void setFieldAndCheck(Node node, String s)
+	{
+		for(int i = 0;i < allFields.size();i++)
+		{
+			if(((FieldNode)allFields.get(i)).getName().equals(s))
+				allFields.remove(i);
+		}
+		
+		allFields.add(node);
+	}
+	
 	public void setMethodOffset(int offset)
 	{
 		offsetMethods = offset;
@@ -60,6 +71,16 @@ public class CTentry {
 	public ArrayList<Node> getMethods()
 	{
 		return allMethods;
+	}
+	
+	public void setMethods(ArrayList <Node> mList)
+	{
+		allMethods = mList;
+	}
+	
+	public void setFields(ArrayList <Node> fList)
+	{
+		allFields = fList;
 	}
 	
 	public void addvTable(STentry e, String s)

@@ -29,19 +29,22 @@ public class NewNode implements Node{
 	       System.out.println("Invocation of a non-function "+id);
 	       System.exit(0);
 	     }
+	     
 	   //parlist sono i figli del CallNode
-	    // ArrayList<Node> p = t.getParList();	// otteniamo la lista dei tipi dei parametri formali
+	     ArrayList<Node> p = t.getParList();	// otteniamo la lista dei tipi dei parametri formali
 	     if ( !(entry.getFields().size() == parlist.size()) ) {	// controlliamo che il numero dei parametri formali sia uguale al numero di parametri passati in input.
-	       System.out.println("Wrong number of parameters in the invocation of "+id);
+	       System.out.println("Wrong number of parameters in the invocation of "+id+" and parlist size is: "+parlist.size());
 	       System.exit(0);
 	     } 
 	  // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
 	     for (int i=0; i<parlist.size(); i++) 
 	       if (
-	    		   !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), entry.getFields().get(i).typeCheck()) ) 
+	    		    
+	    		 //  !(FOOLlib.isSubtype( (parlist.get(i)), entry.getFields().get(i).typeCheck()) ) 
+	    		  !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), entry.getFields().get(i)) )  //non so quale sia corretto tra questi
 	    		  // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
 	    		   ) {
-	         System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
+	         System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
 	         System.exit(0);
 	       } 
 	     return t.getRet();
