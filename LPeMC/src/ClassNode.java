@@ -83,14 +83,24 @@ public class ClassNode implements Node{
 			for(int i = 0; i < classEntry.allMethods.size(); i++)
 			{
 				for(int j = 0; j < superEntry.allMethods.size(); j++)
+				{
+//					System.out.println("class SymType:"+((MethodNode)classEntry.allMethods.get(i)).getSymType()
+//							+" for class "+name);
+//					System.out.println("super SymType:"+((MethodNode)superEntry.allMethods.get(j)).getSymType()
+//							+" for class "+name);
 					if(!FOOLlib.isSubtype(((MethodNode)classEntry.allMethods.get(i)).getSymType(), 
 							((MethodNode)superEntry.allMethods.get(j)).getSymType()))
 					{
+						System.out.println("class SymType:"+((MethodNode)classEntry.allMethods.get(i)).getSymType()
+								+" for class "+name);
+						System.out.println("super SymType:"+((MethodNode)superEntry.allMethods.get(j)).getSymType()
+								+" for class "+name);
+						
 						System.out.println("Wrong method type in method "+ 
-								((MethodNode)superEntry.allMethods.get(j)).getName()+" for class "+name);
+								((MethodNode)superEntry.allMethods.get(j)).getName()+" for class: "+name);
 						System.exit(0);
 					}
-
+				}
 			}
 		}
 		//return new ClassTypeNode();
