@@ -94,7 +94,7 @@ public class ClassNode implements Node{
 			}
 		}
 		//return new ClassTypeNode();
-		return null; //non siamo sicuri.
+		return new ClassTypeNode(); //non siamo sicuri.
 		
 	}
 	

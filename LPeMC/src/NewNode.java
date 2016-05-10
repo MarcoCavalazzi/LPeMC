@@ -36,18 +36,20 @@ public class NewNode implements Node{
 	       System.out.println("Wrong number of parameters in the invocation of "+id+" and parlist size is: "+parlist.size());
 	       System.exit(0);
 	     } 
-	  // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
+	     // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
 	     for (int i=0; i<parlist.size(); i++) 
-	       if (
-	    		    
-	    		 //  !(FOOLlib.isSubtype( (parlist.get(i)), entry.getFields().get(i).typeCheck()) ) 
-	    		  !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), entry.getFields().get(i)) )  //non so quale sia corretto tra questi
-	    		  // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
-	    		   ) {
-	         System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
-	         System.exit(0);
-	       } 
-	     return t.getRet();
+	     { 
+	    	 System.out.println("\ntype of parlist: "+parlist.get(i).typeCheck() + " of:"+id);
+	         System.out.println("\nentry type:"+entry.getFields().get(i).typeCheck()+ " of:"+id);
+	     if (
+	    	    !(FOOLlib.isSubtype( (parlist.get(i).typeCheck()), entry.getFields().get(i).typeCheck()) ) 
+	    	   //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
+	    		 ) {
+	    	 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
+	    	 System.exit(0);
+	     } 
+	     }
+	     return t.getRet().typeCheck();
 	}
 	
 
