@@ -163,7 +163,6 @@ public class FunNode implements Node, DecNode {
 
   @Override
   public Node getSymType() {
-	
 	return type;
   }
   

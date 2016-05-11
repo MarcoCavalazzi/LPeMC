@@ -43,7 +43,7 @@ public class CallNode implements Node {
     		   !(FOOLlib.isSubtype( (parlist.get(i)).typeCheck(), p.get(i)) ) 
     		  // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
     		   ) {
-         System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id);
+         System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of "+id+"  The parameter is: "+parlist.get(i));
          System.exit(0);
        } 
      return t.getRet();

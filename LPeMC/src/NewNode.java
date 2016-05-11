@@ -15,7 +15,7 @@ public class NewNode implements Node{
 		String parlstr="";
 		for (Node par:parlist)
 		  parlstr+=par.toPrint(s+"  ");		
-		return s+"NewNode:" + id +" at nestlev " +"\n" 
+		return s+"NewNode: "+ id +"\n\t" 
 	           +entry.toPrint(s+"  ")
 	           +parlstr;
 	}
@@ -47,7 +47,7 @@ public class NewNode implements Node{
 	    		 ) {
 	    	// System.out.println("\ntype of parlist: "+parlist.get(i).typeCheck() + " of:"+id);
 	        // System.out.println("\nentry type:"+entry.getFields().get(i).typeCheck()+ " of:"+id);
-	    	 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
+	    	 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id+"  The parameter is: "+parlist.get(i));
 	    	 System.exit(0);
 	     } 
 	     }

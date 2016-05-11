@@ -30,7 +30,7 @@ public class FOOLlib {
   
   private static LinkedHashMap<String, LinkedHashMap<String, String>> dtmc = new LinkedHashMap<String, LinkedHashMap<String, String>>();
   private static LinkedHashMap<String, Integer> classIndex = new LinkedHashMap<String, Integer>();
-  private static LinkedHashMap<String, String> classHierarchy = new LinkedHashMap<String, String>();
+  private static LinkedHashMap<String, String> classHierarchy = new LinkedHashMap<String, String>(); //*** da togliere, così come i metodi che la usano.
   private static ArrayList<String> classInstances = new ArrayList<String>();
   private static ArrayList<AttributeTuple> parTuples = new ArrayList<AttributeTuple>();
   private static LinkedHashMap<String, Integer> parOnlyOfClass = new LinkedHashMap<String, Integer>();
@@ -45,9 +45,16 @@ public class FOOLlib {
   private static int varAndCallIndex = 0;
   private static String lastVarNameForClass;
   
-  //valuta se il tipo "a" e' <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
+  // Evaluates if the type of "a" is <= of the type of "b", where "a" and "b" are types like: int, bool, class etc...
   public static boolean isSubtype (Node a, Node b) {
 	  
+	  // EmptyTypeNode is always a subtype of a ClassTypeNode.
+	  if(a instanceof EmptyTypeNode  &&  b instanceof ClassTypeNode){
+		  return true;
+	  }
+	  
+	  /*
+	  //vecchio codice.
 	  if(a instanceof ClassTypeNode && b instanceof ClassTypeNode)
 	  {
 		  String tmp = "tmp";
@@ -57,7 +64,7 @@ public class FOOLlib {
 		  if(tmp == superType.get( ((ClassTypeNode) b).getName()))
 		  {
 			  return true;
-		  }	  
+		  }
 	  
 		  while(tmp != null)
 		  {
@@ -67,15 +74,41 @@ public class FOOLlib {
 			  {
 				  return true;
 			  }
-		  
 		  }
 	  
 	      return false;
 	  }
-	  
-	  if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode)
+	  */
+	  // OO check
+	  if(a instanceof ClassTypeNode && b instanceof ClassTypeNode)
 	  {
-		  return true;
+		  // initial check that controls if the classes are the same.
+		  if( ((ClassTypeNode)a).getName() == ((ClassTypeNode)b).getName() )
+		  {
+			  return true;
+		  }
+		  
+		  // We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
+		  String tmp = "tmp";
+	  
+		  tmp = superType.get( ((ClassTypeNode)b).getName());
+	  
+		  if( ((ClassTypeNode)a).getName() == tmp)
+		  {
+			  return true;
+		  }
+	  
+		  while(tmp != null)
+		  {
+			  tmp = superType.get(tmp);
+		  
+			  if( ((ClassTypeNode)a).getName()  ==  tmp )
+			  {
+				  return true;
+			  }
+		  }
+	  
+	      return false;
 	  }
 	  
 	  /*
@@ -93,6 +126,7 @@ public class FOOLlib {
 	  }
 	  */
 	  // MARCO: Io penso che il codice dovrebbe essere così:
+	  // Functional check
 	  Node retA;
 	  Node retB;
 	  if((a instanceof ArrowTypeNode) && (b instanceof ArrowTypeNode))
@@ -133,7 +167,8 @@ public class FOOLlib {
 //	    	return false;
 //	    }
 	  
-    return a.getClass().equals(b.getClass())
+	  // basic check
+      return a.getClass().equals(b.getClass())
     		|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)  		  		   
     	       ); 
     

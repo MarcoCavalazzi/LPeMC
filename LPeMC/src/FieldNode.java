@@ -25,7 +25,6 @@ public class FieldNode implements Node, DecNode {
 
   @Override
   public Node getSymType() {
-	
 	return type;
   }
 

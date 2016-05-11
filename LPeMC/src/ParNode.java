@@ -24,7 +24,6 @@ public class ParNode implements Node, DecNode {
 
   @Override
   public Node getSymType() {
-	
 	return type;
   }
   //funzioni per l'OO
