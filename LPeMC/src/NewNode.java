@@ -42,9 +42,9 @@ public class NewNode implements Node{
 	    	 //System.out.println("\ntype of parlist: "+parlist.get(i).typeCheck() + " of:"+id);
 	         //System.out.println("\nentry type:"+entry.getFields().get(i).typeCheck()+ " of:"+id);
 	     if (
-	    	    !(FOOLlib.isSubtype( ( entry.getFields().get(i).typeCheck()),parlist.get(i).typeCheck()) ) 
+	    	    !(FOOLlib.isSubtype(parlist.get(i).typeCheck(),( entry.getFields().get(i).typeCheck())) ) 
 	    	   //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
-	    		 ) {
+	    	 ) {
 	    	// System.out.println("\ntype of parlist: "+parlist.get(i).typeCheck() + " of:"+id);
 	        // System.out.println("\nentry type:"+entry.getFields().get(i).typeCheck()+ " of:"+id);
 	    	 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id+"  The parameter is: "+parlist.get(i));
@@ -52,6 +52,7 @@ public class NewNode implements Node{
 	     } 
 	     }
 	     return t.getRet().typeCheck();
+	    // return t.getRet(); prima era così ma secondo me (Giuseppe) è corretto con .typeCheck() ma non sono sicuro
 	}
 	
 
