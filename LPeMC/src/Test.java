@@ -12,10 +12,13 @@ public class Test {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         FOOLParser parser = new FOOLParser(tokens);
         
+        System.out.println("--- Parsing ---");
         Node ast = parser.prog(); 	//generazione AST con Id associate a relative entry symbol table
         System.out.println("You had: "+lexer.lexicalErrors+" lexical errors and "+parser.getNumberOfSyntaxErrors()+" syntax errors.");
+        System.out.println("--- Abstract Syntax Tree ---");
         System.out.println(ast.toPrint(""));
         
+        System.out.println("--- Type checking ---");
         Node type = ast.typeCheck(); //type-checking bottom-up 
         System.out.println(type.toPrint("Type checking ok! Type of the program is: "));
         

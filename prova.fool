@@ -13,7 +13,7 @@ let
     fun openLoan:Account (m:TradingAcc) if (6>=30000) 
       then {new Account(loan.getMon())} 
       else {null};
-  } 
+  }
   
   class MyBankLoan extends BankLoan (loan: TradingAcc) {
     fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
