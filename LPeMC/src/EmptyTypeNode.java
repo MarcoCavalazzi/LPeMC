@@ -17,6 +17,4 @@ public class EmptyTypeNode implements Node {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-
 }

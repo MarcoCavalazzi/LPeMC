@@ -6,18 +6,15 @@ public class ClassCallNode implements Node {
 	private STentry entry; 
 	private STentry methodEntry;
 	private ArrayList<Node> par = new ArrayList<Node>();
-	//private int nNewClass;
 	private int nl;
 	
 	
-	
-	 public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p, int n) {
+	public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p, int n) {
 	   id=i;
 	   entry=e;
 	   methodEntry = me;
 	   par = p;
 	   nl = n;
-	   
 	}
 	public String toPrint(String s) {
 		
@@ -44,14 +41,12 @@ public class ClassCallNode implements Node {
 			  }
 		  }
 		  return new ClassTypeNode(((ClassNode)classAtn.getRet()).getName());
-		  
-		
 		 */
 		ArrowTypeNode t=null;
 		if (methodEntry.getType() instanceof ArrowTypeNode) 
 			t=(ArrowTypeNode) methodEntry.getType(); 
 		else {
-			System.out.println("Invocation of a non-method "+id);
+			System.out.println("Invocation of a non-method: "+id);
 			System.exit(0);
 		}
 	     if(par != null)
@@ -61,16 +56,15 @@ public class ClassCallNode implements Node {
 	    		 System.out.println("Wrong number of parameters in the invocation of "+id);
 	    		 System.exit(0);
 	    	 } 
-	    	 // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
-	    	 for (int i=0; i< par.size(); i++) 
-	    		 if (
-	    				 !(FOOLlib.isSubtype( (par.get(i)).typeCheck(), p.get(i)) ) 
-	    				 // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
-	    				 ) {
-	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
+	    	 // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypeNode)
+	    	 for (int i=0; i< par.size(); i++)
+	    	 {
+	    		 if ( !( FOOLlib.isSubtype( p.get(i), (par.get(i)).typeCheck()) ) ){ 
+	    			  // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
+	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id+"().  Type required: "+ p.get(i) +". Type passed: "+ (par.get(i)).typeCheck());
 	    			 System.exit(0);
-	    		 } 
-
+	    		 }
+	    	 }
 	     }
 	     return t.getRet();
 	}

@@ -1,6 +1,5 @@
 
 public class EmptyNode implements Node{
-
 	  
 	  public EmptyNode () {
 		  
@@ -15,7 +14,7 @@ public class EmptyNode implements Node{
 	  } 
 	  
 	  public String codeGeneration() {
-		return "push -1\n";	
+		return "push -1\n";
 	  }
 
 }

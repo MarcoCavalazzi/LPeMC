@@ -12,16 +12,17 @@ public class Test {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         FOOLParser parser = new FOOLParser(tokens);
         
-        System.out.println("--- Parsing ---");
+        System.out.println("--- Parsing ---\n");
         Node ast = parser.prog(); 	//generazione AST con Id associate a relative entry symbol table
         System.out.println("You had: "+lexer.lexicalErrors+" lexical errors and "+parser.getNumberOfSyntaxErrors()+" syntax errors.");
-        System.out.println("--- Abstract Syntax Tree ---");
+        System.out.println("\n--- Abstract Syntax Tree ---");
         System.out.println(ast.toPrint(""));
         
         System.out.println("--- Type checking ---");
         Node type = ast.typeCheck(); //type-checking bottom-up 
         System.out.println(type.toPrint("Type checking ok! Type of the program is: "));
         
+        System.out.println("--- Code generation ---");
      // ora consideriamo anche la SVM.g
      // estendiamo Node con un nuovo metodo: codeGeneration()
         String code = ast.codeGeneration();	// mettiamo tutto il codice assembler (che quando avevamo fatto l'assemblatore facevamo a mano) in una stringa.
@@ -39,6 +40,7 @@ public class Test {
         
         parserVM.assembly();
         
+        System.out.println("--- Code execution ---");
         ExecuteVM vm = new ExecuteVM(parserVM.code);
         vm.cpu();  
         

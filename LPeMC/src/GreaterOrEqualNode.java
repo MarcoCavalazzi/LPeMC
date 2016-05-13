@@ -8,14 +8,12 @@ public class GreaterOrEqualNode implements Node {
 		left = l;
 		right = r;
 	    }
-
 	
 	@Override
 	public String toPrint(String s) {
 		return s+"GreaterOrEqual"   + 
 				left.toPrint(s+"  ")+   
         	    right.toPrint(s+"  "); 
-		
 	}
 
 	@Override
@@ -43,6 +41,5 @@ public class GreaterOrEqualNode implements Node {
 			      "push 1\n"+
 			      l2+":\n";
 	}
-	
 
 }

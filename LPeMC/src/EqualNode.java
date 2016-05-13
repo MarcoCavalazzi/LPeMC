@@ -13,7 +13,7 @@ public class EqualNode implements Node {
                        + right.toPrint(s+"  ") ; 
   }
   
-  public Node typeCheck() {	  
+  public Node typeCheck() {
 	Node l = left.typeCheck();
     Node r = right.typeCheck();
     if ( (!( FOOLlib.isSubtype(l,r) || FOOLlib.isSubtype(r,l)))  ||  l instanceof ArrowTypeNode  ||  r instanceof ArrowTypeNode )    	   

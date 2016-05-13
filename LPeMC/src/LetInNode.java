@@ -43,10 +43,6 @@ public class LetInNode implements Node {
 			  cl.typeCheck();
     	
     return exp.typeCheck();
-    
-    
-    
-    
   }
   
   // Questa funzione stamperà un valore per ognuna delle dichiarazioni, mostrando lo stato dello stack.
