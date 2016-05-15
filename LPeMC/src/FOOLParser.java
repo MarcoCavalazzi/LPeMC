@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g 2016-05-15 20:34:28
+// $ANTLR 3.5.2 C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g 2016-05-15 20:38:14
 
 	import java.util.ArrayList;
 	import java.util.HashMap;
@@ -1865,14 +1865,6 @@ public class FOOLParser extends Parser {
 							       STentry entryRealCl = null;
 							       STentry entryM = null;
 							       // String clName = ((ClassTypeNode)entry.getType()).getName();
-							       //int k=nestingClassLevel;
-							      // int h=nestingLevel;
-							      int h=symTable.size()-1;
-							      int k=virtualTable.size()-1;
-							       STentry entryM=null;
-							      // System.out.println(""+(i!=null?i.getText():null));   
-							       STentry entryRealCl = null;                 
-							      // String clName = ((ClassTypeNode)entry.getType()).getName();
 							       //System.out.println("Class Name: "+clName);              
 							     // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
 							//       -ClassCallNode  ID1.ID2() 
@@ -1942,7 +1934,7 @@ public class FOOLParser extends Parser {
 
 							        ArrayList<Node> mArgList = new ArrayList<Node>();
 							     
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:762:6: (cmex1= exp ( COMMA cmexn= exp )* )?
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:754:6: (cmex1= exp ( COMMA cmexn= exp )* )?
 							int alt27=2;
 							int LA27_0 = input.LA(1);
 							if ( (LA27_0==FALSE||(LA27_0 >= ID && LA27_0 <= IF)||LA27_0==INTEGER||LA27_0==LPAR||(LA27_0 >= NEW && LA27_0 <= NULL)||LA27_0==PRINT||LA27_0==TRUE) ) {
@@ -1950,7 +1942,7 @@ public class FOOLParser extends Parser {
 							}
 							switch (alt27) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:762:7: cmex1= exp ( COMMA cmexn= exp )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:754:7: cmex1= exp ( COMMA cmexn= exp )*
 									{
 									pushFollow(FOLLOW_exp_in_value1657);
 									cmex1=exp();
@@ -1959,7 +1951,7 @@ public class FOOLParser extends Parser {
 
 									        mArgList.add(cmex1);
 									     
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:766:6: ( COMMA cmexn= exp )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:758:6: ( COMMA cmexn= exp )*
 									loop26:
 									while (true) {
 										int alt26=2;
@@ -1970,7 +1962,7 @@ public class FOOLParser extends Parser {
 
 										switch (alt26) {
 										case 1 :
-											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:766:7: COMMA cmexn= exp
+											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:758:7: COMMA cmexn= exp
 											{
 											match(input,COMMA,FOLLOW_COMMA_in_value1672); 
 											pushFollow(FOLLOW_exp_in_value1676);
@@ -2022,7 +2014,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "factor"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:780:1: factor returns [Node ast] : f= value ( EQ l= value | GR l= value | LE l= value )* ;
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:772:1: factor returns [Node ast] : f= value ( EQ l= value | GR l= value | LE l= value )* ;
 	public final Node factor() throws RecognitionException {
 		Node ast = null;
 
@@ -2031,15 +2023,15 @@ public class FOOLParser extends Parser {
 		Node l =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:781:5: (f= value ( EQ l= value | GR l= value | LE l= value )* )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:781:7: f= value ( EQ l= value | GR l= value | LE l= value )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:773:5: (f= value ( EQ l= value | GR l= value | LE l= value )* )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:773:7: f= value ( EQ l= value | GR l= value | LE l= value )*
 			{
 			pushFollow(FOLLOW_value_in_factor1753);
 			f=value();
 			state._fsp--;
 
 			ast = f;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:782:5: ( EQ l= value | GR l= value | LE l= value )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:774:5: ( EQ l= value | GR l= value | LE l= value )*
 			loop30:
 			while (true) {
 				int alt30=4;
@@ -2062,7 +2054,7 @@ public class FOOLParser extends Parser {
 				}
 				switch (alt30) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:783:9: EQ l= value
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:775:9: EQ l= value
 					{
 					match(input,EQ,FOLLOW_EQ_in_factor1771); 
 					pushFollow(FOLLOW_value_in_factor1775);
@@ -2073,7 +2065,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:784:9: GR l= value
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:776:9: GR l= value
 					{
 					match(input,GR,FOLLOW_GR_in_factor1787); 
 					pushFollow(FOLLOW_value_in_factor1791);
@@ -2084,7 +2076,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 3 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:785:9: LE l= value
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:777:9: LE l= value
 					{
 					match(input,LE,FOLLOW_LE_in_factor1804); 
 					pushFollow(FOLLOW_value_in_factor1808);

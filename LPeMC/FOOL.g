@@ -682,14 +682,6 @@ value	returns [Node ast]
        STentry entryRealCl = null;
        STentry entryM = null;
        // String clName = ((ClassTypeNode)entry.getType()).getName();
-       //int k=nestingClassLevel;
-      // int h=nestingLevel;
-      int h=symTable.size()-1;
-      int k=virtualTable.size()-1;
-       STentry entryM=null;
-      // System.out.println(""+$i.text);   
-       STentry entryRealCl = null;                 
-      // String clName = ((ClassTypeNode)entry.getType()).getName();
        //System.out.println("Class Name: "+clName);              
      // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
 //       -ClassCallNode  ID1.ID2() 
