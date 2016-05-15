@@ -7,7 +7,7 @@ public class GreaterOrEqualNode implements Node {
 	public GreaterOrEqualNode(Node l, Node r) {
 		left = l;
 		right = r;
-	    }
+	}
 	
 	@Override
 	public String toPrint(String s) {

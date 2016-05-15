@@ -62,7 +62,7 @@ public class ClassNode implements Node{
 		
 	    return new ArrowTypeNode (pt, this);
 	    */
-		
+		/*
 		if(superEntry != null)//cioè se c'è ereditarietà
 		{
 			// ***** MARCO: secondo me qui c'è un problema. Invece di controllare tutti i tipi del child con tutti i tipi dei parametri del parent
@@ -85,6 +85,7 @@ public class ClassNode implements Node{
 			/* 
 			 * Checking the type of the fields in the child class to see if they match the parent class' fields' types.
 			 */
+		/*
 			boolean flag = false;
 			int i = 0;
 			int j = 0;
@@ -114,6 +115,7 @@ public class ClassNode implements Node{
 			/*
 			 * Checking the types of the methods and their parameters with the parent class' methods.
 			 */
+		/*
 			i=0;
 			flag=false;
 			while( i < classEntry.allMethods.size() )
@@ -152,6 +154,7 @@ public class ClassNode implements Node{
 		}
 		
 		//return new ClassTypeNode();
+	*/
 		return new ClassTypeNode(name); //non siamo sicuri.
 	}
 	

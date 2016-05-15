@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g 2016-05-13 18:49:27
+// $ANTLR 3.5.2 C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g 2016-05-15 19:59:40
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -72,8 +72,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = PLUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:821:9: ( '+' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:821:11: '+'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:847:9: ( '+' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:847:11: '+'
 			{
 			match('+'); 
 			}
@@ -92,8 +92,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = MINUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:822:9: ( '-' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:822:11: '-'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:848:9: ( '-' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:848:11: '-'
 			{
 			match('-'); 
 			}
@@ -112,8 +112,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = MULT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:823:9: ( '*' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:823:11: '*'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:849:9: ( '*' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:849:11: '*'
 			{
 			match('*'); 
 			}
@@ -132,8 +132,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = DIV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:824:7: ( '/' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:824:9: '/'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:850:7: ( '/' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:850:9: '/'
 			{
 			match('/'); 
 			}
@@ -152,8 +152,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = LPAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:825:7: ( '(' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:825:9: '('
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:851:7: ( '(' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:851:9: '('
 			{
 			match('('); 
 			}
@@ -172,8 +172,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = RPAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:826:7: ( ')' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:826:9: ')'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:852:7: ( ')' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:852:9: ')'
 			{
 			match(')'); 
 			}
@@ -192,8 +192,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = CLPAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:827:7: ( '{' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:827:9: '{'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:853:7: ( '{' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:853:9: '{'
 			{
 			match('{'); 
 			}
@@ -212,8 +212,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = CRPAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:828:7: ( '}' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:828:9: '}'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:854:7: ( '}' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:854:9: '}'
 			{
 			match('}'); 
 			}
@@ -232,8 +232,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = SEMIC;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:829:9: ( ';' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:829:11: ';'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:855:9: ( ';' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:855:11: ';'
 			{
 			match(';'); 
 			}
@@ -252,8 +252,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = COLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:830:9: ( ':' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:830:11: ':'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:856:9: ( ':' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:856:11: ':'
 			{
 			match(':'); 
 			}
@@ -272,8 +272,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = COMMA;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:831:7: ( ',' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:831:9: ','
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:7: ( ',' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:9: ','
 			{
 			match(','); 
 			}
@@ -292,8 +292,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = DOT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:832:5: ( '.' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:832:7: '.'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:858:5: ( '.' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:858:7: '.'
 			{
 			match('.'); 
 			}
@@ -312,8 +312,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = OR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:833:5: ( '||' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:833:7: '||'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:859:5: ( '||' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:859:7: '||'
 			{
 			match("||"); 
 
@@ -333,8 +333,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = AND;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:834:5: ( '&&' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:834:7: '&&'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:860:5: ( '&&' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:860:7: '&&'
 			{
 			match("&&"); 
 
@@ -354,8 +354,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = NOT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:835:5: ( 'not' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:835:7: 'not'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:861:5: ( 'not' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:861:7: 'not'
 			{
 			match("not"); 
 
@@ -375,8 +375,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = GR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:836:5: ( '>=' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:836:7: '>='
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:862:5: ( '>=' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:862:7: '>='
 			{
 			match(">="); 
 
@@ -396,8 +396,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = LE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:837:5: ( '<=' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:837:7: '<='
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:863:5: ( '<=' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:863:7: '<='
 			{
 			match("<="); 
 
@@ -417,8 +417,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = EQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:838:5: ( '==' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:838:7: '=='
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:864:5: ( '==' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:864:7: '=='
 			{
 			match("=="); 
 
@@ -438,8 +438,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = ASS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:839:5: ( '=' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:839:7: '='
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:865:5: ( '=' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:865:7: '='
 			{
 			match('='); 
 			}
@@ -458,8 +458,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = TRUE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:840:7: ( 'true' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:840:9: 'true'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:866:7: ( 'true' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:866:9: 'true'
 			{
 			match("true"); 
 
@@ -479,8 +479,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = FALSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:841:7: ( 'false' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:841:9: 'false'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:867:7: ( 'false' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:867:9: 'false'
 			{
 			match("false"); 
 
@@ -500,8 +500,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:842:5: ( 'if' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:842:7: 'if'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:868:5: ( 'if' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:868:7: 'if'
 			{
 			match("if"); 
 
@@ -521,8 +521,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = THEN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:843:7: ( 'then' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:843:9: 'then'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:869:7: ( 'then' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:869:9: 'then'
 			{
 			match("then"); 
 
@@ -542,8 +542,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = ELSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:844:7: ( 'else' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:844:9: 'else'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:870:7: ( 'else' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:870:9: 'else'
 			{
 			match("else"); 
 
@@ -563,8 +563,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = PRINT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:845:7: ( 'print' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:845:9: 'print'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:871:7: ( 'print' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:871:9: 'print'
 			{
 			match("print"); 
 
@@ -584,8 +584,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = LET;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:846:9: ( 'let' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:846:11: 'let'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:872:9: ( 'let' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:872:11: 'let'
 			{
 			match("let"); 
 
@@ -605,8 +605,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = IN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:847:9: ( 'in' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:847:11: 'in'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:873:9: ( 'in' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:873:11: 'in'
 			{
 			match("in"); 
 
@@ -626,8 +626,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = VAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:848:9: ( 'var' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:848:11: 'var'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:874:9: ( 'var' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:874:11: 'var'
 			{
 			match("var"); 
 
@@ -647,8 +647,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = FUN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:849:5: ( 'fun' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:849:7: 'fun'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:875:5: ( 'fun' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:875:7: 'fun'
 			{
 			match("fun"); 
 
@@ -668,8 +668,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = CLASS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:850:7: ( 'class' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:850:9: 'class'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:876:7: ( 'class' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:876:9: 'class'
 			{
 			match("class"); 
 
@@ -689,8 +689,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = EXTENDS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:851:9: ( 'extends' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:851:11: 'extends'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:877:9: ( 'extends' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:877:11: 'extends'
 			{
 			match("extends"); 
 
@@ -710,8 +710,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = NEW;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:852:7: ( 'new' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:852:9: 'new'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:878:7: ( 'new' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:878:9: 'new'
 			{
 			match("new"); 
 
@@ -731,8 +731,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = NULL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:853:9: ( 'null' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:853:11: 'null'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:879:9: ( 'null' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:879:11: 'null'
 			{
 			match("null"); 
 
@@ -752,8 +752,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:854:5: ( 'int' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:854:7: 'int'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:880:5: ( 'int' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:880:7: 'int'
 			{
 			match("int"); 
 
@@ -773,8 +773,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = BOOL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:855:7: ( 'bool' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:855:9: 'bool'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:881:7: ( 'bool' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:881:9: 'bool'
 			{
 			match("bool"); 
 
@@ -794,8 +794,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = ARROW;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:856:9: ( '->' )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:856:11: '->'
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:882:9: ( '->' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:882:11: '->'
 			{
 			match("->"); 
 
@@ -815,7 +815,7 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = INTEGER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:9: ( ( ( '1' .. '9' ) ( '0' .. '9' )* ) | '0' )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:883:9: ( ( ( '1' .. '9' ) ( '0' .. '9' )* ) | '0' )
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( ((LA2_0 >= '1' && LA2_0 <= '9')) ) {
@@ -833,10 +833,10 @@ public class FOOLLexer extends Lexer {
 
 			switch (alt2) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:11: ( ( '1' .. '9' ) ( '0' .. '9' )* )
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:883:11: ( ( '1' .. '9' ) ( '0' .. '9' )* )
 					{
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:11: ( ( '1' .. '9' ) ( '0' .. '9' )* )
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:12: ( '1' .. '9' ) ( '0' .. '9' )*
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:883:11: ( ( '1' .. '9' ) ( '0' .. '9' )* )
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:883:12: ( '1' .. '9' ) ( '0' .. '9' )*
 					{
 					if ( (input.LA(1) >= '1' && input.LA(1) <= '9') ) {
 						input.consume();
@@ -846,7 +846,7 @@ public class FOOLLexer extends Lexer {
 						recover(mse);
 						throw mse;
 					}
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:22: ( '0' .. '9' )*
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:883:22: ( '0' .. '9' )*
 					loop1:
 					while (true) {
 						int alt1=2;
@@ -880,7 +880,7 @@ public class FOOLLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:857:37: '0'
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:883:37: '0'
 					{
 					match('0'); 
 					}
@@ -901,8 +901,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:858:7: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:858:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:884:7: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )* )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:884:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -912,7 +912,7 @@ public class FOOLLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:858:28: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:884:28: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )*
 			loop3:
 			while (true) {
 				int alt3=2;
@@ -957,10 +957,10 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = WHITESP;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:859:9: ( ( '\\t' | ' ' | '\\r' | '\\n' )+ )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:859:11: ( '\\t' | ' ' | '\\r' | '\\n' )+
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:885:9: ( ( '\\t' | ' ' | '\\r' | '\\n' )+ )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:885:11: ( '\\t' | ' ' | '\\r' | '\\n' )+
 			{
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:859:11: ( '\\t' | ' ' | '\\r' | '\\n' )+
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:885:11: ( '\\t' | ' ' | '\\r' | '\\n' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
@@ -1010,8 +1010,8 @@ public class FOOLLexer extends Lexer {
 		try {
 			int _type = ERR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:861:9: ( . )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:861:11: .
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:887:9: ( . )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:887:11: .
 			{
 			matchAny(); 
 			 System.out.println("Invalid char: "+getText()); lexicalErrors++; _channel=HIDDEN; 

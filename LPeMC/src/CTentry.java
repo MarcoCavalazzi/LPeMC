@@ -20,6 +20,7 @@ public class CTentry {
 	{
 		dec = d;
 		nestingLevel = nl;
+		// Debug: System.out.println("[CTentry.java] nesting level = "+nestingLevel);
 	}
 	
 	public CTentry(Node d)
@@ -32,7 +33,10 @@ public class CTentry {
 		for(int i = 0;i < allFields.size();i++)
 		{
 			if(((FieldNode)allFields.get(i)).getName().equals(s))
+			{
 				allFields.remove(i);
+				break;
+			}
 		}
 		
 		allFields.add(node);
@@ -89,12 +93,18 @@ public class CTentry {
 	}
 	
 	public String toPrint(String string) {
-		// TODO Auto-generated method stub
 		return "CTentry";
 	}
-
+	
+	public void setAllField(ArrayList<Node> af)
+	{
+		for(int i =0; i < af.size();i++)
+		{
+			allFields.add(af.get(i));
+		}
+	}
+	
 	public Node getType() {
-		
 		return type;
 	}
 }

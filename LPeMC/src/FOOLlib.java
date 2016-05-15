@@ -14,6 +14,7 @@ public class FOOLlib {
   
   private static String funCode="";
   
+  public static HashMap<String,Integer> objectPointerMap = new HashMap<String,Integer>();
   public static int objectPointer = 0;
   
   //OO

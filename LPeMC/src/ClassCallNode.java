@@ -83,16 +83,16 @@ public class ClassCallNode implements Node {
 		  }
 
 		  return
-		  "lhp\n" + 
-		  parCode+
-		  "lhp\n" +
-		 // "push 3"+
-		 // "push 3"+//è da commentare
-		  "push " + (methodEntry.getOffset()+FOOLlib.objectPointer) + "\n" + //objectpointer + offset del metodo
-		  //"add\n"+//da commentare
-		 // "add\n"+//da commentare
-		  "lw\n" +
-		  "js\n"; 	// salto
+			  "srv\n"+  //in cima allo stack c'è l'object pointer, per cui lo salvo in un registro
+	          "lhp\n" + 
+			  parCode+
+			  //"lhp\n" +//non so se vada o meno
+			  "lrv\n"+
+			  "lrv\n"+ //recupero l'object pointer
+			  "push 0\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+			  "add\n"+
+			  "lw\n" +
+			  "js\n"; 	// salto
 
 
 		
