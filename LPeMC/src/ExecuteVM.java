@@ -158,6 +158,7 @@ public class ExecuteVM {
         System.out.println("  * RA:"+ ra +"\tRV: "+rv +"\t\tHP:  "+hp);
         dumpStack();
         dumpHeap();
+        
     }
     
     

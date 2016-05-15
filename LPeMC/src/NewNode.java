@@ -110,6 +110,8 @@ public class NewNode implements Node{
 //		"shp\n";
 //		//labelSHP;	
 //		//"shp\n"; //? non ho capito come gestire l'object pointer ):   ma dov'è? abbiamo lo stack pointer e l'object? 
-	
+		
+		
 	}
+
 }

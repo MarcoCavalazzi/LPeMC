@@ -105,7 +105,7 @@ public class ClassNode implements Node{
 				if(!flag)	// If no match has been found... 
 				{
 					System.out.println("Wrong field type in field "+ 
-							((FieldNode)superEntry.allFields.get(j)).getName() +" for class "+ name);
+							((FieldNode)superEntry.allFields.get(--j)).getName() +" for class "+ name);
 					System.exit(0);
 				}
 				
@@ -138,14 +138,13 @@ public class ClassNode implements Node{
 				}
 				
 				if(!flag){
-					System.out.println("Wrong method type in method "+ 
-							((MethodNode)superEntry.allMethods.get(j)).getName()+" for class: "+name);
-					System.out.println("Debug statements:");
 					System.out.println("class method name:"+((MethodNode)classEntry.allMethods.get(i)).getName()
 							+" for class "+name);
 					System.out.println("super method name:"+((MethodNode)superEntry.allMethods.get(j)).getName()
-							+" for class "+ name);
+							+" for class "+name);
 					
+					System.out.println("Wrong method type in method "+ 
+							((MethodNode)superEntry.allMethods.get(--j)).getName()+" for class: "+name);
 					System.exit(0);
 				}
 				
@@ -154,7 +153,8 @@ public class ClassNode implements Node{
 		}
 		
 		//return new ClassTypeNode();
-	*/
+		 * 
+		 */
 		return new ClassTypeNode(name); //non siamo sicuri.
 	}
 	

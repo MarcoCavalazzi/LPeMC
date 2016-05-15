@@ -56,12 +56,22 @@ public class ClassCallNode implements Node {
 	    		 System.out.println("Wrong number of parameters in the invocation of "+id);
 	    		 System.exit(0);
 	    	 } 
+<<<<<<< HEAD
 	    	 // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypeNode)
 	    	 for (int i=0; i< par.size(); i++)
 	    	 {
 	    		 if ( !( FOOLlib.isSubtype( p.get(i), (par.get(i)).typeCheck()) ) ){ 
 	    			  // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
 	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id+"().  Type required: "+ p.get(i) +". Type passed: "+ (par.get(i)).typeCheck());
+=======
+	    	 // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
+	    	 for (int i=0; i< par.size(); i++) 
+	    		 if (
+	    				 !(FOOLlib.isSubtype( p.get(i), par.get(i).typeCheck() ) ) 
+	    				 // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
+	    				 ) {
+	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
+>>>>>>> branch 'newMasterOO' of https://github.com/MarcoCavalazzi/LPeMC.git
 	    			 System.exit(0);
 	    		 }
 	    	 }
@@ -78,24 +88,22 @@ public class ClassCallNode implements Node {
 		  }
 		  
 		  String getAR = "";
-		  for(int i=0; i< nl-entry.getNestinglevel(); i++){
+		  //for(int i=0; i< nl-methodEntry.getNestinglevel(); i++){ 
+		  for(int i=0; i< nl-entry.getNestinglevel(); i++){ 
 			  getAR += "lw\n";
 		  }
 
 		  return
-			  "srv\n"+  //in cima allo stack c'è l'object pointer, per cui lo salvo in un registro
-	          "lhp\n" + 
-			  parCode+
-			  //"lhp\n" +//non so se vada o meno
-			  "lrv\n"+
-			  "lrv\n"+ //recupero l'object pointer
-			  "push 0\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
-			  "add\n"+
-			  "lw\n" +
-			  "js\n"; 	// salto
-
-
-		
+		  "srv\n"+  //in cima allo stack c'è l'object pointer, per cui lo salvo in un registro
+          "lhp\n" + 
+		  parCode+
+		  //"lhp\n" +//non so se vada o meno
+		  "lrv\n"+
+		  "lrv\n"+ //recupero l'object pointer
+		  "push 0\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+		  "add\n"+
+		  "lw\n" +
+		  "js\n"; 	// salto
 	}
 
 	 public String getClassName(){
