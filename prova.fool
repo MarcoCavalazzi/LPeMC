@@ -10,22 +10,19 @@ let
   
   class BankLoan (loan: Account) {
     fun getLoan:Account () loan;
-    fun openLoan:Account (m:TradingAcc) if (6>=30000) 
-      then {new Account(loan.getMon())} 
-      else {null};
+   
   } 
   
   class MyBankLoan extends BankLoan (loan: TradingAcc) {
-    fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
-      then {new TradingAcc(loan.getMon(),loan.getInv())} 
-      else {null};
+    fun openLoan:int()  if (6>=20000) 
+      then {5} 
+      else {90};
   } 
     
-  var bl:MyBankLoan = new MyBankLoan(new TradingAcc(50000,40000));
-  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
-  var myLoan:Account = bl.openLoan(myTradingAcc);
+  var bl:BankLoan = new MyBankLoan(new TradingAcc(50000,40000));
+
       
-in print(if (myLoan==null) then {0} else {myLoan.getMon()});  
+in print(bl.getLoan());  
 
 
 /*
@@ -40,9 +37,9 @@ let
 		fun getMon:int() 999;	
     }
 
-	var x:TradingAcc = new TradingAcc(111,222);
+	var x:Account = new Account(111);
 in 
-	print(x.getInv());
+	print(x.getPippo());
 
 let 
 	

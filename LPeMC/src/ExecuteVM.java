@@ -157,14 +157,24 @@ public class ExecuteVM {
         System.out.println("  * SP: "+ sp +"\tFP: "+ fp +"\tIP: "+ ip);
         System.out.println("  * RA:"+ ra +"\tRV: "+rv +"\t\tHP:  "+hp);
         dumpStack();
+        dumpHeap();
+        
     }
     
     
     private void dumpStack(){
-      System.out.println("--------------");
-      for(int i=memory.length-1; i>=sp; i--){
-          System.out.println(i+": "+memory[i]);
-      }
+    	System.out.println("-------------- STACK --------------");
+    	for(int i=memory.length-1; i>=sp; i--){
+    		System.out.println(i+": "+memory[i]);
+    	}  
+    }
+    
+    public final void dumpHeap(){
+		
+    	System.out.println("-------------- HEAP --------------");
+    	for(int i=0; i<=hp; i++){
+    		System.out.println(i+": "+memory[i]);
+    	}
     }
     
     private int pop() {

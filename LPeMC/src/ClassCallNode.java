@@ -64,7 +64,7 @@ public class ClassCallNode implements Node {
 	    	 // ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
 	    	 for (int i=0; i< par.size(); i++) 
 	    		 if (
-	    				 !(FOOLlib.isSubtype( (par.get(i)).typeCheck(), p.get(i)) ) 
+	    				 !(FOOLlib.isSubtype( p.get(i), par.get(i).typeCheck() ) ) 
 	    				 // !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
 	    				 ) {
 	    			 System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
@@ -84,19 +84,20 @@ public class ClassCallNode implements Node {
 		  }
 		  
 		  String getAR = "";
-		  for(int i=0; i< nl-entry.getNestinglevel(); i++){
+		  //for(int i=0; i< nl-methodEntry.getNestinglevel(); i++){ 
+		  for(int i=0; i< nl-entry.getNestinglevel(); i++){ 
 			  getAR += "lw\n";
 		  }
 
 		  return
-		  "lhp\n" + 
+		  "srv\n"+  //in cima allo stack c'è l'object pointer, per cui lo salvo in un registro
+          "lhp\n" + 
 		  parCode+
-		  "lhp\n" +
-		 // "push 3"+
-		 // "push 3"+//è da commentare
-		  "push " + (methodEntry.getOffset()+FOOLlib.objectPointer) + "\n" + //objectpointer + offset del metodo
-		  //"add\n"+//da commentare
-		 // "add\n"+//da commentare
+		  //"lhp\n" +//non so se vada o meno
+		  "lrv\n"+
+		  "lrv\n"+ //recupero l'object pointer
+		  "push 0\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+		  "add\n"+
 		  "lw\n" +
 		  "js\n"; 	// salto
 

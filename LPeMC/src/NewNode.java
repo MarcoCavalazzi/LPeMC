@@ -87,7 +87,7 @@ public class NewNode implements Node{
 							"shp\n"	;
 		}
 		
-		
+		//FOOLlib.objectPointerMap.put(id, entry.allMethods.size());
 		FOOLlib.objectPointer = entry.allMethods.size();
 		
 		return 	
@@ -98,9 +98,9 @@ public class NewNode implements Node{
 				"lhp\n"+ //carico l'heap pointer corrente
 				"add\n"+
 				"shp\n"+				
-				parCode+			
+				parCode+
+				"lhp\n"+ //carico sulla cima dello stack hp, esattamente prima dei metodi poichè ci servirà per gestire l'object pointer
 				methodLabel;
-				//"push 3\n";
 						
 				
 //		//"lhp\n" +	

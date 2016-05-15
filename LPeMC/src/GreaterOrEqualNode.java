@@ -1,13 +1,13 @@
 
 public class GreaterOrEqualNode implements Node {
 
-    private Node left;
-    private Node right;
-	
+	private Node left;
+	private Node right;
+
 	public GreaterOrEqualNode(Node l, Node r) {
 		left = l;
 		right = r;
-	    }
+	}
 
 	
 	@Override
