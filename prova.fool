@@ -5,7 +5,9 @@ let
   }
   
   class TradingAcc extends Account (invested:int) {
-    fun getInv:int () invested;
+    fun getInv:int () if (invested<=20000) 
+      then {5} 
+      else {99};
   }
   
   class BankLoan (loan: Account) {
@@ -14,15 +16,13 @@ let
   } 
   
   class MyBankLoan extends BankLoan (loan: TradingAcc) {
-    fun openLoan:int()  if (6>=20000) 
-      then {5} 
-      else {90};
+    fun openLoan:int () 2;
   } 
     
-  var bl:BankLoan = new MyBankLoan(new TradingAcc(50000,40000));
+  var bl:TradingAcc = new TradingAcc(50000,40000);
 
       
-in print(bl.getLoan());  
+in print(bl.getInv());  
 
 
 /*

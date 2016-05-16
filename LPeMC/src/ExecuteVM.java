@@ -22,12 +22,12 @@ public class ExecuteVM {
         System.out.println("Generated code:");
         System.out.println("----------------------");
         for(int i=0; i<code.length; i++){
-        	if(code[i] != 25){// 25 = PUSH
+        	if(code[i] != 25 && code[i] != 5 && code[i] != 6 && code[i] != 7 && code[i] != 8){// 25 = PUSH, 5 = BRANCH, 6 = BRANCHEQ, 7 = BRANCHGR, 8 = BRANCHLESS
         		if(code[i]==0)
         			break;	// This control avoids to associate <invalid> strings to values that belong to the PUSH commands.
         		System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
         	}else{
-        		System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
+        		System.out.print(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString()+"   ");
         		System.out.println(code[++i]);
         	}
         }
@@ -134,7 +134,7 @@ public class ExecuteVM {
             push(hp);
             break;
          case SVMParser.PRINT :
-            System.out.println((sp<MEMSIZE)?memory[sp]:"Empty stack!");
+            System.out.println((sp<MEMSIZE)?"\n>>> output >>>    "+memory[sp]+"\n":"Empty stack!");
             break;
          case SVMParser.HALT :	// The last command executed from the program.
         	 System.out.println("\n_End of program_");

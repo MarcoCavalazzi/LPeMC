@@ -342,7 +342,7 @@ public class ClassNode implements Node{
 	//	"\n"+methodLabel+":\n"+
 	//	methodCode);
 		
-		return "";
+		return "";//forse ci vuole ClassTypeNode
 
 	}
 }

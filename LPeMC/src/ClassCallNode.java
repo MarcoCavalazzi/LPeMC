@@ -98,8 +98,9 @@ public class ClassCallNode implements Node {
 		  //"lhp\n" +//non so se vada o meno
 		  "lrv\n"+
 		  "lrv\n"+ //recupero l'object pointer
-		  "push 0\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
-		  "add\n"+
+		  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+		 //"push 1\n"+
+		 "add\n"+
 		  "lw\n" +
 		  "js\n"; 	// salto
 	}

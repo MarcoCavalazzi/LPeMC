@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class NewNode implements Node{
 
@@ -60,11 +61,11 @@ public class NewNode implements Node{
 	public String codeGeneration() {
 		String parCode = "";
 		String methodLabel = "";
-		String parSHP = "";
-		String labelSHP = "";
+		Logger LOGGER = Logger.getLogger("InfoLogging");
 		for(int i = 0; i < parlist.size(); i++)
 		{
 			parCode += parlist.get(i).codeGeneration()+"\n";
+			//LOGGER.info("sono dentro parlist");
 			parCode +=  "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
 						"sw\n" +
 						"push 1\n"+ 
@@ -76,6 +77,7 @@ public class NewNode implements Node{
 		
 		for(int i = 0; i < entry.allMethods.size(); i++)
 		{
+			
 			methodLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
 		   // +"shp\n";
 			//System.out.println("label method "+i+": "+((MethodNode)entry.allMethods.get(i)).getLabel());
@@ -91,16 +93,18 @@ public class NewNode implements Node{
 		FOOLlib.objectPointer = entry.allMethods.size();
 		
 		return 	
-				"lhp \n" +
-				"sw \n" +
-				"lhp\n" +
-				"push 1\n"+ 
+				//"lhp\n" +
+				//"sw\n" +
+				//"lhp\n" +				
+				"push 1\n"+ //pusha 1, carica l'heap, li somma (per avere la prossima posizione libera nello heap)
 				"lhp\n"+ //carico l'heap pointer corrente
 				"add\n"+
-				"shp\n"+				
+				"shp\n"+ //lo salva, e lo usa per poi andare ad inserire il risultato della code generation del primo parametro, poi stesso procedimento per il secondo e così via		
 				parCode+
 				"lhp\n"+ //carico sulla cima dello stack hp, esattamente prima dei metodi poichè ci servirà per gestire l'object pointer
-				methodLabel;
+				"srv\n"+
+				methodLabel+
+				"lrv\n";
 						
 				
 //		//"lhp\n" +	
