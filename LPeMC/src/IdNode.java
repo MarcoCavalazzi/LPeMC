@@ -57,12 +57,18 @@ public class IdNode implements Node {
   public String codeGeneration() {
 	
 	if(ctentry != null)
-	{
+	{  
 		String getAR="";
 		for (int i=0;i<nl-ctentry.getNestinglevel(); i++ )
 		  getAR+="lw\n";	
-			
-		return "push "+entry.getOffset()+"\n"+
+		
+		int offset;
+		if(ctentry.getFieldOffset()!=-3)
+			offset  = ctentry.getFieldOffset();
+			else
+				offset  = ctentry.getMethodOffset();
+		
+		return "push "+offset+"\n"+
 	           "lfp\n"+
 			   getAR+
 			   "add\n"+
