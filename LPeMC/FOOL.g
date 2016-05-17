@@ -48,6 +48,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     int classoffset = -2;	     
 	     CTentry extendedEntry = null;
 	     CTentry ctentry       = null;
+	     int methodOffset = 0;
 	   } 
 	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe //in cllist vanno solo classi o anche il resto? perchè la cod generation per i metodi ad esempio si fa da dentro ClassNode
 	   {
@@ -159,7 +160,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     )* )? RPAR
 	     {
 	        ctentry.addType( new ArrowTypeNode(ConstrPar, Obj) ); //è esatto??????????
-	        int methodOffset = 0;
+	        
 	     }
 	     CLPAR//apri graffa
 	       (FUN mid=ID COLON retm=basic
