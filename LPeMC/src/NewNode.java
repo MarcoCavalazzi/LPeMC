@@ -61,19 +61,19 @@ public class NewNode implements Node{
 	public String codeGeneration() {
 		String parCode = "";
 		String methodLabel = "";
-		Logger LOGGER = Logger.getLogger("InfoLogging");
-		for(int i = 0; i < parlist.size(); i++)
-		{
-			parCode += parlist.get(i).codeGeneration()+"\n";
-			//LOGGER.info("sono dentro parlist");
-			parCode +=  "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
-						"sw\n" +
-						"push 1\n"+ 
-						"lhp\n"+ //carico l'heap pointer corrente
-						"add\n"+
-						"shp\n";
-			
-		}
+		//Logger LOGGER = Logger.getLogger("InfoLogging");
+//		for(int i = 0; i < parlist.size(); i++)
+//		{
+//			parCode += parlist.get(i).codeGeneration()+"\n";
+//			//LOGGER.info("sono dentro parlist");
+//			parCode +=  "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
+//						"sw\n" +
+//						"push 1\n"+ 
+//						"lhp\n"+ //carico l'heap pointer corrente
+//						"add\n"+
+//						"shp\n";
+//			
+//		}
 		
 		for(int i = 0; i < entry.allMethods.size(); i++)
 		{
@@ -90,7 +90,7 @@ public class NewNode implements Node{
 		}
 		
 		//FOOLlib.objectPointerMap.put(id, entry.allMethods.size());
-		FOOLlib.objectPointer = entry.allMethods.size();
+		//FOOLlib.objectPointer = entry.allMethods.size();
 		
 		return 	
 				//"lhp\n" +
@@ -100,10 +100,10 @@ public class NewNode implements Node{
 				"lhp\n"+ //carico l'heap pointer corrente
 				"add\n"+
 				"shp\n"+ //lo salva, e lo usa per poi andare ad inserire il risultato della code generation del primo parametro, poi stesso procedimento per il secondo e così via		
-				parCode+
+				makeParCode()+
 				"lhp\n"+ //carico sulla cima dello stack hp, esattamente prima dei metodi poichè ci servirà per gestire l'object pointer
 				"srv\n"+
-				methodLabel+
+				makeMethodCode()+
 				"lrv\n";
 						
 				
@@ -116,6 +116,42 @@ public class NewNode implements Node{
 //		//"shp\n"; //? non ho capito come gestire l'object pointer ):   ma dov'è? abbiamo lo stack pointer e l'object? 
 		
 		
+	}
+	
+	private String makeParCode()
+	{
+		String code = "";
+		for(int i = 0; i < parlist.size(); i++)
+		{
+			code += parlist.get(i).codeGeneration()+"\n";
+			
+			code += "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
+					"sw\n" +
+					"push 1\n"+ 
+					"lhp\n"+ //carico l'heap pointer corrente
+					"add\n"+
+					"shp\n";
+		}
+		return code;
+	}
+	
+	private String makeMethodCode()
+	{
+		String mLabel="";
+		for(int i = 0; i < entry.allMethods.size(); i++)
+		{
+			
+			mLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
+		   // +"shp\n";
+			//System.out.println("label method "+i+": "+((MethodNode)entry.allMethods.get(i)).getLabel());
+			mLabel += "lhp\n"+
+							"sw\n" +
+							"push 1\n"+ 
+							"lhp\n"+ //carico l'heap pointer corrente
+							"add\n"+
+							"shp\n"	;
+		}
+		return mLabel;
 	}
 
 }

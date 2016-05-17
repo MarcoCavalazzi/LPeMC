@@ -108,4 +108,9 @@ public class CTentry {
 		
 		return type;
 	}
+
+	public int getNestinglevel() {
+		
+		return nestingLevel;
+	}
 }

@@ -5,8 +5,8 @@ let
   }
   
   class TradingAcc extends Account (invested:int) {
-    fun getInv:int () if (invested<=20000) 
-      then {5} 
+    fun getInv:int () if (invested>=2000) 
+      then {money} 
       else {99};
   }
   

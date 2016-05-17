@@ -147,14 +147,14 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	        ConstrPar.add($tn.ast);
           FieldNode ObjfieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
           Obj.addField(ObjfieldN);
-          ctentry.setFieldOffset(fieldOffset--);
+          ctentry.setFieldOffset(fieldOffset);
         //  if ( hmn.put($pn.text,new STentry(ObjfieldN,nestingClassLevel,$tn.ast,fieldOffset)) != null  )modificato il 14_05
           if ( hmn.put($pn.text,new STentry(ObjfieldN,nestingLevel,$tn.ast,fieldOffset)) != null  )
           {
              System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
              System.exit(0); 
           }
-          
+          fieldOffset--;
          ctentry.setFieldAndCheck(Objfield, $pn.text);//va bene? 14_05
 	     }
 	     )* )? RPAR
@@ -586,25 +586,30 @@ value	returns [Node ast]
 	    int j  = nestingLevel;
 	    int jj = nestingClassLevel;
 	    STentry entry     = null; 
-	    STentry classEntry = null;
+	    CTentry classEntry = null;
 	    
 	    // while (j>=0 && entry==null)
 	    //  entry=(symTable.get(j--)).get($i.text);
 	    for(j=0;j<symTable.size() && entry==null;j++)
 	        entry=(symTable.get(j)).get($i.text);
 	        
-	    while (jj>=0 && classEntry==null){
-        classEntry=(virtualTable.get(jj--)).get($i.text);         
-        }
+	    //while (jj>=0 && classEntry==null){
+       // classEntry=(virtualTable.get(jj--)).get($i.text);         
+      //  }
+       for(jj=0;jj < virtualTable.size() && classEntry==null;jj++)
+          classEntry=classTable.get(jj);
          
-	    if (entry == null ){
+	    if (entry == null && classEntry == null){
 	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!");	       
 	       System.exit(0);
 	    }
-	     	   
-	    $ast = new IdNode($i.text,entry,nestingLevel);
+	     	 
+	    if( classEntry != null )	        
+	        $ast = new IdNode($i.text,classEntry,nestingClassLevel);
+	    else
+	        $ast = new IdNode($i.text,entry,nestingLevel);
 	    
-	    
+	    /*
 	    String classInputName = "";
       if(classEntry != null){
         if(classEntry.getDecl() instanceof ParNode){
@@ -612,7 +617,7 @@ value	returns [Node ast]
           }
         }
       }
-   
+   */
                  
     }
     (
