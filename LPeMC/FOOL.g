@@ -45,8 +45,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
    : { 
 	     $astlist = new ArrayList<Node>() ;
 	     int offset      = -2;
-	     int classoffset = -2;
-	     int methodOffset = 0;
+	     int classoffset = -2;	     
 	     CTentry extendedEntry = null;
 	     CTentry ctentry       = null;
 	   } 
@@ -160,6 +159,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
 	     )* )? RPAR
 	     {
 	        ctentry.addType( new ArrowTypeNode(ConstrPar, Obj) ); //è esatto??????????
+	        int methodOffset = 0;
 	     }
 	     CLPAR//apri graffa
 	       (FUN mid=ID COLON retm=basic
@@ -187,7 +187,7 @@ cllist returns [ArrayList<Node> astlist]   // Probabilmente deve restituire una 
                 System.exit(0); 
              }
              nestingClassLevel++;
-             nestingLevel++; //06_05 non so se vada bene
+             nestingLevel++; 
              HashMap<String,STentry> hmnc = new HashMap<String,STentry> ();
              virtualTable.add(hmnc);
              ctentry.setMethod(f);
@@ -588,10 +588,10 @@ value	returns [Node ast]
 	    STentry entry     = null; 
 	    CTentry classEntry = null;
 	    
-	    // while (j>=0 && entry==null)
-	    //  entry=(symTable.get(j--)).get($i.text);
-	    for(j=0;j<symTable.size() && entry==null;j++)
-	        entry=(symTable.get(j)).get($i.text);
+	     while (j>=0 && entry==null)
+	      entry=(symTable.get(j--)).get($i.text);
+	 //   for(j=0;j<symTable.size() && entry==null;j++)
+	     //   entry=(symTable.get(j)).get($i.text);
 	        
 	    //while (jj>=0 && classEntry==null){
        // classEntry=(virtualTable.get(jj--)).get($i.text);         
