@@ -91,18 +91,46 @@ public class ClassCallNode implements Node {
 			  getAR += "lw\n";
 		  }
 
-		  return
-		  "srv\n"+  //in cima allo stack c'è l'object pointer, per cui lo salvo in un registro
-          "lhp\n" + 
-		  parCode+
-		  //"lhp\n" +//non so se vada o meno
-		  "lrv\n"+
-		  "lrv\n"+ //recupero l'object pointer
-		  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
-		 //"push 1\n"+
-		 "add\n"+
-		  "lw\n" +
-		  "js\n"; 	// salto
+//		  return
+//		  "srv\n"+  //in cima allo stack c'è l'object pointer, per cui lo salvo in un registro
+//          "lhp\n" + 
+//		  parCode+
+//		  //"lhp\n" +//non so se vada o meno
+//		  "lrv\n"+
+//		  "lrv\n"+ //recupero l'object pointer
+//		  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+//		 //"push 1\n"+
+//		  "add\n"+
+//		  "lw\n" +
+//		  "js\n"; 	// salto
+		  
+		  
+		  return			
+	         // "lhp\n" + 
+			  //parCode+
+			 // "lhp\n" +
+			  //getAR+
+			  
+			 // "pop\n"+
+			  //"pop\n"+
+			//  "lrv\n"+
+			 // "lrv\n"+ //recupero l'object pointer
+			 //"lfp\n"+//eliminabile...forse
+			 //"srv\n"+//eliminabile...forse
+			  "cfp\n"+
+			  "lfp\n"+
+			 // "push "+(nl-methodEntry.getNestinglevel())+"\n"+
+			  "push 0\n"+
+			  "add\n"+	
+			  "lw\n"+
+			  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+			  "add\n"+
+			  "lw\n" +	
+			  //"lrv\n"+//eliminabile...forse
+			  //"sfp\n"+//eliminabile...forse
+			  "js\n";
+		  
+		  
 	}
 
 	 public String getClassName(){
