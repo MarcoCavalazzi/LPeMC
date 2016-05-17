@@ -588,15 +588,17 @@ value	returns [Node ast]
 	    STentry entry     = null; 
 	    CTentry classEntry = null;
 	    
-	     while (j>=0 && entry==null)
-	      entry=(symTable.get(j--)).get($i.text);
-	 //   for(j=0;j<symTable.size() && entry==null;j++)
-	     //   entry=(symTable.get(j)).get($i.text);
-	        
-	    //while (jj>=0 && classEntry==null){
-       // classEntry=(virtualTable.get(jj--)).get($i.text);         
-      //  }
-       for(jj=0;jj < virtualTable.size() && classEntry==null;jj++)
+	  //   while (j>=0 && entry==null)
+	 //     entry=(symTable.get(j--)).get($i.text);
+	    for(j=0;j<symTable.size() && entry==null;j++)
+	       entry=(symTable.get(j)).get($i.text);
+	     
+	    if(entry==null)    
+	      while (jj>=0 && classEntry==null){
+	        entry=(virtualTable.get(jj--)).get($i.text);         
+	      } 
+	           
+      for(jj=0;jj < virtualTable.size() && classEntry==null;jj++)
           classEntry=classTable.get(jj);
          
 	    if (entry == null && classEntry == null){

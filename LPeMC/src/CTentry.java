@@ -4,8 +4,8 @@ import java.util.HashMap;
 public class CTentry {
 	
 	HashMap<String,STentry> vTable = new HashMap<String,STentry>();
-	private int offsetFields;               						// offset (<=-1) da usare per un nuovo field                                                                                  (decrementati)
-	private int offsetMethods;               						// offset (>=0) da usare per nuovo metodo
+	private int offsetFields = -3;               						// offset (<=-1) da usare per un nuovo field                                                                                  (decrementati)
+	private int offsetMethods= -3;               						// offset (>=0) da usare per nuovo metodo
 															//(incrementati)
 	ArrayList<Node> allFields = new ArrayList<Node>();      //tutti i figli virtuali che sono campi 
 															// ordinati in base al loro offset, cioè 
@@ -113,4 +113,15 @@ public class CTentry {
 		
 		return nestingLevel;
 	}
+	
+	public int getFieldOffset() {
+		
+		return offsetFields;
+	}
+	
+	public int getMethodOffset() {
+	
+		return offsetMethods;
+}
+	
 }
