@@ -122,6 +122,29 @@ public class CTentry {
 	public int getMethodOffset() {
 	
 		return offsetMethods;
-}
+	}
 	
+	public HashMap<String,STentry> getVirtualTable()
+	{
+		return vTable;
+	}
+	
+	public void setVirtualTable(HashMap<String,STentry> vt)
+	{
+		 vTable = vt;
+	}
+	
+	public  STentry putvTable(String s, STentry st, CTentry ctentry)
+	{	
+			if(ctentry != null){
+				if(ctentry.getVirtualTable().containsKey(s))
+					vTable.remove(s);
+			}
+		 return vTable.put(s, st);
+	}
+
+	public Node getDec() {
+		// TODO Auto-generated method stub
+		return dec;
+	}
 }

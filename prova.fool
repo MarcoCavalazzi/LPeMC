@@ -10,14 +10,7 @@ let
       else {99};
   }
   
-  class BankLoan (loan: Account) {
-    fun getLoan:Account () loan;
-   
-  } 
-  
-  class MyBankLoan extends BankLoan (loan: TradingAcc) {
-    fun openLoan:int () 2;
-  } 
+
    
   var bl2:Account = new Account(678);   
   var bl:TradingAcc = new TradingAcc(50000,40000);

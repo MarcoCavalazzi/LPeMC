@@ -59,46 +59,7 @@ public class STentry {
 			  s+"STentry: type\n" + 
 			  type.toPrint(s+"  ");  
   }
-  
-  //funzioni per l'OO
-  
-  /***
-   * Metodo per prelevare la classe corrente relativa all'istanza chiamata e il relativo offset
-   * @param className : nome della classe
-   * @param name : nome dell'id utilizzato nella chiamata
-   * @return : l'offset dell'id settato all'oggetto utilizzato nella chiamata
-   */
-  public int getInstanceClassIndex(String className, String name) {
-	  if(!instancesCounters.containsKey(className)) {
-		  return -1;
-	  }
-	  int counter = instancesCounters.get(className);
-	  int curIndex = instancesClasses.indexOf(className+name+counter);
-	  instancesCounters.put(className, curIndex >= 0 ? counter + 1 : counter);
-	  //System.out.println("curind: " + curIndex + " counter: " + counter);
-	  if(curIndex < 0 && counter > 0) {
-		  counter--;
-	  }
-	  return instancesClasses.indexOf(className+name+counter);
-  }
-  
-  /**
-   * Metodo per registrare la classe corrente relativa all'istanza chiamata e il relativo offset
-   * @param className : nome della classe
-   * @param name : nome dell'id utilizzato nella chiamata
-   * @param offset : offset della variabile utilizzata nella chiamata all'oggetto
-   */
-  public void putInstanceClassAndOffset(String className, String name, int offset) {
-	  instancesCounters.put(className, 0);
-	  int counter = 0;
-	  if(instancesInsertCounters.get(className) != null){
-		  counter++;
-	  }
-	  instancesInsertCounters.put(className, counter);
-	  //System.out.println("PUT " + className+name + counter + " OS " + offset);
-	  putInstanceClass(className + name + counter);
-	  putInstanceOffset(offset);
-  }
+ 
   
   public void setIsMethod()
   {
@@ -109,19 +70,7 @@ public class STentry {
   {
 	  return className;
   }
-  public String getInstanceClass (int index)
-  {return instancesClasses.get(index);}
   
-  private void putInstanceClass(String className) {
-	  instancesClasses.add(className);
-  }
-  
-  public int getInstanceOffset (int index)
-  {return instancesOffset.get(index);}
-  
-  private void putInstanceOffset(int os) {
-	  instancesOffset.add(os);
-  }
 
   public String getMethodName() {
 	return methodName;
@@ -136,5 +85,6 @@ public class STentry {
   {
 	  className = s;
   }
+
   
 }  

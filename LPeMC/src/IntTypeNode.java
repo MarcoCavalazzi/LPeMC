@@ -9,7 +9,7 @@ public class IntTypeNode implements Node {
   
   //non utilizzato
   public Node typeCheck() {
-    return null;
+    return new IntTypeNode();
   }
   
   public String codeGeneration() {

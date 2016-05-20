@@ -81,7 +81,7 @@ public class IdNode implements Node {
 		
 	return "push "+entry.getOffset()+"\n"+
            "lfp\n"+
-		   getAR+
+		   getAR+		  
 		   "add\n"+
            "lw\n";
   }

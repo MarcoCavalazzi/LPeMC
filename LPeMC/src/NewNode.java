@@ -52,7 +52,7 @@ public class NewNode implements Node{
 	    	 System.exit(0);
 	     } 
 	     }
-	     return t.getRet().typeCheck();
+	     return entry.getDec().typeCheck();
 	    // return t.getRet(); prima era così ma secondo me (Giuseppe) è corretto con .typeCheck() ma non sono sicuro
 	}
 	

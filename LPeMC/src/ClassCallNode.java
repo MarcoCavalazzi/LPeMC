@@ -123,9 +123,15 @@ public class ClassCallNode implements Node {
 			  "push 0\n"+
 			  "add\n"+	
 			  "lw\n"+
+//			  "srv\n"+
+//			  "lrv\n"+
+//			  "lrv\n"+
+//			  "sra\n"+
 			  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+		
 			  "add\n"+
 			  "lw\n" +	
+			  
 			  //"lrv\n"+//eliminabile...forse
 			  //"sfp\n"+//eliminabile...forse
 			  "js\n";
