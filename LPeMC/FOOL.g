@@ -54,9 +54,10 @@ cllist returns [ArrayList<Node> astlist]
          CTentry extendedEntry = null;
          CTentry ctentry       = null;
          HashMap<String,STentry> hm = symTable.get(nestingLevel);
-            
+         System.out.println("La STentry di class "+$cid.text+" ha nl = "+nestingLevel);   
          STentry entryCl = new STentry(Obj,nestingLevel);
-         ctentry = new CTentry(Obj,nestingVirtualLevel);
+         nestingVirtualLevel++;
+         ctentry = new CTentry(Obj,nestingVirtualLevel);//le ctentry per me non dovrebbero avere nesting
          entryCl.setClassName($cid.text);
          
          STentry tmp  = hm.put($cid.text,entryCl);
@@ -68,7 +69,7 @@ cllist returns [ArrayList<Node> astlist]
             System.exit(0); 
          }                
 
-         nestingVirtualLevel++;
+         //nestingVirtualLevel++;
          HashMap<String,STentry> hmn =  new HashMap<String,STentry>(); 
          symTable.add(hmn);        
 
@@ -98,6 +99,8 @@ cllist returns [ArrayList<Node> astlist]
            Obj.setSuperEntry(extendedEntry);
            Obj.setClassEntry(ctentry);
            FOOLlib.putSuperType($cid.text,$cidext.text);
+           nestingVirtualLevel = extendedEntry.getNestinglevel();
+           hmn = symTable.get(nestingVirtualLevel);
 	     }
 	     )? 
 	     LPAR 
@@ -114,6 +117,7 @@ cllist returns [ArrayList<Node> astlist]
            Obj.addField(Objfield);
            ctentry.setFieldOffset(fieldOffset);
            STentry  tempEntry = new STentry(Objfield,nestingVirtualLevel,$t1.ast,fieldOffset);
+           System.out.println("La entry "+$p1.text+" ha nl = "+nestingVirtualLevel);
            tempEntry.setClassName($cid.text);
            if(ctentry.putvTable($p1.text,tempEntry, extendedEntry) != null)//putvTable controlla anche se c'è overriding, in caso positivo sovrascrive
            {
@@ -154,7 +158,8 @@ cllist returns [ArrayList<Node> astlist]
           FieldNode ObjfieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
           Obj.addField(ObjfieldN);
           ctentry.setFieldOffset(fieldOffset);
-          STentry tmpSTentry = new STentry(ObjfieldN,nestingLevel,$tn.ast,fieldOffset);
+          STentry tmpSTentry = new STentry(ObjfieldN,nestingVirtualLevel,$tn.ast,fieldOffset);
+          System.out.println("La entry "+$pn.text+" ha nl = "+nestingVirtualLevel);
           if ( ctentry.putvTable($pn.text,tmpSTentry,extendedEntry) != null  )
           {
              System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
@@ -188,6 +193,7 @@ cllist returns [ArrayList<Node> astlist]
             
              //STentry entry = new STentry(nestingLevel,f,classoffset++);//commentato e modificato il 16_05
              //STentry entry = new STentry(nestingLevel,f,methodOffset++);
+             System.out.println("La entry "+$mid.text+" ha nl = "+nestingVirtualLevel);
              STentry entry = new STentry(f,nestingVirtualLevel,$retm.ast,methodOffset);
              entry.setClassName($cid.text);
              entry.setIsMethod();             
@@ -222,6 +228,7 @@ cllist returns [ArrayList<Node> astlist]
             ParNode fpar = new ParNode($mp1.text,$mpt1.ast);
             
             f.addPar(fpar);
+            System.out.println("La entry "+$mp1.text+" ha nl = "+nestingVirtualLevel);
             STentry tmpEntryPar = new STentry(fpar,nestingVirtualLevel,$mpt1.ast,parOffset);             
             if ( ctentry.putvTable($mp1.text,tmpEntryPar,extendedEntry) != null  ){
              System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
@@ -268,7 +275,7 @@ cllist returns [ArrayList<Node> astlist]
 	          parTypes.add($mptn.ast);
             ParNode par = new ParNode($mpn.text,$mptn.ast);
             f.addPar(par);
-            
+            System.out.println("La entry "+$mpn.text+" ha nl = "+nestingVirtualLevel);
             STentry stPar = new STentry(fpar,nestingVirtualLevel,$mptn.ast,parOffset);
             if (ctentry.putvTable($mpn.text,stPar,extendedEntry) != null ){
                System.out.println("Parameter id "+$mpn.text+" at line "+$mpn.line+" already declared");
@@ -337,7 +344,7 @@ declist	returns [ArrayList<Node> astlist]
           System.out.println("[FOOL.g] VAR    "+ v.toPrint(""));
             
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
-          
+          System.out.println("Var id "+$i.text+" at line "+$i.line+" ha nesting = "+nestingLevel);
           if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  ){
              System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
