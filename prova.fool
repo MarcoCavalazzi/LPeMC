@@ -2,19 +2,18 @@ let
 
   class Account (money:int) {
     fun getMon:int () money;
+	
   }
   
   class TradingAcc extends Account (invested:int) {
     fun getInv:int () if (invested>=2000) 
-      then {money} 
-      else {99};
+      then {getMon()} 
+      else {66};
+	fun getPippo:int () 912;
   }
-  
 
-   
-  var bl2:Account = new Account(678);   
-  var bl:TradingAcc = new TradingAcc(50000,40000);
-  
+   var bl:TradingAcc = new TradingAcc(50000,40000);
+   var bl2:Account = new Account(675);
 
       
 in print(bl.getInv());  

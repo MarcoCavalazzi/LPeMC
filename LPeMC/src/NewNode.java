@@ -106,12 +106,26 @@ public class NewNode implements Node{
 			//	"lhp\n"+ //carico sulla cima dello stack hp, esattamente prima dei metodi poichè ci servirà per gestire l'object pointer
 				//"srv\n"+
 				makeMethodCode()+				
-				"lrv\n"+ //metto sull stack il valroe rv, cioè l'heap pointer iniziale
-				"lhp\n"+ //salvo tale valore nell'indirizzo di memoria di rappresentato dal valore di hp
-				"sw\n" + 
+				 //metto sull stack il valroe rv, cioè l'heap pointer iniziale
+				//"lhp\n"+ //salvo tale valore nell'indirizzo di memoria di rappresentato dal valore di hp
+				//"sw\n" + 
 				"lhp\n"+ //pusho sullo stack il valore di op, facendo la diff tra hp e numero di metodi
 				"push -"+entry.allMethods.size()+
-				"add\n";
+				//"push -"+entry.allMethods.size()+				
+				"add\n"+
+				"sra\n"+
+				"lra\n"+
+				"lra\n"+
+				"lhp\n"+
+				"sw\n" +
+				"push 1\n"+ 
+				"lhp\n"+ //carico l'heap pointer corrente
+				"add\n"+
+				"shp\n"+
+				"lrv\n"+
+				"lhp\n"+ //salvo tale valore nell'indirizzo di memoria di rappresentato dal valore di hp
+				"sw\n" ;
+				
 						
 				
 //		//"lhp\n" +	

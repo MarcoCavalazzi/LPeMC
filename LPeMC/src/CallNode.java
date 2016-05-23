@@ -75,8 +75,11 @@ public class CallNode implements Node {
 			}
 		}
 		*/
-		
-	  
+	  if(entry.getIsMethod())
+	  {
+		  getAR += "lw\n";
+	  }
+		 
 	  return   "lfp\n"+		// CL
 	  			parCode+	// parametri
 	  			"lfp\n"+	

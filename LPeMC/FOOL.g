@@ -15,6 +15,7 @@ grammar FOOL;
 	private HashMap<String,CTentry> classTable = new HashMap<String,CTentry>();
 	private int nestingLevel = -1;
 	private int nestingVirtualLevel=-1;
+	private int newOffset = 0;
 	//livello ambiente con dichiarazioni piu' esterno ï¿½ 0 (prima posizione ArrayList) invece che 1 (slides)
 	//il "fronte" della lista di tabelle ï¿½ symTable.get(nestingLevel)
 }
@@ -183,7 +184,7 @@ cllist returns [ArrayList<Node> astlist]
              //inserimento di ID nella symtable
              MethodNode f = new MethodNode($mid.text,$retm.ast); 
                       
-             $astlist.add(f);//giusto o da commentare???
+             //$astlist.add(f);//giusto o da commentare???
              // HashMap<String,STentry> hmclass = virtualTable.get(nestingClassLevel);   
              //HashMap<String,STentry> hmclass =  new HashMap<String,STentry>();
              //symTable.add(hmclass);                  
@@ -520,8 +521,9 @@ value	returns [Node ast]
     {
             //ClassCallNode c= new ClassCallNode($i.text,entry,argList,nNewClass);
          // $ast=c;
+         ctEntry.setNewOffset(newOffset);
          $ast = new NewNode($i.text,ctEntry,argList);
-              
+         newOffset++;
 //     
     }
     RPAR
@@ -593,7 +595,8 @@ value	returns [Node ast]
          System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
          System.exit(0); 
        }
-                 
+        
+       entry.setNewOffset(ctentryClass.getNewOffset());  
     }
      LPAR
      {

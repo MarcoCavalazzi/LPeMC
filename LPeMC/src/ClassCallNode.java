@@ -104,39 +104,54 @@ public class ClassCallNode implements Node {
 //		  "lw\n" +
 //		  "js\n"; 	// salto
 		  
-		  
+
 		  return			
-	         // "lhp\n" + 
-			  //parCode+
-			 // "lhp\n" +
-			  //getAR+
-			  
-			 // "pop\n"+
-			  //"pop\n"+
-			//  "lrv\n"+
-			 // "lrv\n"+ //recupero l'object pointer
-			 //"lfp\n"+//eliminabile...forse
-			 //"srv\n"+//eliminabile...forse
-			  "cfp\n"+
-			  "lfp\n"+
-			 // "push "+(nl-methodEntry.getNestinglevel())+"\n"+
-			  "push 0\n"+
-			  "add\n"+	
-			  "lw\n"+
-//			  "srv\n"+
-//			  "lrv\n"+
-//			  "lrv\n"+
-//			  "sra\n"+
-			  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
-		
-			  "add\n"+
-			  "lw\n" +	
-			  
-			  //"lrv\n"+//eliminabile...forse
-			  //"sfp\n"+//eliminabile...forse
-			  "js\n";
-		  
-		  
+//				  "lhp\n" + 
+//				  parCode+
+//				  "lhp\n" +
+//				  getAR+	
+//				  "push "+methodEntry.getOffset()+"\n"+
+//				  //"push 3\n"+
+//				  "lhp\n"+
+//				  getAR+  // 
+//				  //popParNode+
+//				  "add\n"+
+//				  "lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
+//				  "srv\n"+
+//				  "pop\n"+
+//				  "pop\n"+
+//				  "lrv\n"+
+//				  "js\n";	
+		  // "pop\n"+
+		  //"pop\n"+
+		  //  "lrv\n"+
+		  // "lrv\n"+ //recupero l'object pointer
+		  //"lfp\n"+//eliminabile...forse
+		  //"srv\n"+//eliminabile...forse
+
+		  // da qui è il codice del 21_05	  
+		  			  "cfp\n"+
+		  			  //"lfp\n"+
+		  			  //"push "+(nl-entry.getNestinglevel())+"\n"+
+		  			  "push -"+(entry.getNewOffset())+"\n"+		  			  
+		  			  "push 9998"+
+		  			 // "push \n"+
+		  			  "add\n"+	
+		  			  "lw\n"+
+		  			  "srv\n"+
+		  			  "lrv\n"+
+		  			  "lrv\n"+			  			  
+		  			  //"sfp\n"+
+		  			  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+		  		
+		  			  "add\n"+
+		  			  "lw\n" +	
+		  			  
+//		  			  //"lrv\n"+//eliminabile...forse
+//		  			  //"sfp\n"+//eliminabile...forse
+		  			  "js\n";
+		  //fino a qui codice del 21_05
+
 	}
 
 	 public String getClassName(){

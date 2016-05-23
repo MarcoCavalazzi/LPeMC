@@ -16,6 +16,7 @@ public class CTentry {
 	private int nestingLevel;
 	private Node type;
 	private Node dec;
+	private int newOffset = 0;
 	public CTentry(Node d, int nl)
 	{
 		dec = d;
@@ -140,11 +141,20 @@ public class CTentry {
 				if(ctentry.getVirtualTable().containsKey(s))
 					vTable.remove(s);
 			}
-		 return vTable.put(s, st);
+			return vTable.put(s, st);
 	}
 
 	public Node getDec() {
 		// TODO Auto-generated method stub
 		return dec;
+	}
+	public void setNewOffset(int nO)
+	{
+		newOffset = nO;
+	}
+	
+	public int getNewOffset()
+	{
+		return newOffset;
 	}
 }

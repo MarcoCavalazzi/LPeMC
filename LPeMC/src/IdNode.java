@@ -74,14 +74,16 @@ public class IdNode implements Node {
 			   "add\n"+
 	           "lw\n";
 	}
-	  
 	String getAR="";
+	//if(entry.getIsMethod())
+		getAR+="lw\n";
+	
 	for (int i=0;i<nl-entry.getNestinglevel(); i++ )
 	  getAR+="lw\n";	
 		
-	return "push "+entry.getOffset()+"\n"+
-           "lfp\n"+
-		   getAR+		  
+	return "lfp\n"+
+		   getAR+
+		  "push "+entry.getOffset()+"\n"+
 		   "add\n"+
            "lw\n";
   }
