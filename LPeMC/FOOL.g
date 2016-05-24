@@ -69,8 +69,7 @@ cllist returns [ArrayList<Node> astlist]
             System.out.println("Class id "+$cid.text+" at line "+$cid.line+" already declared");
             System.exit(0); 
          }                
-
-         //nestingVirtualLevel++;
+         
          HashMap<String,STentry> hmn =  new HashMap<String,STentry>(); 
          symTable.add(hmn);        
 
@@ -101,7 +100,7 @@ cllist returns [ArrayList<Node> astlist]
            Obj.setClassEntry(ctentry);
            FOOLlib.putSuperType($cid.text,$cidext.text);
            //nestingVirtualLevel = extendedEntry.getNestinglevel();
-           hmn = symTable.get(extendedEntry.getNestinglevel());
+           //hmn = symTable.get(extendedEntry.getNestinglevel());
 	     }
 	     )? 
 	     LPAR 
@@ -531,7 +530,7 @@ value	returns [Node ast]
     {
             //ClassCallNode c= new ClassCallNode($i.text,entry,argList,nNewClass);
          // $ast=c;
-         ctEntry.setNewOffset(newOffset);
+        // ctEntry.setNewOffset(newOffset);
          $ast = new NewNode($i.text,ctEntry,argList);
         // newOffset++;
 //     
@@ -581,14 +580,17 @@ value	returns [Node ast]
         (COMMA a=exp {argList.add($a.ast);})*
       )?
       {
-        $ast=new CallNode($i.text,entry,argList,nestingLevel-(j+1));//è esatto? quasi sicuramente no!
+        if( classEntry != null) 
+         $ast=new CallNode($i.text,entry,argList,nestingVirtualLevel-(jj+1));
+        else 
+        $ast=new CallNode($i.text,entry,argList,nestingVirtualLevel-(jj+1));//è esatto? quasi sicuramente no!
       }    
      RPAR
     |  DOT cmid=ID
     {
        
        STentry entryM = null;
-       jj = nestingVirtualLevel;
+       //jj = nestingVirtualLevel;
       
          
        CTentry ctentryClass = classTable.get(((ClassTypeNode)entry.getType()).getName());      
@@ -623,7 +625,7 @@ value	returns [Node ast]
      )* )? 
      {
         
-        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingVirtualLevel);
+        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel-(jj+1));
      }
      RPAR    
      )? 

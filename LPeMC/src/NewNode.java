@@ -6,6 +6,7 @@ public class NewNode implements Node{
 	private String id;
 	private CTentry entry;
 	private ArrayList<Node> parlist; 
+	
 	public NewNode(String i, CTentry ct, ArrayList<Node> p ) {
 		id = i;
 		entry = ct;
@@ -144,7 +145,11 @@ public class NewNode implements Node{
 		String code = "";
 		for(int i = 0; i < parlist.size(); i++)
 		{
-			code += parlist.get(i).codeGeneration();
+			if(parlist.get(i) instanceof NewNode)	//se ci sono newNode innestati, 		
+				code += ((NewNode)parlist.get(i)).parCodeGeneration(((NewNode)parlist.get(i)));
+			
+			else
+				code += parlist.get(i).codeGeneration();
 			
 			code += "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
 					"sw\n" +
@@ -154,6 +159,11 @@ public class NewNode implements Node{
 					"shp\n";
 		}
 		return code;
+	}
+	
+	private String parCodeGeneration(NewNode n) {
+		
+		return "";
 	}
 	
 	private String makeMethodCode()

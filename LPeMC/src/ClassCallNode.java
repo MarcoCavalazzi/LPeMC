@@ -87,7 +87,7 @@ public class ClassCallNode implements Node {
 		  
 		  String getAR = "";
 		  //for(int i=0; i< nl-methodEntry.getNestinglevel(); i++){ 
-		  for(int i=0; i< nl-entry.getNestinglevel(); i++){ 
+		  for(int i=0; i< nl - methodEntry.getNestinglevel(); i++){ 
 			  getAR += "lw\n";
 		  }
 
@@ -106,22 +106,29 @@ public class ClassCallNode implements Node {
 		  
 
 		  return			
-//				  "lhp\n" + 
-//				  parCode+
-//				  "lhp\n" +
-//				  getAR+	
-//				  "push "+methodEntry.getOffset()+"\n"+
-//				  //"push 3\n"+
-//				  "lhp\n"+
-//				  getAR+  // 
-//				  //popParNode+
-//				  "add\n"+
-//				  "lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
-//				  "srv\n"+
-//				  "pop\n"+
-//				  "pop\n"+
-//				  "lrv\n"+
-//				  "js\n";	
+				  "lhp\n" +                                      
+				  parCode+
+				  "lhp\n" +
+				  getAR+	
+				  "push 1\n"+
+				  "sub\n"+
+				  "lw\n"+
+				  "srv\n"+	
+				  "lrv\n"+
+				  "lrv\n"+
+				  "push "+methodEntry.getOffset()+"\n"+
+				 // "push 0\n"+
+				  //"push 3\n"+
+				 // "lhp\n"+
+				  // getAR+  // 
+				  //popParNode+
+				  "add\n"+				  
+				  "lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
+				 // "srv\n"+
+				 // "pop\n"+
+				  //"pop\n"+
+				 // "lrv\n"+
+				  "js\n";	
 		  // "pop\n"+
 		  //"pop\n"+
 		  //  "lrv\n"+
@@ -130,25 +137,25 @@ public class ClassCallNode implements Node {
 		  //"srv\n"+//eliminabile...forse
 
 		  // da qui è il codice del 21_05	  
-		  			  "cfp\n"+
-		  			  //"lfp\n"+
-		  			  //"push "+(nl-entry.getNestinglevel())+"\n"+
-		  			  "push 9998\n"+
-		  			  "push "+(entry.getNewOffset())+"\n"+
-		  			  "sub\n"+	
-		  			  "lw\n"+
-		  			  "srv\n"+
-		  			  "lrv\n"+
-		  			  "lrv\n"+			  			  
-		  			  //"sfp\n"+
-		  			  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
-		  		
-		  			  "add\n"+
-		  			  "lw\n" +	
+//		  			  "cfp\n"+
+//		  			  //"lfp\n"+
+//		  			  //"push "+(nl-entry.getNestinglevel())+"\n"+
+//		  			  "push 9998\n"+
+//		  			  "push "+(entry.getNewOffset())+"\n"+
+//		  			  "sub\n"+	
+//		  			  "lw\n"+
+//		  			  "srv\n"+
+//		  			  "lrv\n"+
+//		  			  "lrv\n"+			  			  
+//		  			  //"sfp\n"+
+//		  			  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
+//		  		
+//		  			  "add\n"+
+//		  			  "lw\n" +	
 		  			  
 //		  			  //"lrv\n"+//eliminabile...forse
 //		  			  //"sfp\n"+//eliminabile...forse
-		  			  "js\n";
+//		  			  "js\n";
 		  //fino a qui codice del 21_05
 
 	}
