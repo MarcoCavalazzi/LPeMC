@@ -110,7 +110,7 @@ public class NewNode implements Node{
 				//"lhp\n"+ //salvo tale valore nell'indirizzo di memoria di rappresentato dal valore di hp
 				//"sw\n" + 
 				"lhp\n"+ //pusho sullo stack il valore di op, facendo la diff tra hp e numero di metodi
-				"push -"+entry.allMethods.size()+
+				"push -"+entry.allMethods.size()+"\n"+
 				//"push -"+entry.allMethods.size()+				
 				"add\n"+
 				"sra\n"+
@@ -144,7 +144,7 @@ public class NewNode implements Node{
 		String code = "";
 		for(int i = 0; i < parlist.size(); i++)
 		{
-			code += parlist.get(i).codeGeneration()+"\n";
+			code += parlist.get(i).codeGeneration();
 			
 			code += "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
 					"sw\n" +

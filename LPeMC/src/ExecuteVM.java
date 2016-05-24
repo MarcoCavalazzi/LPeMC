@@ -146,8 +146,10 @@ public class ExecuteVM {
     private void dumpInstruction(){
     	System.out.println("----------------------------");
         System.out.print("- INSTRUCTION: "+ k++ + " - ");
+        if(ip > 10000)
+        	System.out.println("ciao");
         String command = SVMParser.tokenNames[code[ip]];
-        if(command != "PUSH"){
+        if(command != "PUSH"  &&  command != "BRANCH"  &&  command != "BRANCHGR"  &&  command != "BRANCHEQ"  &&  command != "BRANCHLESS"){
         	System.out.println(command);
         }else{
         	System.out.print(command);

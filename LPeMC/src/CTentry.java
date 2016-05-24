@@ -41,6 +41,21 @@ public class CTentry {
 		
 		allFields.add(node);
 	}
+	public void setMethodAndCheck(Node node, String s)
+	{
+		for(int i = 0;i < allMethods.size();i++)
+		{
+			if(((MethodNode)allMethods.get(i)).getName().equals(s))
+				{
+				allMethods.remove(i);
+					break;
+				}
+		}
+		
+		allMethods.add(node);
+	}
+	
+	
 	
 	public void setMethodOffset(int offset)
 	{

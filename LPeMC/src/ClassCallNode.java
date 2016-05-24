@@ -133,10 +133,9 @@ public class ClassCallNode implements Node {
 		  			  "cfp\n"+
 		  			  //"lfp\n"+
 		  			  //"push "+(nl-entry.getNestinglevel())+"\n"+
-		  			  "push -"+(entry.getNewOffset())+"\n"+		  			  
-		  			  "push 9998"+
-		  			 // "push \n"+
-		  			  "add\n"+	
+		  			  "push 9998\n"+
+		  			  "push "+(entry.getNewOffset())+"\n"+
+		  			  "sub\n"+	
 		  			  "lw\n"+
 		  			  "srv\n"+
 		  			  "lrv\n"+

@@ -12,11 +12,25 @@ let
 	fun getPippo:int () 912;
   }
 
-   var bl:TradingAcc = new TradingAcc(50000,40000);
-   var bl2:Account = new Account(675);
-
+    class BankLoan (loan: Account) {
+    fun getLoan:Account () loan;
+    fun openLoan:Account (m:TradingAcc) if ((m.getMon()+m.getInv())>=30000) 
+      then {new Account(loan.getMon())} 
+      else {null};
+  } 
+ 
+	class MyBankLoan extends BankLoan (loan: TradingAcc) {
+    fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
+      then {new TradingAcc(loan.getMon(),loan.getInv())} 
+      else {null};
+  } 
+ 
+     var bl:BankLoan = new MyBankLoan(new TradingAcc(50000,40000));
+     var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+    var myLoan:Account = bl.openLoan(myTradingAcc);
+     var bl3:Account = new Account(123);
       
-in print(bl.getInv());  
+in print(bl3.getMon());  
 
 
 /*

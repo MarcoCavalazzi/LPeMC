@@ -100,8 +100,8 @@ cllist returns [ArrayList<Node> astlist]
            Obj.setSuperEntry(extendedEntry);
            Obj.setClassEntry(ctentry);
            FOOLlib.putSuperType($cid.text,$cidext.text);
-           nestingVirtualLevel = extendedEntry.getNestinglevel();
-           hmn = symTable.get(nestingVirtualLevel);
+           //nestingVirtualLevel = extendedEntry.getNestinglevel();
+           hmn = symTable.get(extendedEntry.getNestinglevel());
 	     }
 	     )? 
 	     LPAR 
@@ -126,7 +126,7 @@ cllist returns [ArrayList<Node> astlist]
               System.exit(0);
            }
            hmn.put($p1.text,tempEntry);
-           ctentry.setField(Objfield);
+           ctentry.setFieldAndCheck(Objfield,$p1.text);
            fieldOffset--;
 //          if ( hmn.put($p1.text,tempEntry) != null  )
 //          {
@@ -167,6 +167,7 @@ cllist returns [ArrayList<Node> astlist]
              System.exit(0); 
           }
           hmn.put($pn.text,tmpSTentry);
+          ctentry.setFieldAndCheck(ObjfieldN,$pn.text);
           fieldOffset--;
 	     }
 	     )* )? RPAR
@@ -210,7 +211,7 @@ cllist returns [ArrayList<Node> astlist]
             // nestingLevel++; 
              //HashMap<String,STentry> hmnc = new HashMap<String,STentry> ();
             // virtualTable.add(hmnc);
-             ctentry.setMethod(f);
+             ctentry.setMethodAndCheck(f,$mid.text);
              Obj.setMethod(f);
             // symTable.add(hmnc);
              //creare una nuova hashmap per la symTable
@@ -237,6 +238,7 @@ cllist returns [ArrayList<Node> astlist]
              }
              
              hmn.put($mp1.text,tmpEntryPar);
+             
              parOffset++;
             /*
             if(mpt1.text.equals("ClassTypeNode")
@@ -342,13 +344,21 @@ declist	returns [ArrayList<Node> astlist]
           {
              offset-=2;
           }
+        
+          
           System.out.println("[FOOL.g] VAR    "+ v.toPrint(""));
             
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
-          System.out.println("Var id "+$i.text+" at line "+$i.line+" ha nesting = "+nestingLevel);
-          if ( hm.put($i.text,new STentry(nestingLevel,$t.ast,offset--)) != null  ){
+          //System.out.println("Var id "+$i.text+" at line "+$i.line+" ha nesting = "+nestingLevel);
+          STentry varEntry = new STentry(nestingLevel,$t.ast,offset--);
+          if ( hm.put($i.text,varEntry) != null  ){
              System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
+          }
+            if($t.ast instanceof ClassTypeNode)
+          {
+            varEntry.setNewOffset(newOffset);
+            newOffset++;
           }
        }
        |
@@ -523,7 +533,7 @@ value	returns [Node ast]
          // $ast=c;
          ctEntry.setNewOffset(newOffset);
          $ast = new NewNode($i.text,ctEntry,argList);
-         newOffset++;
+        // newOffset++;
 //     
     }
     RPAR
@@ -554,7 +564,7 @@ value	returns [Node ast]
       }
       
 	    if (entry == null && classEntry == null){
-	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!");	       
+	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!!");	       
 	       System.exit(0);
 	    }
 	     	 
@@ -594,9 +604,9 @@ value	returns [Node ast]
        if (entryM==null){
          System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
          System.exit(0); 
-       }
+       }        
         
-       entry.setNewOffset(ctentryClass.getNewOffset());  
+       //entry.setNewOffset(ctentryClass.getNewOffset());  
     }
      LPAR
      {
