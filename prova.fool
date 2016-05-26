@@ -10,13 +10,26 @@ let
       then {getMon()} 
       else {66};
   }
-
+   class BankLoan (loan: Account) {
+    fun getLoan:Account () loan;
+    fun openLoan:Account (m:TradingAcc) if ((m.getMon()+m.getInv())>=30000) 
+      then {new Account(loan.getMon())} 
+      else {null};
+  } 
   
-   var bl:TradingAcc = new TradingAcc(50000,40000);
-   var bl2:Account = new Account(675);
+  class MyBankLoan extends BankLoan (loan: TradingAcc) {
+    fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
+      then {new TradingAcc(loan.getMon(),loan.getInv())} 
+      else {123};
+  } 
+  
+   var bl:TradingAcc = new TradingAcc (50000,3000);
+   var bl2:BankLoan = new BankLoan(new Account(10000));
+   var myTradingAcc:TradingAcc = new TradingAcc(20000,9000);
+   
 
       
-in print(bl.getInv());  
+in print(bl2.openLoan(bl));  
 
 
 /*

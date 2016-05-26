@@ -183,11 +183,13 @@ cllist returns [ArrayList<Node> astlist]
 	       {
 	          parTypes.add($mpt1.ast);
             ParNode fpar = new ParNode($mp1.text,$mpt1.ast);
-            
+            nestingLevel++;//poichè parametri delle funzioni hanno scope sintattico più interno
+            HashMap<String,STentry> parHM =  new HashMap<String,STentry>(); 
+            symTable.add(parHM);
             mNode.addPar(fpar);
             STentry tmpEntryPar = new STentry(fpar,nestingLevel,$mpt1.ast,parOffset);             
             
-            if ( ctentry.putvTable($mp1.text,tmpEntryPar,extendedEntry) != null  ){
+            if ( parHM.put($mp1.text,tmpEntryPar) != null  ){
              System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
              System.exit(0);
              }
@@ -201,9 +203,9 @@ cllist returns [ArrayList<Node> astlist]
 	          parTypes.add($mptn.ast);
             ParNode par = new ParNode($mpn.text,$mptn.ast);
             mNode.addPar(par);
-            System.out.println("La entry "+$mpn.text+" ha nl = "+nestingLevel);
+           
             STentry stPar = new STentry(fpar,nestingLevel,$mptn.ast,parOffset);
-            if (ctentry.putvTable($mpn.text,stPar,extendedEntry) != null ){
+            if (parHM.put($mpn.text,stPar) != null ){
                System.out.println("Parameter id "+$mpn.text+" at line "+$mpn.line+" already declared");
                System.exit(0);
                }
@@ -230,7 +232,7 @@ cllist returns [ArrayList<Node> astlist]
             HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
             symTable.add(varhm);
             
-            if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOs++)) != null  )
+            if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOs)) != null  )
             {
                System.out.println("Var id "+$vid.text+" at line "+$vid.line+" already declared");
                System.exit(0); 
@@ -275,7 +277,6 @@ declist	returns [ArrayList<Node> astlist]
           {
              offset-=2;
           }
-        
           
           System.out.println("[FOOL.g] VAR    "+ v.toPrint(""));
             

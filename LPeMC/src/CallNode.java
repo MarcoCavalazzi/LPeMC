@@ -75,7 +75,7 @@ public class CallNode implements Node {
 			}
 		}
 		*/
-	  if(entry.getIsMethod())
+	 if(entry.getIsMethod())
 	  {
 		  getAR += "lw\n";
 	  }

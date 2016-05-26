@@ -64,7 +64,8 @@ public class MethodNode implements Node, DecNode {
 			  "js\n"    //js salta all'indirizzo che è in cima allo stack
 			  );
 
-	  return "push "+label+"\n";
+	  //return "push "+label+"\n";
+	  return "";
 
   }
   

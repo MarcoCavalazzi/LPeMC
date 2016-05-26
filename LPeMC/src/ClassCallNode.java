@@ -90,19 +90,25 @@ public class ClassCallNode implements Node {
 			  getAR += "lw\n";
 		  }
 
+		  /**		   
+		   * recupera valore dell'ID1 (object pointer) dall'AR dove è dichiarato 
+			 con meccanismo usuale di risalita catena statica
+		   */
 		  return   
-				  "lfp\n"+		// CL
-				  parCode+	// parametri
-				  "lfp\n"+	
-				  getAR+		// AL ;
-				  "push "+methodEntry.getOffset()+"\n"+
 				  "lfp\n"+
-				  getAR+  // 
-				  //popParNode+
+				  getAR+
+				  "push "+entry.getOffset()+"\n"+
 				  "add\n"+
-				  "lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
-				  "js\n";		// salto			
-
+				  "lw\n"+		
+		  		  //ora ho in cima allo stack l'obj pointer 
+				  "srv\n"+
+		  		  "lrv\n"+
+		  		  "lrv\n"+
+		  		  "push "+methodEntry.getOffset()+"\n"+
+		  		  "add\n"+
+		  		  "lw\n"+
+		  		  "js\n";
+		  		  
 	}
 
 	 public String getClassName(){
