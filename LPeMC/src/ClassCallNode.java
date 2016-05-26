@@ -86,77 +86,22 @@ public class ClassCallNode implements Node {
 		  }
 		  
 		  String getAR = "";
-		  //for(int i=0; i< nl-methodEntry.getNestinglevel(); i++){ 
 		  for(int i=0; i< nl - methodEntry.getNestinglevel(); i++){ 
 			  getAR += "lw\n";
 		  }
 
-//		  return
-//		  "srv\n"+  //in cima allo stack c'è l'object pointer, per cui lo salvo in un registro
-//          "lhp\n" + 
-//		  parCode+
-//		  //"lhp\n" +//non so se vada o meno
-//		  "lrv\n"+
-//		  "lrv\n"+ //recupero l'object pointer
-//		  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
-//		 //"push 1\n"+
-//		  "add\n"+
-//		  "lw\n" +
-//		  "js\n"; 	// salto
-		  
-
-		  return			
-				  "lhp\n" +                                      
-				  parCode+
-				  "lhp\n" +
-				  getAR+	
-				  "push 1\n"+
-				  "sub\n"+
-				  "lw\n"+
-				  "srv\n"+	
-				  "lrv\n"+
-				  "lrv\n"+
+		  return   
+				  "lfp\n"+		// CL
+				  parCode+	// parametri
+				  "lfp\n"+	
+				  getAR+		// AL ;
 				  "push "+methodEntry.getOffset()+"\n"+
-				 // "push 0\n"+
-				  //"push 3\n"+
-				 // "lhp\n"+
-				  // getAR+  // 
+				  "lfp\n"+
+				  getAR+  // 
 				  //popParNode+
-				  "add\n"+				  
+				  "add\n"+
 				  "lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
-				 // "srv\n"+
-				 // "pop\n"+
-				  //"pop\n"+
-				 // "lrv\n"+
-				  "js\n";	
-		  // "pop\n"+
-		  //"pop\n"+
-		  //  "lrv\n"+
-		  // "lrv\n"+ //recupero l'object pointer
-		  //"lfp\n"+//eliminabile...forse
-		  //"srv\n"+//eliminabile...forse
-
-		  // da qui è il codice del 21_05	  
-//		  			  "cfp\n"+
-//		  			  //"lfp\n"+
-//		  			  //"push "+(nl-entry.getNestinglevel())+"\n"+
-//		  			  "push 9998\n"+
-//		  			  "push "+(entry.getNewOffset())+"\n"+
-//		  			  "sub\n"+	
-//		  			  "lw\n"+
-//		  			  "srv\n"+
-//		  			  "lrv\n"+
-//		  			  "lrv\n"+			  			  
-//		  			  //"sfp\n"+
-//		  			  "push "+methodEntry.getOffset()+"\n"+ //va aggiunto l'offset del metodo che richiamiamo e non 0 (è solo per test)
-//		  		
-//		  			  "add\n"+
-//		  			  "lw\n" +	
-		  			  
-//		  			  //"lrv\n"+//eliminabile...forse
-//		  			  //"sfp\n"+//eliminabile...forse
-//		  			  "js\n";
-		  //fino a qui codice del 21_05
+				  "js\n";		// salto			
 
 	}
 

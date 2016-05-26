@@ -11,13 +11,10 @@ grammar FOOL;
  
 @members{
 	private ArrayList<HashMap<String,STentry>>  symTable = new ArrayList<HashMap<String,STentry>>();
-	private ArrayList<HashMap<String,STentry>>  virtualTable = new ArrayList<HashMap<String,STentry>>();
 	private HashMap<String,CTentry> classTable = new HashMap<String,CTentry>();
 	private int nestingLevel = -1;
-	private int nestingVirtualLevel=-1;
-	private int newOffset = 0;
-	//livello ambiente con dichiarazioni piu' esterno ï¿½ 0 (prima posizione ArrayList) invece che 1 (slides)
-	//il "fronte" della lista di tabelle ï¿½ symTable.get(nestingLevel)
+	//livello ambiente con dichiarazioni piu' esterno è 0 (prima posizione ArrayList) invece che 1 (slides)
+	//il "fronte" della lista di tabelle symTable.get(nestingLevel)
 }
 
 /*------------------------------------------------------------------
@@ -29,7 +26,6 @@ prog	returns [Node ast]
         | LET 
             {
               nestingLevel++;
-              nestingVirtualLevel++;
               HashMap<String,STentry> hm = new HashMap<String,STentry> ();
               symTable.add(hm);
             }
@@ -57,8 +53,8 @@ cllist returns [ArrayList<Node> astlist]
          HashMap<String,STentry> hm = symTable.get(nestingLevel);
          System.out.println("La STentry di class "+$cid.text+" ha nl = "+nestingLevel);   
          STentry entryCl = new STentry(Obj,nestingLevel);
-         nestingVirtualLevel++;
-         ctentry = new CTentry(Obj,nestingVirtualLevel);//le ctentry per me non dovrebbero avere nesting
+         nestingLevel++;
+         ctentry = new CTentry(Obj,nestingLevel);
          entryCl.setClassName($cid.text);
          
          STentry tmp  = hm.put($cid.text,entryCl);
@@ -70,19 +66,17 @@ cllist returns [ArrayList<Node> astlist]
             System.exit(0); 
          }                
          
-         HashMap<String,STentry> hmn =  new HashMap<String,STentry>(); 
-         symTable.add(hmn);        
-
+         HashMap<String,STentry> classLevelSymTable =  new HashMap<String,STentry>(); 
+         symTable.add(classLevelSymTable);        
+         ctentry.setVirtualTable(classLevelSymTable);
       }
 	    (EXTENDS cidext=ID
 	    {
 	     
-         // HashMap<String,STentry> hmSuper = classTable.get(nestingClassLevel-1);
-           
-           // verifico che la classe estesa sia già stata dichiarata in precedenza 
-          // while (j>=0 && entry==null){
+           // HashMap<String,STentry> hmSuper = classTable.get(nestingClassLevel-1);           
+           // verifico che la classe estesa sia già stata dichiarata in precedenza          
            extendedEntry = classTable.get($cidext.text);
-          // }
+         
                  
            if(extendedEntry == null){
            System.out.println("Class id "+$cidext.text+" at line "+$cidext.line+" not declared");
@@ -95,7 +89,20 @@ cllist returns [ArrayList<Node> astlist]
            ctentry.setFields(tmpField);
            ctentry.setMethods(tmpMethod);
            HashMap<String,STentry> tmpMap = (HashMap<String, STentry>) extendedEntry.getVirtualTable().clone();
-           ctentry.setVirtualTable(tmpMap);
+           //ctentry.setVirtualTable(tmpMap);
+           
+  //         symTable.putAll(tmp);
+//           HashMap<String,STentry> vTableExtendedEntry = extendedEntry.getVirtualTable();
+//           HashMap<String,STentry> tempSymTable = symTable.get(nestingLevel);
+//           vTableExtendedEntry.forEach( STentry s ){
+//              tempSymTable.put(s);
+//           }
+           //ctentry.getVirtualTable().putAll(tempMap);
+//           for(int i=0; i<tmpMap.size(); i++){
+//              symTable.get(nestingLevel).put(tmpMap.get(i).getKey(), tmpMap.get(i).getValue());
+////                ctentry.putvTable(tmpMap.get(i));
+//           }
+           symTable.get(nestingLevel).putAll(tmpMap);
            Obj.setSuperEntry(extendedEntry);
            Obj.setClassEntry(ctentry);
            FOOLlib.putSuperType($cid.text,$cidext.text);
@@ -106,67 +113,39 @@ cllist returns [ArrayList<Node> astlist]
 	     LPAR 
 	     {
            ArrayList<Node> ConstrPar = new ArrayList<Node>();
-           //int clParOffset = 1;
            int fieldOffset=-1; 
        }
 	     (p1=ID COLON t1=basic 
 	     {
 	       
 	         ConstrPar.add($t1.ast);
-           FieldNode Objfield = new FieldNode($p1.text,$t1.ast,$cid.text);
-           Obj.addField(Objfield);
+           FieldNode objField = new FieldNode($p1.text,$t1.ast,$cid.text);
+           Obj.addField(objField);
            ctentry.setFieldOffset(fieldOffset);
-           STentry  tempEntry = new STentry(Objfield,nestingVirtualLevel,$t1.ast,fieldOffset);
-           System.out.println("La entry "+$p1.text+" ha nl = "+nestingVirtualLevel);
+           STentry  tempEntry = new STentry(objField,nestingLevel,$t1.ast,fieldOffset);
            tempEntry.setClassName($cid.text);
            if(ctentry.putvTable($p1.text,tempEntry, extendedEntry) != null)//putvTable controlla anche se c'è overriding, in caso positivo sovrascrive
            {
               System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared!");
               System.exit(0);
-           }
-           hmn.put($p1.text,tempEntry);
-           ctentry.setFieldAndCheck(Objfield,$p1.text);
+           }         
+           ctentry.setFieldAndCheck(objField,$p1.text);//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
            fieldOffset--;
-//          if ( hmn.put($p1.text,tempEntry) != null  )
-//          {
-//             System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared");
-//             System.exit(0); 
-//          }
-          
-          
-          //ctentry.setFieldAndCheck(Objfield, $p1.text);
-          //boolean flag = false;
-          //
-//            if(extendedEntry!=null) //per controllare se c'è stato un extends
-//           {
-//            for(int i =0;i< extendedEntry.getFields().size() ;i++) //cerco se c'è stato override
-//              if(extendedEntry.getFields().get(i).equals($p1.text)) //in caso positivo, flag = true per cui non verrà aggiunta alla ctentry 
-//                {
-//                  //remove field?
-//                }
-//           }
-         // if(!flag)         
-           //ctentry.setField(Objfield); //controlla se il campo è già presente, in caso positivo si sta facendo ovveriding e quindi devo sovrascrivere (questa operazione viene fatta in setField)
-          //se p1 è anche in extendedEntry.getFields non lo aggiungiamo in symbolTable
-          
-         
-         // nestingLevel++; //06_05 non so se vada bene
 	     }
 	     (COMMA pn=ID COLON tn=basic
 	     {
 	        ConstrPar.add($tn.ast);
-          FieldNode ObjfieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
-          Obj.addField(ObjfieldN);
+          FieldNode objFieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
+          Obj.addField(objFieldN);
           ctentry.setFieldOffset(fieldOffset);
-          STentry tmpSTentry = new STentry(ObjfieldN,nestingVirtualLevel,$tn.ast,fieldOffset);
-          System.out.println("La entry "+$pn.text+" ha nl = "+nestingVirtualLevel);
+          STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,fieldOffset);
+          System.out.println("La entry "+$pn.text+" ha nl = "+nestingLevel);
           if ( ctentry.putvTable($pn.text,tmpSTentry,extendedEntry) != null  )
           {
              System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
              System.exit(0); 
-          }
-          hmn.put($pn.text,tmpSTentry);
-          ctentry.setFieldAndCheck(ObjfieldN,$pn.text);
+          }         
+          ctentry.setFieldAndCheck(objFieldN,$pn.text);
           fieldOffset--;
 	     }
 	     )* )? RPAR
@@ -176,26 +155,12 @@ cllist returns [ArrayList<Node> astlist]
 	     }
 	     CLPAR//apri graffa
 	       (FUN mid=ID COLON retm=basic
-	       {               
-	           //creazione del nodo del metodo e set a true del flag indicante che si
-             // è all'interno di un metodo di classe 
-              
-             //isInMethod = true;
-             //inserimento di ID nella symtable
-             MethodNode f = new MethodNode($mid.text,$retm.ast); 
+	       { 
+             MethodNode mNode = new MethodNode($mid.text,$retm.ast); 
                       
              //$astlist.add(f);//giusto o da commentare???
-             // HashMap<String,STentry> hmclass = virtualTable.get(nestingClassLevel);   
-             //HashMap<String,STentry> hmclass =  new HashMap<String,STentry>();
-             //symTable.add(hmclass);                  
-             //aggiunga del parametro nell'apposita collezione tenendo conto dell'overriding dei parametri
-             //FOOLlib.addMethodTuple($mid.text, $cid.text, FOOLlib.getMethodRealOffset(Obj,$mid.text));
-             //STentry entry = new STentry(nestingClassLevel,f,classoffset++); //modificato il 14_05           
-            
-             //STentry entry = new STentry(nestingLevel,f,classoffset++);//commentato e modificato il 16_05
-             //STentry entry = new STentry(nestingLevel,f,methodOffset++);
-             System.out.println("La entry "+$mid.text+" ha nl = "+nestingVirtualLevel);
-             STentry entry = new STentry(f,nestingVirtualLevel,$retm.ast,methodOffset);
+             
+             STentry entry = new STentry(mNode,nestingLevel,$retm.ast,methodOffset);
              entry.setClassName($cid.text);
              entry.setIsMethod();             
              if ( ctentry.putvTable($mid.text,entry,extendedEntry) != null  )
@@ -203,20 +168,11 @@ cllist returns [ArrayList<Node> astlist]
                 System.out.println("Method id "+$mid.text+" at line "+$mid.line+" already declared");
                 System.exit(0); 
              }
-             ctentry.setMethodOffset(methodOffset);
-             hmn.put($mid.text,entry);
+             ctentry.setMethodOffset(methodOffset);  //            
              methodOffset++;
-            // nestingClassLevel++;
-            // nestingLevel++; 
-             //HashMap<String,STentry> hmnc = new HashMap<String,STentry> ();
-            // virtualTable.add(hmnc);
-             ctentry.setMethodAndCheck(f,$mid.text);
-             Obj.setMethod(f);
-            // symTable.add(hmnc);
-             //creare una nuova hashmap per la symTable
-             // nestingLevel++;
-             // HashMap<String,STentry> hmnc = new HashMap<String,STentry> (); //hmnc è la vTable
-             //symTable.add(hmnc);
+             ctentry.setMethodAndCheck(mNode,$mid.text);
+             Obj.setMethod(mNode);
+
 	       }
 	       LPAR 
 	       {
@@ -228,47 +184,15 @@ cllist returns [ArrayList<Node> astlist]
 	          parTypes.add($mpt1.ast);
             ParNode fpar = new ParNode($mp1.text,$mpt1.ast);
             
-            f.addPar(fpar);
-            System.out.println("La entry "+$mp1.text+" ha nl = "+nestingVirtualLevel);
-            STentry tmpEntryPar = new STentry(fpar,nestingVirtualLevel,$mpt1.ast,parOffset);             
+            mNode.addPar(fpar);
+            STentry tmpEntryPar = new STentry(fpar,nestingLevel,$mpt1.ast,parOffset);             
+            
             if ( ctentry.putvTable($mp1.text,tmpEntryPar,extendedEntry) != null  ){
              System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
              System.exit(0);
              }
              
-             hmn.put($mp1.text,tmpEntryPar);
-             
              parOffset++;
-            /*
-            if(mpt1.text.equals("ClassTypeNode")
-            {
-             //  STentry entryCl2 = new STentry(Obj,nestingLevel);
-               entryCl.setClassName($cid.text);
-             //  ctentry = new CTentry2(Obj,nestingClassLevel);
-               STentry tmp2  = hm.put($cid.text,entryCl);
-               CTentry tmp22 = classTable.put($cid.text,ctentry);
-         
-         if (tmp2 != null && tmp22 != null)
-         {
-            System.out.println("Class id "+$cid.text+" at line "+$cid.line+" already declared");
-            System.exit(0); 
-         }                
-         //creare una nuova hashmap per la symTable      
-        
-         nestingLevel++;
-         nestingClassLevel++;
-         HashMap<String,STentry> hmn2 = new HashMap<String,STentry>(); 
-         HashMap<String,STentry> vTable2 = new HashMap<String,STentry> (); //sicura sta cosa?
-         symTable.add(hmn);
-         virtualTable.add(vTable);
-            }
-           */
-            // if ( hmnc.put($mp1.text,new STentry(fpar,nestingLevel,$mpt1.ast,parOffset++)) != null  )
-	          // if ( entry.put($mp1.text,new STentry(fpar,nestingLevel,$mpt1.ast,parOffset++)) != null  )
-	          // {
-	          //     System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
-	          //     System.exit(0); 
-	          // }
 	          
             
 	       }
@@ -276,15 +200,14 @@ cllist returns [ArrayList<Node> astlist]
 	       {
 	          parTypes.add($mptn.ast);
             ParNode par = new ParNode($mpn.text,$mptn.ast);
-            f.addPar(par);
-            System.out.println("La entry "+$mpn.text+" ha nl = "+nestingVirtualLevel);
-            STentry stPar = new STentry(fpar,nestingVirtualLevel,$mptn.ast,parOffset);
+            mNode.addPar(par);
+            System.out.println("La entry "+$mpn.text+" ha nl = "+nestingLevel);
+            STentry stPar = new STentry(fpar,nestingLevel,$mptn.ast,parOffset);
             if (ctentry.putvTable($mpn.text,stPar,extendedEntry) != null ){
                System.out.println("Parameter id "+$mpn.text+" at line "+$mpn.line+" already declared");
                System.exit(0);
                }
                
-            hmn.put($mpn.text,stPar);
             parOffset++;
 
 	       })* )? RPAR
@@ -294,37 +217,46 @@ cllist returns [ArrayList<Node> astlist]
             
             
 	       }
-	       (LET {int innerOs = 0; }
-	       (VAR vid=ID COLON vt=type ASS ve=exp //se aggiungiamo var nel metodo, siamo in uno scope sintattico maggiore, per cui si crea una nuova hashmap, si aumenta il nestingVirtualLevel e poi si aggiunge a symTable
+	       (LET 
+	       {
+	           int innerOs = 0; 
+	           nestingLevel++;
+	       }
+	       (VAR vid=ID COLON vt=type ASS ve=exp //se aggiungiamo var nel metodo, siamo in uno scope sintattico maggiore, per cui si crea una nuova hashmap, si aumenta il nestingLevel e poi si aggiunge a symTable
 	       {
 	          VarNode v = new VarNode($vid.text,$vt.ast,$ve.ast);
-            // letInMethodList.add(v); 
+           // letInMethodList.add(v); 
             $astlist.add(v);
-            //HashMap<String,STentry> varhm = symTable.get(nestingVirtualLevel);
             HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
             symTable.add(varhm);
-            nestingVirtualLevel++;
-            if ( varhm.put($vid.text,new STentry(v,nestingVirtualLevel,$vt.ast,innerOs++)) != null  )
+            
+            if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOs++)) != null  )
             {
                System.out.println("Var id "+$vid.text+" at line "+$vid.line+" already declared");
                System.exit(0); 
-            }              
+            } 
+                         
           }
-	        SEMIC)* IN )? vine=exp
+	        SEMIC)* IN 
+	        {
+	          symTable.remove(nestingLevel--);
+	        }
+	        )? varE=exp //varExp
 	        {
 	            //chiudere scope                       
-              //symTable.remove(nestingLevel--);  //è corretto? 06_05
-              //virtualTable.remove(nestingClassLevel--);           
-              f.addBody($vine.ast);
+                         
+              mNode.addBody($varE.ast);
               //aggiungo il metodo alla classe
-              Obj.addMethod(f); 
-              // isInMethod = false;
+              Obj.addMethod(mNode); 
               
 	        }
 	        SEMIC)* 
-      CRPAR)*
+      CRPAR
       {
+        symTable.remove(nestingLevel--);  
       }
+      )*
+      
    ;
         
 declist	returns [ArrayList<Node> astlist]
@@ -354,11 +286,7 @@ declist	returns [ArrayList<Node> astlist]
              System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
           }
-            if($t.ast instanceof ClassTypeNode)
-          {
-            varEntry.setNewOffset(newOffset);
-            newOffset++;
-          }
+       
        }
        |
        FUN i=ID COLON t=basic
@@ -437,7 +365,7 @@ basic returns [Node ast]
   :       INT  {$ast=new IntTypeNode();}
         | BOOL {$ast=new BoolTypeNode();} 
         | i=ID   {
-         int jj = nestingVirtualLevel;    
+         int jj = nestingLevel;    
          STentry classEntry = null;    
          while (jj>=0 && classEntry==null){
            classEntry=(symTable.get(jj--)).get($i.text);         
@@ -546,7 +474,6 @@ value	returns [Node ast]
   |  i=ID
     {//cercare la dichiarazione (cioè quando lo usa)
 	    int j  = nestingLevel;
-	    int jj = nestingVirtualLevel;
 	    STentry entry     = null; 
 	    CTentry classEntry = null;
 	    classEntry = classTable.get($i.text);
@@ -558,8 +485,8 @@ value	returns [Node ast]
 //	     
 	    if(classEntry==null)    
 	    {
-         while (jj>=0 && entry==null)
-         entry=(symTable.get(jj--)).get($i.text);
+         while (j>=0 && entry==null)
+         entry=(symTable.get(j--)).get($i.text);
       }
       
 	    if (entry == null && classEntry == null){
@@ -570,7 +497,7 @@ value	returns [Node ast]
 	    if( classEntry != null )	        
 	        $ast = new IdNode($i.text,classEntry,nestingLevel);
 	    else
-	        $ast = new IdNode($i.text,entry,nestingVirtualLevel);
+	        $ast = new IdNode($i.text,entry,nestingLevel);
 	    
                  
     }
@@ -580,19 +507,19 @@ value	returns [Node ast]
         (COMMA a=exp {argList.add($a.ast);})*
       )?
       {
+      
+        System.out.println("nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
         if( classEntry != null) 
-         $ast=new CallNode($i.text,entry,argList,nestingVirtualLevel-(jj+1));
+         $ast=new CallNode($i.text,entry,argList,nestingLevel-(j+1));
         else 
-        $ast=new CallNode($i.text,entry,argList,nestingVirtualLevel-(jj+1));//è esatto? quasi sicuramente no!
+        $ast=new CallNode($i.text,entry,argList,nestingLevel-(j+1));//è esatto? quasi sicuramente no!
       }    
      RPAR
     |  DOT cmid=ID
     {
        
        STentry entryM = null;
-       //jj = nestingVirtualLevel;
-      
-         
+
        CTentry ctentryClass = classTable.get(((ClassTypeNode)entry.getType()).getName());      
      // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
 //       -ClassCallNode  ID1.ID2() 
@@ -607,8 +534,7 @@ value	returns [Node ast]
          System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
          System.exit(0); 
        }        
-        
-       //entry.setNewOffset(ctentryClass.getNewOffset());  
+  
     }
      LPAR
      {
@@ -624,8 +550,8 @@ value	returns [Node ast]
      }
      )* )? 
      {
-        
-        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel-(jj+1));
+        System.out.println("CCN: nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
+        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel-(j+1));
      }
      RPAR    
      )? 

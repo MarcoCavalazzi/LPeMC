@@ -80,9 +80,8 @@ public class NewNode implements Node{
 		{
 			
 			methodLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
-		   // +"shp\n";
-			//System.out.println("label method "+i+": "+((MethodNode)entry.allMethods.get(i)).getLabel());
-			methodLabel += "lhp\n"+
+			
+			methodLabel +=  "lhp\n"+
 							"sw\n" +
 							"push 1\n"+ 
 							"lhp\n"+ //carico l'heap pointer corrente
@@ -90,53 +89,11 @@ public class NewNode implements Node{
 							"shp\n"	;
 		}
 		
-		//FOOLlib.objectPointerMap.put(id, entry.allMethods.size());
-		//FOOLlib.objectPointer = entry.allMethods.size();
-		
 		return 	
-				//"lhp\n" +
-				//"sw\n" +
-				"lhp\n" +
-				"srv\n"+ //mi salvo in rv l'heap pointer corrent
-				//"lhp\n"+
-				"push 1\n"+ //pusha 1, carica l'heap, li somma (per avere la prossima posizione libera nello heap)
-				"lhp\n"+ //carico l'heap pointer corrente
-				"add\n"+ //sposto l'heap pointer di 1
-				"shp\n"+ //lo salva, e lo usa per poi andare ad inserire il risultato della code generation del primo parametro, poi stesso procedimento per il secondo e così via		
-				makeParCode()+
-			//	"lhp\n"+ //carico sulla cima dello stack hp, esattamente prima dei metodi poichè ci servirà per gestire l'object pointer
-				//"srv\n"+
-				makeMethodCode()+				
-				 //metto sull stack il valroe rv, cioè l'heap pointer iniziale
-				//"lhp\n"+ //salvo tale valore nell'indirizzo di memoria di rappresentato dal valore di hp
-				//"sw\n" + 
-				"lhp\n"+ //pusho sullo stack il valore di op, facendo la diff tra hp e numero di metodi
-				"push -"+entry.allMethods.size()+"\n"+
-				//"push -"+entry.allMethods.size()+				
-				"add\n"+
-				"sra\n"+
-				"lra\n"+
-				"lra\n"+
-				"lhp\n"+
-				"sw\n" +
-				"push 1\n"+ 
-				"lhp\n"+ //carico l'heap pointer corrente
-				"add\n"+
-				"shp\n"+
-				"lrv\n"+
-				"lhp\n"+ //salvo tale valore nell'indirizzo di memoria di rappresentato dal valore di hp
-				"sw\n" ;
-				
-						
-				
-//		//"lhp\n" +	
-//		parCode+			
-//		methodLabel+
-//		"push "+(entry.allMethods.size() -1)+"\n"+
-//		"shp\n";
-//		//labelSHP;	
-//		//"shp\n"; //? non ho capito come gestire l'object pointer ):   ma dov'è? abbiamo lo stack pointer e l'object? 
-		
+			    makeParCode()+	
+			    "lhp\n"+
+				makeMethodCode();								
+	
 		
 	}
 	
@@ -145,10 +102,10 @@ public class NewNode implements Node{
 		String code = "";
 		for(int i = 0; i < parlist.size(); i++)
 		{
-			if(parlist.get(i) instanceof NewNode)	//se ci sono newNode innestati, 		
-				code += ((NewNode)parlist.get(i)).parCodeGeneration(((NewNode)parlist.get(i)));
+			//if(parlist.get(i) instanceof NewNode)	//se ci sono newNode innestati, 		
+				//code += ((NewNode)parlist.get(i)).parCodeGeneration(((NewNode)parlist.get(i)));
 			
-			else
+			//else
 				code += parlist.get(i).codeGeneration();
 			
 			code += "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
