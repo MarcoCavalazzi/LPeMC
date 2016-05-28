@@ -80,7 +80,7 @@ public class CallNode implements Node {
 		  getAR += "lw\n";
 	  }
 		 
-	  return   "lfp\n"+		// CL
+	  return    "lfp\n"+		// CL
 	  			parCode+	// parametri
 	  			"lfp\n"+	
 	  			getAR+		// AL ;

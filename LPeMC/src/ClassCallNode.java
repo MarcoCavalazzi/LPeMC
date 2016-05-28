@@ -5,16 +5,18 @@ public class ClassCallNode implements Node {
 	private String id;
 	private STentry entry; 
 	private STentry methodEntry;
+	private CTentry ctentry;
 	private ArrayList<Node> par = new ArrayList<Node>();
 	private int nl;
 	
 	
-	public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p, int n) {
+	public ClassCallNode (String i, STentry e,STentry me, ArrayList<Node> p, int n, CTentry c) {
 	   id=i;
 	   entry=e;
 	   methodEntry = me;
 	   par = p;
 	   nl = n;
+	   ctentry = c;
 	}
 	public String toPrint(String s) {
 		
@@ -79,32 +81,45 @@ public class ClassCallNode implements Node {
 
 	
 	public String codeGeneration() {
-		
+		 
+		  int offsetNewInn=0;
 		  String parCode = "";	// codice per la prima parte dell'activation record (vedi file "progettiamo il nostro layout" nell'esercitazione 12_04).
 		  for(int i=par.size()-1; i>=0; i--){
 			  parCode += par.get(i).codeGeneration();
 		  }
 		  
-		  String getAR = "";
+		  String getAR2 = "";
 		  for(int i=0; i< nl - methodEntry.getNestinglevel(); i++){ 
+			  getAR2 += "lw\n";
+		  }
+		  String getAR = "";
+		  for(int i=0; i< nl - entry.getNestinglevel(); i++){ 
 			  getAR += "lw\n";
 		  }
+		  for(int i =0; i < ctentry.getFields().size();i++)
+			  if(((FieldNode)ctentry.getFields().get(i)).getSymType() instanceof ClassTypeNode)
+			  {
+				  offsetNewInn++;
+			  }
 
-		  /**		   
+			/**		   
 		   * recupera valore dell'ID1 (object pointer) dall'AR dove è dichiarato 
 			 con meccanismo usuale di risalita catena statica
 		   */
 		  return   
+				  "lfp\n"+		// CL
+		  		  parCode+	// parametri
 				  "lfp\n"+
 				  getAR+
-				  "push "+entry.getOffset()+"\n"+
+				  "push "+(entry.getOffset()-offsetNewInn)+"\n"+
 				  "add\n"+
-				  "lw\n"+		
+				  "lw\n"+
 		  		  //ora ho in cima allo stack l'obj pointer 
 				  "srv\n"+
 		  		  "lrv\n"+
 		  		  "lrv\n"+
-		  		  "push "+methodEntry.getOffset()+"\n"+
+		  		  //"push "+methodEntry.getOffset()+"\n"+
+		  		"push 1\n"+
 		  		  "add\n"+
 		  		  "lw\n"+
 		  		  "js\n";

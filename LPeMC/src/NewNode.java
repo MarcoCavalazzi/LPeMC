@@ -107,13 +107,15 @@ public class NewNode implements Node{
 			
 			//else
 				code += parlist.get(i).codeGeneration();
+			if(!(parlist.get(i) instanceof NewNode)){
+				code += "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
+						"sw\n" +
+						"push 1\n"+ 
+						"lhp\n"+ //carico l'heap pointer corrente
+						"add\n"+
+						"shp\n";
+			}
 			
-			code += "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
-					"sw\n" +
-					"push 1\n"+ 
-					"lhp\n"+ //carico l'heap pointer corrente
-					"add\n"+
-					"shp\n";
 		}
 		return code;
 	}

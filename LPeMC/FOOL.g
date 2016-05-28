@@ -552,7 +552,7 @@ value	returns [Node ast]
      )* )? 
      {
         System.out.println("CCN: nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
-        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel-(j+1));
+        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel-(j+1), ctentryClass);
      }
      RPAR    
      )? 
