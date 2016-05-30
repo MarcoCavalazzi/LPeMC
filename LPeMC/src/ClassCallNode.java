@@ -118,8 +118,7 @@ public class ClassCallNode implements Node {
 				  "srv\n"+
 		  		  "lrv\n"+
 		  		  "lrv\n"+
-		  		  //"push "+methodEntry.getOffset()+"\n"+
-		  		"push 1\n"+
+		  		  "push "+methodEntry.getOffset()+"\n"+		  		
 		  		  "add\n"+
 		  		  "lw\n"+
 		  		  "js\n";

@@ -42,7 +42,7 @@ cllist returns [ArrayList<Node> astlist]
 	     $astlist = new ArrayList<Node>() ;
 	     int offset      = -2;
 	     int classoffset = -2;	     
-	     int methodOffset = 0;
+	     //int methodOffset = 0;
 	   } 
 	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe 
 	   {
@@ -113,7 +113,7 @@ cllist returns [ArrayList<Node> astlist]
 	     LPAR 
 	     {
            ArrayList<Node> ConstrPar = new ArrayList<Node>();
-           int fieldOffset=-1; 
+          // int fieldOffset=-1; 
        }
 	     (p1=ID COLON t1=basic 
 	     {
@@ -121,8 +121,8 @@ cllist returns [ArrayList<Node> astlist]
 	         ConstrPar.add($t1.ast);
            FieldNode objField = new FieldNode($p1.text,$t1.ast,$cid.text);
            Obj.addField(objField);
-           ctentry.setFieldOffset(fieldOffset);
-           STentry  tempEntry = new STentry(objField,nestingLevel,$t1.ast,fieldOffset);
+           //ctentry.setFieldOffset(fieldOffset);
+           STentry  tempEntry = new STentry(objField,nestingLevel,$t1.ast,ctentry.getFieldOffset());
            tempEntry.setClassName($cid.text);
            if(ctentry.putvTable($p1.text,tempEntry, extendedEntry) != null)//putvTable controlla anche se c'è overriding, in caso positivo sovrascrive
            {
@@ -130,15 +130,15 @@ cllist returns [ArrayList<Node> astlist]
               System.exit(0);
            }         
            ctentry.setFieldAndCheck(objField,$p1.text);//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
-           fieldOffset--;
+           ctentry.decFieldOffset();
 	     }
 	     (COMMA pn=ID COLON tn=basic
 	     {
 	        ConstrPar.add($tn.ast);
           FieldNode objFieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
           Obj.addField(objFieldN);
-          ctentry.setFieldOffset(fieldOffset);
-          STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,fieldOffset);
+          //ctentry.setFieldOffset(fieldOffset);
+          STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,ctentry.getFieldOffset());
           System.out.println("La entry "+$pn.text+" ha nl = "+nestingLevel);
           if ( ctentry.putvTable($pn.text,tmpSTentry,extendedEntry) != null  )
           {
@@ -146,7 +146,7 @@ cllist returns [ArrayList<Node> astlist]
              System.exit(0); 
           }         
           ctentry.setFieldAndCheck(objFieldN,$pn.text);
-          fieldOffset--;
+          ctentry.decFieldOffset();
 	     }
 	     )* )? RPAR
 	     {
@@ -160,7 +160,7 @@ cllist returns [ArrayList<Node> astlist]
                       
              //$astlist.add(f);//giusto o da commentare???
              
-             STentry entry = new STentry(mNode,nestingLevel,$retm.ast,methodOffset);
+             STentry entry = new STentry(mNode,nestingLevel,$retm.ast,ctentry.getMethodOffset());
              entry.setClassName($cid.text);
              entry.setIsMethod();             
              if ( ctentry.putvTable($mid.text,entry,extendedEntry) != null  )
@@ -168,8 +168,8 @@ cllist returns [ArrayList<Node> astlist]
                 System.out.println("Method id "+$mid.text+" at line "+$mid.line+" already declared");
                 System.exit(0); 
              }
-             ctentry.setMethodOffset(methodOffset);  //            
-             methodOffset++;
+            // ctentry.setMethodOffset(methodOffset);  //            
+             ctentry.incMethodOffset();
              ctentry.setMethodAndCheck(mNode,$mid.text);
              Obj.setMethod(mNode);
 
