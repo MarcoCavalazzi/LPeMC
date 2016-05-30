@@ -100,7 +100,7 @@ public class NewNode implements Node{
 	private String makeParCode()
 	{
 		String code = "";
-		for(int i = 0; i < parlist.size(); i++)
+		for(int i = parlist.size()-1; i >= 0; i--)
 		{
 			//if(parlist.get(i) instanceof NewNode)	//se ci sono newNode innestati, 		
 				//code += ((NewNode)parlist.get(i)).parCodeGeneration(((NewNode)parlist.get(i)));

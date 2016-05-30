@@ -1,12 +1,12 @@
 push 0
-push 50000
+push 40000
 lhp
 sw
 push 1
 lhp
 add
 shp
-push 3000
+push 50000
 lhp
 sw
 push 1
@@ -22,21 +22,6 @@ lhp
 add
 shp
 push function1
-lhp
-sw
-push 1
-lhp
-add
-shp
-push 10000
-lhp
-sw
-push 1
-lhp
-add
-shp
-lhp
-push function0
 lhp
 sw
 push 1
@@ -51,7 +36,14 @@ push 1
 lhp
 add
 shp
-push function3
+push function4
+lhp
+sw
+push 1
+lhp
+add
+shp
+push 5000
 lhp
 sw
 push 1
@@ -59,13 +51,6 @@ lhp
 add
 shp
 push 20000
-lhp
-sw
-push 1
-lhp
-add
-shp
-push 9000
 lhp
 sw
 push 1
@@ -89,20 +74,51 @@ add
 shp
 lfp
 lfp
+push -3
+add
+lw
+lfp
 push -2
+add
+lw
+lfp
+push -2
+add
+lw
+push 1
+add
+lw
+js
+lfp
+push -4
+add
+lw
+push -1
+beq label10
+push 0
+b label11
+label10:
+push 1
+label11:
+push 1
+beq label8
+lfp
+lfp
+push -4
 add
 lw
 lfp
 push -4
 add
 lw
-srv
-lrv
-lrv
-push 1
+push 0
 add
 lw
 js
+b label9
+label8:
+push 0
+label9:
 print
 halt
 
@@ -127,33 +143,11 @@ js
 function1:
 cfp
 lra
-push 2000
 lfp
 lw
 push -1
 add
 lw
-bless label2
-push 0
-b label3
-label2:
-push 1
-label3:
-push 1
-beq label0
-push 66
-b label1
-label0:
-lfp
-lfp
-lw
-push 0
-lfp
-lw
-add
-lw
-js
-label1:
 srv
 sra
 pop
@@ -189,46 +183,49 @@ lfp
 push 1
 add
 lw
-srv
-lrv
-lrv
-push 1
-add
-lw
-js
-lfp
 lfp
 push 1
 add
 lw
-srv
-lrv
-lrv
-push 1
-add
-lw
-js
-add
-bless label6
 push 0
-b label7
-label6:
+add
+lw
+js
+lfp
+lfp
 push 1
-label7:
+add
+lw
+lfp
 push 1
-beq label4
+add
+lw
+push 0
+add
+lw
+js
+add
+bless label2
+push 0
+b label3
+label2:
+push 1
+label3:
+push 1
+beq label0
 push -1
-b label5
-label4:
+b label1
+label0:
 lfp
 lfp
 push -1
 add
 lw
-srv
-lrv
-lrv
-push 1
+lfp
+push -1
+add
+lw
+push 0
 add
 lw
 js
@@ -246,7 +243,7 @@ push 1
 lhp
 add
 shp
-label5:
+label1:
 srv
 sra
 pop
@@ -266,33 +263,35 @@ lfp
 push 1
 add
 lw
-srv
-lrv
-lrv
+lfp
 push 1
 add
 lw
-js
-bless label10
 push 0
-b label11
-label10:
+add
+lw
+js
+bless label6
+push 0
+b label7
+label6:
 push 1
-label11:
+label7:
 push 1
-beq label8
-push 123
-b label9
-label8:
+beq label4
+push -1
+b label5
+label4:
 lfp
 lfp
 push -1
 add
 lw
-srv
-lrv
-lrv
-push 1
+lfp
+push -1
+add
+lw
+push 0
 add
 lw
 js
@@ -307,10 +306,11 @@ lfp
 push -1
 add
 lw
-srv
-lrv
-lrv
-push 1
+lfp
+push -1
+add
+lw
+push 0
 add
 lw
 js
@@ -335,7 +335,7 @@ push 1
 lhp
 add
 shp
-label9:
+label5:
 srv
 sra
 pop

@@ -23,10 +23,6 @@ public class CTentry {
 		nestingLevel = nl;
 	}
 
-	//public CTentry(Node d)
-	//{
-	//	dec = d;
-	//}
 
 	public void setFieldAndCheck(Node node, String s)
 	{
