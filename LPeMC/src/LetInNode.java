@@ -57,7 +57,8 @@ public class LetInNode implements Node {
 	  for (Node dec:declist)
 	  declcode+=dec.codeGeneration();
 	
-	return "push 0\n"+
+	return 
+		   "push -1\n"+
 		   clcode+
     	   declcode+
     	   exp.codeGeneration()+

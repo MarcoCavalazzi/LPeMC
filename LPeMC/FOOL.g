@@ -142,7 +142,7 @@ cllist returns [ArrayList<Node> astlist]
           Obj.addField(objFieldN);
           //ctentry.setFieldOffset(fieldOffset);
           STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,ctentry.getFieldOffset());
-          System.out.println("La entry "+$pn.text+" ha nl = "+nestingLevel);
+        //  System.out.println("La entry "+$pn.text+" ha nl = "+nestingLevel);
           if ( ctentry.putvTable($pn.text,tmpSTentry,extendedEntry) != null  )
           {
              System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
@@ -164,7 +164,6 @@ cllist returns [ArrayList<Node> astlist]
              MethodNode mNode = new MethodNode($mid.text,$retm.ast); 
                       
              //$astlist.add(f);//giusto o da commentare???
-             
              STentry entry = new STentry(mNode,nestingLevel,$retm.ast,ctentry.getMethodOffset());
              entry.setClassName($cid.text);
              entry.setIsMethod();             
@@ -177,8 +176,10 @@ cllist returns [ArrayList<Node> astlist]
              ctentry.incMethodOffset();
              if(ctentry.setMethodAndCheck(mNode,$mid.text))
                 entry.setOffset(ctentry.getMethodOffset());
-             Obj.setMethod(mNode);
-
+              Obj.setMethod(mNode);
+              nestingLevel++;
+              HashMap<String,STentry> hmMethod = new HashMap<String,STentry> ();
+              symTable.add(hmMethod);
 	       }
 	       LPAR 
 	       {
@@ -189,13 +190,10 @@ cllist returns [ArrayList<Node> astlist]
 	       {
 	          parTypes.add($mpt1.ast);
             ParNode fpar = new ParNode($mp1.text,$mpt1.ast);
-            nestingLevel++;//poichè parametri delle funzioni hanno scope sintattico più interno
-            HashMap<String,STentry> parHM =  new HashMap<String,STentry>(); 
-            symTable.add(parHM);
             mNode.addPar(fpar);
             STentry tmpEntryPar = new STentry(fpar,nestingLevel,$mpt1.ast,parOffset);             
             
-            if ( parHM.put($mp1.text,tmpEntryPar) != null  ){
+            if ( hmMethod.put($mp1.text,tmpEntryPar) != null  ){
              System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
              System.exit(0);
              }
@@ -211,7 +209,7 @@ cllist returns [ArrayList<Node> astlist]
             mNode.addPar(par);
            
             STentry stPar = new STentry(fpar,nestingLevel,$mptn.ast,parOffset);
-            if (parHM.put($mpn.text,stPar) != null ){
+            if (hmMethod.put($mpn.text,stPar) != null ){
                System.out.println("Parameter id "+$mpn.text+" at line "+$mpn.line+" already declared");
                System.exit(0);
                }
@@ -558,7 +556,7 @@ value	returns [Node ast]
      )* )? 
      {
         System.out.println("CCN: nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
-        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel-(j+1), ctentryClass);
+        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel, ctentryClass);
      }
      RPAR    
      )? 

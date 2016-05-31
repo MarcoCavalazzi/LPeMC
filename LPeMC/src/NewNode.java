@@ -114,16 +114,16 @@ public class NewNode implements Node{
 
 			//else
 			code += parlist.get(i).codeGeneration();
-			//if(!(parlist.get(i) instanceof NewNode)){
+			//if(parlist.get(i) instanceof NewNode){
 				code +=// "INIZIO PARCODE\n"+
 						"lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
-						"sw\n" +
-						"push 1\n"+ 
+						"sw\n" +					
 						"lhp\n"+ //carico l'heap pointer corrente
+						"push 1\n"+ 
 						"add\n"+
 						"shp\n";
 				//"FINE PARCODE\n";
-			//}
+		//	}
 
 		}
 		return code;
@@ -146,8 +146,8 @@ public class NewNode implements Node{
 			mLabel += //"INIZIO MAKEMETHODCODE\n"+
 					"lhp\n"+
 					"sw\n" +
-					"lhp\n"+ //carico l'heap pointer corrente
-					"push 1\n"+ 					 
+					"lhp\n"+ //carico l'heap pointer corrente	
+					"push 1\n"+								 					 
 					"add\n"+
 					"shp\n";
 			//"FINE MAKEMETHODCODE\n";

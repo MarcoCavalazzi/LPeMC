@@ -146,7 +146,7 @@ public class FunNode implements Node, DecNode {
                     "js\n"
                    );*/
 	
-	return "push "+funl+"\n";
+	return "lfp\npush "+funl+"\n";
   }
   
   //valore di ritorno non utilizzato

@@ -92,6 +92,7 @@ public class ClassCallNode implements Node {
 		for(int i=0; i< nl - methodEntry.getNestinglevel(); i++){ 
 			getAR2 += "lw\n";
 		}
+		
 		String getAR = "";
 		for(int i=0; i< nl - entry.getNestinglevel(); i++){ 
 			getAR += "lw\n";
@@ -106,7 +107,7 @@ public class ClassCallNode implements Node {
 		 * recupera valore dell'ID1 (object pointer) dall'AR dove è dichiarato 
 			 con meccanismo usuale di risalita catena statica
 		 */
-		return   
+		return 
 				"lfp\n"+		// CL
 				parCode+	// parametri
 				"lfp\n"+
