@@ -24,7 +24,7 @@ public class CTentry {
 	}
 
 
-	public void setFieldAndCheck(Node node, String s)
+	public boolean setFieldAndCheck(Node node, String s)
 	{
 		for(int i = 0;i < allFields.size();i++)
 		{
@@ -32,13 +32,15 @@ public class CTentry {
 			{
 				allFields.remove(i);
 				offsetFields++;
-				break;
+				allFields.add(node);
+				return true;
 			}
 		}
 
 		allFields.add(node);
+		return false;
 	}
-	public void setMethodAndCheck(Node node, String s)
+	public boolean setMethodAndCheck(Node node, String s)
 	{
 		for(int i = 0;i < allMethods.size();i++)
 		{
@@ -46,11 +48,13 @@ public class CTentry {
 			{
 				allMethods.remove(i);
 				offsetMethods--;
-				break;
+				allMethods.add(node);
+				return true;
 			}
 		}
 
 		allMethods.add(node);
+		return false;
 	}
 
 

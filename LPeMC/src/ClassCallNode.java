@@ -120,6 +120,7 @@ public class ClassCallNode implements Node {
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+
 				"lw\n"+	
+				
 				"push "+methodEntry.getOffset()+"\n"+		  		
 				"add\n"+
 				"lw\n"+

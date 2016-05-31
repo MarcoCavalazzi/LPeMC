@@ -106,6 +106,8 @@ cllist returns [ArrayList<Node> astlist]
            Obj.setSuperEntry(extendedEntry);
            Obj.setClassEntry(ctentry);
            FOOLlib.putSuperType($cid.text,$cidext.text);
+           ctentry.setMethodOffset(extendedEntry.getMethodOffset());
+           ctentry.setFieldOffset(extendedEntry.getFieldOffset());
            //nestingVirtualLevel = extendedEntry.getNestinglevel();
            //hmn = symTable.get(extendedEntry.getNestinglevel());
 	     }
@@ -129,7 +131,8 @@ cllist returns [ArrayList<Node> astlist]
               System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared!");
               System.exit(0);
            }         
-           ctentry.setFieldAndCheck(objField,$p1.text);//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+           if(ctentry.setFieldAndCheck(objField,$p1.text))
+              tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
            ctentry.decFieldOffset();
 	     }
 	     (COMMA pn=ID COLON tn=basic
@@ -145,7 +148,9 @@ cllist returns [ArrayList<Node> astlist]
              System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
              System.exit(0); 
           }         
-          ctentry.setFieldAndCheck(objFieldN,$pn.text);
+          if(ctentry.setFieldAndCheck(objFieldN,$pn.text))
+             tmpSTentry.setOffset(ctentry.getFieldOffset());
+             
           ctentry.decFieldOffset();
 	     }
 	     )* )? RPAR
@@ -170,7 +175,8 @@ cllist returns [ArrayList<Node> astlist]
              }
             // ctentry.setMethodOffset(methodOffset);  //            
              ctentry.incMethodOffset();
-             ctentry.setMethodAndCheck(mNode,$mid.text);
+             if(ctentry.setMethodAndCheck(mNode,$mid.text))
+                entry.setOffset(ctentry.getMethodOffset());
              Obj.setMethod(mNode);
 
 	       }

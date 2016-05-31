@@ -17,11 +17,17 @@ lhp
 push function0
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 push function1
+lhp
+sw
+lhp
+push 1
+add
+shp
 lhp
 sw
 push 1
@@ -32,15 +38,15 @@ lhp
 push function2
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 push function4
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 push 5000
@@ -61,15 +67,15 @@ lhp
 push function0
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 push function1
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 lfp
@@ -145,7 +151,7 @@ cfp
 lra
 lfp
 lw
-push -1
+push -2
 add
 lw
 srv
@@ -200,7 +206,7 @@ lfp
 push 1
 add
 lw
-push 0
+push 1
 add
 lw
 js
@@ -239,8 +245,8 @@ lhp
 push function0
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 label1:
@@ -291,7 +297,7 @@ lfp
 push -1
 add
 lw
-push 0
+push 1
 add
 lw
 js
@@ -324,15 +330,15 @@ lhp
 push function0
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 push function1
 lhp
 sw
-push 1
 lhp
+push 1
 add
 shp
 label5:
