@@ -4,7 +4,7 @@ public class AttributeTuple {
 	protected int offset;
 	protected String attributeName;
 	protected String className;
-	
+
 	public AttributeTuple(String attributeName, String className, int offset) {
 		this.attributeName = attributeName;
 		this.className = className;
@@ -14,7 +14,7 @@ public class AttributeTuple {
 	public void setOffset(int newOffset) {
 		offset = newOffset;
 	}
-	
+
 	public int getOffset() {
 		return offset;
 	}

@@ -21,31 +21,31 @@ public class ClassNode implements Node{
 	{
 		superEntry = sE;
 	}
-	
+
 	public void setClassEntry(CTentry cE)
 	{
 		classEntry = cE;
 	}
-	
-	
+
+
 	public String toPrint(String s) {
 		String ret = s+"Class "+name+"\n" + s + "   " + (fields.size() > 0 ? " parameters:" : "") + " \n";
-	    for(int j=0;j < fields.size();j++){
-	      ret += s+fields.get(j).toPrint(s+" ")+"\n";
-	    }
+		for(int j=0;j < fields.size();j++){
+			ret += s+fields.get(j).toPrint(s+" ")+"\n";
+		}
 
-	    if(sc != null && (sc instanceof ClassNode)){
-	    	ret += s+"superclass: "+(((ClassNode)sc).getName())+"\n";
-	    }
-	    
-	    int i;
-	    if (dec != null ){
-		      ret += s+"body:\n";
-		    for(i=0;i < dec.size();i++){
-		      ret += s+dec.get(i).toPrint(s+" ")+"\n";
-		    }
-	    }
-	    return ret;
+		if(sc != null && (sc instanceof ClassNode)){
+			ret += s+"superclass: "+(((ClassNode)sc).getName())+"\n";
+		}
+
+		int i;
+		if (dec != null ){
+			ret += s+"body:\n";
+			for(i=0;i < dec.size();i++){
+				ret += s+dec.get(i).toPrint(s+" ")+"\n";
+			}
+		}
+		return ret;
 	}
 
 	/*
@@ -63,11 +63,11 @@ public class ClassNode implements Node{
 		for( MethodNode m : methods ){
 			m.typeCheck();
 		}
-		
+
 		/* Then, considering that there could have been some overriding (we consider the overriding in place anyway),
 		 * we check the fields and the methods of the superEntry
 		 * comparing them to the ones in the classEntry. */
-		
+
 		/*
 		 * Checking the types of the methods and their parameters with the parent class' methods.
 		 */
@@ -87,25 +87,25 @@ public class ClassNode implements Node{
 						isSubtype = true;
 						break;
 					}
-					
+
 					j++;
 				}
-				
+
 				if(!isSubtype){
 					System.out.println("[ClassNode] Type check found a problem:");
 					System.out.println("-> method:"+((MethodNode)superEntry.allMethods.get(i)).getName()+" did not have a match in the child/extended class.");
 					//System.out.println("super-class \""+ superEntry.getClass() +"\" -> method name:"+((MethodNode)superEntry.allMethods.get(--j)).getName());
-					
+
 					//System.out.println("Wrong method type in method "+ 
 					//		((MethodNode)superEntry.allMethods.get(--j)).getName()+" for class: "+name);
 					System.exit(0);
 				}
-				
+
 				i++;
 			}
 		}
-		
-		
+
+
 		/*
 		ArrayList<Node> uniq = FOOLlib.getTotalDecMethodsAndFields(this);
 		ArrayList<Node> pt = new ArrayList<Node>();
@@ -116,9 +116,9 @@ public class ClassNode implements Node{
 			      pt.add(((ParNode)n).typeCheck());
 			}
 		}
-		
+
 	    return new ArrowTypeNode (pt, this);
-	    */
+		 */
 		/*
 		if(superEntry != null)//cioè se c'è ereditarietà
 		{

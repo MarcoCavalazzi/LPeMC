@@ -10,7 +10,7 @@ let
       fun printL:List (l:List)    
         if (l == null) then {null}
                        else {makeList(printL(l.rest()),print(l.first()))};
-    in  printL(l);                 
+    in  printL(l);
   
   fun append:List (l1:List, l2:List)
       if (l1 == null)
@@ -49,4 +49,4 @@ let
                                 new List(2,
                                     new List(5,null))))));
   
-in printList(decreasing(l));
+in printList(increasing(l));

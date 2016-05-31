@@ -2,12 +2,12 @@
 public class AndNode implements Node {
 	private Node left;
 	private Node right;
-	
+
 	public AndNode(Node l, Node r){
 		left=l;
 		right=r;
 	}
-	
+
 	@Override
 	public String toPrint(String s) {
 		return s+ "AndNode\n"+left.toPrint(s)+" "+right.toPrint(s)+" ";
@@ -18,12 +18,12 @@ public class AndNode implements Node {
 		// Type checking. Se ci sono due sottotipi di BOOL va avanti, altrimenti si ferma.
 		if (! (FOOLlib.isSubtype(left,new BoolTypeNode()))  &&  (FOOLlib.isSubtype(right,new BoolTypeNode())) ){
 			System.out.println("Non BOOL in AND operation");
-		    System.exit(0);
+			System.exit(0);
 		}
-		
+
 		return new BoolTypeNode();
 	}
-	
+
 	// Questo metodo restituisce il risultato della moltiplicazione tra i due elementi in input. Restituisce:
 	// 1 per True
 	// 0 per False.
@@ -35,9 +35,9 @@ public class AndNode implements Node {
 		//No, non esistono come comandi nel file SVM.g, secondo me è corretto usare mult e add 
 		// con mult riesco a fare: 1*0 = 0 | 1*1 = 1 | 0*0 = 0| cioè le regole per fare l'AND logico
 		//per l'OR è lo stesso ragionamento ma con add
-		
+
 		// Scusa se insisto. Ho capito la tua spiegazione, ma cosa dice al compilatore quando considerare il numero per intero e quando bit a bit?
-		
+
 		return left.codeGeneration()+right.codeGeneration()+"mult\n";
 	}
 

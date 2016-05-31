@@ -87,7 +87,7 @@ public class ClassCallNode implements Node {
 		for(int i=par.size()-1; i>=0; i--){
 			parCode += par.get(i).codeGeneration();
 		}
-		
+
 		String getAR = "";
 		for(int i=0; i< nl - entry.getNestinglevel(); i++)
 			getAR += "lw\n";
@@ -110,7 +110,7 @@ public class ClassCallNode implements Node {
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+
 				"lw\n"+	
-				
+
 				"push "+methodEntry.getOffset()+"\n"+		  		
 				"add\n"+
 				"lw\n"+

@@ -93,9 +93,9 @@ public class CallNode implements Node {
 				"push "+entry.getOffset()+"\n"+
 				"push 1\n"+
 				"sub\n"+
-	  			"add\n"+
-	  			"lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
-	  			"js\n";
+				"add\n"+
+				"lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
+				"js\n";
 	}
 
 }  

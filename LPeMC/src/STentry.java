@@ -6,7 +6,6 @@ public class STentry {
 	private String className = null;
 	private boolean isMethod = false;
 	private String methodName= null;
-	private int newOffset = 0;
 	private int offset;	// per poter leggere il valore scelto a partire dal fp.
 	private Node dec;
 
@@ -15,16 +14,19 @@ public class STentry {
 	offset=o;}
 
 	public STentry (int n, Node t, int o)
-	{nl=n;
-	type=t;
-	offset=o;
+	{
+		nl=n;
+		type=t;
+		offset=o;
 	}
 
 	public STentry (Node d, int n, Node t,int os)
-	{dec=d;
-	nl=n;
-	type=t;
-	offset=os;}
+	{
+		dec=d;
+		nl=n;
+		type=t;
+		offset=os;
+	}
 
 	public STentry (Node d, int n)
 	{
@@ -33,10 +35,14 @@ public class STentry {
 	}
 
 	public void addType (Node t)
-	{type=t;}
+	{
+		type=t;
+	}
 
 	public Node getType ()
-	{return type;}
+	{
+		return type;
+	}
 
 	public int getOffset ()
 	{
@@ -47,7 +53,9 @@ public class STentry {
 		offset = off;
 	}
 	public int getNestinglevel ()
-	{return nl;}
+	{
+		return nl;
+	}
 
 	public Node getDecl() {
 		return dec;  
@@ -85,8 +93,8 @@ public class STentry {
 		className = s;
 	}
 
-	public boolean getIsMethod() {
-		// TODO Auto-generated method stub
+	public boolean getIsMethod()
+	{
 		return isMethod;
 	}
 

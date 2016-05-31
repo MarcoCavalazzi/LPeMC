@@ -1,60 +1,56 @@
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-
-import com.sun.org.apache.bcel.internal.generic.Instruction;
 
 public class ExecuteVM {
-    
-    public static final int CODESIZE = 10000;
-    public static final int MEMSIZE = 10000;
-    
-    private int[] code;
-    private int[] memory = new int[MEMSIZE];
-    
-    private int ip = 0;
-    private int ra;
-    private int rv;
-    private int sp = MEMSIZE;
-    private int fp = MEMSIZE;
-    private int hp = 0;
-    
-    PrintWriter writer;		// This variable is used to store the output of the program in a file.
-    
-    public ExecuteVM(int[] code) {
-    	// Codice di Debug che visualizza il codice del programma in linguaggio macchina.
-        System.out.println("Generated code:");
-        System.out.println("----------------------");
-        for(int i=0; i<code.length; i++){
-        	if(code[i] != 25 && code[i] != 5 && code[i] != 6 && code[i] != 7 && code[i] != 8){// 25 = PUSH, 5 = BRANCH, 6 = BRANCHEQ, 7 = BRANCHGR, 8 = BRANCHLESS
-        		if(code[i]==0)
-        			break;	// This control avoids to associate <invalid> strings to values that belong to the PUSH commands.
-        		System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
-        	}else{
-        		System.out.print(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString()+"   ");
-        		System.out.println(code[++i]);
-        	}
-        }
-        //System.out.println("\nWe will now display the instructions of the code step by step. Together we display the state of the Stack (as \"stack pointer: stack value\").\nOnly the part of the Stack that contains useful values will be printed.");
-        // After this, in the Console, we will show the stack and the state of the pointers for every step of the code during its execution.
-        
-        // Constructor
-        this.code = code;
-    }
-    
-    public void cpu() {
-    	writer = null;
-    	try {
-    		writer = new PrintWriter("programOutput.txt", "UTF-8");
-    	} catch (Exception e) {
-    		System.out.println("! Unable to create the output file. See ExecuteVM.java. !");
-    		e.printStackTrace();
-    		System.exit(0);
-    	}
-    	
-    	while ( true ) {
+
+	public static final int CODESIZE = 10000;
+	public static final int MEMSIZE = 10000;
+
+	private int[] code;
+	private int[] memory = new int[MEMSIZE];
+
+	private int ip = 0;
+	private int ra;
+	private int rv;
+	private int sp = MEMSIZE;
+	private int fp = MEMSIZE;
+	private int hp = 0;
+
+	PrintWriter writer;		// This variable is used to store the output of the program in a file.
+
+	public ExecuteVM(int[] code) {
+		// Codice di Debug che visualizza il codice del programma in linguaggio macchina.
+		System.out.println("Generated code:");
+		System.out.println("----------------------");
+		for(int i=0; i<code.length; i++){
+			if(code[i] != 25 && code[i] != 5 && code[i] != 6 && code[i] != 7 && code[i] != 8){// 25 = PUSH, 5 = BRANCH, 6 = BRANCHEQ, 7 = BRANCHGR, 8 = BRANCHLESS
+				if(code[i]==0)
+					break;	// This control avoids to associate <invalid> strings to values that belong to the PUSH commands.
+				System.out.println(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString());
+			}else{
+				System.out.print(code[i] +"\t"+ SVMParser.tokenNames[code[i]].toString()+"   ");
+				System.out.println(code[++i]);
+			}
+		}
+		//System.out.println("\nWe will now display the instructions of the code step by step. Together we display the state of the Stack (as \"stack pointer: stack value\").\nOnly the part of the Stack that contains useful values will be printed.");
+		// After this, in the Console, we will show the stack and the state of the pointers for every step of the code during its execution.
+
+		// Constructor
+		this.code = code;
+	}
+
+	public void cpu() {
+		writer = null;
+		try {
+			writer = new PrintWriter("programOutput.txt", "UTF-8");
+		} catch (Exception e) {
+			System.out.println("! Unable to create the output file. See ExecuteVM.java. !");
+			e.printStackTrace();
+			System.exit(0);
+		}
+
+		while ( true ) {
 			//dumpInstruction();	// Debug statement. Without this statement no instruction or stack or heap is shown nor stored in the file "programOutput.txt".
-    		
+
 			int bytecode = code[ip++]; // fetch
 			int arg1,arg2;
 			switch ( bytecode ) {
@@ -147,7 +143,7 @@ public class ExecuteVM {
 				push(hp);
 				break;
 			case SVMParser.PRINT :
-				System.out.println((sp<MEMSIZE)?"\n>>> output >>>    "+memory[sp]+"\n":"Empty stack!");
+				System.out.println((sp<MEMSIZE)?">>> output >>>    "+memory[sp]:"Empty stack!");
 				break;
 			case SVMParser.HALT :	// The last command executed from the program.
 				writer.close();	 // Closing the output file where all the output is memorised.
@@ -155,64 +151,64 @@ public class ExecuteVM {
 				return;
 			}
 		}
-    }
-    
-    
-    private int k=1;	// Variable used while displaying (and saving on a file) the instructions.
-    private void dumpInstruction(){
-    	System.out.println("----------------------------");
-        System.out.print("- INSTRUCTION: "+ k++ + " - ");
-        writer.println("----------------------------");
-        writer.print("- INSTRUCTION: "+ k++ + " - ");
-        
-        if(ip > 10000)
-        	System.out.println("Errore di esecuzione, l'IP è maggiore di 10000.");
-        String command = SVMParser.tokenNames[code[ip]];
-        if(command != "PUSH"  &&  command != "BRANCH"  &&  command != "BRANCHGR"  &&  command != "BRANCHEQ"  &&  command != "BRANCHLESS"){
-        	System.out.println(command);
-        	writer.println(command);
-        }else{
-        	System.out.print(command);
-        	writer.print(command);
-        	int tempIp = ip+1;
-        	System.out.println(" "+code[tempIp]);
-        	writer.println("  "+code[tempIp]);
-        }
-        System.out.println("  * SP: "+ sp +"\tFP: "+ fp +"\tIP: "+ ip);
-        System.out.println("  * RA:"+ ra +"\tRV: "+rv +"\t\tHP:  "+hp);
-        writer.println("  * SP: "+ sp +"\tFP: "+ fp +"\tIP: "+ ip);
-        writer.println("  * RA:"+ ra +"\tRV: "+rv +"\t\tHP:  "+hp);
-        
-        dumpStack();
-        dumpHeap();
-    }
-    
-    // Function that displays the stack
-    private void dumpStack(){
-    	System.out.println("-------------- STACK --------------");
-    	writer.println("-------------- STACK --------------");
-    	for(int i=memory.length-1; i>=sp; i--){
-    		System.out.println(i+": "+memory[i]);
-    		writer.println(i+": "+memory[i]);
-    	}  
-    }
-    // Function that displays the heap
-    public final void dumpHeap(){
-		
-    	System.out.println("-------------- HEAP --------------");
-    	writer.println("-------------- HEAP --------------");
-    	for(int i=0; i<=hp; i++){
-    		System.out.println(i+": "+memory[i]);
-    		writer.println(i+": "+memory[i]);
-    	}
-    }
-    
-    private int pop() {
-      return memory[sp++];
-    }
-    
-    private void push(int v) {
-      memory[--sp] = v;
-    }
-    
+	}
+
+
+	private int k=1;	// Variable used while displaying (and saving on a file) the instructions.
+	private void dumpInstruction(){
+		System.out.println("----------------------------");
+		System.out.print("- INSTRUCTION: "+ k++ + " - ");
+		writer.println("----------------------------");
+		writer.print("- INSTRUCTION: "+ k++ + " - ");
+
+		if(ip > 10000)
+			System.out.println("Errore di esecuzione, l'IP è maggiore di 10000.");
+		String command = SVMParser.tokenNames[code[ip]];
+		if(command != "PUSH"  &&  command != "BRANCH"  &&  command != "BRANCHGR"  &&  command != "BRANCHEQ"  &&  command != "BRANCHLESS"){
+			System.out.println(command);
+			writer.println(command);
+		}else{
+			System.out.print(command);
+			writer.print(command);
+			int tempIp = ip+1;
+			System.out.println(" "+code[tempIp]);
+			writer.println("  "+code[tempIp]);
+		}
+		System.out.println("  * SP: "+ sp +"\tFP: "+ fp +"\tIP: "+ ip);
+		System.out.println("  * RA:"+ ra +"\tRV: "+rv +"\t\tHP:  "+hp);
+		writer.println("  * SP: "+ sp +"\tFP: "+ fp +"\tIP: "+ ip);
+		writer.println("  * RA:"+ ra +"\tRV: "+rv +"\t\tHP:  "+hp);
+
+		dumpStack();
+		dumpHeap();
+	}
+
+	// Function that displays the stack
+	private void dumpStack(){
+		System.out.println("-------------- STACK --------------");
+		writer.println("-------------- STACK --------------");
+		for(int i=memory.length-1; i>=sp; i--){
+			System.out.println(i+": "+memory[i]);
+			writer.println(i+": "+memory[i]);
+		}  
+	}
+	// Function that displays the heap
+	public final void dumpHeap(){
+
+		System.out.println("-------------- HEAP --------------");
+		writer.println("-------------- HEAP --------------");
+		for(int i=0; i<=hp; i++){
+			System.out.println(i+": "+memory[i]);
+			writer.println(i+": "+memory[i]);
+		}
+	}
+
+	private int pop() {
+		return memory[sp++];
+	}
+
+	private void push(int v) {
+		memory[--sp] = v;
+	}
+
 }
