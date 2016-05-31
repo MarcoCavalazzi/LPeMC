@@ -60,41 +60,6 @@ public class NewNode implements Node{
 
 	@Override
 	public String codeGeneration() {
-		String newCode=		
-					    "sw\n"+
-						"lhp\n"+
-						"push 1\n"+
-						"add\n"+
-						"shp\n"+
-						"lhp\n";
-		//String parCode = "";
-		//String methodLabel = "";
-		//Logger LOGGER = Logger.getLogger("InfoLogging");
-		//		for(int i = 0; i < parlist.size(); i++)
-		//		{
-		//			parCode += parlist.get(i).codeGeneration()+"\n";
-		//			//LOGGER.info("sono dentro parlist");
-		//			parCode +=  "lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
-		//						"sw\n" +
-		//						"push 1\n"+ 
-		//						"lhp\n"+ //carico l'heap pointer corrente
-		//						"add\n"+
-		//						"shp\n";
-		//			
-		//		}
-
-		//		for(int i = 0; i < entry.allMethods.size(); i++)
-		//		{
-		//			
-		//			methodLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
-		//			
-		//			methodLabel +=  "lhp\n"+
-		//							"sw\n" +
-		//							"push 1\n"+ 
-		//							"lhp\n"+ //carico l'heap pointer corrente
-		//							"add\n"+
-		//							"shp\n"	;
-		//		}
 
 		return 	
 				makeParCode()+	
@@ -109,12 +74,7 @@ public class NewNode implements Node{
 		String code = "";
 		for(int i = parlist.size()-1; i >= 0; i--)
 		{
-			//if(parlist.get(i) instanceof NewNode)	//se ci sono newNode innestati, 		
-			//code += ((NewNode)parlist.get(i)).parCodeGeneration(((NewNode)parlist.get(i)));
-
-			//else
-			code += parlist.get(i).codeGeneration();
-			//if(parlist.get(i) instanceof NewNode){
+			code += parlist.get(i).codeGeneration();			
 				code +=// "INIZIO PARCODE\n"+
 						"lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
 						"sw\n" +					
@@ -123,16 +83,11 @@ public class NewNode implements Node{
 						"add\n"+
 						"shp\n";
 				//"FINE PARCODE\n";
-		//	}
 
 		}
 		return code;
 	}
 
-	private String parCodeGeneration(NewNode n) {
-
-		return "";
-	}
 
 	private String makeMethodCode()
 	{
@@ -141,8 +96,7 @@ public class NewNode implements Node{
 		{
 
 			mLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
-			// +"shp\n";
-			//System.out.println("label method "+i+": "+((MethodNode)entry.allMethods.get(i)).getLabel());
+			
 			mLabel += //"INIZIO MAKEMETHODCODE\n"+
 					"lhp\n"+
 					"sw\n" +

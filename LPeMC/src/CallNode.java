@@ -75,22 +75,35 @@ public class CallNode implements Node {
 			}
 		}
 		*/
-	 if(entry.getIsMethod())
-	  {
-		  getAR += "lw\n";
-	  }
+//	 if(entry.getIsMethod())
+//	  {
+//		  getAR += "lw\n";
+//	  }
 		 
-	  return    "lfp\n"+		// CL
+	  return    "inizio CallNode!!\n"+
+			    "lfp\n"+		// CL
+			    //"inizio parcode\n"+
 	  			parCode+	// parametri
+	  			//"fine parcode\n"+
 	  			"lfp\n"+	
 	  			getAR+		// AL ;
 	  			"push "+entry.getOffset()+"\n"+
-	  			"lfp\n"+
-	  			getAR+  // 
+	  			"add\n"+
+	  			"lw\n"+
+	  			//getAR+
+	  			"lfp\n"+	  			
+	  			getAR+
+	  			//"lw\n"+
+	  			"push "+entry.getOffset()+"\n"+
+	  			"push 1\n"+
+	  			"sub\n"+
+	  			
+	  			//getAR+  // 
 	  			//popParNode+
 	  			"add\n"+
 	  			"lw\n"+		// //recupera indirizzo  AL:address (fp) di AR dichiarazione (vedi file progettiamo nostro layout.txt)
-	  			"js\n";		// salto
+	  			"js\n"+		// salto
+	  			"fine callNode!!!\n";
   }
     
 }  

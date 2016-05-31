@@ -111,6 +111,7 @@ public class ClassCallNode implements Node {
 				"lfp\n"+		// CL
 				parCode+	// parametri
 				"lfp\n"+
+				//"CLASSCALLNODE\n"+
 				getAR+
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+

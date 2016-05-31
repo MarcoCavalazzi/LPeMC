@@ -52,7 +52,9 @@ public class FunNode implements Node, DecNode {
   public String codeGeneration() {
 	String decCode = "";
 	String popDec = "";
+	String popPar = "";
 	String popParNode = "";
+	String popDecNode = "";
 	String funl=FOOLlib.freshFunLabel();
 	
 	if(declist != null){//aggiunto il controllo se la nostra declist non risulti vuota
@@ -60,67 +62,65 @@ public class FunNode implements Node, DecNode {
 			decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
 		}
 		
-		// Marco: Scusate l'ignoranza, ma vorrei capire meglio il funzionamento di FunNode:
-		// Qui di seguito aggiungiamo già dei "pop", 
-		//  dobbiamo forse togliere questi due cicli su "declist" e "parlist" visto che facciamo già il controllo con i 2 "pop" extra (vedi più sotto)?
-		
 		for(Node dec:declist){
 			popDec += "pop\n";
 		}
 	}
 	
-	String popPar = "";
+	
 	for(Node dec:parlist){
 		popPar += "pop\n";
 	}
 	
-	String popArrowTypeNode = "";
-	if(getSymType() instanceof ArrowTypeNode)
-	{
-		popArrowTypeNode = "pop\n" + "pop\n";
-	}
+//	String popArrowTypeNode = "";
+//	if(getSymType() instanceof ArrowTypeNode)
+//	{
+//		popArrowTypeNode = "pop\n" + "pop\n";
+//	}
 	
-	if(popDec == "" && declist!=null)	
+	if(declist!=null)	
 	{
 		for(int i=0; i < declist.size();i++)
 		{
-			if(((VarNode)declist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+			
+			if(declist.get(i) instanceof FunNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popDec += "pop\n" + "pop\n";
-				break;
+				popDecNode += "pop\n";
+				//break;
 			}
 		}
 	}
 	
-	//////DUBBIO!!!!//////
 	
-	if(popParNode == "")	
+	if(parlist != null)	
 	{
 		for(int i=0; i < parlist.size();i++)
 		{
-			if(((ParNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+			if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popParNode += "pop\n" + "pop\n";
-				break;
+				popParNode += "pop\n";
+				//break;
 			}
 		}
 	}
 	
 	FOOLlib.putCode(
 	    "\n"+funl+":\n"+		
+	//"inizio FUN!!\n"+
 		"cfp\n"+	// setta il registro $fp / copy stack pointer into frame pointer
 	    "lra\n"+   // load from ra sullo stack
 		decCode+	// codice delle dichiarazioni
 		body.codeGeneration()+
 		"srv\n"+	//salvo il risultato in un registro 
-		//popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
 		
-		
-		"sra\n"+    //salvo il return address
-		"pop\n"+	// pop dell'AL (access link)
+		popDecNode+
 		popPar+     //pop dei parametri che ho in parlist
-		popParNode+ //dubbio!!
-		popDec+
+		"sra\n"+    //salvo il return address				
+		"pop\n"+	// pop dell'AL (access link)	
+		popParNode+
+			
+		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
+		
 		"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 		"lrv\n"+
 		"lra\n"+

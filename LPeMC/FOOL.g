@@ -279,7 +279,7 @@ declist	returns [ArrayList<Node> astlist]
           //System.out.println("type: "+$t.ast + "var "+$i.text);
           if($t.ast instanceof ArrowTypeNode)
           {
-             offset-=2;
+             offset--;
           }
           
           System.out.println("[FOOL.g] VAR    "+ v.toPrint(""));
@@ -299,8 +299,9 @@ declist	returns [ArrayList<Node> astlist]
           //inserimento di ID nella symtable
           FunNode f = new FunNode($i.text,$t.ast);
           $astlist.add(f);
-          HashMap<String,STentry> hm = symTable.get(nestingLevel);
-          STentry entry = new STentry(nestingLevel,offset--);
+          HashMap<String,STentry> hm = symTable.get(nestingLevel);                
+          STentry entry = new STentry(nestingLevel,offset);
+          offset=offset - 2;
           //STentry entry = new STentry(nestingLevel,f,offset-=2);
           if ( hm.put($i.text,entry) != null ){
              System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
@@ -318,12 +319,10 @@ declist	returns [ArrayList<Node> astlist]
 	          parTypes.add($fty.ast); 
 	          ParNode fpar = new ParNode($fid.text,$fty.ast);
 	          
-	          if($fty.ast instanceof ArrowTypeNode)
-            {
-               paroffset+=2;
-               System.out.println("Parameter id "+$fid.text+" è di tipo funzionale");
-            } 
-	          
+	          if($fty.ast instanceof ArrowTypeNode )            
+               paroffset++;
+             
+                      	        
 	          f.addPar(fpar);
 	                             
 	          if ( hmn.put($fid.text,new STentry(fpar,nestingLevel,$fty.ast,paroffset++)) != null  ){
@@ -338,7 +337,7 @@ declist	returns [ArrayList<Node> astlist]
 		           ParNode par = new ParNode($id.text,$ty.ast);
 		           if($fty.ast instanceof ArrowTypeNode)
 		           {
-		              paroffset+=2;
+		              paroffset*=2;
 		              System.out.println("Parameter id "+$id.text+" è di tipo funzionale:");
                } 
 		           f.addPar(par);
@@ -513,11 +512,11 @@ value	returns [Node ast]
       )?
       {
       
-        System.out.println("nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
+       // System.out.println("nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
         if( classEntry != null) 
-         $ast=new CallNode($i.text,entry,argList,nestingLevel-(j+1));
+         $ast=new CallNode($i.text,entry,argList,nestingLevel);
         else 
-        $ast=new CallNode($i.text,entry,argList,nestingLevel-(j+1));//è esatto? quasi sicuramente no!
+        $ast=new CallNode($i.text,entry,argList,nestingLevel);//è esatto? quasi sicuramente no!
       }    
      RPAR
     |  DOT cmid=ID

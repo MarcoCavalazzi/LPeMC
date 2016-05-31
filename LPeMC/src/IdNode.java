@@ -60,13 +60,32 @@ public class IdNode implements Node {
 
 	for (int i=0;i<nl-entry.getNestinglevel(); i++ )
 		getAR+="lw\n";	
-
+	if(!(entry.getType() instanceof ArrowTypeNode)){
 	return 
+			"INIZIO IDNODE\n"+
 			"lfp\n"+
 			getAR+
 			"push "+entry.getOffset()+"\n"+
 			"add\n"+
-			"lw\n";
+			"lw\n"+			
+			"FINE IDNODE\n";
+	}
+	else {
+		return 
+				"INIZIO IDNODE\n"+
+				"lfp\n"+
+				getAR+
+				"push "+entry.getOffset()+"\n"+
+				"add\n"+
+				"lw\n"+
+				"lfp\n"+
+				"push "+entry.getOffset()+"\n"+
+				"push 1\n"+
+				"sub\n"+
+				"add\n"+
+				"lw\n"+
+				"FINE IDNODE\n";
+	}
   }
   
 }  

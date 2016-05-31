@@ -47,7 +47,18 @@ public class MethodNode implements Node, DecNode {
 		  for(Node par:parlist) 
 			  popPar += "pop\n";
 
-
+	  if(parlist != null)	
+		{
+			for(int i=0; i < parlist.size();i++)
+			{
+				if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
+				{
+					popPar += "pop\n" + "pop\n" ;
+					//break;
+				}
+			}
+		}
+		
 
 	  FOOLlib.putCode(
 			  "\n"+label+":\n"+
@@ -55,9 +66,10 @@ public class MethodNode implements Node, DecNode {
 			  "lra\n" +			 
 			  body.codeGeneration()+ //body della funzione
 			  "srv\n" + //salvo il risultato in un registro 
+			  popPar+
 			  "sra\n" + //salvo il return address
 			  "pop\n" + //pop dell'AL
-			  popPar  + //pop dei parametri che ho in parlist
+			  //popPar  + //pop dei parametri che ho in parlist
 			  "sfp\n" + //ripristino l'$fp al control link (CL) 
 			  "lrv\n" +
 			  "lra\n" +
