@@ -7,12 +7,10 @@ public class FunNode implements Node, DecNode {
   private ArrayList<Node> parlist = new ArrayList<Node>(); 
   private ArrayList<Node> declist; 
   private Node body;
-  private boolean isClassMethod = false; //per OO
   public FunNode (String i, Node t) {
     id=i;
     type=t;
   }
-  
   
   public void addDec (ArrayList<Node> d) {
 	  declist=d;
@@ -72,21 +70,15 @@ public class FunNode implements Node, DecNode {
 		popPar += "pop\n";
 	}
 	
-//	String popArrowTypeNode = "";
-//	if(getSymType() instanceof ArrowTypeNode)
-//	{
-//		popArrowTypeNode = "pop\n" + "pop\n";
-//	}
 	
 	if(declist!=null)	
 	{
 		for(int i=0; i < declist.size();i++)
 		{
 			
-			if(declist.get(i) instanceof FunNode)//decNode è corretto? è solo un'interfaccia!
+			if(declist.get(i) instanceof FunNode)
 			{
-				popDecNode += "pop\n";
-				//break;
+				popDec += "pop\n";
 			}
 		}
 	}
@@ -98,7 +90,7 @@ public class FunNode implements Node, DecNode {
 		{
 			if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
 			{
-				popParNode += "pop\n";
+				popPar += "pop\n";
 				//break;
 			}
 		}
@@ -106,45 +98,21 @@ public class FunNode implements Node, DecNode {
 	
 	FOOLlib.putCode(
 	    "\n"+funl+":\n"+		
-	//"inizio FUN!!\n"+
 		"cfp\n"+	// setta il registro $fp / copy stack pointer into frame pointer
 	    "lra\n"+   // load from ra sullo stack
 		decCode+	// codice delle dichiarazioni
 		body.codeGeneration()+
-		"srv\n"+	//salvo il risultato in un registro 
-		
-		popDecNode+
-		popPar+     //pop dei parametri che ho in parlist
+		"srv\n"+	//salvo il risultato in un registro 	
+		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
 		"sra\n"+    //salvo il return address				
 		"pop\n"+	// pop dell'AL (access link)	
-		popParNode+
-			
-		popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
-		
+		popPar+     //pop dei parametri che ho in parlist		
 		"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 		"lrv\n"+
 		"lra\n"+
 		"js\n"      //js salta all'indirizzo che è in cima allo stack e salva la prossima istruzione in ra.
     );
-	/* codice del progetto funzionante:
-	//inserisco la serie di istruzioni della funzione che poi verranno utilizzate
-    //nel letinNode
-    FOOLlib.putFunCode(
-    				"\n"+funl+":\n"+
-                    "cfp\n"+ //aggiorniamo il frame pointer
-                    "lra\n"+ //carichiamo il return address
-                    decCode+ //preparo le dichiarazioni locali della funzione
-                    body.codeGeneration()+ //eseguo il corpo della funzione
-                    "srv\n"+ //gestisco il return value(registro)
-                    popDec+ //carico le dichiarazioni locali della funzione
-                    "sra\n"+ //ci salviamo il return address
-                    "pop\n"+ //butto via l'access link
-                    popPar+  //prelievo dei i parametri
-                    "sfp\n"+ //memorizzo il frame pointer a cui ero arrivato
-                    "lrv\n"+ //mi preparo a ritornare
-                    "lra\n"+ //ritorno all'AR precedente
-                    "js\n"
-                   );*/
+	
 	
 	return "lfp\npush "+funl+"\n";
   }
@@ -165,19 +133,5 @@ public class FunNode implements Node, DecNode {
   public Node getSymType() {
 	return type;
   }
-  
-  //Funzioni per l'OO
-  
-  public boolean getClassMethodFlag() {
-	  return isClassMethod;
-  }
-  
-  public String getName() {
-	  return id;
-  }
-  
-  public void setInMethod()
-  {
-	  isClassMethod = true;
-  }
+ 
 }  

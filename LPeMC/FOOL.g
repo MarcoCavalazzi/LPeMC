@@ -133,6 +133,7 @@ cllist returns [ArrayList<Node> astlist]
            }         
            if(ctentry.setFieldAndCheck(objField,$p1.text))
               tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+           
            ctentry.decFieldOffset();
 	     }
 	     (COMMA pn=ID COLON tn=basic
@@ -236,7 +237,7 @@ cllist returns [ArrayList<Node> astlist]
             HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
             symTable.add(varhm);
             
-            if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOs)) != null  )
+            if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOs++)) != null  )
             {
                System.out.println("Var id "+$vid.text+" at line "+$vid.line+" already declared");
                System.exit(0); 
@@ -335,11 +336,9 @@ declist	returns [ArrayList<Node> astlist]
 	          {
 		           parTypes.add($ty.ast); 
 		           ParNode par = new ParNode($id.text,$ty.ast);
-		           if($fty.ast instanceof ArrowTypeNode)
-		           {
-		              paroffset*=2;
-		              System.out.println("Parameter id "+$id.text+" è di tipo funzionale:");
-               } 
+		           if($ty.ast instanceof ArrowTypeNode)
+		              paroffset++;
+             
 		           f.addPar(par);
 		           if ( hmn.put($id.text,new STentry(par,nestingLevel,$ty.ast,paroffset++)) != null  ){
 		              System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
@@ -498,9 +497,9 @@ value	returns [Node ast]
 	       System.exit(0);
 	    }
 	     	 
-	    if( classEntry != null )	        
-	        $ast = new IdNode($i.text,classEntry,nestingLevel);
-	    else
+	    //if( classEntry != null )	        
+	       // $ast = new IdNode($i.text,classEntry,nestingLevel);
+	  //  else
 	        $ast = new IdNode($i.text,entry,nestingLevel);
 	    
                  
@@ -554,7 +553,6 @@ value	returns [Node ast]
      }
      )* )? 
      {
-        System.out.println("CCN: nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
         $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel, ctentryClass);
      }
      RPAR    

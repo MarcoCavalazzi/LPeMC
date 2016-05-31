@@ -65,11 +65,10 @@ public class MethodNode implements Node, DecNode {
 			  "cfp\n" + //setta $fp
 			  "lra\n" +			 
 			  body.codeGeneration()+ //body della funzione
-			  "srv\n" + //salvo il risultato in un registro 
-			  popPar+
+			  "srv\n" + //salvo il risultato in un registro 			 
 			  "sra\n" + //salvo il return address
 			  "pop\n" + //pop dell'AL
-			  //popPar  + //pop dei parametri che ho in parlist
+			  popPar  + //pop dei parametri che ho in parlist
 			  "sfp\n" + //ripristino l'$fp al control link (CL) 
 			  "lrv\n" +
 			  "lra\n" +

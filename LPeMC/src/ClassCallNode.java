@@ -87,21 +87,10 @@ public class ClassCallNode implements Node {
 		for(int i=par.size()-1; i>=0; i--){
 			parCode += par.get(i).codeGeneration();
 		}
-
-		String getAR2 = "";
-		for(int i=0; i< nl - methodEntry.getNestinglevel(); i++){ 
-			getAR2 += "lw\n";
-		}
 		
 		String getAR = "";
-		for(int i=0; i< nl - entry.getNestinglevel(); i++){ 
+		for(int i=0; i< nl - entry.getNestinglevel(); i++)
 			getAR += "lw\n";
-		}
-//		for(int i =0; i < ctentry.getFields().size();i++) non serve
-//			if(((FieldNode)ctentry.getFields().get(i)).getSymType() instanceof ClassTypeNode)
-//			{
-//				//offsetNewInn++;
-//			}
 
 		/**		   
 		 * recupera valore dell'ID1 (object pointer) dall'AR dove è dichiarato 
@@ -111,7 +100,6 @@ public class ClassCallNode implements Node {
 				"lfp\n"+		// CL
 				parCode+	// parametri
 				"lfp\n"+
-				//"CLASSCALLNODE\n"+
 				getAR+
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+
