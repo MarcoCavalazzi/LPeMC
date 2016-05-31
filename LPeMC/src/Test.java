@@ -40,7 +40,7 @@ public class Test {
         
         parserVM.assembly();
         
-        System.out.println("--- Code execution ---");
+        System.out.println("\n--- Code execution ---");
         ExecuteVM vm = new ExecuteVM(parserVM.code);
         vm.cpu();  
         

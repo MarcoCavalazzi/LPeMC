@@ -35,7 +35,7 @@ public class ExecuteVM {
         		System.out.println(code[++i]);
         	}
         }
-        System.out.println("\nWe will now display the instructions of the code step by step. Together we display the state of the Stack (as \"stack pointer: stack value\").\nOnly the part of the Stack that contains useful values will be printed.");
+        //System.out.println("\nWe will now display the instructions of the code step by step. Together we display the state of the Stack (as \"stack pointer: stack value\").\nOnly the part of the Stack that contains useful values will be printed.");
         // After this, in the Console, we will show the stack and the state of the pointers for every step of the code during its execution.
         
         // Constructor
@@ -53,8 +53,8 @@ public class ExecuteVM {
     	}
     	
     	while ( true ) {
-			dumpInstruction();	// Debug statement.
-
+			//dumpInstruction();	// Debug statement. Without this statement no instruction or stack or heap is shown nor stored in the file "programOutput.txt".
+    		
 			int bytecode = code[ip++]; // fetch
 			int arg1,arg2;
 			switch ( bytecode ) {
