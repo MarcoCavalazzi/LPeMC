@@ -246,12 +246,12 @@ cllist returns [ArrayList<Node> astlist]
           }
 	        SEMIC)* IN 
 	        {
-	          symTable.remove(nestingLevel--);
+	          
 	        }
 	        )? varE=exp //varExp
 	        {
 	            //chiudere scope                       
-                         
+              symTable.remove(nestingLevel--);           
               mNode.addBody($varE.ast);
               //aggiungo il metodo alla classe
               Obj.addMethod(mNode); 
