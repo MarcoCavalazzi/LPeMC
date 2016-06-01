@@ -49,7 +49,7 @@ public class FOOLlib {
 	//valuta se il tipo "a" e' <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
 	public static boolean isSubtype (Node a, Node b) {
 		if(a instanceof ClassTypeNode && b instanceof ClassTypeNode)
-		{ 
+		{
 			// initial check that controls if the classes are the same.
 			if( ((ClassTypeNode)a).getName().equals(((ClassTypeNode)b).getName())  )
 			{
@@ -57,7 +57,7 @@ public class FOOLlib {
 			}
 
 			// We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
-			String tmp = "tmp";
+			String tmp = "";
 
 			tmp = superType.get( ((ClassTypeNode)b).getName());
 
@@ -78,39 +78,14 @@ public class FOOLlib {
 
 			return false;
 		}
-		/*
-	  if(a instanceof ClassTypeNode && b instanceof ClassTypeNode)
-	  {
-		  String tmp = "tmp";
-
-		  tmp = superType.get( ((ClassTypeNode) a).getName());
-
-		  if(tmp == superType.get( ((ClassTypeNode) b).getName()))
-		  {
-			  return true;
-		  }	  
-
-		  while(tmp != null)
-		  {
-			  tmp = superType.get(tmp);
-
-			  if(tmp == superType.get( ((ClassTypeNode) b).getName()))
-			  {
-				  return true;
-			  }
-
-		  }
-
-	      return false;
-	  }
-		 */
+		
 		if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
 		{
 			return true;
 		}
-
-
-
+		
+		
+		
 		/*
 	  boolean ret = false;
 	  boolean ret2 = false;
@@ -169,6 +144,47 @@ public class FOOLlib {
 		return a.getClass().equals(b.getClass())
 				|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)  		  		   
 						); 
+	}
+	
+	// This function finds the lowest common ancestor for the Nodes in input and, if it exists, it returns it. Otherwise it returns null.
+	public Node lowestCommonAncestor(Node a, Node b){
+		if(a instanceof EmptyTypeNode && b instanceof EmptyTypeNode ){
+			return null;
+		}
+		
+		if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
+		{
+			return b;
+		}
+		
+		if(b instanceof EmptyTypeNode && a instanceof ClassTypeNode ){
+			return a;
+		}
+		
+		if(a instanceof ClassTypeNode && b instanceof ClassTypeNode ){
+			
+			// We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
+			String tmp = "";
+			
+			tmp = superType.get( ((ClassTypeNode)a).getName());	// Finding the parent class of 'a'.
+			
+			if( isSubtype(b, new ClassTypeNode(tmp)) )//((ClassTypeNode)a).getName().equals(tmp)
+			{
+				return b;
+			}
+			
+			while(tmp != null)
+			{
+				tmp = superType.get(tmp);
+	
+				if( isSubtype(b, new ClassTypeNode(tmp)) )
+				{
+					return b;
+				}
+			}
+		}
+		
+		return null;	// Returned when the Nodes in input are not EmptyTypeNodes nor ClassTypeNodes.
 	}
 
 	public static String freshLabel() {

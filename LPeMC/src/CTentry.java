@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class CTentry {
 
@@ -13,17 +14,22 @@ public class CTentry {
 	ArrayList<Node> allMethods = new ArrayList<Node>();     // tutti i figli virtuali che sono metodi 
 	// ordinati in base al loro offset, cioè
 	// indice array è: offset metodo
+	
+	HashSet<Integer> locals;	// Conterrà gli offset di campi e metodi definiti da questa classe
+	
 	private int nestingLevel;
 	private Node type;
 	private Node dec;
 	private int newOffset = 0;
+	
 	public CTentry(Node d, int nl)
 	{
 		dec = d;
 		nestingLevel = nl;
+		locals = new HashSet<Integer>();
 	}
-
-
+	
+	
 	public boolean setFieldAndCheck(Node node, String s)
 	{
 		for(int i = 0;i < allFields.size();i++)
@@ -40,6 +46,28 @@ public class CTentry {
 		allFields.add(node);
 		return false;
 	}
+	// Versione ESTENSIONE OPZIONALE
+	public boolean setFieldAndCheck_Opt(Node node, String s)	// Optimized version.
+	{
+		if( locals.contains(node) ){ // ?? locals dovrebbe contenere solo interi pare, come lo usiamo?
+			
+		}
+		
+		for(int i = 0;i < allFields.size();i++)
+		{
+			if(((FieldNode)allFields.get(i)).getName().equals(s))
+			{
+				allFields.remove(i);
+				offsetFields++;
+				allFields.add(node);
+				return true;
+			}
+		}
+
+		allFields.add(node);
+		return false;
+	}
+	
 	public boolean setMethodAndCheck(Node node, String s)
 	{
 		for(int i = 0;i < allMethods.size();i++)
@@ -56,13 +84,12 @@ public class CTentry {
 		allMethods.add(node);
 		return false;
 	}
-
-
-
+	
 	public void setMethodOffset(int offset)
 	{
 		offsetMethods = offset;
 	}
+	
 	public void incMethodOffset()
 	{
 		offsetMethods++;
@@ -71,6 +98,7 @@ public class CTentry {
 	public void decFieldOffset(){
 		offsetFields--;
 	}
+	
 	public void setFieldOffset(int offset)
 	{
 		offsetFields = offset;
