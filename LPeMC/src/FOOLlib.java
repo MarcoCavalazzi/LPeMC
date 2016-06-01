@@ -58,14 +58,14 @@ public class FOOLlib {
 
 			// We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
 			String tmp = "";
-
+			
 			tmp = superType.get( ((ClassTypeNode)b).getName());
-
+			
 			if( ((ClassTypeNode)a).getName().equals(tmp))
 			{
 				return true;
 			}
-
+			
 			while(tmp != null)
 			{
 				tmp = superType.get(tmp);
@@ -75,15 +75,22 @@ public class FOOLlib {
 					return true;
 				}
 			}
-
+			
 			return false;
 		}
 		
-		if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
+		if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode)
 		{
 			return true;
 		}
 		
+		Boolean temp = a instanceof BoolTypeNode;
+		 temp = b instanceof EmptyTypeNode;
+		if( (a instanceof EmptyTypeNode && b instanceof BoolTypeNode) ||
+			(b instanceof EmptyTypeNode && a instanceof BoolTypeNode)
+		){
+			return false;
+		}
 		
 		
 		/*
@@ -145,32 +152,38 @@ public class FOOLlib {
 				|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)  		  		   
 						); 
 	}
-	
+
 	// This function finds the lowest common ancestor for the Nodes in input and, if it exists, it returns it. Otherwise it returns null.
-	public Node lowestCommonAncestor(Node a, Node b){
-		if(a instanceof EmptyTypeNode && b instanceof EmptyTypeNode ){
+	public static Node lowestCommonAncestor(Node a, Node b){
+		
+		if( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode))
+			return new BoolTypeNode();
+		
+		if( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)|| 
+				(a instanceof IntTypeNode) && (b instanceof BoolTypeNode)||
+				(a instanceof IntTypeNode) && (b instanceof IntTypeNode))
+			return new IntTypeNode();
+		
+		if(a instanceof EmptyTypeNode && b instanceof EmptyTypeNode )
 			return null;
-		}
 		
 		if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
-		{
 			return b;
-		}
 		
-		if(b instanceof EmptyTypeNode && a instanceof ClassTypeNode ){
+		if(b instanceof EmptyTypeNode && a instanceof ClassTypeNode )
 			return a;
-		}
+		
 		
 		if(a instanceof ClassTypeNode && b instanceof ClassTypeNode ){
 			
 			// We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
 			String tmp = "";
 			
-			tmp = superType.get( ((ClassTypeNode)a).getName());	// Finding the parent class of 'a'.
+			tmp = superType.get( ((ClassTypeNode)a).getName() );	// Finding the parent class of 'a'.
 			
 			if( isSubtype(b, new ClassTypeNode(tmp)) )//((ClassTypeNode)a).getName().equals(tmp)
 			{
-				return b;
+				return new ClassTypeNode(tmp);
 			}
 			
 			while(tmp != null)
@@ -179,14 +192,41 @@ public class FOOLlib {
 	
 				if( isSubtype(b, new ClassTypeNode(tmp)) )
 				{
-					return b;
+					return new ClassTypeNode(tmp);
 				}
 			}
 		}
 		
+		ArrowTypeNode res = new ArrowTypeNode();
+		if((a instanceof ArrowTypeNode) && (b instanceof ArrowTypeNode))
+		{
+			if(((ArrowTypeNode)a).getParList().size() == ((ArrowTypeNode)b).getParList().size())
+			{
+				Node lowestRes = lowestCommonAncestor(((ArrowTypeNode)a).getRet(), ((ArrowTypeNode)b).getRet());
+				if(lowestRes != null)
+				{
+					res.setRet(lowestRes);
+					for(int i =0; i < ((ArrowTypeNode)a).getParList().size(); i++)
+					{
+						if( isSubtype( ((ArrowTypeNode)a).getParList().get(i), ((ArrowTypeNode)b).getParList().get(i) ) )
+							res.addParListElem(((ArrowTypeNode)a).getParList().get(i));
+						else{
+							if( isSubtype( ((ArrowTypeNode)b).getParList().get(i), ((ArrowTypeNode)a).getParList().get(i) ) )
+							{
+								res.addParListElem(((ArrowTypeNode)b).getParList().get(i));
+							}
+						}
+					}
+				}
+				//else: return null; (we use the default one at the end of the function)
+			}
+		}
+		
+		
 		return null;	// Returned when the Nodes in input are not EmptyTypeNodes nor ClassTypeNodes.
 	}
-
+	
+	
 	public static String freshLabel() {
 		return "label"+(labCount++);	  
 	}

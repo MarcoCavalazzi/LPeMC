@@ -5,17 +5,17 @@ public class ArrowTypeNode implements Node {
 
 	private ArrayList<Node> parlist; 
 	private Node ret;
-
+	
+	public ArrowTypeNode()
+	{
+		//costruttore vuoto di base
+	}
+	
 	public ArrowTypeNode (ArrayList<Node> p, Node r) {
 		parlist=p;
 		ret=r;
 	}
-
-
-	public ArrowTypeNode()
-	{
-		//costruttore vuoto temporaneo
-	}
+	
 	public String toPrint(String s) { //
 		String parlstr="";
 		for (Node par:parlist)
@@ -63,6 +63,14 @@ public class ArrowTypeNode implements Node {
 
 	public String codeGeneration() {
 		return "";
+	}
+
+	public void addParListElem(Node node) {
+		parlist.add(node);
+	}
+
+	public void setRet(Node lowestRes) {
+		ret = lowestRes;
 	}
 
 

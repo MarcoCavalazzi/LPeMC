@@ -8,10 +8,15 @@ TYPE-CHECKING
 
 metodo "Node lowestCommonAncestor(Node a, Node b)" che:
 - per a e b tipi classe (o EmptyTypeNode)
-all'inizio considera la classe "a" e risale le sue super classi (tramite la funzione "superType") controllando, ogni volta, se "b" sia sottotipo (metodo "isSubtype") della classe considerata: torna tale classe qualora il controllo abbia, prima o poi, successo, null altrimenti 
+all'inizio considera la classe "a" e risale le sue super classi (tramite la funzione "superType") 
+controllando, ogni volta, se "b" sia sottotipo (metodo "isSubtype") della classe considerata: 
+torna tale classe qualora il controllo abbia, prima o poi, successo, altrimenti null.
 (se uno tra a e b è di tipo EmptyTypeNode torna l'altro)
 - per a e b tipi funzionali con stesso numero di tipi parametri
-controlla se esiste il lowest common ancestor dei due tipi di ritorno di a e b (si richiama ricorsivamente) e se, per ogni i, i due tipi parametro i-esimi sono uno sottotipo dell'altro (metodo "isSubtype"): torna null se il controllo non ha successo, altrimenti torna un tipo funzionale che ha come tipo di ritorno il risultato della chiamata ricorsiva e come tipo di parametro i-esimo il tipo che è sottotipo dell'altro
+controlla se esiste il lowest common ancestor dei due tipi di ritorno di a e b (si richiama ricorsivamente) e... se, per ogni i, i due tipi parametro i-esimi sono uno sottotipo dell'altro (metodo "isSubtype"): 
+se il controllo non ha successo torna null, 
+altrimenti torna un tipo funzionale che ha come tipo di ritorno il risultato della chiamata 
+ ricorsiva e come tipo di parametro i-esimo il tipo che è sottotipo dell'altro.
 - per a e b tipi bool/int 
 torna int se almeno uno è int, bool altrimenti 
 - in ogni altro caso torna null

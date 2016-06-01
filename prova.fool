@@ -1,4 +1,18 @@
+if(0==null) then {print(true)} else {print(1)};
+
+
 let
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  var acc:Account = new Account(20000);
+  
+in
+	if(acc==null) then {print(0)} else {print(1)};
+
+
+/*let
 
   class Account (money:int) {
     fun getMon:int () money;
