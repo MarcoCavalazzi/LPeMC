@@ -84,12 +84,14 @@ public class FOOLlib {
 			return true;
 		}
 		
-		Boolean temp = a instanceof BoolTypeNode;
-		 temp = b instanceof EmptyTypeNode;
 		if( (a instanceof EmptyTypeNode && b instanceof BoolTypeNode) ||
-			(b instanceof EmptyTypeNode && a instanceof BoolTypeNode)
+			(a instanceof BoolTypeNode && b instanceof EmptyTypeNode)
 		){
 			return false;
+		}
+		
+		if( a instanceof EmptyTypeNode && b instanceof EmptyTypeNode ){
+			return true;
 		}
 		
 		

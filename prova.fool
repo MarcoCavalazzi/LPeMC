@@ -1,4 +1,4 @@
-if(0==null) then {print(true)} else {print(1)};
+if(null==null) then {print(0)} else {print(1)};
 
 
 let
