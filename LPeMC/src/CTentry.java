@@ -52,7 +52,7 @@ public class CTentry {
 		if( locals.contains(node) ){ // ?? locals dovrebbe contenere solo interi pare, come lo usiamo?
 			
 		}
-		
+		/*
 		for(int i = 0;i < allFields.size();i++)
 		{
 			if(((FieldNode)allFields.get(i)).getName().equals(s))
@@ -64,7 +64,7 @@ public class CTentry {
 			}
 		}
 
-		allFields.add(node);
+		allFields.add(node);*/
 		return false;
 	}
 	
