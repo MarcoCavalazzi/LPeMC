@@ -156,7 +156,7 @@ public class FOOLlib {
 	// This function finds the lowest common ancestor for the Nodes in input and, if it exists, it returns it. Otherwise it returns null.
 	public static Node lowestCommonAncestor(Node a, Node b){
 		
-		if( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode))
+		if( (a instanceof BoolTypeNode) && (b instanceof BoolTypeNode))
 			return new BoolTypeNode();
 		
 		if( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)|| 
