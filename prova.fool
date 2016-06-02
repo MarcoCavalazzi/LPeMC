@@ -1,4 +1,13 @@
-if(null==null) then {print(0)} else {print(1)};
+let
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  var loan:Account = new Account(2000);
+  fun loa:int () 88;
+  
+in 
+  if(null==loa) then {print(0)} else {print(1)};
 
 
 let

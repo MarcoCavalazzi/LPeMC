@@ -166,13 +166,17 @@ public class FOOLlib {
 				(a instanceof IntTypeNode) && (b instanceof IntTypeNode))
 			return new IntTypeNode();
 		
-		if(a instanceof EmptyTypeNode && b instanceof EmptyTypeNode )
-			return null;
+		if( a instanceof EmptyTypeNode && b instanceof EmptyTypeNode )
+			return new EmptyTypeNode();
+		if( (a instanceof EmptyTypeNode && !(b instanceof EmptyTypeNode)) ||
+			(b instanceof EmptyTypeNode && !(a instanceof EmptyTypeNode))	)
+			return new BoolTypeNode();
 		
-		if(a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
+		
+		if( a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
 			return b;
 		
-		if(b instanceof EmptyTypeNode && a instanceof ClassTypeNode )
+		if( b instanceof EmptyTypeNode && a instanceof ClassTypeNode )
 			return a;
 		
 		
