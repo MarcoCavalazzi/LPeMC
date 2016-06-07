@@ -132,7 +132,11 @@ cllist returns [ArrayList<Node> astlist]
               System.exit(0);
            }         
            if(ctentry.setFieldAndCheck(objField,$p1.text))
-              tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+               tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+//           if( ctentry.setFieldAndCheck_Opt(objField, $p1.text, ctentry.getFieldOffset()) )
+//               tempEntry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+           
+           
            
            ctentry.decFieldOffset();
 	     }
@@ -151,13 +155,15 @@ cllist returns [ArrayList<Node> astlist]
           }         
           if(ctentry.setFieldAndCheck(objFieldN,$pn.text))
              tmpSTentry.setOffset(ctentry.getFieldOffset());
+//          if( ctentry.setFieldAndCheck_Opt(objFieldN, $pn.text, ctentry.getFieldOffset()) )
+//             tmpSTentry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+           
              
           ctentry.decFieldOffset();
 	     }
 	     )* )? RPAR
 	     {
 	        ctentry.addType( new ArrowTypeNode(ConstrPar, Obj) ); 
-	        
 	     }
 	     CLPAR//apri graffa
 	       (FUN mid=ID COLON retm=basic
@@ -177,6 +183,9 @@ cllist returns [ArrayList<Node> astlist]
              ctentry.incMethodOffset();
              if(ctentry.setMethodAndCheck(mNode,$mid.text))
                 entry.setOffset(ctentry.getMethodOffset());
+//              if(ctentry.setMethodAndCheck_Opt( mNode, $mid.text, ctentry.getMethodOffset() ))
+//                entry.setOffset(ctentry.getMethodOffset());
+                
               Obj.setMethod(mNode);
               nestingLevel++;
               HashMap<String,STentry> hmMethod = new HashMap<String,STentry> ();
@@ -226,7 +235,7 @@ cllist returns [ArrayList<Node> astlist]
 	       }
 	       (LET 
 	       {
-	           int innerOs = 0; 
+	           int innerOffset = 0; 
 	           nestingLevel++;
 	       }
 	       (VAR vid=ID COLON vt=type ASS ve=exp //se aggiungiamo var nel metodo, siamo in uno scope sintattico maggiore, per cui si crea una nuova hashmap, si aumenta il nestingLevel e poi si aggiunge a symTable
@@ -237,7 +246,7 @@ cllist returns [ArrayList<Node> astlist]
             HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
             symTable.add(varhm);
             
-            if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOs++)) != null  )
+            if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOffset++)) != null  )
             {
                System.out.println("Var id "+$vid.text+" at line "+$vid.line+" already declared");
                System.exit(0); 

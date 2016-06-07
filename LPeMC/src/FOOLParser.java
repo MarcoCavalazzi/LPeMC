@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g 2016-06-01 06:21:37
+// $ANTLR 3.5.2 C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g 2016-06-07 22:04:39
 
 	import java.util.ArrayList;
 	import java.util.HashMap;
@@ -336,11 +336,15 @@ public class FOOLParser extends Parser {
 							              System.exit(0);
 							           }         
 							           if(ctentry.setFieldAndCheck(objField,(p1!=null?p1.getText():null)))
-							              tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+							               tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+							//           if( ctentry.setFieldAndCheck_Opt(objField, (p1!=null?p1.getText():null), ctentry.getFieldOffset()) )
+							//               tempEntry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+							           
+							           
 							           
 							           ctentry.decFieldOffset();
 								     
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:139:7: ( COMMA pn= ID COLON tn= basic )*
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:143:7: ( COMMA pn= ID COLON tn= basic )*
 							loop3:
 							while (true) {
 								int alt3=2;
@@ -351,7 +355,7 @@ public class FOOLParser extends Parser {
 
 								switch (alt3) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:139:8: COMMA pn= ID COLON tn= basic
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:143:8: COMMA pn= ID COLON tn= basic
 									{
 									match(input,COMMA,FOLLOW_COMMA_in_cllist234); 
 									pn=(Token)match(input,ID,FOLLOW_ID_in_cllist238); 
@@ -374,6 +378,9 @@ public class FOOLParser extends Parser {
 									          }         
 									          if(ctentry.setFieldAndCheck(objFieldN,(pn!=null?pn.getText():null)))
 									             tmpSTentry.setOffset(ctentry.getFieldOffset());
+									//          if( ctentry.setFieldAndCheck_Opt(objFieldN, (pn!=null?pn.getText():null), ctentry.getFieldOffset()) )
+									//             tmpSTentry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+									           
 									             
 									          ctentry.decFieldOffset();
 										     
@@ -393,10 +400,9 @@ public class FOOLParser extends Parser {
 					match(input,RPAR,FOLLOW_RPAR_in_cllist266); 
 
 						        ctentry.addType( new ArrowTypeNode(ConstrPar, Obj) ); 
-						        
 						     
 					match(input,CLPAR,FOLLOW_CLPAR_in_cllist282); 
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:163:9: ( FUN mid= ID COLON retm= basic LPAR (mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )* )? RPAR ( LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN )? varE= exp SEMIC )*
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:169:9: ( FUN mid= ID COLON retm= basic LPAR (mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )* )? RPAR ( LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN )? varE= exp SEMIC )*
 					loop9:
 					while (true) {
 						int alt9=2;
@@ -407,7 +413,7 @@ public class FOOLParser extends Parser {
 
 						switch (alt9) {
 						case 1 :
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:163:10: FUN mid= ID COLON retm= basic LPAR (mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )* )? RPAR ( LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN )? varE= exp SEMIC
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:169:10: FUN mid= ID COLON retm= basic LPAR (mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )* )? RPAR ( LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN )? varE= exp SEMIC
 							{
 							match(input,FUN,FOLLOW_FUN_in_cllist293); 
 							mid=(Token)match(input,ID,FOLLOW_ID_in_cllist297); 
@@ -432,6 +438,9 @@ public class FOOLParser extends Parser {
 							             ctentry.incMethodOffset();
 							             if(ctentry.setMethodAndCheck(mNode,(mid!=null?mid.getText():null)))
 							                entry.setOffset(ctentry.getMethodOffset());
+							//              if(ctentry.setMethodAndCheck_Opt( mNode, (mid!=null?mid.getText():null), ctentry.getMethodOffset() ))
+							//                entry.setOffset(ctentry.getMethodOffset());
+							                
 							              Obj.setMethod(mNode);
 							              nestingLevel++;
 							              HashMap<String,STentry> hmMethod = new HashMap<String,STentry> ();
@@ -442,7 +451,7 @@ public class FOOLParser extends Parser {
 								          ArrayList<Node> parTypes = new ArrayList<Node>();
 							            int parOffset = 1;
 								       
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:190:9: (mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )* )?
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:199:9: (mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )* )?
 							int alt6=2;
 							int LA6_0 = input.LA(1);
 							if ( (LA6_0==ID) ) {
@@ -450,7 +459,7 @@ public class FOOLParser extends Parser {
 							}
 							switch (alt6) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:190:10: mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:199:10: mp1= ID COLON mpt1= type ( COMMA mpn= ID COLON mptn= type )*
 									{
 									mp1=(Token)match(input,ID,FOLLOW_ID_in_cllist347); 
 									match(input,COLON,FOLLOW_COLON_in_cllist349); 
@@ -473,7 +482,7 @@ public class FOOLParser extends Parser {
 										          
 									            
 										       
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:206:9: ( COMMA mpn= ID COLON mptn= type )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:215:9: ( COMMA mpn= ID COLON mptn= type )*
 									loop5:
 									while (true) {
 										int alt5=2;
@@ -484,7 +493,7 @@ public class FOOLParser extends Parser {
 
 										switch (alt5) {
 										case 1 :
-											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:206:10: COMMA mpn= ID COLON mptn= type
+											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:215:10: COMMA mpn= ID COLON mptn= type
 											{
 											match(input,COMMA,FOLLOW_COMMA_in_cllist375); 
 											mpn=(Token)match(input,ID,FOLLOW_ID_in_cllist379); 
@@ -527,7 +536,7 @@ public class FOOLParser extends Parser {
 							            
 							            
 								       
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:227:9: ( LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN )?
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:236:9: ( LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN )?
 							int alt8=2;
 							int LA8_0 = input.LA(1);
 							if ( (LA8_0==LET) ) {
@@ -535,14 +544,14 @@ public class FOOLParser extends Parser {
 							}
 							switch (alt8) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:227:10: LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:236:10: LET ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )* IN
 									{
 									match(input,LET,FOLLOW_LET_in_cllist423); 
 
-										           int innerOs = 0; 
+										           int innerOffset = 0; 
 										           nestingLevel++;
 										       
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:232:9: ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:241:9: ( VAR vid= ID COLON vt= type ASS ve= exp SEMIC )*
 									loop7:
 									while (true) {
 										int alt7=2;
@@ -553,7 +562,7 @@ public class FOOLParser extends Parser {
 
 										switch (alt7) {
 										case 1 :
-											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:232:10: VAR vid= ID COLON vt= type ASS ve= exp SEMIC
+											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:241:10: VAR vid= ID COLON vt= type ASS ve= exp SEMIC
 											{
 											match(input,VAR,FOLLOW_VAR_in_cllist445); 
 											vid=(Token)match(input,ID,FOLLOW_ID_in_cllist449); 
@@ -574,7 +583,7 @@ public class FOOLParser extends Parser {
 											            HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
 											            symTable.add(varhm);
 											            
-											            if ( varhm.put((vid!=null?vid.getText():null),new STentry(v,nestingLevel,vt,innerOs++)) != null  )
+											            if ( varhm.put((vid!=null?vid.getText():null),new STentry(v,nestingLevel,vt,innerOffset++)) != null  )
 											            {
 											               System.out.println("Var id "+(vid!=null?vid.getText():null)+" at line "+(vid!=null?vid.getLine():0)+" already declared");
 											               System.exit(0); 
@@ -649,7 +658,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "declist"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:269:1: declist returns [ArrayList<Node> astlist] : ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )* ;
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:278:1: declist returns [ArrayList<Node> astlist] : ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )* ;
 	public final ArrayList<Node> declist() throws RecognitionException {
 		ArrayList<Node> astlist = null;
 
@@ -664,14 +673,14 @@ public class FOOLParser extends Parser {
 		ArrayList<Node> d =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:270:2: ( ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )* )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:270:4: ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:279:2: ( ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )* )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:279:4: ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )*
 			{
 
 				    astlist = new ArrayList<Node>() ;
 				    int offset=-2;
 				  
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:274:5: ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:283:5: ( ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC )*
 			loop15:
 			while (true) {
 				int alt15=2;
@@ -682,9 +691,9 @@ public class FOOLParser extends Parser {
 
 				switch (alt15) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:275:6: ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:284:6: ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp ) SEMIC
 					{
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:275:6: ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp )
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:284:6: ( VAR i= ID COLON t= type ASS e= exp | FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp )
 					int alt14=2;
 					int LA14_0 = input.LA(1);
 					if ( (LA14_0==VAR) ) {
@@ -702,7 +711,7 @@ public class FOOLParser extends Parser {
 
 					switch (alt14) {
 						case 1 :
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:276:8: VAR i= ID COLON t= type ASS e= exp
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:285:8: VAR i= ID COLON t= type ASS e= exp
 							{
 							match(input,VAR,FOLLOW_VAR_in_declist620); 
 							i=(Token)match(input,ID,FOLLOW_ID_in_declist624); 
@@ -739,7 +748,7 @@ public class FOOLParser extends Parser {
 							}
 							break;
 						case 2 :
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:298:8: FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:307:8: FUN i= ID COLON t= basic LPAR (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )? RPAR ( LET d= declist IN )? e= exp
 							{
 							match(input,FUN,FOLLOW_FUN_in_declist663); 
 							i=(Token)match(input,ID,FOLLOW_ID_in_declist667); 
@@ -767,7 +776,7 @@ public class FOOLParser extends Parser {
 							       
 							match(input,LPAR,FOLLOW_LPAR_in_declist691); 
 							 ArrayList<Node> parTypes = new ArrayList<Node>(); int paroffset=1; 
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:317:8: (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )?
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:326:8: (fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )* )?
 							int alt12=2;
 							int LA12_0 = input.LA(1);
 							if ( (LA12_0==ID) ) {
@@ -775,7 +784,7 @@ public class FOOLParser extends Parser {
 							}
 							switch (alt12) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:318:10: fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:327:10: fid= ID COLON fty= type ( COMMA id= ID COLON ty= type )*
 									{
 									fid=(Token)match(input,ID,FOLLOW_ID_in_declist716); 
 									match(input,COLON,FOLLOW_COLON_in_declist718); 
@@ -798,7 +807,7 @@ public class FOOLParser extends Parser {
 										             System.exit(0);
 										          }
 									         
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:334:10: ( COMMA id= ID COLON ty= type )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:343:10: ( COMMA id= ID COLON ty= type )*
 									loop11:
 									while (true) {
 										int alt11=2;
@@ -809,7 +818,7 @@ public class FOOLParser extends Parser {
 
 										switch (alt11) {
 										case 1 :
-											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:335:12: COMMA id= ID COLON ty= type
+											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:344:12: COMMA id= ID COLON ty= type
 											{
 											match(input,COMMA,FOLLOW_COMMA_in_declist757); 
 											id=(Token)match(input,ID,FOLLOW_ID_in_declist761); 
@@ -845,7 +854,7 @@ public class FOOLParser extends Parser {
 
 							match(input,RPAR,FOLLOW_RPAR_in_declist812); 
 							 entry.addType( new ArrowTypeNode(parTypes, t) ); 
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:351:8: ( LET d= declist IN )?
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:360:8: ( LET d= declist IN )?
 							int alt13=2;
 							int LA13_0 = input.LA(1);
 							if ( (LA13_0==LET) ) {
@@ -853,7 +862,7 @@ public class FOOLParser extends Parser {
 							}
 							switch (alt13) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:351:10: LET d= declist IN
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:360:10: LET d= declist IN
 									{
 									match(input,LET,FOLLOW_LET_in_declist826); 
 									pushFollow(FOLLOW_declist_in_declist830);
@@ -905,7 +914,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "type"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:362:1: type returns [Node ast] : (bas= basic |art= arrow );
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:371:1: type returns [Node ast] : (bas= basic |art= arrow );
 	public final Node type() throws RecognitionException {
 		Node ast = null;
 
@@ -914,7 +923,7 @@ public class FOOLParser extends Parser {
 		Node art =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:363:9: (bas= basic |art= arrow )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:372:9: (bas= basic |art= arrow )
 			int alt16=2;
 			int LA16_0 = input.LA(1);
 			if ( (LA16_0==BOOL||LA16_0==ID||LA16_0==INT) ) {
@@ -932,7 +941,7 @@ public class FOOLParser extends Parser {
 
 			switch (alt16) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:363:11: bas= basic
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:372:11: bas= basic
 					{
 					pushFollow(FOLLOW_basic_in_type911);
 					bas=basic();
@@ -942,7 +951,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:364:11: art= arrow
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:373:11: art= arrow
 					{
 					pushFollow(FOLLOW_arrow_in_type927);
 					art=arrow();
@@ -968,7 +977,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "basic"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:367:1: basic returns [Node ast] : ( INT | BOOL |i= ID );
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:376:1: basic returns [Node ast] : ( INT | BOOL |i= ID );
 	public final Node basic() throws RecognitionException {
 		Node ast = null;
 
@@ -976,7 +985,7 @@ public class FOOLParser extends Parser {
 		Token i=null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:368:3: ( INT | BOOL |i= ID )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:377:3: ( INT | BOOL |i= ID )
 			int alt17=3;
 			switch ( input.LA(1) ) {
 			case INT:
@@ -1001,21 +1010,21 @@ public class FOOLParser extends Parser {
 			}
 			switch (alt17) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:368:11: INT
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:377:11: INT
 					{
 					match(input,INT,FOLLOW_INT_in_basic955); 
 					ast =new IntTypeNode();
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:369:11: BOOL
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:378:11: BOOL
 					{
 					match(input,BOOL,FOLLOW_BOOL_in_basic970); 
 					ast =new BoolTypeNode();
 					}
 					break;
 				case 3 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:370:11: i= ID
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:379:11: i= ID
 					{
 					i=(Token)match(input,ID,FOLLOW_ID_in_basic987); 
 
@@ -1050,7 +1059,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "arrow"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:389:1: arrow returns [Node ast] : LPAR (funParT= type ( COMMA funParTy= type )* )? RPAR ARROW retTy= basic ;
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:398:1: arrow returns [Node ast] : LPAR (funParT= type ( COMMA funParTy= type )* )? RPAR ARROW retTy= basic ;
 	public final Node arrow() throws RecognitionException {
 		Node ast = null;
 
@@ -1060,15 +1069,15 @@ public class FOOLParser extends Parser {
 		Node retTy =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:390:9: ( LPAR (funParT= type ( COMMA funParTy= type )* )? RPAR ARROW retTy= basic )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:390:11: LPAR (funParT= type ( COMMA funParTy= type )* )? RPAR ARROW retTy= basic
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:399:9: ( LPAR (funParT= type ( COMMA funParTy= type )* )? RPAR ARROW retTy= basic )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:399:11: LPAR (funParT= type ( COMMA funParTy= type )* )? RPAR ARROW retTy= basic
 			{
 			match(input,LPAR,FOLLOW_LPAR_in_arrow1016); 
 
 			            //creazione di una lista vuota per i parametri
 			            ArrayList<Node> funParTypes = new ArrayList<Node>();
 			          
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:395:11: (funParT= type ( COMMA funParTy= type )* )?
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:404:11: (funParT= type ( COMMA funParTy= type )* )?
 			int alt19=2;
 			int LA19_0 = input.LA(1);
 			if ( (LA19_0==BOOL||LA19_0==ID||LA19_0==INT||LA19_0==LPAR) ) {
@@ -1076,7 +1085,7 @@ public class FOOLParser extends Parser {
 			}
 			switch (alt19) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:396:13: funParT= type ( COMMA funParTy= type )*
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:405:13: funParT= type ( COMMA funParTy= type )*
 					{
 					pushFollow(FOLLOW_type_in_arrow1057);
 					funParT=type();
@@ -1085,7 +1094,7 @@ public class FOOLParser extends Parser {
 
 					              funParTypes.add(funParT);
 					            
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:400:13: ( COMMA funParTy= type )*
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:409:13: ( COMMA funParTy= type )*
 					loop18:
 					while (true) {
 						int alt18=2;
@@ -1096,7 +1105,7 @@ public class FOOLParser extends Parser {
 
 						switch (alt18) {
 						case 1 :
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:400:14: COMMA funParTy= type
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:409:14: COMMA funParTy= type
 							{
 							match(input,COMMA,FOLLOW_COMMA_in_arrow1087); 
 							pushFollow(FOLLOW_type_in_arrow1091);
@@ -1146,7 +1155,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "exp"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:410:1: exp returns [Node ast] : f= term ( PLUS l= term | MINUS l= term | OR l= term )* ;
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:419:1: exp returns [Node ast] : f= term ( PLUS l= term | MINUS l= term | OR l= term )* ;
 	public final Node exp() throws RecognitionException {
 		Node ast = null;
 
@@ -1155,15 +1164,15 @@ public class FOOLParser extends Parser {
 		Node l =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:411:3: (f= term ( PLUS l= term | MINUS l= term | OR l= term )* )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:411:5: f= term ( PLUS l= term | MINUS l= term | OR l= term )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:420:3: (f= term ( PLUS l= term | MINUS l= term | OR l= term )* )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:420:5: f= term ( PLUS l= term | MINUS l= term | OR l= term )*
 			{
 			pushFollow(FOLLOW_term_in_exp1161);
 			f=term();
 			state._fsp--;
 
 			ast = f;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:412:7: ( PLUS l= term | MINUS l= term | OR l= term )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:421:7: ( PLUS l= term | MINUS l= term | OR l= term )*
 			loop20:
 			while (true) {
 				int alt20=4;
@@ -1186,7 +1195,7 @@ public class FOOLParser extends Parser {
 				}
 				switch (alt20) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:413:8: PLUS l= term
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:422:8: PLUS l= term
 					{
 					match(input,PLUS,FOLLOW_PLUS_in_exp1180); 
 					pushFollow(FOLLOW_term_in_exp1184);
@@ -1197,7 +1206,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:414:10: MINUS l= term
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:423:10: MINUS l= term
 					{
 					match(input,MINUS,FOLLOW_MINUS_in_exp1198); 
 					pushFollow(FOLLOW_term_in_exp1202);
@@ -1208,7 +1217,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 3 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:415:10: OR l= term
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:424:10: OR l= term
 					{
 					match(input,OR,FOLLOW_OR_in_exp1215); 
 					pushFollow(FOLLOW_term_in_exp1219);
@@ -1241,7 +1250,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "term"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:419:1: term returns [Node ast] : f= factor ( MULT l= factor | DIV l= factor | AND l= factor )* ;
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:428:1: term returns [Node ast] : f= factor ( MULT l= factor | DIV l= factor | AND l= factor )* ;
 	public final Node term() throws RecognitionException {
 		Node ast = null;
 
@@ -1250,15 +1259,15 @@ public class FOOLParser extends Parser {
 		Node l =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:420:2: (f= factor ( MULT l= factor | DIV l= factor | AND l= factor )* )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:420:4: f= factor ( MULT l= factor | DIV l= factor | AND l= factor )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:429:2: (f= factor ( MULT l= factor | DIV l= factor | AND l= factor )* )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:429:4: f= factor ( MULT l= factor | DIV l= factor | AND l= factor )*
 			{
 			pushFollow(FOLLOW_factor_in_term1253);
 			f=factor();
 			state._fsp--;
 
 			ast = f;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:421:6: ( MULT l= factor | DIV l= factor | AND l= factor )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:430:6: ( MULT l= factor | DIV l= factor | AND l= factor )*
 			loop21:
 			while (true) {
 				int alt21=4;
@@ -1281,7 +1290,7 @@ public class FOOLParser extends Parser {
 				}
 				switch (alt21) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:422:7: MULT l= factor
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:431:7: MULT l= factor
 					{
 					match(input,MULT,FOLLOW_MULT_in_term1270); 
 					pushFollow(FOLLOW_factor_in_term1274);
@@ -1292,7 +1301,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:423:9: DIV l= factor
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:432:9: DIV l= factor
 					{
 					match(input,DIV,FOLLOW_DIV_in_term1286); 
 					pushFollow(FOLLOW_factor_in_term1291);
@@ -1303,7 +1312,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 3 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:424:9: AND l= factor
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:433:9: AND l= factor
 					{
 					match(input,AND,FOLLOW_AND_in_term1303); 
 					pushFollow(FOLLOW_factor_in_term1308);
@@ -1336,7 +1345,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "value"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:428:1: value returns [Node ast] : (i= INTEGER | TRUE | FALSE | NULL | NEW i= ID LPAR (fa= exp ( COMMA a= exp )* )? RPAR | IF LPAR x= exp RPAR THEN CLPAR y= exp CRPAR ELSE CLPAR z= exp CRPAR | NOT LPAR x= exp RPAR | PRINT LPAR e= exp RPAR | LPAR e= exp RPAR |i= ID ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )? );
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:437:1: value returns [Node ast] : (i= INTEGER | TRUE | FALSE | NULL | NEW i= ID LPAR (fa= exp ( COMMA a= exp )* )? RPAR | IF LPAR x= exp RPAR THEN CLPAR y= exp CRPAR ELSE CLPAR z= exp CRPAR | NOT LPAR x= exp RPAR | PRINT LPAR e= exp RPAR | LPAR e= exp RPAR |i= ID ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )? );
 	public final Node value() throws RecognitionException {
 		Node ast = null;
 
@@ -1353,7 +1362,7 @@ public class FOOLParser extends Parser {
 		Node cmexn =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:429:2: (i= INTEGER | TRUE | FALSE | NULL | NEW i= ID LPAR (fa= exp ( COMMA a= exp )* )? RPAR | IF LPAR x= exp RPAR THEN CLPAR y= exp CRPAR ELSE CLPAR z= exp CRPAR | NOT LPAR x= exp RPAR | PRINT LPAR e= exp RPAR | LPAR e= exp RPAR |i= ID ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )? )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:438:2: (i= INTEGER | TRUE | FALSE | NULL | NEW i= ID LPAR (fa= exp ( COMMA a= exp )* )? RPAR | IF LPAR x= exp RPAR THEN CLPAR y= exp CRPAR ELSE CLPAR z= exp CRPAR | NOT LPAR x= exp RPAR | PRINT LPAR e= exp RPAR | LPAR e= exp RPAR |i= ID ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )? )
 			int alt29=10;
 			switch ( input.LA(1) ) {
 			case INTEGER:
@@ -1413,35 +1422,35 @@ public class FOOLParser extends Parser {
 			}
 			switch (alt29) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:429:4: i= INTEGER
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:438:4: i= INTEGER
 					{
 					i=(Token)match(input,INTEGER,FOLLOW_INTEGER_in_value1335); 
 					ast = new NatNode(Integer.parseInt((i!=null?i.getText():null)));
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:430:4: TRUE
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:439:4: TRUE
 					{
 					match(input,TRUE,FOLLOW_TRUE_in_value1344); 
 					ast = new BoolNode(true);
 					}
 					break;
 				case 3 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:431:5: FALSE
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:440:5: FALSE
 					{
 					match(input,FALSE,FOLLOW_FALSE_in_value1353); 
 					ast = new BoolNode(false);
 					}
 					break;
 				case 4 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:432:5: NULL
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:441:5: NULL
 					{
 					match(input,NULL,FOLLOW_NULL_in_value1361); 
 					ast = new EmptyNode();
 					}
 					break;
 				case 5 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:433:5: NEW i= ID LPAR (fa= exp ( COMMA a= exp )* )? RPAR
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:442:5: NEW i= ID LPAR (fa= exp ( COMMA a= exp )* )? RPAR
 					{
 					match(input,NEW,FOLLOW_NEW_in_value1370); 
 					i=(Token)match(input,ID,FOLLOW_ID_in_value1374); 
@@ -1460,7 +1469,7 @@ public class FOOLParser extends Parser {
 
 					       ArrayList<Node> argList = new ArrayList<Node>();
 					    
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:449:5: (fa= exp ( COMMA a= exp )* )?
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:458:5: (fa= exp ( COMMA a= exp )* )?
 					int alt23=2;
 					int LA23_0 = input.LA(1);
 					if ( (LA23_0==FALSE||(LA23_0 >= ID && LA23_0 <= IF)||LA23_0==INTEGER||LA23_0==LPAR||(LA23_0 >= NEW && LA23_0 <= NULL)||LA23_0==PRINT||LA23_0==TRUE) ) {
@@ -1468,7 +1477,7 @@ public class FOOLParser extends Parser {
 					}
 					switch (alt23) {
 						case 1 :
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:449:6: fa= exp ( COMMA a= exp )*
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:458:6: fa= exp ( COMMA a= exp )*
 							{
 							pushFollow(FOLLOW_exp_in_value1401);
 							fa=exp();
@@ -1478,7 +1487,7 @@ public class FOOLParser extends Parser {
 							       argList.add(fa);
 							       //ctEntry.setField(fa);
 							    
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:454:7: ( COMMA a= exp )*
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:463:7: ( COMMA a= exp )*
 							loop22:
 							while (true) {
 								int alt22=2;
@@ -1489,7 +1498,7 @@ public class FOOLParser extends Parser {
 
 								switch (alt22) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:454:8: COMMA a= exp
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:463:8: COMMA a= exp
 									{
 									match(input,COMMA,FOLLOW_COMMA_in_value1416); 
 									pushFollow(FOLLOW_exp_in_value1420);
@@ -1525,7 +1534,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 6 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:471:5: IF LPAR x= exp RPAR THEN CLPAR y= exp CRPAR ELSE CLPAR z= exp CRPAR
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:480:5: IF LPAR x= exp RPAR THEN CLPAR y= exp CRPAR ELSE CLPAR z= exp CRPAR
 					{
 					match(input,IF,FOLLOW_IF_in_value1471); 
 					match(input,LPAR,FOLLOW_LPAR_in_value1473); 
@@ -1552,7 +1561,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 7 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:474:5: NOT LPAR x= exp RPAR
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:483:5: NOT LPAR x= exp RPAR
 					{
 					match(input,NOT,FOLLOW_NOT_in_value1523); 
 					match(input,LPAR,FOLLOW_LPAR_in_value1525); 
@@ -1565,7 +1574,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 8 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:475:5: PRINT LPAR e= exp RPAR
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:484:5: PRINT LPAR e= exp RPAR
 					{
 					match(input,PRINT,FOLLOW_PRINT_in_value1541); 
 					match(input,LPAR,FOLLOW_LPAR_in_value1543); 
@@ -1578,7 +1587,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 9 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:476:5: LPAR e= exp RPAR
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:485:5: LPAR e= exp RPAR
 					{
 					match(input,LPAR,FOLLOW_LPAR_in_value1557); 
 					pushFollow(FOLLOW_exp_in_value1561);
@@ -1590,7 +1599,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 10 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:477:6: i= ID ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )?
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:486:6: i= ID ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )?
 					{
 					i=(Token)match(input,ID,FOLLOW_ID_in_value1574); 
 					//cercare la dichiarazione (cioè quando lo usa)
@@ -1622,7 +1631,7 @@ public class FOOLParser extends Parser {
 						    
 					                 
 					    
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:507:5: ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )?
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:516:5: ( LPAR (fa= exp ( COMMA a= exp )* )? RPAR | DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR )?
 					int alt28=3;
 					int LA28_0 = input.LA(1);
 					if ( (LA28_0==LPAR) ) {
@@ -1633,11 +1642,11 @@ public class FOOLParser extends Parser {
 					}
 					switch (alt28) {
 						case 1 :
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:508:7: LPAR (fa= exp ( COMMA a= exp )* )? RPAR
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:517:7: LPAR (fa= exp ( COMMA a= exp )* )? RPAR
 							{
 							match(input,LPAR,FOLLOW_LPAR_in_value1594); 
 							 ArrayList<Node> argList = new ArrayList<Node>(); 
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:509:7: (fa= exp ( COMMA a= exp )* )?
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:518:7: (fa= exp ( COMMA a= exp )* )?
 							int alt25=2;
 							int LA25_0 = input.LA(1);
 							if ( (LA25_0==FALSE||(LA25_0 >= ID && LA25_0 <= IF)||LA25_0==INTEGER||LA25_0==LPAR||(LA25_0 >= NEW && LA25_0 <= NULL)||LA25_0==PRINT||LA25_0==TRUE) ) {
@@ -1645,14 +1654,14 @@ public class FOOLParser extends Parser {
 							}
 							switch (alt25) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:509:8: fa= exp ( COMMA a= exp )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:518:8: fa= exp ( COMMA a= exp )*
 									{
 									pushFollow(FOLLOW_exp_in_value1608);
 									fa=exp();
 									state._fsp--;
 
 									argList.add(fa);
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:510:9: ( COMMA a= exp )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:519:9: ( COMMA a= exp )*
 									loop24:
 									while (true) {
 										int alt24=2;
@@ -1663,7 +1672,7 @@ public class FOOLParser extends Parser {
 
 										switch (alt24) {
 										case 1 :
-											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:510:10: COMMA a= exp
+											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:519:10: COMMA a= exp
 											{
 											match(input,COMMA,FOLLOW_COMMA_in_value1621); 
 											pushFollow(FOLLOW_exp_in_value1625);
@@ -1696,7 +1705,7 @@ public class FOOLParser extends Parser {
 							}
 							break;
 						case 2 :
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:521:8: DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:530:8: DOT cmid= ID LPAR (cmex1= exp ( COMMA cmexn= exp )* )? RPAR
 							{
 							match(input,DOT,FOLLOW_DOT_in_value1666); 
 							cmid=(Token)match(input,ID,FOLLOW_ID_in_value1670); 
@@ -1724,7 +1733,7 @@ public class FOOLParser extends Parser {
 
 							        ArrayList<Node> mArgList = new ArrayList<Node>();
 							     
-							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:546:6: (cmex1= exp ( COMMA cmexn= exp )* )?
+							// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:555:6: (cmex1= exp ( COMMA cmexn= exp )* )?
 							int alt27=2;
 							int LA27_0 = input.LA(1);
 							if ( (LA27_0==FALSE||(LA27_0 >= ID && LA27_0 <= IF)||LA27_0==INTEGER||LA27_0==LPAR||(LA27_0 >= NEW && LA27_0 <= NULL)||LA27_0==PRINT||LA27_0==TRUE) ) {
@@ -1732,7 +1741,7 @@ public class FOOLParser extends Parser {
 							}
 							switch (alt27) {
 								case 1 :
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:546:7: cmex1= exp ( COMMA cmexn= exp )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:555:7: cmex1= exp ( COMMA cmexn= exp )*
 									{
 									pushFollow(FOLLOW_exp_in_value1700);
 									cmex1=exp();
@@ -1741,7 +1750,7 @@ public class FOOLParser extends Parser {
 
 									        mArgList.add(cmex1);
 									     
-									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:550:6: ( COMMA cmexn= exp )*
+									// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:559:6: ( COMMA cmexn= exp )*
 									loop26:
 									while (true) {
 										int alt26=2;
@@ -1752,7 +1761,7 @@ public class FOOLParser extends Parser {
 
 										switch (alt26) {
 										case 1 :
-											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:550:7: COMMA cmexn= exp
+											// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:559:7: COMMA cmexn= exp
 											{
 											match(input,COMMA,FOLLOW_COMMA_in_value1715); 
 											pushFollow(FOLLOW_exp_in_value1719);
@@ -1803,7 +1812,7 @@ public class FOOLParser extends Parser {
 
 
 	// $ANTLR start "factor"
-	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:563:1: factor returns [Node ast] : f= value ( EQ l= value | GR l= value | LE l= value )* ;
+	// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:572:1: factor returns [Node ast] : f= value ( EQ l= value | GR l= value | LE l= value )* ;
 	public final Node factor() throws RecognitionException {
 		Node ast = null;
 
@@ -1812,15 +1821,15 @@ public class FOOLParser extends Parser {
 		Node l =null;
 
 		try {
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:564:5: (f= value ( EQ l= value | GR l= value | LE l= value )* )
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:564:7: f= value ( EQ l= value | GR l= value | LE l= value )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:573:5: (f= value ( EQ l= value | GR l= value | LE l= value )* )
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:573:7: f= value ( EQ l= value | GR l= value | LE l= value )*
 			{
 			pushFollow(FOLLOW_value_in_factor1796);
 			f=value();
 			state._fsp--;
 
 			ast = f;
-			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:565:5: ( EQ l= value | GR l= value | LE l= value )*
+			// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:574:5: ( EQ l= value | GR l= value | LE l= value )*
 			loop30:
 			while (true) {
 				int alt30=4;
@@ -1843,7 +1852,7 @@ public class FOOLParser extends Parser {
 				}
 				switch (alt30) {
 				case 1 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:566:9: EQ l= value
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:575:9: EQ l= value
 					{
 					match(input,EQ,FOLLOW_EQ_in_factor1814); 
 					pushFollow(FOLLOW_value_in_factor1818);
@@ -1854,7 +1863,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 2 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:567:9: GR l= value
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:576:9: GR l= value
 					{
 					match(input,GR,FOLLOW_GR_in_factor1830); 
 					pushFollow(FOLLOW_value_in_factor1834);
@@ -1865,7 +1874,7 @@ public class FOOLParser extends Parser {
 					}
 					break;
 				case 3 :
-					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:568:9: LE l= value
+					// C:\\Users\\Mark\\git\\LPeMC\\LPeMC\\FOOL.g:577:9: LE l= value
 					{
 					match(input,LE,FOLLOW_LE_in_factor1847); 
 					pushFollow(FOLLOW_value_in_factor1851);

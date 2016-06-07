@@ -42,16 +42,23 @@ public class CTentry {
 				return true;
 			}
 		}
-
+		
 		allFields.add(node);
 		return false;
 	}
 	// Versione ESTENSIONE OPZIONALE
-	public boolean setFieldAndCheck_Opt(Node node, String s)	// Optimized version.
+	public boolean setFieldAndCheck_Opt(Node node, String s, Integer fieldOff)	// Optimized version.
 	{
-		if( locals.contains(node) ){ // ?? locals dovrebbe contenere solo interi pare, come lo usiamo?
-			
+		if( !locals.contains( fieldOff )){ // ?? locals dovrebbe contenere solo interi pare, come lo usiamo?
+			locals.add(fieldOff);
+			allFields.add(node);
+			return true;
 		}
+		
+		System.out.println("Redefinition of the field \""+s+"\" in the same class. Terminating execution.");
+		System.exit(0);
+		return false;
+		
 		/*
 		for(int i = 0;i < allFields.size();i++)
 		{
@@ -63,9 +70,8 @@ public class CTentry {
 				return true;
 			}
 		}
-
+		
 		allFields.add(node);*/
-		return false;
 	}
 	
 	public boolean setMethodAndCheck(Node node, String s)
@@ -84,6 +90,19 @@ public class CTentry {
 		allMethods.add(node);
 		return false;
 	}
+	// Versione ESTENSIONE OPZIONALE
+	public boolean setMethodAndCheck_Opt(Node node, String s, Integer methodOff)
+	{
+		if( !locals.contains( methodOff )){ // ?? locals dovrebbe contenere solo interi pare, come lo usiamo?
+			locals.add(methodOff);
+			allFields.add(node);
+			return true;
+		}
+		
+		System.out.println("Redefinition of the method \""+s+"\" in the same class. Terminating execution.");
+		System.exit(0);
+		return false;
+	}
 	
 	public void setMethodOffset(int offset)
 	{
@@ -92,6 +111,13 @@ public class CTentry {
 	
 	public void incMethodOffset()
 	{
+		if( locals.add(offsetMethods) != true ){	// If the element was not present yet in the HashSet the function returns 'true'.
+			// There is already an element in the HashSet with value 'offsetMethods'.
+			// The method has already been defined.
+			// si tratta di una ridefinizione effettuata all'interno della stessa classe: notifico l'errore.
+			System.out.println("Error: redefinition of a method with the same name in the same class.");
+			System.exit(0);
+		}
 		offsetMethods++;
 	}
 
