@@ -1,6 +1,6 @@
 *******************************ESTENSIONE 1***********************************
 
-rende possibile utilizzare come parametri di un "==" e dei rami then ed else di un "if-then-else" due espressioni non solo quando sono una sottotipo dell'altra, ma anche quando hanno un lowest common ancestor
+Rende possibile utilizzare come parametri di un "==" e dei rami then ed else di un "if-then-else" due espressioni non solo quando sono una sottotipo dell'altra, ma anche quando hanno un lowest common ancestor
 
 TYPE-CHECKING
 
@@ -32,7 +32,15 @@ su tipi funzionali typechecking comunque fallisce, altrimenti fallisce solo se l
 
 *******************************ESTENSIONE 2***********************************
 
-rende possibile rilevare la ridefinizione (erronea) di campi e metodi con stesso nome effettuata all'interno della stessa classe e migliora l'efficienza nel controllo di correttezza tipi in overridng
+Rende possibile rilevare la ridefinizione (erronea) di campi e metodi con stesso nome effettuata all'interno della stessa classe e migliora l'efficienza nel controllo di correttezza tipi in overriding
+e.g.: class Account (loan:Int){
+	fun g:int(i:int,j:int) i+j;
+	fun g:int(i:int)i+2;
+}
+
+e.g. class TradingAcc extends Account (loan2:Int){
+	fun g:int(i:int)i+2;
+}
 
 FUNZIONAMENTO PARSER
 
