@@ -34,6 +34,9 @@ public class STentry {
 		nl = n;
 	}
 
+	public STentry() {
+	}
+
 	public void addType (Node t)
 	{
 		type=t;

@@ -46,7 +46,13 @@ public class CTentry {
 		allFields.add(node);
 		return false;
 	}
+	
+	public void addLocals(int i)
+	{
+		locals.add(i);
+	}
 	// Versione ESTENSIONE OPZIONALE
+	/*
 	public boolean setFieldAndCheck_Opt(Node node, String s, Integer fieldOff)	// Optimized version.
 	{
 		if( !locals.contains( fieldOff )){ // ?? locals dovrebbe contenere solo interi pare, come lo usiamo?
@@ -58,7 +64,7 @@ public class CTentry {
 		System.out.println("Redefinition of the field \""+s+"\" in the same class. Terminating execution.");
 		System.exit(0);
 		return false;
-		
+	*/	
 		/*
 		for(int i = 0;i < allFields.size();i++)
 		{
@@ -72,7 +78,7 @@ public class CTentry {
 		}
 		
 		allFields.add(node);*/
-	}
+	//}
 	
 	public boolean setMethodAndCheck(Node node, String s)
 	{
@@ -91,7 +97,7 @@ public class CTentry {
 		return false;
 	}
 	// Versione ESTENSIONE OPZIONALE
-	public boolean setMethodAndCheck_Opt(Node node, String s, Integer methodOff)
+	/*public boolean setMethodAndCheck_Opt(Node node, String s, Integer methodOff)
 	{
 		if( !locals.contains( methodOff )){ // ?? locals dovrebbe contenere solo interi pare, come lo usiamo?
 			locals.add(methodOff);
@@ -102,7 +108,7 @@ public class CTentry {
 		System.out.println("Redefinition of the method \""+s+"\" in the same class. Terminating execution.");
 		System.exit(0);
 		return false;
-	}
+	}*/
 	
 	public void setMethodOffset(int offset)
 	{
@@ -111,13 +117,13 @@ public class CTentry {
 	
 	public void incMethodOffset()
 	{
-		if( locals.add(offsetMethods) != true ){	// If the element was not present yet in the HashSet the function returns 'true'.
-			// There is already an element in the HashSet with value 'offsetMethods'.
-			// The method has already been defined.
-			// si tratta di una ridefinizione effettuata all'interno della stessa classe: notifico l'errore.
-			System.out.println("Error: redefinition of a method with the same name in the same class.");
-			System.exit(0);
-		}
+//		if( locals.add(offsetMethods) != true ){	// If the element was not present yet in the HashSet the function returns 'true'.
+//			// There is already an element in the HashSet with value 'offsetMethods'.
+//			// The method has already been defined.
+//			// si tratta di una ridefinizione effettuata all'interno della stessa classe: notifico l'errore.
+//			System.out.println("Error: redefinition of a method with the same name in the same class.");
+//			System.exit(0);
+//		}
 		offsetMethods++;
 	}
 
@@ -214,15 +220,21 @@ public class CTentry {
 
 	public  STentry putvTable(String s, STentry st, CTentry ctentry)
 	{	
-		if(ctentry != null){
-			if(ctentry.getVirtualTable().containsKey(s))
-				vTable.remove(s);
-		}
+		//if(!locals.add(st.getOffset()))
+		//	return new STentry();
+		
+		//if(ctentry != null){
+			//if(ctentry.getVirtualTable().containsKey(s))
+			//	vTable.remove(s);
+	//	}
 		return vTable.put(s, st);
 	}
 
+	public boolean checkLocals(int offset)
+	{
+		return locals.contains(offset);
+	}
 	public Node getDec() {
-		// TODO Auto-generated method stub
 		return dec;
 	}
 	public void setNewOffset(int nO)
@@ -233,5 +245,11 @@ public class CTentry {
 	public int getNewOffset()
 	{
 		return newOffset;
+	}
+
+
+	public HashSet<Integer> getLocals() {
+		return locals;
+		
 	}
 }

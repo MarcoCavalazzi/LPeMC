@@ -51,7 +51,6 @@ cllist returns [ArrayList<Node> astlist]
          CTentry extendedEntry = null;
          CTentry ctentry       = null;
          HashMap<String,STentry> hm = symTable.get(nestingLevel);
-         System.out.println("La STentry di class "+$cid.text+" ha nl = "+nestingLevel);   
          STentry entryCl = new STentry(Obj,nestingLevel);
          nestingLevel++;
          ctentry = new CTentry(Obj,nestingLevel);
@@ -126,39 +125,39 @@ cllist returns [ArrayList<Node> astlist]
            //ctentry.setFieldOffset(fieldOffset);
            STentry  tempEntry = new STentry(objField,nestingLevel,$t1.ast,ctentry.getFieldOffset());
            tempEntry.setClassName($cid.text);
-           if(ctentry.putvTable($p1.text,tempEntry, extendedEntry) != null)//putvTable controlla anche se c'è overriding, in caso positivo sovrascrive
+           STentry tmpField = ctentry.getVirtualTable().put($p1.text,tempEntry); //restituisce una STentry se già presente in vTable
+           if(tmpField != null)
            {
+              if(ctentry.checkLocals(tmpField.getOffset())){ //se è true vuol dire che sto ridefinendo un field/method nella classe
               System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared!");
               System.exit(0);
+              }           
            }         
            if(ctentry.setFieldAndCheck(objField,$p1.text))
-               tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
-//           if( ctentry.setFieldAndCheck_Opt(objField, $p1.text, ctentry.getFieldOffset()) )
-//               tempEntry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+               tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)    
            
-           
-           
+           ctentry.addLocals(ctentry.getFieldOffset());
            ctentry.decFieldOffset();
 	     }
 	     (COMMA pn=ID COLON tn=basic
 	     {
 	        ConstrPar.add($tn.ast);
           FieldNode objFieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
-          Obj.addField(objFieldN);
-          //ctentry.setFieldOffset(fieldOffset);
+          Obj.addField(objFieldN);      
           STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,ctentry.getFieldOffset());
-        //  System.out.println("La entry "+$pn.text+" ha nl = "+nestingLevel);
-          if ( ctentry.putvTable($pn.text,tmpSTentry,extendedEntry) != null  )
+          STentry tmpFieldN = ctentry.getVirtualTable().put($pn.text,tmpSTentry);
+          if ( tmpFieldN  != null  )
           {
-             System.out.println("Parameter id "+$pn.text+" at line "+$pn.line+" already declared");
-             System.exit(0); 
+             if(ctentry.checkLocals(tmpFieldN.getOffset())){
+                System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared!");
+                System.exit(0);
+             }           
           }         
           if(ctentry.setFieldAndCheck(objFieldN,$pn.text))
              tmpSTentry.setOffset(ctentry.getFieldOffset());
-//          if( ctentry.setFieldAndCheck_Opt(objFieldN, $pn.text, ctentry.getFieldOffset()) )
-//             tmpSTentry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+             tmpSTentry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
            
-             
+          ctentry.addLocals(ctentry.getFieldOffset());
           ctentry.decFieldOffset();
 	     }
 	     )* )? RPAR
@@ -169,23 +168,27 @@ cllist returns [ArrayList<Node> astlist]
 	       (FUN mid=ID COLON retm=basic
 	       { 
              MethodNode mNode = new MethodNode($mid.text,$retm.ast); 
-                      
-             //$astlist.add(f);//giusto o da commentare???
              STentry entry = new STentry(mNode,nestingLevel,$retm.ast,ctentry.getMethodOffset());
              entry.setClassName($cid.text);
-             entry.setIsMethod();             
-             if ( ctentry.putvTable($mid.text,entry,extendedEntry) != null  )
+             entry.setIsMethod();  
+             STentry tmpMethod = ctentry.getVirtualTable().put($mid.text,entry);
+             if (tmpMethod != null)
              {
-                System.out.println("Method id "+$mid.text+" at line "+$mid.line+" already declared");
-                System.exit(0); 
-             }
-            // ctentry.setMethodOffset(methodOffset);  //            
+                if(ctentry.checkLocals(tmpMethod.getOffset())){
+                  System.out.println("Method id "+$mid.text+" at line "+$mid.line+" already declared!");
+                  System.exit(0);
+                }      
+                else
+                    ctentry.addLocals(tmpMethod.getOffset());
+             } 
+             else
+                ctentry.addLocals(ctentry.getMethodOffset());          
+             
              ctentry.incMethodOffset();
+             
              if(ctentry.setMethodAndCheck(mNode,$mid.text))
-                entry.setOffset(ctentry.getMethodOffset());
-//              if(ctentry.setMethodAndCheck_Opt( mNode, $mid.text, ctentry.getMethodOffset() ))
-//                entry.setOffset(ctentry.getMethodOffset());
-                
+                entry.setOffset(ctentry.getMethodOffset());              
+              
               Obj.setMethod(mNode);
               nestingLevel++;
               HashMap<String,STentry> hmMethod = new HashMap<String,STentry> ();
