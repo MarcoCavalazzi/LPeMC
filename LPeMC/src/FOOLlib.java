@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class FOOLlib {
 	// classe usata per consentire di mettere il booleano, un sottotipo di un altro tipo, sia utilizzato laddove ci si aspetterebbe un intero.
-	//valuta se il tipo "a" è <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
+	//valuta se il tipo "a" ï¿½ <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
 
 	private static int labCount=0;
 	//private static int newlabel=0;  questi 2 campi noi li abbiamo chiamati labCount e funLabCount
@@ -109,7 +109,7 @@ public class FOOLlib {
 		  return ret = true;
 	  }
 		 */
-		// MARCO: Io penso che il codice dovrebbe essere così:
+		// MARCO: Io penso che il codice dovrebbe essere cosï¿½:
 		Node retA;
 		Node retB;
 		if((a instanceof ArrowTypeNode) && (b instanceof ArrowTypeNode))
@@ -121,7 +121,7 @@ public class FOOLlib {
 			// Confrontiamo i tipi dei due elementi. Devono essere identici per poter proseguire, altrimenti ci blocchiamo.
 			if( !(retA.getClass().equals(retB.getClass())) )	// Since each class is like a singleton - there's only one instance of each Class per JVM - it is even possible to use an identity comparison "=="
 			{
-				return false;	// Se siamo qui è perché le due classi sono differenti.
+				return false;	// Se siamo qui ï¿½ perchï¿½ le due classi sono differenti.
 			}
 
 			// Ora controlliamo i tipi dei parametri richiesti in input. Li controlliamo a coppie, se anche solo una coppia ha elementi di classi diverse interrompiamo ritornando "false".
@@ -168,9 +168,9 @@ public class FOOLlib {
 		
 		if( a instanceof EmptyTypeNode && b instanceof EmptyTypeNode )
 			return new EmptyTypeNode();
-		if( (a instanceof EmptyTypeNode && !(b instanceof EmptyTypeNode)) ||
-			(b instanceof EmptyTypeNode && !(a instanceof EmptyTypeNode))	)
-			return new BoolTypeNode();
+//		if( (a instanceof EmptyTypeNode && !(b instanceof EmptyTypeNode)) ||
+//			(b instanceof EmptyTypeNode && !(a instanceof EmptyTypeNode))	)
+//			return new BoolTypeNode();
 		
 		
 		if( a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
@@ -326,7 +326,7 @@ public class FOOLlib {
 
 	/**
 	 * Metodo per costruire il nome composto delle classi indicizzate
-	 * @param isCallMethod : flag indicante se la classe è istanziata all'interno di un metodo
+	 * @param isCallMethod : flag indicante se la classe ï¿½ istanziata all'interno di un metodo
 	 * @return : il nome composto della classe indicizzata
 	 */
 	public static String getVarNameForClass(boolean isCallMethod) {
@@ -353,7 +353,7 @@ public class FOOLlib {
 
 	/**
 	 * Metodo per settare il nome della classe riferito ad una variabile
-	 * @param typeName : nome della classe di cui la variabile è istanza
+	 * @param typeName : nome della classe di cui la variabile ï¿½ istanza
 	 */
 	public static void setRealVarType(String typeName){
 		realVarType.add(typeName);
