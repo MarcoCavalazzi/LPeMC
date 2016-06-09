@@ -1,0 +1,200 @@
+let
+
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+    fun getInv:int () invested;
+	fun getMon:int () invested;
+  }
+  
+  var myLoan:Account = new Account(10);
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  
+      
+in print(if (myLoan==null) then {0} else {myLoan.getMon()});  
+
+
+
+
+
+/*
+
+
+// ridefinizione di money in Account
+let
+
+  class Account (money:int) {
+	var money:int = 7;
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+    fun getInv:int () invested;
+  }
+  
+  var myLoan:Account = new Account(10);
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  
+      
+in print(if (myLoan==null) then {0} else {myLoan.getMon()});  
+
+
+
+
+
+
+// ridefinizione di money in TradingAcc
+let
+
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+	var money:int = 0;
+    fun getInv:int () invested;
+	fun getMon:int () invested;
+  }
+  
+  var myLoan:Account = new Account(10);
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  
+      
+in print(if (myTradingAcc==null) then {0} else {myTradingAcc.getMon()});  
+
+
+
+
+
+// ridefiniione di getInv in TradingAcc
+let
+
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+    fun getInv:int () invested;
+	fun getInv:int () money;
+  }
+  
+  var myLoan:Account = new Account(10);
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  
+      
+in print(if (myTradingAcc==null) then {0} else {myTradingAcc.getInv()});  
+
+
+
+
+
+
+// ridefinizione di invested in TradingAcc
+let
+
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+	var invested:int = 7;
+    fun getInv:int () invested;
+  }
+  
+  var myLoan:Account = new Account(10);
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  
+      
+in print(if (myTradingAcc==null) then {0} else {myTradingAcc.getInv()});  
+
+
+
+
+
+// doppia ridefinizione di invested in TradingAcc
+let
+
+  class Account (money:int) {
+	var money:int = 0;
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+	var invested:int = 7;
+	var invested:int = 99;
+    fun getInv:int () invested;
+  }
+  
+  var myLoan:Account = new Account(10);
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  
+      
+in print(if (myLoan==null) then {0} else {myLoan.getMon()});  
+
+
+
+
+
+
+// ridefinizione/overriding di getMon() in TradingAcc. Dovrebbe funzionare bene, però può servire per vedere, col debugging, se viene seguito il giusto iter nel codice per i controlli con le nuove funzioni.
+let
+
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+	var invested:int = 0;
+    fun getInv:int () invested;
+	fun getMon:int () invested;
+  }
+  
+  var myLoan:Account = new Account(10);
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  
+      
+in print(if (myTradingAcc==null) then {0} else {myTradingAcc.getMon()});  
+
+
+
+
+
+
+
+
+// Final test, ci sono solo più classi, testa se, dato un tipo di ritorno diverso in openLoan() viene comunque vista la ridefinizione del metodo all'interno della classe MyBankLoan.
+let
+
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+    fun getInv:int () invested;
+  }
+  
+  class BankLoan (loan: Account) {
+    fun getLoan:Account () loan;
+    fun openLoan:Account (m:TradingAcc) if ((m.getMon()+m.getInv())>=30000) 
+      then {new Account(loan.getMon())} 
+      else {null};
+  } 
+  
+  class MyBankLoan extends BankLoan (loan: TradingAcc) {
+    fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
+      then {new TradingAcc(loan.getMon(),loan.getInv())} 
+      else {null};
+	fun openLoan:Account (l:Account) if (l.getMon()>=20000) 
+      then {new TradingAcc(loan.getMon(),loan.getInv())} 
+      else {null};
+  } 
+    
+  var bl:BankLoan = new MyBankLoan(new TradingAcc(50000,40000));
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  var myLoan:Account = bl.openLoan(myTradingAcc);
+      
+in print(if (myLoan==null) then {0} else {myLoan.getMon()});  
+
+*/

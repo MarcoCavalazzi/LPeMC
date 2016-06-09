@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class FOOLlib {
 	// classe usata per consentire di mettere il booleano, un sottotipo di un altro tipo, sia utilizzato laddove ci si aspetterebbe un intero.
-	//valuta se il tipo "a" ï¿½ <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
+	//valuta se il tipo "a" è <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
 
 	private static int labCount=0;
 	//private static int newlabel=0;  questi 2 campi noi li abbiamo chiamati labCount e funLabCount
@@ -109,7 +109,7 @@ public class FOOLlib {
 		  return ret = true;
 	  }
 		 */
-		// MARCO: Io penso che il codice dovrebbe essere cosï¿½:
+		// MARCO: Io penso che il codice dovrebbe essere così:
 		Node retA;
 		Node retB;
 		if((a instanceof ArrowTypeNode) && (b instanceof ArrowTypeNode))
@@ -121,7 +121,7 @@ public class FOOLlib {
 			// Confrontiamo i tipi dei due elementi. Devono essere identici per poter proseguire, altrimenti ci blocchiamo.
 			if( !(retA.getClass().equals(retB.getClass())) )	// Since each class is like a singleton - there's only one instance of each Class per JVM - it is even possible to use an identity comparison "=="
 			{
-				return false;	// Se siamo qui ï¿½ perchï¿½ le due classi sono differenti.
+				return false;	// Se siamo qui è perché le due classi sono differenti.
 			}
 
 			// Ora controlliamo i tipi dei parametri richiesti in input. Li controlliamo a coppie, se anche solo una coppia ha elementi di classi diverse interrompiamo ritornando "false".
@@ -168,14 +168,13 @@ public class FOOLlib {
 		
 		if( a instanceof EmptyTypeNode && b instanceof EmptyTypeNode )
 			return new EmptyTypeNode();
-//		if( (a instanceof EmptyTypeNode && !(b instanceof EmptyTypeNode)) ||
-//			(b instanceof EmptyTypeNode && !(a instanceof EmptyTypeNode))	)
-//			return new BoolTypeNode();
-		
+		/*if( (a instanceof EmptyTypeNode && !(b instanceof EmptyTypeNode)) ||
+			(b instanceof EmptyTypeNode && !(a instanceof EmptyTypeNode))	)
+			return new BoolTypeNode();
+		*/
 		
 		if( a instanceof EmptyTypeNode && b instanceof ClassTypeNode )
 			return b;
-		
 		if( b instanceof EmptyTypeNode && a instanceof ClassTypeNode )
 			return a;
 		
@@ -183,25 +182,49 @@ public class FOOLlib {
 		if(a instanceof ClassTypeNode && b instanceof ClassTypeNode ){
 			
 			// We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
-			String tmp = "";
+			String parentAname = superType.get( ((ClassTypeNode)a).getName() );	// Finding the parent class of 'a'.
+			ClassTypeNode parentA = new ClassTypeNode(parentAname);
 			
-			tmp = superType.get( ((ClassTypeNode)a).getName() );	// Finding the parent class of 'a'.
-			
-			if( isSubtype(b, new ClassTypeNode(tmp)) )//((ClassTypeNode)a).getName().equals(tmp)
+			// First check for parentA.
+			if( isSubtype(b, parentA) )//((ClassTypeNode)a).getName().equals(tmp)
 			{
-				return new ClassTypeNode(tmp);
+				return parentA;
 			}
 			
-			while(tmp != null)
+			String parentBname = ((ClassTypeNode)b).getName();
+			ClassTypeNode parentB;
+			
+			// Cycling checks. We keep on looking for the parent classes of A
+			while(parentBname != null)
 			{
-				tmp = superType.get(tmp);
-	
-				if( isSubtype(b, new ClassTypeNode(tmp)) )
+				// Reset of the parent of the class A considered. Necessary for the while cycles afterwards.
+				parentAname = superType.get( ((ClassTypeNode)a).getName() );	// Finding the parent class of 'a'.
+				parentA = new ClassTypeNode(parentAname);
+				
+				parentBname = superType.get( parentBname );
+				parentB = new ClassTypeNode( parentBname );
+				
+				// First check for parentB.
+				if( isSubtype(parentB, parentA) )
 				{
-					return new ClassTypeNode(tmp);
+					return parentA;
+				}
+				
+				// At every cycle we compare a parent of B with all the parents of A.
+				while(parentAname != null){
+					
+					parentAname = superType.get(parentAname);
+					parentA = new ClassTypeNode(parentAname);
+					
+					if( isSubtype(parentB, parentA) )
+					{
+						return parentA;
+					}
 				}
 			}
 		}
+		
+		
 		
 		ArrowTypeNode res = new ArrowTypeNode();
 		if((a instanceof ArrowTypeNode) && (b instanceof ArrowTypeNode))
@@ -229,7 +252,7 @@ public class FOOLlib {
 		}
 		
 		
-		return null;	// Returned when the Nodes in input are not EmptyTypeNodes nor ClassTypeNodes.
+		return null;
 	}
 	
 	
@@ -326,7 +349,7 @@ public class FOOLlib {
 
 	/**
 	 * Metodo per costruire il nome composto delle classi indicizzate
-	 * @param isCallMethod : flag indicante se la classe ï¿½ istanziata all'interno di un metodo
+	 * @param isCallMethod : flag indicante se la classe è istanziata all'interno di un metodo
 	 * @return : il nome composto della classe indicizzata
 	 */
 	public static String getVarNameForClass(boolean isCallMethod) {
@@ -353,7 +376,7 @@ public class FOOLlib {
 
 	/**
 	 * Metodo per settare il nome della classe riferito ad una variabile
-	 * @param typeName : nome della classe di cui la variabile ï¿½ istanza
+	 * @param typeName : nome della classe di cui la variabile è istanza
 	 */
 	public static void setRealVarType(String typeName){
 		realVarType.add(typeName);

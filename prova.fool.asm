@@ -59,8 +59,14 @@ lhp
 push 1
 add
 shp
-push 1
-push 1
+lfp
+push -3
+add
+lw
+lfp
+push -5
+add
+lw
 beq label2
 push 0
 b label3
