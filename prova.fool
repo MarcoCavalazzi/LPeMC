@@ -7,6 +7,44 @@ let
 		fun methodB: int () 2;
 	}
 
+	class C extends B(){
+		fun methodC: int () 3;
+	}
+	class E extends C(){
+		fun methodC: int () 33;
+	}
+	
+	class D extends B(){
+		fun methodD: int () 4;
+	}
+	class F extends D(){
+		fun methodD: int () 55;
+		fun methodF: int () 66;	// con questa riga fare methodD esegue methodF. Senza, esegue methodA!
+	}
+	
+	var objA:A = new A();
+	var objB:B = new B();
+	var objC:C = new C();
+	var objD:D = new D();
+	var objE:E = new E();
+	var objF:F = new F();
+
+in
+print(if(objE==objF) then {objE.methodC()} else {objF.methodD()});
+
+
+
+
+
+let
+	class A(){
+		fun methodA: int () 1;
+	}
+
+	class B extends A(){
+		fun methodB: int () 2;
+	}
+
 	class C extends A(){
 		fun methodC: int () 3;
 	}
@@ -21,7 +59,7 @@ let
 	var objD:D = new D();
 
 in
-print(if(objB==objD) then {objB.methodB()} else {objD.methodD()});
+print(if(objB==objD) then {0} else {777});
 
 /*let
   class Account (money:int) {

@@ -46,8 +46,11 @@ public class FOOLlib {
 	private static int varAndCallIndex = 0;
 	private static String lastVarNameForClass;
 
-	//valuta se il tipo "a" e' <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
+	// Metodo che controllerà che il primo elemento sia di un tipo che è uguale al secondo oppure è un suo sottotipo.
+	// Valuta se il tipo "a" e' <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
 	public static boolean isSubtype (Node a, Node b) {
+		
+		// Nel caso delle classi controlla che 'a' sia di tipo uguale a 'b' o che 'a' sia di un tipo "parent" di 'b'.
 		if(a instanceof ClassTypeNode && b instanceof ClassTypeNode)
 		{
 			// initial check that controls if the classes are the same.
@@ -180,26 +183,47 @@ public class FOOLlib {
 		
 		
 		if(a instanceof ClassTypeNode && b instanceof ClassTypeNode ){
+			// Initial check to see if they are already subtypes.
+			if( isSubtype(b, a) )
+			{
+				return b;
+			}
 			
-			// We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
+			// We will now check all the parents (super-classes) of 'b' to see if they match with the parents of 'a'.
 			String parentAname = superType.get( ((ClassTypeNode)a).getName() );	// Finding the parent class of 'a'.
 			ClassTypeNode parentA = new ClassTypeNode(parentAname);
 			
-			// First check for parentA.
-			if( isSubtype(b, parentA) )//((ClassTypeNode)a).getName().equals(tmp)
+			/*
+			 * VERSIONE DEL PROF. SECONDO LE SPECIFICHE:
+			 *
+			while(parentAname != null){
+				if( isSubtype(b, parentA) )
+				{
+					return b;
+				}
+				
+				parentAname = superType.get( parentAname );	// Finding the parent class of 'a'.
+				parentA = new ClassTypeNode(parentAname);
+			}
+		}
+			*/
+			
+			// VERSIONE DI MARCO:
+			// First check for 'parentA'.
+			if( isSubtype(b, parentA) )
 			{
-				return parentA;
+				return b;
 			}
 			
-			String parentBname = ((ClassTypeNode)b).getName();
+			String parentBname = ((ClassTypeNode)b).getName();	// Initialization of 'parentBname'
 			ClassTypeNode parentB;
 			
-			// Cycling checks. We keep on looking for the parent classes of A
+			// Cycling checks. We keep on looking for the parent classes of A while checking all 'b' and its parents for a positive outcome for the isSubtype() function.
 			while(parentBname != null)
 			{
 				// Reset of the parent of the class A considered. Necessary for the while cycles afterwards.
-				parentAname = superType.get( ((ClassTypeNode)a).getName() );	// Finding the parent class of 'a'.
-				parentA = new ClassTypeNode(parentAname);
+				parentAname = ((ClassTypeNode)a).getName();
+				parentA = (ClassTypeNode)a;
 				
 				parentBname = superType.get( parentBname );
 				parentB = new ClassTypeNode( parentBname );
@@ -207,7 +231,7 @@ public class FOOLlib {
 				// First check for parentB.
 				if( isSubtype(parentB, parentA) )
 				{
-					return parentA;
+					return parentB;
 				}
 				
 				// At every cycle we compare a parent of B with all the parents of A.
@@ -218,7 +242,7 @@ public class FOOLlib {
 					
 					if( isSubtype(parentB, parentA) )
 					{
-						return parentA;
+						return parentB;
 					}
 				}
 			}
