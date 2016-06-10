@@ -1,12 +1,12 @@
 let
 
-  class Account (money:int) {
-    fun getMon:int (m:bool) true;
+  class Account (money:bool) {
+    fun getMon:bool (m:bool) true;
   }
   
-  class TradingAcc extends Account (money:bool) {
+  class TradingAcc extends Account (money:int) {
     fun getInv:int () 1;
-	fun getMon:bool (m:bool) true;
+	fun getMon:int (m:bool) true;
   }
   
   var myLoan:Account = new Account(10);

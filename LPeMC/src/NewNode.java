@@ -61,6 +61,17 @@ public class NewNode implements Node{
 	@Override
 	public String codeGeneration() {
 
+		if(entry.vTable.size() == 0) //classe vuota
+		{
+			return  	
+					"lhp\n"+ //così facendo l'obj pointer che sarà sullo stack punterà allo spazio vuoto che creiamo 
+					"lhp\n"+ //carico l'heap pointer corrente e faccio un salto di 1 creando uno spazio vuoto
+					"push 1\n"+ 
+					"add\n"+
+					"shp\n";
+					
+		}
+		
 		return 	
 				makeParCode()+	
 				"lhp\n"+		
@@ -75,14 +86,14 @@ public class NewNode implements Node{
 		for(int i = parlist.size()-1; i >= 0; i--)
 		{
 			code += parlist.get(i).codeGeneration();			
-			code +=// "INIZIO PARCODE\n"+
+			code +=
 					"lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
 					"sw\n" +					
 					"lhp\n"+ //carico l'heap pointer corrente
 					"push 1\n"+ 
 					"add\n"+
 					"shp\n";
-			//"FINE PARCODE\n";
+		
 
 		}
 		return code;
@@ -97,14 +108,13 @@ public class NewNode implements Node{
 
 			mLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
 
-			mLabel += //"INIZIO MAKEMETHODCODE\n"+
+			mLabel += 
 					"lhp\n"+
 					"sw\n" +
 					"lhp\n"+ //carico l'heap pointer corrente	
 					"push 1\n"+								 					 
 					"add\n"+
 					"shp\n";
-			//"FINE MAKEMETHODCODE\n";
 		}
 		return mLabel;
 	}
