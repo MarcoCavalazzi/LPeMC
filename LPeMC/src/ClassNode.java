@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class ClassNode implements Node{
 	private Node sc;
@@ -72,43 +73,40 @@ public class ClassNode implements Node{
 		/*
 		 * Checking the types of the methods and their parameters with the parent class' methods.
 		 */
-		int i=0, j=0;
-		boolean isSubtype;
 		if( superEntry != null ){	// If the parent class has been extended...
 			// ...check if the parent methods have been implemented (or overridden).
 
 			superEntry.getLocals().retainAll(classEntry.getLocals());//considero solo i metodi/field con overriding (retainAll fa una unione degli elementi di locals di superEntry e classEntry
-			
-			while( i < superEntry.allMethods.size() )// For each of the methods of the parent class:
-			{
-				isSubtype = false;
-				j=0;
-				while( j < classEntry.allMethods.size() )	// Check if the parent class' method matches one of the methods in the child/extended class.
-				{
-					if( FOOLlib.isSubtype( ((MethodNode)superEntry.allMethods.get(i)).getSymType(), 
-							((MethodNode)classEntry.allMethods.get(j)).getSymType() ) )
+
+			List<Integer> overOffset = new ArrayList<Integer>(superEntry.getLocals());			
+			int val = 0;
+			for(int i = 0; i < overOffset.size();i++) 
+			{	
+				val = overOffset.get(i);
+				if(val >=0)//cioè offset di metodo
+				{ 
+					if( !(FOOLlib.isSubtype( ((MethodNode)superEntry.allMethods.get(val)).getSymType(), 
+							((MethodNode)classEntry.allMethods.get(val)).getSymType() )) )
 					{
-						isSubtype = true;
-						break;
+						System.out.println("[ClassNode] Type check found a problem:");
+						System.out.println("-> method:"+((MethodNode)superEntry.allMethods.get(val)).getName()+" did not have a match in the child/extended class.");
+						System.exit(0);
+					}					
+				}	
+				else
+				{
+					val = -(val)-1;
+					if( !(FOOLlib.isSubtype( ((FieldNode)superEntry.allFields.get(val)).getSymType(), 
+							((FieldNode)classEntry.allFields.get(val)).getSymType() )) )
+					{
+						System.out.println("[ClassNode] Type check found a problem:");
+						System.out.println("-> field:"+((FieldNode)superEntry.allFields.get(val)).getName()+" did not have a match in the child/extended class.");
+						System.exit(0);
 					}
-
-					j++;
 				}
-
-				if(!isSubtype){
-					System.out.println("[ClassNode] Type check found a problem:");
-					System.out.println("-> method:"+((MethodNode)superEntry.allMethods.get(i)).getName()+" did not have a match in the child/extended class.");
-					//System.out.println("super-class \""+ superEntry.getClass() +"\" -> method name:"+((MethodNode)superEntry.allMethods.get(--j)).getName());
-
-					//System.out.println("Wrong method type in method "+ 
-					//		((MethodNode)superEntry.allMethods.get(--j)).getName()+" for class: "+name);
-					System.exit(0);
-				}
-
-				i++;
 			}
 		}
-	
+
 		return new ClassTypeNode(name); 
 	}
 

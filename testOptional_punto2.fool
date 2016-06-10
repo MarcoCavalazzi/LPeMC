@@ -1,19 +1,19 @@
 let
 
   class Account (money:int) {
-    fun getMon:int () money;
+    fun getMon:int (m:bool) true;
   }
   
-  class TradingAcc extends Account (invested:int) {
-    fun getInv:int () invested;
-	fun getMon:int () invested;
+  class TradingAcc extends Account (money:bool) {
+    fun getInv:int () 1;
+	fun getMon:bool (m:bool) true;
   }
   
   var myLoan:Account = new Account(10);
-  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  var myTradingAcc:TradingAcc = new TradingAcc(true);
   
       
-in print(if (myLoan==null) then {0} else {myLoan.getMon()});  
+in print(if (myLoan==null) then {0} else {myLoan.getMon(1)});  
 
 
 

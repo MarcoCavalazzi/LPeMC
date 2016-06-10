@@ -60,7 +60,7 @@ public class EqualNode implements Node {
 	}*/
 		String l1=FOOLlib.freshLabel();
 		String l2=FOOLlib.freshLabel();
-		return left.codeGeneration()+
+		return  left.codeGeneration()+
 				right.codeGeneration()+
 				"beq "+l1+"\n"+
 				"push 0\n"+

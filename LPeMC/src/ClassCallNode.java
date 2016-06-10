@@ -20,30 +20,16 @@ public class ClassCallNode implements Node {
 	}
 	public String toPrint(String s) {
 
-		String str = s+"CALL CLASS " + id + " \n"+s+"  Parameters type: \n";
+		String str = s+"Class call " + id + " \n"+s+"  Parameters type: \n";
 		for(int j=0;j < par.size();j++){
-			str += s+"   "+par.get(j).toPrint(s+" ");
+			str += s+"  "+par.get(j).toPrint(s+" ");
 		}
 		return str;
 	}
 
 
 	public Node typeCheck() {
-		/*
-		 ArrowTypeNode classAtn = (ArrowTypeNode)((ClassNode)((ArrowTypeNode)entry.getType()).getRet()).typeCheck();
-		  if(classAtn.getPar().size() != par.size()) {
-			  System.out.println("Wrong parameter's number for constructor of " + id);
-		}
 
-		for(int i = 0; i < par.size(); i++) {
-			  Node curP = par.get(i);
-			  if (!(FOOLlib.isSubtype(curP.typeCheck(), classAtn.getPar().get(i).typeCheck()))){
-			        System.out.println("Wrong type for constructor of " + id);
-			        //System.exit(0); 
-			  }
-		  }
-		  return new ClassTypeNode(((ClassNode)classAtn.getRet()).getName());
-		 */
 		ArrowTypeNode t=null;
 		if (methodEntry.getType() instanceof ArrowTypeNode) 
 			t=(ArrowTypeNode) methodEntry.getType(); 

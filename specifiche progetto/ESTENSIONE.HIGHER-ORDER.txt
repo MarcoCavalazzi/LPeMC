@@ -37,7 +37,6 @@ variabili/parametri potranno avere tipo funzionale ArrowTypeNode)
 TYPE-CHECKING
 
 ** FOOLlib gestione tipi **
-*da riguardare
 isSubtype()
 ora deve gestire (oltre a "bool" sottotipo di "int") tipi funzionali in base alla 
 -relazione di co-varianza sul tipo di ritorno

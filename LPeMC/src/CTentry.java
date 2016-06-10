@@ -36,9 +36,8 @@ public class CTentry {
 		{
 			if(((FieldNode)allFields.get(i)).getName().equals(s))
 			{
-				allFields.remove(i);
+				allFields.set(i, node);
 				offsetFields++;
-				allFields.add(node);
 				return true;
 			}
 		}
@@ -85,10 +84,9 @@ public class CTentry {
 		for(int i = 0;i < allMethods.size();i++)
 		{
 			if(((MethodNode)allMethods.get(i)).getName().equals(s))
-			{
-				allMethods.remove(i);
-				offsetMethods--;
-				allMethods.add(node);
+			{				
+				allMethods.set(i, node);
+				offsetMethods--;				
 				return true;
 			}
 		}

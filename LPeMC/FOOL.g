@@ -182,12 +182,12 @@ cllist returns [ArrayList<Node> astlist]
                     ctentry.addLocals(tmpMethod.getOffset());
              } 
              else
-                ctentry.addLocals(ctentry.getMethodOffset());          
-             
-             ctentry.incMethodOffset();
+                ctentry.addLocals(ctentry.getMethodOffset());                                  
              
              if(ctentry.setMethodAndCheck(mNode,$mid.text))
-                entry.setOffset(ctentry.getMethodOffset());              
+                entry.setOffset(ctentry.getMethodOffset());    
+                
+             ctentry.incMethodOffset();          
               
               Obj.setMethod(mNode);
               nestingLevel++;
