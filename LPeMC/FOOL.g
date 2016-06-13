@@ -55,7 +55,7 @@ cllist returns [ArrayList<Node> astlist]
          nestingLevel++;
          ctentry = new CTentry(Obj,nestingLevel);
          entryCl.setClassName($cid.text);
-         
+         entryCl.setType(null);
          STentry tmp  = hm.put($cid.text,entryCl);
          CTentry tmp2 = classTable.put($cid.text,ctentry);
          
@@ -289,16 +289,14 @@ declist	returns [ArrayList<Node> astlist]
        {
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
-          //System.out.println("type: "+$t.ast + "var "+$i.text);
           if($t.ast instanceof ArrowTypeNode)
           {
              offset--;
           }
           
-          System.out.println("[FOOL.g] VAR    "+ v.toPrint(""));
+          System.out.println("VAR    "+ v.toPrint(""));
             
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
-          //System.out.println("Var id "+$i.text+" at line "+$i.line+" ha nesting = "+nestingLevel);
           STentry varEntry = new STentry(nestingLevel,$t.ast,offset--);
           if ( hm.put($i.text,varEntry) != null  ){
              System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
@@ -361,7 +359,6 @@ declist	returns [ArrayList<Node> astlist]
        )? 
        RPAR { entry.addType( new ArrowTypeNode(parTypes, $t.ast) ); } 
        ( LET d=declist IN )?
-          //{f.addDec($d.astlist);} 
        e=exp
        {//chiudere scope
           symTable.remove(nestingLevel--);
@@ -461,22 +458,15 @@ value	returns [Node ast]
     (fa=exp
     {
        argList.add($fa.ast);
-       //ctEntry.setField($fa.ast);
     }
 	     (COMMA a=exp
 	     {
 	        argList.add($a.ast);
-	        // ctEntry.setField($a.ast);
 	     }
 	     )* 
 	  )?
     {
-            //ClassCallNode c= new ClassCallNode($i.text,entry,argList,nNewClass);
-         // $ast=c;
-        // ctEntry.setNewOffset(newOffset);
-         $ast = new NewNode($i.text,ctEntry,argList);
-        // newOffset++;
-//     
+         $ast = new NewNode($i.text,ctEntry,argList);     
     }
     RPAR
         
@@ -492,12 +482,7 @@ value	returns [Node ast]
 	    STentry entry     = null; 
 	    CTentry classEntry = null;
 	    classEntry = classTable.get($i.text);
-	        
-	  //   while (j>=0 && entry==null)
-	 //     entry=(symTable.get(j--)).get($i.text);
-//	    for(j=0;j<symTable.size() && entry==null;j++)
-//	       entry=(symTable.get(j)).get($i.text);
-//	     
+	        	     
 	    if(classEntry==null)    
 	    {
          while (j>=0 && entry==null)
@@ -509,10 +494,10 @@ value	returns [Node ast]
 	       System.exit(0);
 	    }
 	     	 
-	    //if( classEntry != null )	        
-	       // $ast = new IdNode($i.text,classEntry,nestingLevel);
-	  //  else
-	        $ast = new IdNode($i.text,entry,nestingLevel);
+	    if( classEntry != null )	        
+	       $ast = new IdNode($i.text,classEntry,nestingLevel);
+	    else
+	       $ast = new IdNode($i.text,entry,nestingLevel);
 	    
                  
     }
@@ -523,19 +508,23 @@ value	returns [Node ast]
       )?
       {
       
-       // System.out.println("nl - (j+1) = "+(nestingLevel-(j+1))+" nl = "+nestingLevel+" j = "+j);
         if( classEntry != null) 
-         $ast=new CallNode($i.text,entry,argList,nestingLevel);
+          $ast=new CallNode($i.text,entry,argList,nestingLevel);
         else 
-        $ast=new CallNode($i.text,entry,argList,nestingLevel);//è esatto? quasi sicuramente no!
+          $ast=new CallNode($i.text,entry,argList,nestingLevel);
       }    
      RPAR
     |  DOT cmid=ID
     {
-       
+       CTentry ctentryClass = null;
        STentry entryM = null;
-
-       CTentry ctentryClass = classTable.get(((ClassTypeNode)entry.getType()).getName());      
+       if(entry != null) 
+         ctentryClass = classTable.get(((ClassTypeNode)entry.getType()).getName());
+       else
+       {  
+          System.out.println("Not object invocation");
+          System.exit(0);
+       }    
      // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
 //       -ClassCallNode  ID1.ID2() 
 //        STentry dell'ID1 in campo "entry"

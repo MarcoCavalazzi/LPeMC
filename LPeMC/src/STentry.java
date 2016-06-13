@@ -47,6 +47,11 @@ public class STentry {
 		return type;
 	}
 
+	public void setType(Node s)
+	{
+		type = s;
+	}
+	
 	public int getOffset ()
 	{
 		return offset;

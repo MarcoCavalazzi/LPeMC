@@ -46,20 +46,13 @@ public class ClassCallNode implements Node {
 			}
 			// ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypeNode)
 			for (int i=0; i< par.size(); i++)
-			{
-				if ( !( FOOLlib.isSubtype( p.get(i), (par.get(i)).typeCheck()) ) ){ 
-					// !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
-					System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id+"().  Type required: "+ p.get(i) +". Type passed: "+ (par.get(i)).typeCheck());
-					// ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
-					for (int i1=0; i1< par.size(); i1++) 
-						if (
-								!(FOOLlib.isSubtype( p.get(i1), par.get(i1).typeCheck() ) ) 
-								// !(FOOLlib.isSubtype((p.get(i)),(parlist.get(i)).typeCheck())) //nei parametri il nodo a deve essere supertipo perchè applichiamo la controvarianza
-								) {
-							System.out.println("Wrong type for "+(i1+1)+"-th parameter in the invocation of: "+id);
-							System.exit(0);
-						}
+			{			
+				// ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypeNode)				
+				if (!(FOOLlib.isSubtype( par.get(i).typeCheck(), p.get(i))) ) {
+					System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id);
+					System.exit(0);
 				}
+
 			}
 		}
 		return t.getRet();
@@ -68,8 +61,7 @@ public class ClassCallNode implements Node {
 
 	public String codeGeneration() {
 
-		int offsetNewInn=0;
-		String parCode = "";	// codice per la prima parte dell'activation record (vedi file "progettiamo il nostro layout" nell'esercitazione 12_04).
+		String parCode = "";	
 		for(int i=par.size()-1; i>=0; i--){
 			parCode += par.get(i).codeGeneration();
 		}
@@ -83,20 +75,18 @@ public class ClassCallNode implements Node {
 			 con meccanismo usuale di risalita catena statica
 		 */
 		return 
-				"lfp\n"+		// CL
-				parCode+	// parametri
+				"lfp\n"+
+				parCode+	
 				"lfp\n"+
 				getAR+
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+
 				"lw\n"+
-				//ora ho in cima allo stack l'obj pointer 
 				"lfp\n"+
 				getAR+
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+
 				"lw\n"+	
-
 				"push "+methodEntry.getOffset()+"\n"+		  		
 				"add\n"+
 				"lw\n"+

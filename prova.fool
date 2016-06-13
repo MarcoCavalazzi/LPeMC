@@ -16,7 +16,7 @@ let
   } 
   
   class MyBankLoan extends BankLoan (loan: TradingAcc) {
-    fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
+    fun openLoan:TradingAcc (l:Account) if (MyBankLoan.getMon()>=20000) 
       then {new TradingAcc(loan.getMon(),loan.getInv())} 
       else {null};
   } 

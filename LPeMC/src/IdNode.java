@@ -32,13 +32,16 @@ public class IdNode implements Node {
 	}
 
 	public Node typeCheck () {
-		/*
-	  if ((entry.getType() instanceof ArrowTypeNode)) { //
-	  System.out.println("Wrong usage of function identifier");
-      System.exit(0);
-    }
-    tolto perchè adesso possiamo usare anche gli arrowtypenode	
-		 */
+
+		if(entry.getIsMethod()){
+			System.out.println("Id "+id+" is a method");
+			System.exit(0);	
+		}
+		if(entry.getType()==null)//id di classe hanno come type null (--per nomi di classi mettere "null" come tipo--)
+		{
+			System.out.println("Id "+id+" is a class");
+			System.exit(0);
+		}
 
 		//credo ci sia da aggiungere varList.getType() instance of ArrowTypeNode
 		//ma come ottengo la lista dei parametri o delle variabili che possono essere di tipo funzionale?
