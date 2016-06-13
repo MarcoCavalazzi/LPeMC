@@ -49,7 +49,7 @@ public class ExecuteVM {
 		}
 
 		while ( true ) {
-			//dumpInstruction();	// Debug statement. Without this statement no instruction or stack or heap is shown nor stored in the file "programOutput.txt".
+			dumpInstruction();	// Debug statement. Without this statement no instruction or stack or heap is shown nor stored in the file "programOutput.txt".
 
 			int bytecode = code[ip++]; // fetch
 			int arg1,arg2;
