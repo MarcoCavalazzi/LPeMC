@@ -16,9 +16,9 @@ public class VarNode implements Node, DecNode {
 				+exp.toPrint(s+"  "); 
 	}
 
-	//valore di ritorno non utilizzato
+	
 	public Node typeCheck () {
-		if (! (FOOLlib.isSubtype(type,exp.typeCheck())) ){   
+		if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){   
 			System.out.println("incompatible value for variable: "+id);
 			System.exit(0);
 		}     

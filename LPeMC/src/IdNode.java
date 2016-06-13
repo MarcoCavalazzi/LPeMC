@@ -1,7 +1,7 @@
 public class IdNode implements Node {
 
 	private String id;
-	private STentry entry;
+	private STentry entry = null;
 	private CTentry ctentry = null;
 	private int nl;
 
@@ -28,19 +28,22 @@ public class IdNode implements Node {
 	}
 
 	public String toPrint(String s) {
-		return s+"Id:" + id +" at nestlev "+ nl +"\n" + entry.toPrint(s+"  ") ;  
+		if(entry!= null) //id generico	
+			return s+"Id:" + id +" at nestlev "+ nl +"\n" + entry.toPrint(s+"  ") ;  
+		else //id di classe
+			return s+"Class Id:"+id+"at nestlev"+nl+"\n" + ctentry.toPrint(s+"  ");
 	}
 
 	public Node typeCheck () {
 
-		if(entry.getIsMethod()){
-			System.out.println("Id "+id+" is a method");
-			System.exit(0);	
-		}
-		if(entry.getType()==null)//id di classe hanno come type null (--per nomi di classi mettere "null" come tipo--)
+		if(entry==null)
 		{
 			System.out.println("Id "+id+" is a class");
 			System.exit(0);
+		}
+		if(entry.getIsMethod()){
+			System.out.println("Id "+id+" is a method");
+			System.exit(0);	
 		}
 
 		//credo ci sia da aggiungere varList.getType() instance of ArrowTypeNode

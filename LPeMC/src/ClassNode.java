@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class ClassNode implements Node{
@@ -107,12 +106,6 @@ public class ClassNode implements Node{
 
 		return new ClassTypeNode(name); 
 	}
-
-
-
-
-
-
 
 
 	public Node getSuperClass() {

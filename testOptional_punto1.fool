@@ -21,4 +21,4 @@ let
 	var objD:D = new D();
 
 in
-print(if(objB==objD) then {objB.methodB()} else {objD.methodD()});
+print(if(objD==objB) then {objB.methodB()} else {objD.methodD()});

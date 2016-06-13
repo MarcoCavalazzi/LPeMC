@@ -39,24 +39,23 @@ prog	returns [Node ast]
 
 cllist returns [ArrayList<Node> astlist]  
    : { 
-	     $astlist = new ArrayList<Node>() ;
-	     int offset      = -2;
-	     int classoffset = -2;	     
-	     //int methodOffset = 0;
+	     $astlist = new ArrayList<Node>() ;	     
 	   } 
 	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe 
 	   {
-         ClassNode Obj = new ClassNode($cid.text);
-         $astlist.add(Obj);
+         ClassNode classItem = new ClassNode($cid.text);               
+         $astlist.add(classItem);// Initializing local variables
          CTentry extendedEntry = null;
          CTentry ctentry       = null;
-         HashMap<String,STentry> hm = symTable.get(nestingLevel);
-         STentry entryCl = new STentry(Obj,nestingLevel);
-         nestingLevel++;
-         ctentry = new CTentry(Obj,nestingLevel);
+         HashMap<String,STentry> hm = symTable.get(nestingLevel);// Recuperiamo l'hashmap del nesting level in cui ci troviamo.
+         // Creiamo la entry per l'hashmap
+         STentry entryCl = new STentry(classItem,nestingLevel);
          entryCl.setClassName($cid.text);
          entryCl.setType(null);
-         STentry tmp  = hm.put($cid.text,entryCl);
+         nestingLevel++;// Incrementiamo il nesting level (perché siamo dentro la classe ora)
+         ctentry = new CTentry(classItem,nestingLevel);// A questo punto possiamo definire la CTentry
+         
+         STentry tmp  = hm.put($cid.text,entryCl);// "put()" ritorna diverso da null solo se c'era qualcosa di già definito con quella keyword nella HM.
          CTentry tmp2 = classTable.put($cid.text,ctentry);
          
          if (tmp != null && tmp2 != null)
@@ -65,64 +64,46 @@ cllist returns [ArrayList<Node> astlist]
             System.exit(0); 
          }                
          
-         HashMap<String,STentry> classLevelSymTable =  new HashMap<String,STentry>(); 
-         symTable.add(classLevelSymTable);        
-         ctentry.setVirtualTable(classLevelSymTable);
+         HashMap<String,STentry> classLevelSymTable =  new HashMap<String,STentry>(); // creaiamo una nuova HM per gli elementi definiti nella classe
+         symTable.add(classLevelSymTable);  // aggiungiamo tale HM in 'symtable'      
+         ctentry.setVirtualTable(classLevelSymTable);// salviamo tale HM come virtual table della classe (copia del puntatore).
       }
 	    (EXTENDS cidext=ID
 	    {
-	     
-           // HashMap<String,STentry> hmSuper = classTable.get(nestingClassLevel-1);           
-           // verifico che la classe estesa sia già stata dichiarata in precedenza          
+	            
            extendedEntry = classTable.get($cidext.text);
-         
-                 
+                     
            if(extendedEntry == null){
            System.out.println("Class id "+$cidext.text+" at line "+$cidext.line+" not declared");
               System.exit(0);
            }
+                     
+           ArrayList<Node> tmpFields = (ArrayList<Node>) extendedEntry.getFields().clone(); //.clone() è necessario per non rischiare di copiare il riferimento all'oggetto
+           ArrayList<Node> tmpMethods = (ArrayList<Node>) extendedEntry.getMethods().clone();
+           ctentry.setFields(tmpFields);
+           ctentry.setMethods(tmpMethods);
+           HashMap<String,STentry> tmpMap = (HashMap<String, STentry>) extendedEntry.getVirtualTable().clone();// Prendiamo la virtual table della classe parent e la copiamo nella virtual table della classe figlia.
            
-           
-           ArrayList<Node> tmpField  = (ArrayList<Node>) extendedEntry.getFields().clone(); //necessario per non rischiare di copiare il riferimento all'oggetto
-           ArrayList<Node> tmpMethod = (ArrayList<Node>) extendedEntry.getMethods().clone();
-           ctentry.setFields(tmpField);
-           ctentry.setMethods(tmpMethod);
-           HashMap<String,STentry> tmpMap = (HashMap<String, STentry>) extendedEntry.getVirtualTable().clone();
-           //ctentry.setVirtualTable(tmpMap);
-           
-  //         symTable.putAll(tmp);
-//           HashMap<String,STentry> vTableExtendedEntry = extendedEntry.getVirtualTable();
-//           HashMap<String,STentry> tempSymTable = symTable.get(nestingLevel);
-//           vTableExtendedEntry.forEach( STentry s ){
-//              tempSymTable.put(s);
-//           }
-           //ctentry.getVirtualTable().putAll(tempMap);
-//           for(int i=0; i<tmpMap.size(); i++){
-//              symTable.get(nestingLevel).put(tmpMap.get(i).getKey(), tmpMap.get(i).getValue());
-////                ctentry.putvTable(tmpMap.get(i));
-//           }
-           symTable.get(nestingLevel).putAll(tmpMap);
-           Obj.setSuperEntry(extendedEntry);
-           Obj.setClassEntry(ctentry);
-           FOOLlib.putSuperType($cid.text,$cidext.text);
+           symTable.get(nestingLevel).putAll(tmpMap); //merge tra tmpMap e la virtualTable della classe che estende
            ctentry.setMethodOffset(extendedEntry.getMethodOffset());
            ctentry.setFieldOffset(extendedEntry.getFieldOffset());
-           //nestingVirtualLevel = extendedEntry.getNestinglevel();
-           //hmn = symTable.get(extendedEntry.getNestinglevel());
+           classItem.setSuperEntry(extendedEntry);
+           classItem.setClassEntry(ctentry);
+           FOOLlib.putSuperType($cid.text,$cidext.text);//Memorizziamo il nome della classe e della relativa super classe in FOOLlib.
+          
+
 	     }
 	     )? 
 	     LPAR 
 	     {
-           ArrayList<Node> ConstrPar = new ArrayList<Node>();
-          // int fieldOffset=-1; 
+           ArrayList<Node> constrPar = new ArrayList<Node>();//lista dei field della classe
        }
 	     (p1=ID COLON t1=basic 
 	     {
 	       
-	         ConstrPar.add($t1.ast);
+	         constrPar.add($t1.ast);
            FieldNode objField = new FieldNode($p1.text,$t1.ast,$cid.text);
-           Obj.addField(objField);
-           //ctentry.setFieldOffset(fieldOffset);
+           classItem.addField(objField);
            STentry  tempEntry = new STentry(objField,nestingLevel,$t1.ast,ctentry.getFieldOffset());
            tempEntry.setClassName($cid.text);
            STentry tmpField = ctentry.getVirtualTable().put($p1.text,tempEntry); //restituisce una STentry se già presente in vTable
@@ -133,17 +114,17 @@ cllist returns [ArrayList<Node> astlist]
               System.exit(0);
               }           
            }         
-           if(ctentry.setFieldAndCheck(objField,$p1.text))
+           if(ctentry.setFieldAndCheck(objField,$p1.text))   //check anche su allFields e gestione della lista stessa
                tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)    
            
-           ctentry.addLocals(ctentry.getFieldOffset());
+           ctentry.addLocals(ctentry.getFieldOffset()); //aggiungo l'offset del field in caso non sia stato ancora dichiarato
            ctentry.decFieldOffset();
 	     }
 	     (COMMA pn=ID COLON tn=basic
 	     {
-	        ConstrPar.add($tn.ast);
+	        constrPar.add($tn.ast);
           FieldNode objFieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
-          Obj.addField(objFieldN);      
+          classItem.addField(objFieldN);      
           STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,ctentry.getFieldOffset());
           STentry tmpFieldN = ctentry.getVirtualTable().put($pn.text,tmpSTentry);
           if ( tmpFieldN  != null  )
@@ -162,7 +143,7 @@ cllist returns [ArrayList<Node> astlist]
 	     }
 	     )* )? RPAR
 	     {
-	        ctentry.addType( new ArrowTypeNode(ConstrPar, Obj) ); 
+	        ctentry.addType( new ArrowTypeNode(constrPar, classItem) ); 
 	     }
 	     CLPAR//apri graffa
 	       (FUN mid=ID COLON retm=basic
@@ -189,7 +170,7 @@ cllist returns [ArrayList<Node> astlist]
                 
              ctentry.incMethodOffset();          
               
-              Obj.setMethod(mNode);
+              classItem.setMethod(mNode);
               nestingLevel++;
               HashMap<String,STentry> hmMethod = new HashMap<String,STentry> ();
               symTable.add(hmMethod);
@@ -244,7 +225,6 @@ cllist returns [ArrayList<Node> astlist]
 	       (VAR vid=ID COLON vt=type ASS ve=exp //se aggiungiamo var nel metodo, siamo in uno scope sintattico maggiore, per cui si crea una nuova hashmap, si aumenta il nestingLevel e poi si aggiunge a symTable
 	       {
 	          VarNode v = new VarNode($vid.text,$vt.ast,$ve.ast);
-           // letInMethodList.add(v); 
             $astlist.add(v);
             HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
             symTable.add(varhm);
@@ -266,7 +246,7 @@ cllist returns [ArrayList<Node> astlist]
               symTable.remove(nestingLevel--);           
               mNode.addBody($varE.ast);
               //aggiungo il metodo alla classe
-              Obj.addMethod(mNode); 
+              classItem.addMethod(mNode); 
               
 	        }
 	        SEMIC)* 
@@ -289,7 +269,7 @@ declist	returns [ArrayList<Node> astlist]
        {
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
-          if($t.ast instanceof ArrowTypeNode)
+          if($t.ast instanceof ArrowTypeNode)//se tipo funzionale, offset doppio 
           {
              offset--;
           }
@@ -313,7 +293,6 @@ declist	returns [ArrayList<Node> astlist]
           HashMap<String,STentry> hm = symTable.get(nestingLevel);                
           STentry entry = new STentry(nestingLevel,offset);
           offset=offset - 2;
-          //STentry entry = new STentry(nestingLevel,f,offset-=2);
           if ( hm.put($i.text,entry) != null ){
              System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
@@ -495,7 +474,7 @@ value	returns [Node ast]
 	    }
 	     	 
 	    if( classEntry != null )	        
-	       $ast = new IdNode($i.text,classEntry,nestingLevel);
+	       $ast = new IdNode($i.text,classEntry,nestingLevel);//per distinguere i nome di classe e id generico
 	    else
 	       $ast = new IdNode($i.text,entry,nestingLevel);
 	    
@@ -509,9 +488,13 @@ value	returns [Node ast]
       {
       
         if( classEntry != null) 
-          $ast=new CallNode($i.text,entry,argList,nestingLevel);
-        else 
-          $ast=new CallNode($i.text,entry,argList,nestingLevel);
+        {
+            System.out.println("Call of class Id "+$i.text);
+            System.exit(0);
+        }
+        else
+            $ast=new CallNode($i.text,entry,argList,nestingLevel);
+
       }    
      RPAR
     |  DOT cmid=ID
