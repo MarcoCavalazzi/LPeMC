@@ -29,7 +29,8 @@ public class CTentry {
 		locals = new HashSet<Integer>();
 	}
 	
-	
+	// If the field passed in input exists already in the 'allFields' data structure the new item is placed at its place and the function returns 'true' (meaning: yes, there has been overriding).
+	// Otherwise, the function adds the new item and returns 'false' (meaning: no overriding).
 	public boolean setFieldAndCheck(Node node, String s)
 	{
 		for(int i = 0;i < allFields.size();i++)
@@ -37,7 +38,7 @@ public class CTentry {
 			if(((FieldNode)allFields.get(i)).getName().equals(s))
 			{
 				allFields.set(i, node);
-				offsetFields++;
+				offsetFields++;	// Adjusting the offset to consider the replaced item (one less item will be in the list, so we go e.g. from -3 to -2 -> only 2 fields are set).
 				return true;
 			}
 		}
@@ -125,7 +126,8 @@ public class CTentry {
 		offsetMethods++;
 	}
 
-	public void decFieldOffset(){
+	public void decFieldOffset()
+	{
 		offsetFields--;
 	}
 	
@@ -174,7 +176,8 @@ public class CTentry {
 		vTable.put(s,e);
 	}
 
-	public String toPrint(String string) {
+	public String toPrint(String string)
+	{
 		return "CTentry";
 	}
 
@@ -186,23 +189,23 @@ public class CTentry {
 		}
 	}
 
-	public Node getType() {
-
+	public Node getType()
+	{
 		return type;
 	}
 
-	public int getNestinglevel() {
-
+	public int getNestinglevel()
+	{
 		return nestingLevel;
 	}
 
-	public int getFieldOffset() {
-
+	public int getFieldOffset()
+	{
 		return offsetFields;
 	}
 
-	public int getMethodOffset() {
-
+	public int getMethodOffset()
+	{
 		return offsetMethods;
 	}
 
@@ -227,14 +230,18 @@ public class CTentry {
 	//	}
 		return vTable.put(s, st);
 	}
-
+	
+	// This function returns 'true' if the variable 'locals' contained the offset passed in input. 
 	public boolean checkLocals(int offset)
 	{
 		return locals.contains(offset);
 	}
-	public Node getDec() {
+	
+	public Node getDec()
+	{
 		return dec;
 	}
+	
 	public void setNewOffset(int nO)
 	{
 		newOffset = nO;
@@ -244,10 +251,9 @@ public class CTentry {
 	{
 		return newOffset;
 	}
-
-
-	public HashSet<Integer> getLocals() {
+	
+	public HashSet<Integer> getLocals()
+	{
 		return locals;
-		
 	}
 }
