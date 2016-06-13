@@ -19,10 +19,10 @@ public class EqualNode implements Node {
 		Node r = right.typeCheck();
 		// Su tipi funzionali typechecking comunque fallisce, 
 		// altrimenti fallisce solo se lowestCommonAncestor ritorna null
-		Node leftLCA = FOOLlib.lowestCommonAncestor(l,r);
+		//Node leftLCA = FOOLlib.lowestCommonAncestor(l,r);
 		Node rightLCA = FOOLlib.lowestCommonAncestor(r,l);
 		
-		if ( leftLCA == null || rightLCA == null ||  l instanceof ArrowTypeNode  ||  r instanceof ArrowTypeNode )    	   
+		if (  rightLCA == null ||  l instanceof ArrowTypeNode  ||  r instanceof ArrowTypeNode )    	   
 		{
 			System.out.println("Incompatible types in equal");
 			System.exit(0);

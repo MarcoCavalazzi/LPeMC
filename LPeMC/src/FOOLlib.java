@@ -27,9 +27,9 @@ public class FOOLlib {
 			// We will now check all the parents (super-classes) of 'b' to see if they match with 'a'.
 			String tmp = "";
 			
-			tmp = superType.get( ((ClassTypeNode)b).getName());
+			tmp = superType.get( ((ClassTypeNode)a).getName());
 			
-			if( ((ClassTypeNode)a).getName().equals(tmp))
+			if( ((ClassTypeNode)b).getName().equals(tmp))
 			{
 				return true;
 			}
@@ -38,7 +38,7 @@ public class FOOLlib {
 			{
 				tmp = superType.get(tmp);
 
-				if( ((ClassTypeNode)a).getName().equals(tmp) )
+				if( ((ClassTypeNode)b).getName().equals(tmp) )
 				{
 					return true;
 				}
@@ -125,7 +125,7 @@ public class FOOLlib {
 			
 			/*
 			 * VERSIONE DEL PROF. SECONDO LE SPECIFICHE:
-			 *
+			 */
 			while(parentAname != null){
 				if( isSubtype(b, parentA) )
 				{
@@ -136,7 +136,7 @@ public class FOOLlib {
 				parentA = new ClassTypeNode(parentAname);
 			}
 		}
-			*/
+			/*
 			
 			// VERSIONE DI MARCO:
 			// First check for 'parentA'.
@@ -178,7 +178,7 @@ public class FOOLlib {
 			}
 		}
 		
-		
+		*/
 		
 		ArrowTypeNode res = new ArrowTypeNode();
 		if((a instanceof ArrowTypeNode) && (b instanceof ArrowTypeNode))

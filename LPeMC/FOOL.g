@@ -522,7 +522,7 @@ value	returns [Node ast]
          ctentryClass = classTable.get(((ClassTypeNode)entry.getType()).getName());
        else
        {  
-          System.out.println("Not object invocation");
+          System.out.println("Not object invocation, check: "+$i.text);
           System.exit(0);
        }    
      // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo

@@ -157,7 +157,7 @@ public class ExecuteVM {
 	private int k=1;	// Variable used while displaying (and saving on a file) the instructions.
 	private void dumpInstruction(){
 		System.out.println("----------------------------");
-		System.out.print("- INSTRUCTION: "+ k++ + " - ");
+		System.out.print("- INSTRUCTION: "+ k + " - ");
 		writer.println("----------------------------");
 		writer.print("- INSTRUCTION: "+ k++ + " - ");
 

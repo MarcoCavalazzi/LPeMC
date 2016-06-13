@@ -85,8 +85,7 @@ public class ClassNode implements Node{
 				val = overOffset.get(i);
 				if(val >=0)//cioè offset di metodo
 				{ 
-					if( !(FOOLlib.isSubtype( ((MethodNode)superEntry.allMethods.get(val)).getSymType(), 
-							((MethodNode)classEntry.allMethods.get(val)).getSymType() )) )
+					if( !(FOOLlib.isSubtype(((MethodNode)classEntry.allMethods.get(val)).getSymType() ,((MethodNode)superEntry.allMethods.get(val)).getSymType())) )
 					{
 						System.out.println("[ClassNode] Type check found a problem:");
 						System.out.println("-> method:"+((MethodNode)superEntry.allMethods.get(val)).getName()+" did not have a match in the child/extended class.");
@@ -96,8 +95,7 @@ public class ClassNode implements Node{
 				else
 				{
 					val = -(val)-1;
-					if( !(FOOLlib.isSubtype( ((FieldNode)superEntry.allFields.get(val)).getSymType(), 
-							((FieldNode)classEntry.allFields.get(val)).getSymType() )) )
+					if( !(FOOLlib.isSubtype(((FieldNode)classEntry.allFields.get(val)).getSymType(),((FieldNode)superEntry.allFields.get(val)).getSymType( ))) )
 					{
 						System.out.println("[ClassNode] Type check found a problem:");
 						System.out.println("-> field:"+((FieldNode)superEntry.allFields.get(val)).getName()+" did not have a match in the child/extended class.");
