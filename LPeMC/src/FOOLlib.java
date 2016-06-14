@@ -87,8 +87,17 @@ public class FOOLlib {
 
 			return true;	// Le relazioni di co-variazna sui parametri di ritorno e quelle di contro-varianza sui parametri in ingresso sono rispettate.
 		}
-
-		return a.getClass().equals(b.getClass())
+		
+		Class<? extends Node> leftTest;
+		Class<? extends Node> rightTest;
+		try{
+			leftTest = a.getClass();
+			rightTest = b.getClass();
+		}catch(Exception e){
+			return false;
+		}
+		
+		return leftTest.equals(rightTest)
 				|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode) ); 
 	}
 
