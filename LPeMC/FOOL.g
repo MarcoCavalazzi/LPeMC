@@ -157,7 +157,7 @@ cllist returns [ArrayList<Node> astlist]
 	        ctentry.addType( new ArrowTypeNode(constrPar, classItem) ); // adding the type to the ctentry
 	     }
 	     CLPAR//apri graffa
-	       (FUN mid=ID COLON retm=basic    // definizione di un metodo della classe
+	       (FUN mid=ID COLON retm=basic    // definizione di un metodo della classe. Esempio-> fun method:int ()
 	       {
              // Definizione del metodo
              MethodNode mNode = new MethodNode($mid.text,$retm.ast);
@@ -187,40 +187,42 @@ cllist returns [ArrayList<Node> astlist]
              HashMap<String,STentry> hmMethod = new HashMap<String,STentry>();  // Definizione della HashMap del metodo in symtable.
              symTable.add(hmMethod);
 	       }
-	       LPAR 
+	       LPAR
 	       {
 	          ArrayList<Node> parTypes = new ArrayList<Node>();  // parametri in input per il metodo
             int parOffset = 1;
 	       }
 	       (mp1=ID COLON mpt1=type 
 	       {
+	           // Leggiamo il primo parametro in input del metodo
 	           parTypes.add($mpt1.ast);
              ParNode fpar = new ParNode($mp1.text,$mpt1.ast);
-             mNode.addPar(fpar);
-             STentry tmpEntryPar = new STentry(fpar,nestingLevel,$mpt1.ast,parOffset);             
+             mNode.addPar(fpar);  // Aggiungiamo il parametro alla struttura dati del metodo
              
-             if ( hmMethod.put($mp1.text,tmpEntryPar) != null  ){
+             STentry tmpEntryPar = new STentry(fpar,nestingLevel,$mpt1.ast,parOffset);             
+             if ( hmMethod.put($mp1.text,tmpEntryPar) != null  ){  // Aggiungiamo il parametro alla symbol table
                 System.out.println("Parameter id "+$mp1.text+" at line "+$mp1.line+" already declared");
                 System.exit(0);
              }
              
-             parOffset++;
+             parOffset++;   // Incrementiamo l'offset per il prossimo parametro
 	       }
 	       (COMMA mpn=ID COLON mptn=type
 	       {
+	           // Leggiamo dal secondo parametro in poi in input del metodo
 	           parTypes.add($mptn.ast);
              ParNode par = new ParNode($mpn.text,$mptn.ast);
-             mNode.addPar(par);
+             mNode.addPar(par);  // Aggiungiamo il parametro alla struttura dati del metodo
              
              STentry stPar = new STentry(fpar,nestingLevel,$mptn.ast,parOffset);
-             if (hmMethod.put($mpn.text,stPar) != null ){
+             if (hmMethod.put($mpn.text,stPar) != null ){  // Aggiungiamo il parametro alla symbol table
                 System.out.println("Parameter id "+$mpn.text+" at line "+$mpn.line+" already declared");
                 System.exit(0);
              }
                
-             parOffset++;
+             parOffset++;   // Incrementiamo l'offset per il prossimo parametro
 
-	       })* )? RPAR
+	       })* )? RPAR   // Fine parametri del metodo
 	       {
 	           entry.addType( new ArrowTypeNode(parTypes , $retm.ast) );
              ArrayList<Node> letInMethodList = new ArrayList<Node>();       
@@ -230,36 +232,34 @@ cllist returns [ArrayList<Node> astlist]
 	           int innerOffset = 0; 
 	           nestingLevel++;
 	       }
-	       (VAR vid=ID COLON vt=type ASS ve=exp //se aggiungiamo var nel metodo, siamo in uno scope sintattico maggiore, per cui si crea una nuova hashmap, si aumenta il nestingLevel e poi si aggiunge a symTable
+	       (VAR vid=ID COLON vt=type ASS ve=exp // Se aggiungiamo var nel metodo, siamo in uno scope sintattico maggiore (per via del LET), per cui si crea una nuova hashmap, si aumenta il nestingLevel e poi si aggiunge a symTable
 	       {
 	           VarNode v = new VarNode($vid.text,$vt.ast,$ve.ast);
              $astlist.add(v);
+             
              HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
              symTable.add(varhm);
-             
              if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOffset++)) != null  )
              {
                  System.out.println("Var id "+$vid.text+" at line "+$vid.line+" already declared");
-                 System.exit(0); 
-             } 
+                 System.exit(0);
+             }
           }
 	        SEMIC)* IN 
 	        {
-	          
+	          // *********** Giuseppe, dici che possiamo togliere queste parentesi vuote?
 	        }
 	        )? varE=exp //varExp
 	        {
-	            //chiudere scope                       
+	            // Chiudiamo lo scope, decrementando anche il nesting level di riferimento.
               symTable.remove(nestingLevel--);           
-              mNode.addBody($varE.ast);
-              //aggiungo il metodo alla classe
-              classItem.addMethod(mNode); 
-              
+              mNode.addBody($varE.ast);     // Aggiungiamo la var al metodo ****** corretto?
+              classItem.addMethod(mNode);   // Aggiungiamo il metodo alla classe
 	        }
 	        SEMIC)* 
       CRPAR
       {
-        symTable.remove(nestingLevel--);  
+        symTable.remove(nestingLevel--);  // Chiudiamo lo scope.
       }
       )*
       
