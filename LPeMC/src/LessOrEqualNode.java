@@ -10,7 +10,7 @@ public class LessOrEqualNode implements Node {
 
 	@Override
 	public String toPrint(String s) {
-		return s+"LessOrEqualNode"   + 
+		return s+"LessOrEqualNode\n"+ 
 				left.toPrint(s+"  ")+   
 				right.toPrint(s+"  "); 		
 	}

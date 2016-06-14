@@ -17,7 +17,7 @@ public class NewNode implements Node{
 		String parlstr="";
 		for (Node par:parlist)
 			parlstr+=par.toPrint(s+"  ");		
-		return s+"\tNewNode: "+ id +"\n\t" 
+		return s+"NewNode: "+ id +"\n\t" 
 		+entry.toPrint(s+"  ")+"\n"
 		+parlstr;
 	}
@@ -39,7 +39,6 @@ public class NewNode implements Node{
 		// Per ogni parametro controlliamo che il tipo passato sia tipo o sottotipo di quello specificato nei parametri formali
 		for (int i=0; i<parlist.size(); i++) 
 		{ 
-
 			if (!(FOOLlib.isSubtype(parlist.get(i).typeCheck(), entry.getFields().get(i).typeCheck())) ) {
 				
 				System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id+"  The parameter is: "+parlist.get(i));

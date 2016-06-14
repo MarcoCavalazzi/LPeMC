@@ -19,7 +19,7 @@ public class ClassCallNode implements Node {
 	public String toPrint(String s) {
 		String str = s+"Class call " + id + " \n"+s+"  Parameters type: \n";
 		for(int j=0;j < par.size();j++){
-			str += s+"  "+par.get(j).toPrint(s+" ");
+			str += s+"  "+par.get(j).toPrint(s+"  ");
 		}
 		return str;
 	}
