@@ -418,7 +418,7 @@ term returns [Node ast]
   	;
 
 value	returns [Node ast]
-		: i=INTEGER {$ast= new NatNode(Integer.parseInt($i.text));}  
+		: i=INTEGER {$ast= new NatNode(Integer.parseInt($i.text));}
 		| TRUE  {$ast = new BoolNode(true);}
 	  | FALSE {$ast = new BoolNode(false);}
 	  | NULL  {$ast = new EmptyNode();}
@@ -666,7 +666,7 @@ NULL  : 'null' ;
 INT   : 'int' ;
 BOOL  : 'bool' ;
 ARROW : '->' ;  
-INTEGER : (('1'..'9')('0'..'9')*) | '0' ; 
+INTEGER : (('-')?('1'..'9')('0'..'9')*) | '0' ; 
 ID      : ('a'..'z'|'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')* ;
 WHITESP : ( '\t' | ' ' | '\r' | '\n' )+    { $channel=HIDDEN; } ;
  
