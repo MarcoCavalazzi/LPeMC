@@ -15,6 +15,7 @@ grammar FOOL;
 	private int nestingLevel = -1;
 	//livello ambiente con dichiarazioni piu' esterno è 0 (prima posizione ArrayList) invece che 1 (slides)
 	//il "fronte" della lista di tabelle symTable.get(nestingLevel)
+	boolean debuggingModeOn=false; // variabile che determina se stampare le print di debug o meno durante l'esecuzione. (false = non stampare)
 }
 
 /*------------------------------------------------------------------
@@ -274,7 +275,9 @@ declist	returns [ArrayList<Node> astlist]
              offset--;
           }
           
-          System.out.println("VAR    "+ v.toPrint(""));
+          if(debuggingModeOn){
+              System.out.println("VAR    "+ v.toPrint(""));
+          }
           
           // Recuperiamo l'HashMap del livello attuale e vi aggiungiamo la VAR.
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
@@ -639,7 +642,7 @@ RPAR    : ')' ;
 CLPAR   : '{' ;
 CRPAR   : '}' ;
 SEMIC   : ';' ;
-COLON   : ':' ; 
+COLON   : ':' ;
 COMMA   : ',' ;
 DOT : '.' ;
 OR  : '||';
@@ -647,7 +650,7 @@ AND : '&&';
 NOT : 'not' ;
 GR  : '>=' ;
 LE  : '<=' ;
-EQ  : '==' ;  
+EQ  : '==' ;
 ASS : '=' ;
 TRUE  : 'true' ;
 FALSE : 'false' ;
@@ -655,18 +658,18 @@ IF    : 'if' ;
 THEN  : 'then';
 ELSE  : 'else' ;
 PRINT : 'print' ;
-LET   : 'let' ; 
-IN    : 'in' ;  
+LET   : 'let' ;
+IN    : 'in' ;
 VAR   : 'var' ;
-FUN   : 'fun' ; 
-CLASS : 'class' ; 
-EXTENDS : 'extends' ; 
-NEW   : 'new' ; 
-NULL  : 'null' ;    
+FUN   : 'fun' ;
+CLASS : 'class' ;
+EXTENDS : 'extends' ;
+NEW   : 'new' ;
+NULL  : 'null' ;
 INT   : 'int' ;
 BOOL  : 'bool' ;
-ARROW : '->' ;  
-INTEGER : (('-')?('1'..'9')('0'..'9')*) | '0' ; 
+ARROW : '->' ;
+INTEGER : (('-')?('1'..'9')('0'..'9')*) | '0' ;
 ID      : ('a'..'z'|'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')* ;
 WHITESP : ( '\t' | ' ' | '\r' | '\n' )+    { $channel=HIDDEN; } ;
  

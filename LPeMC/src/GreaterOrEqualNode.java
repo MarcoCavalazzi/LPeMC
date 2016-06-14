@@ -12,7 +12,7 @@ public class GreaterOrEqualNode implements Node {
 
 	@Override
 	public String toPrint(String s) {
-		return s+"GreaterOrEqual"   + 
+		return s+"GreaterOrEqual\n"+ 
 				left.toPrint(s+"  ")+   
 				right.toPrint(s+"  "); 
 	}
