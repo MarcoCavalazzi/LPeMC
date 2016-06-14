@@ -60,12 +60,12 @@ public class LetInNode implements Node {
 			declcode+=dec.codeGeneration();
 
 		return 
-				"push -1\n"+	
+				"push -1\n"+			// Messo perché vogliamo uno spazio libero alla base dello stack
 				clcode+
 				declcode+
 				exp.codeGeneration()+
-				"halt\n"+
-				FOOLlib.getCode();
+				"halt\n"+				// Stop del programma
+				FOOLlib.getCode();		// Memorizziamo qui le funzioni, per andarle a richiamare, nel caso ci servano, attraverso la label. 
 	}
 
 }  
