@@ -283,7 +283,8 @@ declist	returns [ArrayList<Node> astlist]
           }
           
           System.out.println("VAR    "+ v.toPrint(""));
-            
+          
+          // Recuperiamo l'HashMap del livello attuale e vi aggiungiamo la VAR.
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
           STentry varEntry = new STentry(nestingLevel,$t.ast,offset--);
           if ( hm.put($i.text,varEntry) != null  ){
@@ -293,48 +294,54 @@ declist	returns [ArrayList<Node> astlist]
        }
        |
        FUN i=ID COLON t=basic
-       {  
-          //inserimento di ID nella symtable
+       {
+          // Creazione del FunNode e aggiunta in astlist
           FunNode f = new FunNode($i.text,$t.ast);
           $astlist.add(f);
-          HashMap<String,STentry> hm = symTable.get(nestingLevel);                
+          // Recuperiamo l'HashMap del livello attuale e vi aggiungiamo la FUN.
+          HashMap<String,STentry> hm = symTable.get(nestingLevel);
           STentry entry = new STentry(nestingLevel,offset);
-          offset=offset - 2;
+          offset = offset - 2;  // ****** come mai -2? Non dovrebbe essere +2?
           if ( hm.put($i.text,entry) != null ){
              System.out.println("FUN id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
           }
-          //creare una nuova hashmap per la symTable
-          nestingLevel++;
-          HashMap<String,STentry> hmn = new HashMap<String,STentry> ();
+          // Creiamo una nuova HashMap per la symTable per gestire il livello di nesting interno alla funzione.
+          nestingLevel++;   // andiamo "dentro" alla funzione.
+          HashMap<String,STentry> hmn = new HashMap<String,STentry> (); // HashMap che gestisce il contenuto della funzione.
           symTable.add(hmn);
        }
-       LPAR { ArrayList<Node> parTypes = new ArrayList<Node>(); int paroffset=1; } 
+       LPAR
+       {
+          ArrayList<Node> parTypes = new ArrayList<Node>();
+          int paroffset = 1;
+       }
        (
          fid=ID COLON fty=type
          {
-	          parTypes.add($fty.ast); 
+            // Gestione del parametro in input alla FUN
+	          parTypes.add($fty.ast);
 	          ParNode fpar = new ParNode($fid.text,$fty.ast);
 	          
-	          if($fty.ast instanceof ArrowTypeNode )            
+	          if($fty.ast instanceof ArrowTypeNode )  // Se di tipo funzionale
                paroffset++;
-             
-                      	        
-	          f.addPar(fpar);
-	                             
+            
+	          f.addPar(fpar);    // Aggiunta del parametro alla funzione
+	          
 	          if ( hmn.put($fid.text,new STentry(fpar,nestingLevel,$fty.ast,paroffset++)) != null  ){
 	             System.out.println("Parameter id "+$fid.text+" at line "+$fid.line+" already declared");
 	             System.exit(0);
 	          }
          }
          (
-	          COMMA id=ID COLON ty=type
+	          COMMA id=ID COLON ty=type  // parametri di input dal secondo in poi.
 	          {
+	             // Gestione degli altri parametri in input alla FUN (come per il primo parametro).
 		           parTypes.add($ty.ast); 
 		           ParNode par = new ParNode($id.text,$ty.ast);
 		           if($ty.ast instanceof ArrowTypeNode)
 		              paroffset++;
-             
+               
 		           f.addPar(par);
 		           if ( hmn.put($id.text,new STentry(par,nestingLevel,$ty.ast,paroffset++)) != null  ){
 		              System.out.println("Parameter id "+$id.text+" at line "+$id.line+" already declared");
@@ -342,7 +349,7 @@ declist	returns [ArrayList<Node> astlist]
 		           }
 	          }
          )*
-       )? 
+       )?
        RPAR { entry.addType( new ArrowTypeNode(parTypes, $t.ast) ); } 
        ( LET d=declist IN )?
        e=exp
@@ -363,18 +370,18 @@ basic returns [Node ast]
   :       INT  {$ast=new IntTypeNode();}
         | BOOL {$ast=new BoolTypeNode();} 
         | i=ID   {
-         int jj = nestingLevel;    
-         STentry classEntry = null;    
-         while (jj>=0 && classEntry==null){
-           classEntry=(symTable.get(jj--)).get($i.text);         
-         }       
-                  if(classEntry != null)
-                  {
-                    $ast=new ClassTypeNode($i.text);                  
-                   }
-                  else
-                  $ast=new IdNode();
-        }
+	         int jj = nestingLevel;    
+	         STentry classEntry = null;    
+	         while (jj>=0 && classEntry==null){
+	            classEntry=(symTable.get(jj--)).get($i.text);         
+	         }       
+	         if(classEntry != null)
+	         {
+	            $ast=new ClassTypeNode($i.text);                  
+	         }
+	         else
+	            $ast=new IdNode();
+         }
 	;	
 
 /*type: basic | arrow;
