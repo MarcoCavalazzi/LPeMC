@@ -268,15 +268,16 @@ cllist returns [ArrayList<Node> astlist]
 declist	returns [ArrayList<Node> astlist]
 	: {
 	    $astlist = new ArrayList<Node>() ;
-	    int offset=-2;
+	    int offset=-2;   // ******* Giuseppe, perché partiamo da -2? 
 	  }
-    (
+    ( // Possiamo trovarci a dichiarare VAR o FUNzioni
      (
        VAR i=ID COLON t=type ASS e=exp
        {
+          // Leggiamo l'input, creiamo la struttura dati della Var e l'aggiungiamo alla lista 'astlist'.
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
-          if($t.ast instanceof ArrowTypeNode)//se tipo funzionale, offset doppio 
+          if($t.ast instanceof ArrowTypeNode) // Se è di tipo funzionale usiamo un offset doppio per considerare ********** il puntatore e il valore???
           {
              offset--;
           }
@@ -289,7 +290,6 @@ declist	returns [ArrayList<Node> astlist]
              System.out.println("Var id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
           }
-       
        }
        |
        FUN i=ID COLON t=basic
@@ -301,7 +301,7 @@ declist	returns [ArrayList<Node> astlist]
           STentry entry = new STentry(nestingLevel,offset);
           offset=offset - 2;
           if ( hm.put($i.text,entry) != null ){
-             System.out.println("Fun id "+$i.text+" at line "+$i.line+" already declared");
+             System.out.println("FUN id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
           }
           //creare una nuova hashmap per la symTable
@@ -430,7 +430,6 @@ value	returns [Node ast]
        CTentry ctEntry=null; 
        ctEntry=classTable.get($i.text);
        
-       
        if(ctEntry==null)
        {
           System.out.println("Class "+$i.text+" at line "+$i.line+" not declared!!!!");
@@ -555,8 +554,8 @@ factor returns [Node ast]
     : f = value {$ast = $f.ast;}
     (
         EQ l=value {$ast = new EqualNode($ast,$l.ast);}
-      | GR l=value {$ast = new GreaterOrEqualNode($ast,$l.ast);} //GreaterOrEqualNode svolto
-      | LE l=value {$ast = new LessOrEqualNode($ast,$l.ast);} //LessOrEqualNode svolto
+      | GR l=value {$ast = new GreaterOrEqualNode($ast,$l.ast);}
+      | LE l=value {$ast = new LessOrEqualNode($ast,$l.ast);}
     )*
   ; 
 
