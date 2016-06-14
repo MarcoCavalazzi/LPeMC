@@ -13,7 +13,7 @@ grammar FOOL;
 	private ArrayList<HashMap<String,STentry>>  symTable = new ArrayList<HashMap<String,STentry>>();
 	private HashMap<String,CTentry> classTable = new HashMap<String,CTentry>();
 	private int nestingLevel = -1; // ***** non facciamo prima a togliere questo e togliere anche il "nestingLevel++" in prog LET IN ??
-	//livello ambiente con dichiarazioni piu' esterno √® 0 (prima posizione ArrayList) invece che 1 (slides)
+	//livello ambiente con dichiarazioni piu' esterno Ë 0 (prima posizione ArrayList) invece che 1 (slides)
 	//il "fronte" della lista di tabelle symTable.get(nestingLevel)
 }
 
@@ -22,7 +22,7 @@ grammar FOOL;
  *------------------------------------------------------------------*/
 
 prog	returns [Node ast]
-	 : e=exp SEMIC {$ast = new ProgNode($e.ast);}
+	 : e=exp SEMIC { $ast = new ProgNode($e.ast); }
         | LET 
             {
               nestingLevel++;
@@ -71,14 +71,13 @@ cllist returns [ArrayList<Node> astlist]
       }
 	    (EXTENDS cidext=ID
 	    {
-	            
            extendedEntry = classTable.get($cidext.text);
-                     
+           
            if(extendedEntry == null){
            System.out.println("Class id "+$cidext.text+" at line "+$cidext.line+" not declared");
               System.exit(0);
            }
-                     
+           
            ArrayList<Node> tmpFields = (ArrayList<Node>) extendedEntry.getFields().clone(); //.clone() √® necessario per non rischiare di copiare il riferimento all'oggetto
            ArrayList<Node> tmpMethods = (ArrayList<Node>) extendedEntry.getMethods().clone();
            ctentry.setFields(tmpFields);
@@ -96,17 +95,16 @@ cllist returns [ArrayList<Node> astlist]
 	     )? 
 	     LPAR 
 	     {
-           ArrayList<Node> constrPar = new ArrayList<Node>();//lista dei field della classe
+           ArrayList<Node> constrPar = new ArrayList<Node>(); // lista dei field della classe
        }
 	     (p1=ID COLON t1=basic 
 	     {
 	         // Aggiungiamo il field alla lista
 	         constrPar.add($t1.ast);
-	         // Aggiungiamo il field alla classe
+	         // Aggiungiamo il field alla classe, necessario poi per la code generation.
            FieldNode objField = new FieldNode($p1.text,$t1.ast,$cid.text);
            classItem.addField(objField);
            // Aggiungiamo il field alla virtual table della ctentry della classe
-           // ******* Giuseppe, spiegami please
            STentry tempEntry = new STentry(objField,nestingLevel,$t1.ast,ctentry.getFieldOffset());
            tempEntry.setClassName($cid.text);
            STentry tmpField = ctentry.getVirtualTable().put($p1.text,tempEntry); //restituisce una STentry se gi‡ presente in vTable
@@ -115,8 +113,8 @@ cllist returns [ArrayList<Node> astlist]
               if(ctentry.checkLocals(tmpField.getOffset())){ //se Ë true vuol dire che sto ridefinendo un field/method nella classe
                 System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared!");
                 System.exit(0);
-              }
-           }//**** fine richiesta di spiegazione
+              }// else: Ë overriding
+           }
            
            // Check anche su allFields e gestione della lista stessa ('allFields')
            if(ctentry.setFieldAndCheck(objField,$p1.text))
@@ -133,7 +131,6 @@ cllist returns [ArrayList<Node> astlist]
            FieldNode objFieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
            classItem.addField(objFieldN);      
            // Aggiungiamo il field alla virtual table della ctentry della classe
-           // ******* Giuseppe, spiegami please
            STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,ctentry.getFieldOffset());
            STentry tmpFieldN = ctentry.getVirtualTable().put($pn.text,tmpSTentry);
            if ( tmpFieldN  != null  )
@@ -147,7 +144,7 @@ cllist returns [ArrayList<Node> astlist]
            // Check anche su allFields e gestione della lista stessa ('allFields')
            if(ctentry.setFieldAndCheck(objFieldN,$pn.text))
               tmpSTentry.setOffset(ctentry.getFieldOffset());
-              tmpSTentry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'√® gi√† come campo, in caso positivo sovrascrive (overriding)
+           tmpSTentry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'√® gi√† come campo, in caso positivo sovrascrive (overriding)
            //******** doppio setOffset() ?? - fine richiesta spiegazione
            ctentry.addLocals(ctentry.getFieldOffset()); // Aggiungo l'offset del field in caso non sia stato ancora dichiarato
            ctentry.decFieldOffset();  // Decrementiamo il fieldOffset per il prossimo field
