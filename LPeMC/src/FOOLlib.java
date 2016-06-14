@@ -89,8 +89,7 @@ public class FOOLlib {
 		}
 
 		return a.getClass().equals(b.getClass())
-				|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode)  		  		   
-						); 
+				|| ( (a instanceof BoolTypeNode) && (b instanceof IntTypeNode) ); 
 	}
 
 	/** Questa funzione cerca il lowest common ancestor per i nodi in input e, se esiste, lo ritorna in output. Altrimenti ritorna 'null'.
