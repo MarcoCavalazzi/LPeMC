@@ -1,4 +1,3 @@
-
 public class OrNode implements Node {
 
 	private Node left;
@@ -26,7 +25,7 @@ public class OrNode implements Node {
 	public String codeGeneration(){
 		String l1=FOOLlib.freshLabel();
 		String l2=FOOLlib.freshLabel();
-		return left.codeGeneration() + "push 1\n"            // vado nel label 1 se almeno uno dei 2 termini ha 1 faccio push di 1 e vado in l2
+		return left.codeGeneration() + "push 1\n"            	// vado nel label 1 se almeno uno dei 2 termini ha 1 faccio push di 1 e vado in l2
 				+ "beq " + l1 + "\n" + right.codeGeneration()   //se entrambi sono diversi da 1, push 0 e vado in l2
 				+ "push 1\n"
 				+ "beq " + l1 + "\n" + "push 0\n" + "b "    

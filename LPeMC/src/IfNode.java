@@ -17,6 +17,7 @@ public class IfNode implements Node {
 	}
 	
 	public Node typeCheck() {
+		//La condizione deve essere un booleano
 		if (!(FOOLlib.isSubtype(new BoolTypeNode(), cond.typeCheck()))) {	// metodo che controllerà che il primo elemento sia di un tipo che è uguale al secondo oppure è un suo sottotipo. 
 			// Quindi accetterà: BOOL E BOOL, INT e INT, BOOL e INT.
 			System.out.println("non boolean condition in if");
@@ -35,15 +36,6 @@ public class IfNode implements Node {
 			return ret;
 		
 		return null;
-		/*
-		if (FOOLlib.isSubtype(t,e)) 
-			return e;
-		if (FOOLlib.isSubtype(e,t))
-			return t;
-		
-		System.out.println("Incompatible types in then else branches");
-		System.exit(0);
-		return null;*/
 	}
 	
 	public String codeGeneration() {
@@ -51,9 +43,9 @@ public class IfNode implements Node {
 		String l2=FOOLlib.freshLabel();
 		return cond.codeGeneration()+
 				"push 1\n"+
-				"beq "+l1+"\n"+
-				el.codeGeneration()+
-				"b "+l2+"\n"+
+				"beq "+l1+"\n"+     	// Se la condizione è vera salta ad "l1" per eseguire lo "then".
+				el.codeGeneration()+	// Mentre se è falsa esegue il codice dell'else...
+				"b "+l2+"\n"+			// ...e salta a l2 per proseguire.
 				l1+":\n"+
 				th.codeGeneration()+
 				l2+":\n";

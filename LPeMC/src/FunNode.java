@@ -7,30 +7,30 @@ public class FunNode implements Node, DecNode {
 	private ArrayList<Node> parlist = new ArrayList<Node>(); 
 	private ArrayList<Node> declist; 
 	private Node body;
+	
 	public FunNode (String i, Node t) {
-		id=i;
-		type=t;
+		id   = i;
+		type = t;
 	}
-
-	public void addDec (ArrayList<Node> d) {
-		declist=d;
+	
+	public void addDec (ArrayList<Node> d) {	// vecchio metodo, non utilizzato.
+		declist = d;
 	}  
 
 	public void addDecBody(ArrayList<Node> d, Node b)
 	{
 		declist = d;
+		body    = b;
+	}
+	
+	public void addBody(Node b){
 		body = b;
 	}
-
-
-	public void addBody(Node b){
-		body=b;
-	}
-
+	
 	public void addPar (Node p) {
 		parlist.add(p);
 	}  
-
+	
 	public String toPrint(String s) {
 		String parlstr="";
 		for (Node par:parlist)
@@ -52,44 +52,41 @@ public class FunNode implements Node, DecNode {
 		String popDec = "";
 		String popPar = "";
 		String funl=FOOLlib.freshFunLabel();
-
-		if(declist != null){//aggiunto il controllo se la nostra declist non risulti vuota
+		
+		if(declist != null){		// controlliamo che la nostra declist non risulti vuota
 			for(Node dec:declist){
 				decCode += dec.codeGeneration();	// creiamo il codice delle dichiarazioni
 			}
-
+			
 			for(Node dec:declist){
-				popDec += "pop\n";
+				popDec += "pop\n";	// Costruzione di popDec, dove settiamo i "pop" necessari poi per togliere i dec dallo stack.
 			}
 		}
-
-
+		
 		for(Node dec:parlist){
-			popPar += "pop\n";
+			popPar += "pop\n";	// Costruzione di popPar, dove settiamo i "pop" necessari poi per togliere i par dallo stack.
 		}
-
-
-		if(declist!=null)	
+		
+		// Nel caso di elementi funzionali aggiungiamo un "pop" aggiuntivo.
+		if(declist != null)
 		{
 			for(int i=0; i < declist.size();i++)
 			{
-
 				if(declist.get(i) instanceof FunNode)
 				{
 					popDec += "pop\n";
 				}
 			}
 		}
-
-
+		
+		// Nel caso di elementi funzionali aggiungiamo un "pop" aggiuntivo.
 		if(parlist != null)	
 		{
 			for(int i=0; i < parlist.size();i++)
 			{
-				if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)//decNode è corretto? è solo un'interfaccia!
+				if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
 				{
 					popPar += "pop\n";
-					//break;
 				}
 			}
 		}
@@ -100,22 +97,22 @@ public class FunNode implements Node, DecNode {
 				"lra\n"+    // load from ra sullo stack
 				decCode+	// codice delle dichiarazioni
 				body.codeGeneration()+
-				"srv\n"+	//salvo il risultato in un registro 	
-				popDec+		//devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
-				"sra\n"+    //salvo il return address				
+				"srv\n"+	// salvo il risultato in un registro 	
+				popDec+		// devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
+				"sra\n"+    // salvo il return address				
 				"pop\n"+	// pop dell'AL (access link)	
-				popPar+     //pop dei parametri che ho in parlist		
+				popPar+     // pop dei parametri che ho in parlist		
 				"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 				"lrv\n"+
 				"lra\n"+
-				"js\n"      //js salta all'indirizzo che è in cima allo stack e salva la prossima istruzione in ra.
+				"js\n"      // js salta all'indirizzo che è in cima allo stack e salva la prossima istruzione in ra.
 				);
 
 
 		return "lfp\npush "+funl+"\n";
 	}
 
-	//valore di ritorno non utilizzato
+	// Valore di ritorno non utilizzato
 	public Node typeCheck () {
 		if (declist!=null) 
 			for (Node dec:declist)

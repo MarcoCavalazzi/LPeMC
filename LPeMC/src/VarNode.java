@@ -1,4 +1,4 @@
-public class VarNode implements Node, DecNode {
+public class VarNode implements Node, DecNode { //Rappresenta una variabile
 
 	private String id;
 	private Node type;
@@ -18,7 +18,7 @@ public class VarNode implements Node, DecNode {
 
 	
 	public Node typeCheck () {
-		if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){   
+		if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){     // Controlla se exp e' effettivamente tipo o sottotipo di quello dichiarato
 			System.out.println("incompatible value for variable: "+id);
 			System.exit(0);
 		}     

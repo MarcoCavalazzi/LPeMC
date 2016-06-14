@@ -1,4 +1,4 @@
-public class ProgNode implements Node {
+public class ProgNode implements Node { // Rappresenta la radice dell'intero albero sintattico
 
 	private Node exp;
 
@@ -16,7 +16,7 @@ public class ProgNode implements Node {
 
 	public String codeGeneration() {
 		return exp.codeGeneration()+
-				"halt\n";
+				"halt\n";     //Terminazione del programma
 	}
 
 }  

@@ -1,4 +1,3 @@
-
 public class LessOrEqualNode implements Node {
 
 	private Node left;

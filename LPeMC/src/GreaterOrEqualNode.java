@@ -30,10 +30,10 @@ public class GreaterOrEqualNode implements Node {
 
 	// E' uguale al LessOrEqualNode. Cambia solo l'ordine degli elementi nello stack.
 	@Override
-	public String codeGeneration() { //bgr for >=, l'ho creato da 0 dal file SVM.g, ho aggiunto in ExecuteVM la corrispondente definizione, mentre in SVMParser.java ho aggiunto il necessario riferimento come public static final int
+	public String codeGeneration() {
 		String l1=FOOLlib.freshLabel();
 		String l2=FOOLlib.freshLabel();
-		return    right.codeGeneration()+
+		return  right.codeGeneration()+
 				left.codeGeneration()+
 				"bless "+l1+"\n"+
 				"push 0\n"+

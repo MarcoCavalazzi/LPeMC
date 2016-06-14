@@ -3,7 +3,6 @@ public class EmptyTypeNode implements Node {
 
 	@Override
 	public String toPrint(String indent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -14,7 +13,6 @@ public class EmptyTypeNode implements Node {
 
 	@Override
 	public String codeGeneration() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

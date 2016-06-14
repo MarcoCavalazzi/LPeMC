@@ -60,11 +60,11 @@ push 1
 add
 shp
 lfp
-push -3
+push -5
 add
 lw
 lfp
-push -5
+push -3
 add
 lw
 beq label2

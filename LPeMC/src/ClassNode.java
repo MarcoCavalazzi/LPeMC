@@ -49,11 +49,11 @@ public class ClassNode implements Node{
 		return ret;
 	}
 
-	/*
-	 * -ClassNode
-		si richiama sui figli che sono metodi, poi -> in caso di ereditarietà:
+	/** -ClassNode (typechecking)
+		 si richiama sui figli che sono metodi, poi -> in caso di ereditarietà:
 		 controlla che l'overriding sia di campi che di metodi sia corretto 
 		 usando i campi allFields e allMethods delle CTentry in classEntry e superEntry
+		 in particolare usa l'HashSet "locals" della CTentry in classEntry per stabilire su quali campi e metodi sia veramente necessario fare tale controllo
 		 (per semplicità controllare che tutti i campi ed i metodi del padre abbiano tipo 
 		 corretto nel figlio anche se, in realtà, non è avvenuto alcun overriding):
 		 il controllo avviene recuperando i tipi tramite il metodo getSymType() sui nodi in 
@@ -75,25 +75,25 @@ public class ClassNode implements Node{
 		if( superEntry != null ){	// If the parent class has been extended...
 			// ...check if the parent methods have been implemented (or overridden).
 
-			superEntry.getLocals().retainAll(classEntry.getLocals());//considero solo i metodi/field con overriding (retainAll fa una unione degli elementi di locals di superEntry e classEntry
-
-			List<Integer> overOffset = new ArrayList<Integer>(superEntry.getLocals());			
+			superEntry.getLocals().retainAll(classEntry.getLocals()); // Considero solo i metodi/field con overriding (retainAll fa una unione degli elementi di locals di superEntry e classEntry)
+			
+			List<Integer> overOffset = new ArrayList<Integer>(superEntry.getLocals());
 			int val = 0;
 			for(int i = 0; i < overOffset.size();i++) 
 			{	
 				val = overOffset.get(i);
-				if(val >=0)//cioè offset di metodo
+				if(val >= 0)//cioè offset di metodo
 				{ 
 					if( !(FOOLlib.isSubtype(((MethodNode)classEntry.allMethods.get(val)).getSymType() ,((MethodNode)superEntry.allMethods.get(val)).getSymType())) )
 					{
 						System.out.println("[ClassNode] Type check found a problem:");
 						System.out.println("-> method:"+((MethodNode)superEntry.allMethods.get(val)).getName()+" did not have a match in the child/extended class.");
 						System.exit(0);
-					}					
-				}	
+					}
+				}
 				else
 				{
-					val = -(val)-1;
+					val = -(val)-1;		// operazione necessaria per il layout. Così andiamo a leggere i fields.
 					if( !(FOOLlib.isSubtype(((FieldNode)classEntry.allFields.get(val)).getSymType(),((FieldNode)superEntry.allFields.get(val)).getSymType( ))) )
 					{
 						System.out.println("[ClassNode] Type check found a problem:");
@@ -128,29 +128,18 @@ public class ClassNode implements Node{
 		dec.add(method);
 	}
 
-
-
 	public void setMethod(MethodNode Node)
 	{
 		methods.add(Node);
 	}
-
-
-
-
+	
 	public String codeGeneration() {
-
-
-
 		for (MethodNode method:methods)
 		{
 			method.setLabel(FOOLlib.freshFunLabel());
 			method.codeGeneration();
-		}	
-
-
-
-		return "";//forse ci vuole ClassTypeNode
-
+		}
+		
+		return "";
 	}
 }

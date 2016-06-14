@@ -16,7 +16,7 @@ public class BoolNode implements Node {
 	}   
 
 	public String codeGeneration() {
-		return val?"push 1\n":"push 0\n";	// Istruzione che dirà di fare push sullo stack del valore (e andiamo a capo).
+		return val?"push 1\n":"push 0\n";	// Istruzione che dirà di fare push sullo stack del valore (e andiamo a capo). true = 1, false = 0.
 	}
 
 }  

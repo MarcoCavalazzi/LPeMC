@@ -22,9 +22,11 @@ public class PlusNode implements Node {
 	}  
 
 	public String codeGeneration() {
-		// aggiungiamo un'istruzione che dirà di fare push sullo stack del valore (e andiamo a capo). Notazione polacca!
-		// non possiamo già calcolare il risultato e pushare quello sullo stack perché potremmo avere anche due espressioni (non solo due numeri banali).
-		return left.codeGeneration() + right.codeGeneration() + "add\n";
+		// aggiungiamo un'istruzione che dir? di fare push sullo stack del valore (e andiamo a capo). Notazione polacca!
+		// non possiamo gi? calcolare il risultato e pushare quello sullo stack perch? potremmo avere anche due espressioni (non solo due numeri banali).
+		return 	left.codeGeneration()
+				+ right.codeGeneration() 
+				+ "add\n";
 	}
 
 }  

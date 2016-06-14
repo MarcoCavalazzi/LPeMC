@@ -4,8 +4,8 @@ public class EqualNode implements Node {
 	private Node right;
 
 	public EqualNode (Node l, Node r) {
-		left=l;
-		right=r;
+		left  = l;
+		right = r;
 	}
 
 	public String toPrint(String s) {
@@ -14,21 +14,22 @@ public class EqualNode implements Node {
 	}
 
 	public Node typeCheck() {
-		
+		// Typecheck sui due operandi
 		Node l = left.typeCheck();
 		Node r = right.typeCheck();
+		
 		// Su tipi funzionali typechecking comunque fallisce, 
 		// altrimenti fallisce solo se lowestCommonAncestor ritorna null
-
-		Node rightLCA = FOOLlib.lowestCommonAncestor(r,l);
+		
+		Node rightLCA = FOOLlib.lowestCommonAncestor(r,l);	// Ci basta controllare solo rightLCA senza badare a leftLCA perché comunque entrambi devono restituire qualcosa diverso da 'null' se esiste un lowestCommonAncestor.
 		
 		if (  rightLCA == null ||  l instanceof ArrowTypeNode  ||  r instanceof ArrowTypeNode )    	   
 		{
 			System.out.println("Incompatible types in equal");
 			System.exit(0);
 		}
+		
 		return new BoolTypeNode();
-
 	}  
 
 	public String codeGeneration() {

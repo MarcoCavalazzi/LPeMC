@@ -5,7 +5,7 @@ import org.antlr.runtime.*;
 public class Test {
     public static void main(String[] args) throws Exception {
     	
-        String fileName = "testOptional_punto1.fool";//"testOptional_punto2.fool";//
+        String fileName = "quicksort.fool";//"testOptional_punto1.fool";//"testOptional_punto2.fool";//
         
         ANTLRFileStream input = new ANTLRFileStream(fileName);
         FOOLLexer lexer = new FOOLLexer(input);

@@ -16,16 +16,16 @@ public class MethodNode implements Node, DecNode {
 	public void addBody(Node b){
 		body=b;
 	}
-
-	public void addParBody(ArrayList<Node> p, Node b)
-	{
+	
+	public void addPar (Node p) {
+		parlist.add(p);
+	} 
+	
+	public void addParBody(ArrayList<Node> p, Node b){
 		parlist = p;
 		body    = b;			  
 	}
-
-	public void addPar (Node p) {
-		parlist.add(p);
-	}  
+	 
 
 	public String toPrint(String s) {
 		String parlstr="";
@@ -54,16 +54,13 @@ public class MethodNode implements Node, DecNode {
 				if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
 				{
 					popPar += "pop\n" + "pop\n" ;
-					//break;
 				}
 			}
 		}
-
-
 		FOOLlib.putCode(
 				"\n"+label+":\n"+
 						"cfp\n" + //setta $fp
-						"lra\n" +			 
+						"lra\n" + 
 						body.codeGeneration()+ //body della funzione
 						"srv\n" + //salvo il risultato in un registro 			 
 						"sra\n" + //salvo il return address
@@ -74,8 +71,7 @@ public class MethodNode implements Node, DecNode {
 						"lra\n" +
 						"js\n"    //js salta all'indirizzo che è in cima allo stack
 				);
-
-		//return "push "+label+"\n";
+		
 		return "";
 
 	}
@@ -93,7 +89,6 @@ public class MethodNode implements Node, DecNode {
 
 	@Override
 	public Node getSymType() {
-
 		return type;
 	}
 

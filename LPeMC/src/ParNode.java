@@ -1,4 +1,4 @@
-public class ParNode implements Node, DecNode {
+public class ParNode implements Node, DecNode { // Rappresenta il paramentro di un metodo o di una funzione
 
 	private String id;
 	private Node type;
@@ -26,8 +26,10 @@ public class ParNode implements Node, DecNode {
 	public Node getSymType() {
 		return type;
 	}
-	//funzioni per l'OO
-	public ParNode (String i, Node t,String iCP){
+	
+	// Funzioni per l'OO
+	
+	public ParNode (String i, Node t, String iCP){ // Identificatore, tipo, nome della classe
 		id=i;
 		type=t;
 		isClassPar = iCP;

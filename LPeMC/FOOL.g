@@ -12,7 +12,7 @@ grammar FOOL;
 @members{
 	private ArrayList<HashMap<String,STentry>>  symTable = new ArrayList<HashMap<String,STentry>>();
 	private HashMap<String,CTentry> classTable = new HashMap<String,CTentry>();
-	private int nestingLevel = -1; // ***** non facciamo prima a togliere questo e togliere anche il "nestingLevel++" in prog LET IN ??
+	private int nestingLevel = -1;
 	//livello ambiente con dichiarazioni piu' esterno è 0 (prima posizione ArrayList) invece che 1 (slides)
 	//il "fronte" della lista di tabelle symTable.get(nestingLevel)
 }
@@ -142,10 +142,9 @@ cllist returns [ArrayList<Node> astlist]
            }         
            
            // Check anche su allFields e gestione della lista stessa ('allFields')
-           if(ctentry.setFieldAndCheck(objFieldN,$pn.text))
+           if(ctentry.setFieldAndCheck(objFieldN,$pn.text)) //controlla in allFields se c'Ã¨ giÃ  come campo, in caso positivo sovrascrive (overriding)
               tmpSTentry.setOffset(ctentry.getFieldOffset());
-           tmpSTentry.setOffset( ctentry.getFieldOffset() );//controlla in allFields se c'Ã¨ giÃ  come campo, in caso positivo sovrascrive (overriding)
-           //******** doppio setOffset() ?? - fine richiesta spiegazione
+           
            ctentry.addLocals(ctentry.getFieldOffset()); // Aggiungo l'offset del field in caso non sia stato ancora dichiarato
            ctentry.decFieldOffset();  // Decrementiamo il fieldOffset per il prossimo field
 	     }
@@ -242,15 +241,11 @@ cllist returns [ArrayList<Node> astlist]
                  System.exit(0);
              }
           }
-	        SEMIC)* IN 
-	        {
-	          // *********** Giuseppe, dici che possiamo togliere queste parentesi vuote?
-	        }
-	        )? varE=exp //varExp
+	        SEMIC)* IN )? varE=exp //varExp
 	        {
 	            // Chiudiamo lo scope, decrementando anche il nesting level di riferimento.
               symTable.remove(nestingLevel--);           
-              mNode.addBody($varE.ast);     // Aggiungiamo la var al metodo ****** corretto?
+              mNode.addBody($varE.ast);     // Aggiungiamo la var al metodo
               classItem.addMethod(mNode);   // Aggiungiamo il metodo alla classe
 	        }
 	        SEMIC)* 
@@ -265,7 +260,7 @@ cllist returns [ArrayList<Node> astlist]
 declist	returns [ArrayList<Node> astlist]
 	: {
 	    $astlist = new ArrayList<Node>() ;
-	    int offset=-2;   // ******* Giuseppe, perché partiamo da -2? 
+	    int offset = -2;   // Partiamo da -2 perché il nostro stack il nostro stack parte da 9998 anziché da 10000.
 	  }
     ( // Possiamo trovarci a dichiarare VAR o FUNzioni
      (
@@ -274,7 +269,7 @@ declist	returns [ArrayList<Node> astlist]
           // Leggiamo l'input, creiamo la struttura dati della Var e l'aggiungiamo alla lista 'astlist'.
           VarNode v = new VarNode($i.text,$t.ast,$e.ast);
           $astlist.add(v);
-          if($t.ast instanceof ArrowTypeNode) // Se è di tipo funzionale usiamo un offset doppio per considerare ********** il puntatore e il valore???
+          if($t.ast instanceof ArrowTypeNode) // Se è di tipo funzionale usiamo un offset doppio. Ci consente di memorizzare sia l'indirizzo della funzione sia l'FP (frame pointer) a questo AR (Activation Record).
           {
              offset--;
           }
@@ -298,7 +293,7 @@ declist	returns [ArrayList<Node> astlist]
           // Recuperiamo l'HashMap del livello attuale e vi aggiungiamo la FUN.
           HashMap<String,STentry> hm = symTable.get(nestingLevel);
           STentry entry = new STentry(nestingLevel,offset);
-          offset = offset - 2;  // ****** come mai -2? Non dovrebbe essere +2?
+          offset = offset - 2;  // perché è funzionale
           if ( hm.put($i.text,entry) != null ){
              System.out.println("FUN id "+$i.text+" at line "+$i.line+" already declared");
              System.exit(0);
@@ -350,10 +345,11 @@ declist	returns [ArrayList<Node> astlist]
        RPAR { entry.addType( new ArrowTypeNode(parTypes, $t.ast) ); } 
        ( LET d=declist IN )?
        e=exp
-       {//chiudere scope
+       {
+          // Chiudiamo lo scope
           symTable.remove(nestingLevel--);
-          f.addDecBody($d.astlist, $e.ast);//abbiamo cambiato add body con addDecBody (dichiarazione dei parametri ed espressione del corpo della funzione)
-       } 
+          f.addDecBody($d.astlist, $e.ast);
+       }
       ) SEMIC
      )*
 	;
@@ -361,197 +357,197 @@ declist	returns [ArrayList<Node> astlist]
 type  returns [Node ast]
         : bas=basic {$ast= $bas.ast;}
         | art=arrow {$ast= $art.ast;}
-    ; 
+  ;
 
 basic returns [Node ast]
-  :       INT  {$ast=new IntTypeNode();}
-        | BOOL {$ast=new BoolTypeNode();} 
+        : INT  {$ast=new IntTypeNode();}
+        | BOOL {$ast=new BoolTypeNode();}
         | i=ID {
 		         int nl = nestingLevel;
-		         STentry classEntry = null;    
+		         STentry classEntry = null;
+		         // Check per vedere se l'ID è di tipo classe.
 		         while (nl>=0 && classEntry==null){
-		            classEntry=(symTable.get(nl--)).get($i.text);         
+		            classEntry = (symTable.get(nl--)).get($i.text);
 		         }
-		                
+		         
 		         if(classEntry != null)
-		            $ast=new ClassTypeNode($i.text);
+		            $ast = new ClassTypeNode($i.text);
 		         else
-		            $ast=new IdNode();
+		            $ast = new IdNode();
           }
-	;	
+	;
 
-/*type: basic | arrow;
-basic: INT | BOOL | ID ;
-arrow: LPAR (type(COMMA type)*)? RPAR ARROW basic;
-*/
 arrow returns [Node ast]
         : LPAR 
           {
-            //creazione di una lista vuota per i parametri
+            // Creazione di una lista vuota per i parametri
             ArrayList<Node> funParTypes = new ArrayList<Node>();
           }
           (
             funParT=type 
             {
-              funParTypes.add($funParT.ast);
+              funParTypes.add($funParT.ast);    // Aggiunta parametro
             }
             (COMMA funParTy=type 
             {
-              funParTypes.add($funParTy.ast);
+              funParTypes.add($funParTy.ast);   // Aggiunta parametro (dal secondo in poi)
             }
           )*)? RPAR ARROW retTy=basic
           {
-           //creazione del nodo della funzione High Order
-           $ast = new ArrowTypeNode(funParTypes,$retTy.ast);
+	           // Creazione del nodo della funzione High Order
+	           $ast = new ArrowTypeNode(funParTypes,$retTy.ast);
           }
     ;
+    
 exp	returns [Node ast]
- 	: f=term {$ast= $f.ast;}
+ 	  : f=term {$ast= $f.ast;}
  	    (
 	 	    PLUS l=term  {$ast = new PlusNode ($ast,$l.ast);}
 	 	    | MINUS l=term {$ast = new MinusNode($ast,$l.ast);}
 	 	    | OR l=term    {$ast = new OrNode   ($ast,$l.ast);}
  	    )*
- 	;
+ 	  ;
  	
 term returns [Node ast]
-	: f=factor {$ast= $f.ast;}
+	  : f=factor {$ast= $f.ast;}
 	    (
 		    MULT l=factor {$ast= new MultNode ($ast,$l.ast);}
 		    | DIV  l=factor {$ast= new DivNode ($ast,$l.ast);}
 		    | AND  l=factor {$ast= new AndNode ($ast,$l.ast);}
 	    )*
-	;
+  	;
 
 value	returns [Node ast]
-	: i=INTEGER {$ast= new NatNode(Integer.parseInt($i.text));}  
-	| TRUE  {$ast = new BoolNode(true);}
-  | FALSE {$ast = new BoolNode(false);}
-  | NULL  {$ast = new EmptyNode();}
-  | NEW i=ID
-    {
-       CTentry ctEntry=null; 
-       ctEntry=classTable.get($i.text);
-       
-       if(ctEntry==null)
-       {
-          System.out.println("Class "+$i.text+" at line "+$i.line+" not declared!!!!");
-          System.exit(0); 
-       }
-    }
-    LPAR
-    {
-       ArrayList<Node> argList = new ArrayList<Node>();
-    }
-    (fa=exp
-    {
-       argList.add($fa.ast);
-    }
-	     (COMMA a=exp
-	     {
-	        argList.add($a.ast);
-	     }
-	     )* 
-	  )?
-    {
-         $ast = new NewNode($i.text,ctEntry,argList);     
-    }
-    RPAR
-        
-  | IF LPAR x=exp RPAR THEN CLPAR y=exp CRPAR 
-       ELSE CLPAR z=exp CRPAR 
-    {$ast= new IfNode($x.ast,$y.ast,$z.ast);}   
-  | NOT LPAR  x=exp RPAR  {$ast = new NotNode($x.ast);}
-  | PRINT LPAR e=exp RPAR {$ast = new PrintNode($e.ast);}
-  | LPAR e=exp RPAR {$ast = $e.ast;}
-  |  i=ID
-    {//cercare la dichiarazione (cioÃ¨ quando lo usa)
-	    int j  = nestingLevel;
-	    STentry entry     = null; 
-	    CTentry classEntry = null;
-	    classEntry = classTable.get($i.text);
-	        	     
-	    if(classEntry==null)    
+		: i=INTEGER {$ast= new NatNode(Integer.parseInt($i.text));}  
+		| TRUE  {$ast = new BoolNode(true);}
+	  | FALSE {$ast = new BoolNode(false);}
+	  | NULL  {$ast = new EmptyNode();}
+	  | NEW i=ID
 	    {
-         while (j>=0 && entry==null)
-         entry=(symTable.get(j--)).get($i.text);
-      }
-      
-	    if (entry == null && classEntry == null){
-	       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!!");	       
-	       System.exit(0);
+	       CTentry ctEntry=null; 
+	       ctEntry=classTable.get($i.text);  // Troviamo la classe di riferimento
+	       
+	       if(ctEntry==null) // Se la classe scritta dall'utente non esiste...
+	       {
+	          System.out.println("Class "+$i.text+" at line "+$i.line+" not declared!!");
+	          System.exit(0); 
+	       }
 	    }
-	     	 
-	    if( classEntry != null )	        
-	       $ast = new IdNode($i.text,classEntry,nestingLevel);//per distinguere i nome di classe e id generico
-	    else
-	       $ast = new IdNode($i.text,entry,nestingLevel);
+	    LPAR
+	    {
+	       ArrayList<Node> argList = new ArrayList<Node>();  // I parametri della classe
+	    }
+	    (
+	      fa=exp    // first argument
+		    {
+		       argList.add($fa.ast);
+		    }
+			  (COMMA a=exp  // arguments dal secondo in poi
+	      {
+	         argList.add($a.ast);
+	      }
+	      )*
+		  )?
+	    {
+	       $ast = new NewNode($i.text,ctEntry,argList);
+	    }
+	    RPAR
 	    
-                 
-    }
-    (
-      LPAR { ArrayList<Node> argList = new ArrayList<Node>(); } 
-      (fa=exp {argList.add($fa.ast);}
-        (COMMA a=exp {argList.add($a.ast);})*
-      )?
-      {
-      
-        if( classEntry != null) 
-        {
-            System.out.println("Call of class Id "+$i.text);
-            System.exit(0);
-        }
-        else
-            $ast=new CallNode($i.text,entry,argList,nestingLevel);
-
-      }    
-     RPAR
-    |  DOT cmid=ID
-    {
-       CTentry ctentryClass = null;
-       STentry entryM = null;
-       if(entry != null) 
-         ctentryClass = classTable.get(((ClassTypeNode)entry.getType()).getName());
-       else
-       {  
-          System.out.println("Not object invocation, check: "+$i.text);
-          System.exit(0);
-       }    
-     // ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
-//       -ClassCallNode  ID1.ID2() 
-//        STentry dell'ID1 in campo "entry"
-//        STentry dell'ID2 in campo "methodEntry"
-//        (ID2 cercato in vTable della CTentry della classe del tipo di ID1)      
-       //ricerca dell'entry del metodo all'interno della classe relativa ad esso trovata in precedenza
-
-       entryM = ctentryClass.getVirtualTable().get($cmid.text);
-       
-       if (entryM==null){
-         System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
-         System.exit(0); 
-       }        
-  
-    }
-     LPAR
-     {
-        ArrayList<Node> mArgList = new ArrayList<Node>();
-     }
-     (cmex1=exp
-     {
-        mArgList.add($cmex1.ast);
-     }
-     (COMMA cmexn=exp
-     {
-        mArgList.add($cmexn.ast);
-     }
-     )* )? 
-     {
-        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel, ctentryClass);
-     }
-     RPAR    
-     )? 
-     
- 	;	 
+	  | IF LPAR x=exp RPAR 
+	       THEN CLPAR y=exp CRPAR 
+	       ELSE CLPAR z=exp CRPAR 
+	    {$ast= new IfNode($x.ast,$y.ast,$z.ast);}   
+	  | NOT   LPAR x=exp RPAR  {$ast = new NotNode($x.ast);}
+	  | PRINT LPAR e=exp RPAR {$ast = new PrintNode($e.ast);}
+	  | LPAR e=exp RPAR {$ast = $e.ast;}
+	  | i=ID
+	    {
+	      // Cerchiamo la dichiarazione (cioe' quando lo usa)
+		    int nl = nestingLevel;
+		    STentry entry      = null;
+		    CTentry classEntry = null;
+		    
+		    // Cerchiamo tra le classi
+		    classEntry = classTable.get($i.text);
+		    if(classEntry==null)  // se non è tra le classi...
+		    {
+		       // Cerchiamo se è definito in Symbol Table nei nesting level dall'attuale a quelli più esterni.
+	         while (nl>=0 && entry==null)
+	            entry=(symTable.get(nl--)).get($i.text);
+	      }
+	      
+		    if (entry == null && classEntry == null){   // Se non è stato trovato da nessuna parte...
+		       System.out.println("Id "+$i.text+" at line "+$i.line+" not declared!!");
+		       System.exit(0);
+		    }
+		    
+		    // Definiamo l'IdNode
+		    if( classEntry != null )	        
+		       $ast = new IdNode($i.text,classEntry,nestingLevel); // Usiamo questo approccio (con tipi diversi in input) per distinguere i nome di classe e id generico
+		    else
+		       $ast = new IdNode($i.text,entry,nestingLevel);
+		  
+		  }
+	    (
+	      LPAR { ArrayList<Node> argList = new ArrayList<Node>(); }
+	      (
+	        fa=exp {argList.add($fa.ast);}
+	        ( COMMA a=exp {argList.add($a.ast);} )*
+	      )?
+	      {
+	        if( classEntry != null)
+	        {
+	            System.out.println("Call of class Id "+$i.text);
+	            System.exit(0);
+	        }
+	        else
+	            $ast=new CallNode($i.text,entry,argList,nestingLevel);
+	        
+	     }
+	     RPAR
+	     | 
+	     DOT cmid=ID
+	     {
+	       CTentry ctentryClass = null;
+	       STentry entryM = null;
+	       
+	       if(entry != null) 
+	          ctentryClass = classTable.get(((ClassTypeNode)entry.getType()).getName());  // Ricerca della entry relativa alla classe dell'oggetto istanza su cui viene richiamato il metodo
+	       else
+	       {  
+	          System.out.println("Not object invocation, check: "+$i.text);
+	          System.exit(0);
+	       }    
+	       
+	       // Ricerca dell'entry del metodo all'interno della classe relativa ad esso trovata in precedenza
+	       entryM = ctentryClass.getVirtualTable().get($cmid.text);
+	       
+	       if (entryM == null){  // Se il metodo richiamato non esiste...
+	         System.out.println("Method Call "+$cmid.text+" at line "+$cmid.line+" not declared");
+	         System.exit(0);
+	       }
+	     }
+	     LPAR
+	     {
+	        ArrayList<Node> mArgList = new ArrayList<Node>();
+	     }
+	     (
+	       cmex1=exp   // class method first argument
+		     {
+		        mArgList.add($cmex1.ast);
+		     }
+		     (COMMA cmexn=exp   // class method n-th argument
+		     {
+		        mArgList.add($cmexn.ast);
+		     }
+		     )*
+	     )? 
+	     {
+	        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel);
+	     }
+	     RPAR    
+	    )?
+	 	;
 
 factor returns [Node ast]
     : f = value {$ast = $f.ast;}
@@ -567,7 +563,7 @@ factor returns [Node ast]
  * GRAMMAR RULES
  *------------------------------------------------------------------*/
 /*
-**prog  : expr SEMIC                        
+prog  : expr SEMIC                        
         | LET cllist declist IN expr SEMIC
         ;
 
@@ -579,35 +575,35 @@ cllist  : (CLASS ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )
               CRPAR)*
         ; 
 
-**declist : (
+declist : (
             (   VAR ID COLON type ASS expr
               | FUN ID COLON basic LPAR (ID COLON type (COMMA ID COLON type)* )? RPAR (LET declist IN)? expr 
             ) SEMIC 
           )*
         ;
 
-**expr  : term 
+expr  : term 
           (   PLUS term  
             | MINUS term 
             | OR t2=term
           ) * 
         ;  
 
-**term  : factor 
+term  : factor 
       (   MULT factor 
         | DIV  factor 
         | AND  factor 
       )*
     ;
     
-**factor  : value 
+factor  : value 
       (   EQ value 
       | GR value 
       | LE value 
     )*
   ;     
     
-**value : 
+value : 
     INTEGER 
   | TRUE      
   | FALSE       
@@ -621,17 +617,16 @@ cllist  : (CLASS ID (EXTENDS ID)? LPAR (ID COLON basic (COMMA ID COLON basic)* )
        | DOT ID LPAR (expr (COMMA expr)* )? RPAR )?    
         ; 
                
-**type    :  basic | arrow 
+type    :  basic | arrow 
         ;
 
-**basic   : INT               
+basic   : INT               
         | BOOL              
-  | ID                        
-  ;  
+			  | ID                        
+			  ;  
     
-**arrow   : LPAR (type (COMMA type)* )? RPAR ARROW basic 
-  ;           	
- 	*/
+arrow   : LPAR (type (COMMA type)* )? RPAR ARROW basic ;           	
+*/
 /*------------------------------------------------------------------
  * LEXER RULES
  *------------------------------------------------------------------*/

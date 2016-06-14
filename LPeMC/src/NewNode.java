@@ -11,13 +11,14 @@ public class NewNode implements Node{
 		entry = ct;
 		parlist = p;
 	}
+	
 	@Override
 	public String toPrint(String s) {
 		String parlstr="";
 		for (Node par:parlist)
 			parlstr+=par.toPrint(s+"  ");		
-		return s+"NewNode: "+ id +"\n\t" 
-		+entry.toPrint(s+"  ")
+		return s+"\tNewNode: "+ id +"\n\t" 
+		+entry.toPrint(s+"  ")+"\n"
 		+parlstr;
 	}
 
@@ -33,8 +34,9 @@ public class NewNode implements Node{
 		if ( !(entry.getFields().size() == parlist.size()) ) {	// controlliamo che il numero dei parametri formali sia uguale al numero di parametri passati in input.
 			System.out.println("Wrong number of parameters in the instantiation  of "+id+" and parlist size is: "+parlist.size());
 			System.exit(0);
-		}  
-		// ora controlliamo che il tipo degli argomenti sia minore o uguale al p.get (che è già un tipo, il tipo del parametro formale che ho recuperato dall'elenco che era dentro al TypNode)
+		}
+		
+		// Per ogni parametro controlliamo che il tipo passato sia tipo o sottotipo di quello specificato nei parametri formali
 		for (int i=0; i<parlist.size(); i++) 
 		{ 
 
@@ -59,14 +61,12 @@ public class NewNode implements Node{
 					"push 1\n"+ 
 					"add\n"+
 					"shp\n";
-					
 		}
 		
 		return 	
 				makeParCode()+	
 				"lhp\n"+		
 				makeMethodCode();								
-
 
 	}
 
@@ -83,8 +83,7 @@ public class NewNode implements Node{
 					"push 1\n"+ 
 					"add\n"+
 					"shp\n";
-		
-
+					
 		}
 		return code;
 	}
@@ -97,7 +96,6 @@ public class NewNode implements Node{
 		{
 
 			mLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
-
 			mLabel += 
 					"lhp\n"+
 					"sw\n" +

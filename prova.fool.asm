@@ -1,6 +1,12 @@
 push -1
+push 40000
 lhp
-push function0
+sw
+lhp
+push 1
+add
+shp
+push 50000
 lhp
 sw
 lhp
@@ -23,13 +29,12 @@ push 1
 add
 shp
 lhp
-push function0
-lhp
 sw
 lhp
 push 1
 add
 shp
+lhp
 push function2
 lhp
 sw
@@ -37,6 +42,27 @@ lhp
 push 1
 add
 shp
+push function4
+lhp
+sw
+lhp
+push 1
+add
+shp
+push 5000
+lhp
+sw
+lhp
+push 1
+add
+shp
+push 20000
+lhp
+sw
+lhp
+push 1
+add
+shp
 lhp
 push function0
 lhp
@@ -45,65 +71,60 @@ lhp
 push 1
 add
 shp
-push function2
+push function1
 lhp
 sw
 lhp
 push 1
 add
 shp
-push function3
-lhp
-sw
-lhp
-push 1
-add
-shp
+lfp
 lfp
 push -3
 add
 lw
 lfp
-push -5
+push -2
 add
 lw
-beq label2
+lfp
+push -2
+add
+lw
+push 1
+add
+lw
+js
+lfp
+push -4
+add
+lw
+push -1
+beq label10
 push 0
-b label3
-label2:
+b label11
+label10:
 push 1
-label3:
+label11:
 push 1
-beq label0
+beq label8
 lfp
 lfp
-push -5
+push -4
 add
 lw
 lfp
-push -5
+push -4
 add
 lw
-push 2
+push 0
 add
 lw
 js
-b label1
-label0:
-lfp
-lfp
-push -3
-add
-lw
-lfp
-push -3
-add
-lw
-push 1
-add
-lw
-js
-label1:
+b label9
+label8:
+push 0
+label9:
 print
 halt
 
@@ -111,7 +132,11 @@ halt
 function0:
 cfp
 lra
-push 1
+lfp
+lw
+push -1
+add
+lw
 srv
 sra
 pop
@@ -124,7 +149,11 @@ js
 function1:
 cfp
 lra
-push 2
+lfp
+lw
+push -2
+add
+lw
 srv
 sra
 pop
@@ -137,7 +166,11 @@ js
 function2:
 cfp
 lra
-push 3
+lfp
+lw
+push -1
+add
+lw
 srv
 sra
 pop
@@ -150,9 +183,174 @@ js
 function3:
 cfp
 lra
-push 4
+push 30000
+lfp
+lfp
+push 1
+add
+lw
+lfp
+push 1
+add
+lw
+push 0
+add
+lw
+js
+lfp
+lfp
+push 1
+add
+lw
+lfp
+push 1
+add
+lw
+push 1
+add
+lw
+js
+add
+bless label2
+push 0
+b label3
+label2:
+push 1
+label3:
+push 1
+beq label0
+push -1
+b label1
+label0:
+lfp
+lfp
+lw
+push -1
+add
+lw
+lfp
+lw
+push -1
+add
+lw
+push 0
+add
+lw
+js
+lhp
+sw
+lhp
+push 1
+add
+shp
+lhp
+push function0
+lhp
+sw
+lhp
+push 1
+add
+shp
+label1:
 srv
 sra
+pop
+pop
+sfp
+lrv
+lra
+js
+
+
+function4:
+cfp
+lra
+push 20000
+lfp
+lfp
+push 1
+add
+lw
+lfp
+push 1
+add
+lw
+push 0
+add
+lw
+js
+bless label6
+push 0
+b label7
+label6:
+push 1
+label7:
+push 1
+beq label4
+push -1
+b label5
+label4:
+lfp
+lfp
+lw
+push -1
+add
+lw
+lfp
+lw
+push -1
+add
+lw
+push 1
+add
+lw
+js
+lhp
+sw
+lhp
+push 1
+add
+shp
+lfp
+lfp
+lw
+push -1
+add
+lw
+lfp
+lw
+push -1
+add
+lw
+push 0
+add
+lw
+js
+lhp
+sw
+lhp
+push 1
+add
+shp
+lhp
+push function0
+lhp
+sw
+lhp
+push 1
+add
+shp
+push function1
+lhp
+sw
+lhp
+push 1
+add
+shp
+label5:
+srv
+sra
+pop
 pop
 sfp
 lrv

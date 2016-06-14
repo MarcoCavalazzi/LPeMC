@@ -15,27 +15,26 @@ public class ArrowTypeNode implements Node {
 		ret=r;
 	}
 	
-	public String toPrint(String s) { //
+	public String toPrint(String s) {
 		String parlstr="";
 		for (Node par:parlist)
 			parlstr+=par.toPrint(s+"  ");
 		return s+"ArrowType\n" + parlstr + ret.toPrint(s+"  ->") ; 
 	}
 
-	public Node getRet () { //
+	public Node getRet () {
 		return ret;
 	}
 
-	public ArrayList<Node> getPar () { //
+	public ArrayList<Node> getPar () {
 		return parlist;
 	}
 
-	public ArrayList<Node> getParList () { //
+	public ArrayList<Node> getParList () {
 		return parlist;
 	}
 
 	public Node typeCheck () {
-		
 		return new ArrowTypeNode(parlist,ret);
 	}
 
@@ -43,11 +42,11 @@ public class ArrowTypeNode implements Node {
 		return "";
 	}
 
-	public void addParListElem(Node node) {
+	public void addParListElem(Node node) {	// This function adds a parameter to the function.
 		parlist.add(node);
 	}
-
-	public void setRet(Node lowestRes) {
+	
+	public void setRet(Node lowestRes) {	// This function sets the return node of the function.
 		ret = lowestRes;
 	}
 

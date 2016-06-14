@@ -1,4 +1,4 @@
-public class NatNode implements Node {
+public class NatNode implements Node { // Rappresenta un valore intero
 
 	private Integer val;
 

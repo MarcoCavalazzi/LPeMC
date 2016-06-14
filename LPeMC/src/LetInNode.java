@@ -33,21 +33,23 @@ public class LetInNode implements Node {
 		return s+"Let\n" + clliststr + declstr + "In\n"+ exp.toPrint(s+"  ") +"EndLetIn\n"; 
 	}
 
+	// Viene effettuato il type checking fi tutti i "dec" e tutte le "classi" (vedi declist e cllist).
+	// Se in uno di loro viene trovato un problema il programma si fermerà facendo notare il tipo di problema incontrato.
 	public Node typeCheck () {
-
+		
 		for (Node dec:declist)
 			dec.typeCheck();
-
+		
 		if(cllist != null)
 			for(Node cl:cllist)
 				cl.typeCheck();
-
+		
 		return exp.typeCheck();
 	}
 
 	// Questa funzione stamperà un valore per ognuna delle dichiarazioni, mostrando lo stato dello stack.
 	public String codeGeneration() {
-
+		
 		String clcode="";
 		if(cllist!=null){
 			for(Node cl:cllist)
@@ -58,7 +60,7 @@ public class LetInNode implements Node {
 			declcode+=dec.codeGeneration();
 
 		return 
-				"push -1\n"+
+				"push -1\n"+	****// Giuseppe: commenta qui cosa fa la code generation per favore. Ad esempio io non capisco perché mette -1, l'halt o se l'ultima istruzione è utile o futile/sbagliata (non si ferma all'halt il programma??).
 				clcode+
 				declcode+
 				exp.codeGeneration()+

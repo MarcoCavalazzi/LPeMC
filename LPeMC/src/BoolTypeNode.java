@@ -6,10 +6,9 @@ public class BoolTypeNode implements Node {
 	public String toPrint(String s) {
 		return s+"BoolType\n";  
 	}
-
-	//non utilizzato
-	public Node typeCheck() {
-		return null;	// volendo si può restituire BoolNode(false);
+	
+	public Node typeCheck(){	// non utilizzato
+		return null;
 	}
 
 	public String codeGeneration() {
