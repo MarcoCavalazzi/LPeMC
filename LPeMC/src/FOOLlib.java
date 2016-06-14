@@ -88,6 +88,7 @@ public class FOOLlib {
 			return true;	// Le relazioni di co-variazna sui parametri di ritorno e quelle di contro-varianza sui parametri in ingresso sono rispettate.
 		}
 		
+		// Questa parte è un test per vedere se si tratta di classi. Se così non fosse allora avremmo un'eccezione.
 		Class<? extends Node> leftTest;
 		Class<? extends Node> rightTest;
 		try{
