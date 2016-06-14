@@ -37,23 +37,12 @@ public class IdNode implements Node {
 	public Node typeCheck () {
 
 		if( entry == null ){
-			System.out.println("Id "+id+" is a class");
-			System.exit(0);
+			System.out.println("Id "+id+" is a class");//si può verificare anche sia id di classe anche controllando il tipo di entry, se è null è di classe
+			System.exit(0);								//ma abbiamo semplicemente gestito questo caso con il fatto che al costruttore possiamo passare una stentry o una ctentry in base al fatto che sia id di classe o generico
 		}
 		if( entry.getIsMethod() ){
 			System.out.println("Id "+id+" is a method");
 			System.exit(0);
-		}
-
-		**** come gestiamo questo commento? //credo ci sia da aggiungere varList.getType() instance of ArrowTypeNode
-		//ma come ottengo la lista dei parametri o delle variabili che possono essere di tipo funzionale?
-		if(entry.getType() instanceof ClassTypeNode)
-		{
-			if( id.equals(entry.getClassName()) || (id.equals(entry.getMethodName())) )
-			{	
-				System.out.println("Id "+id+" already declared");
-				System.exit(0);	
-			}	
 		}
 
 		return entry.getType();

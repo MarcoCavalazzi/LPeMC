@@ -60,7 +60,7 @@ public class LetInNode implements Node {
 			declcode+=dec.codeGeneration();
 
 		return 
-				"push -1\n"+	****// Giuseppe: commenta qui cosa fa la code generation per favore. Ad esempio io non capisco perché mette -1, l'halt o se l'ultima istruzione è utile o futile/sbagliata (non si ferma all'halt il programma??).
+				"push -1\n"+	
 				clcode+
 				declcode+
 				exp.codeGeneration()+
