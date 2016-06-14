@@ -12,7 +12,7 @@ grammar FOOL;
 @members{
 	private ArrayList<HashMap<String,STentry>>  symTable = new ArrayList<HashMap<String,STentry>>();
 	private HashMap<String,CTentry> classTable = new HashMap<String,CTentry>();
-	private int nestingLevel = -1;
+	private int nestingLevel = -1; // ***** non facciamo prima a togliere questo e togliere anche il "nestingLevel++" in prog LET IN ??
 	//livello ambiente con dichiarazioni piu' esterno è 0 (prima posizione ArrayList) invece che 1 (slides)
 	//il "fronte" della lista di tabelle symTable.get(nestingLevel)
 }
@@ -369,19 +369,18 @@ type  returns [Node ast]
 basic returns [Node ast]
   :       INT  {$ast=new IntTypeNode();}
         | BOOL {$ast=new BoolTypeNode();} 
-        | i=ID   {
-	         int jj = nestingLevel;    
-	         STentry classEntry = null;    
-	         while (jj>=0 && classEntry==null){
-	            classEntry=(symTable.get(jj--)).get($i.text);         
-	         }       
-	         if(classEntry != null)
-	         {
-	            $ast=new ClassTypeNode($i.text);                  
-	         }
-	         else
-	            $ast=new IdNode();
-         }
+        | i=ID {
+		         int nl = nestingLevel;
+		         STentry classEntry = null;    
+		         while (nl>=0 && classEntry==null){
+		            classEntry=(symTable.get(nl--)).get($i.text);         
+		         }
+		                
+		         if(classEntry != null)
+		            $ast=new ClassTypeNode($i.text);
+		         else
+		            $ast=new IdNode();
+          }
 	;	
 
 /*type: basic | arrow;
