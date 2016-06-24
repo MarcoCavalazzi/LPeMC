@@ -29,7 +29,7 @@ assembly:
 	  | LOADW           {code[i++] = LOADW;}
 	  | e=LABEL COL     {labelAdd.put($e.text,i);}
 	  | BRANCH e=LABEL  {code[i++] = BRANCH;
-                       labelRef.put(i++,$e.text);}
+                       labelRef.put(i++,$e.text);}  // salta una cella del codice. Verrà riempita dopo.
 	  | BRANCHEQ e=LABEL {code[i++] = BRANCHEQ;
                         labelRef.put(i++,$e.text);}
 	  | BRANCHLESS e=LABEL {code[i++] = BRANCHLESS;
@@ -46,11 +46,12 @@ assembly:
 	  | STOREHP         {code[i++] = STOREHP;}
 	  | PRINT           {code[i++] = PRINT;}
 	  | HALT            {code[i++] = HALT;}
-	  )* { 
+	  )* {
+	       // Sostituiamo i riferimenti salvati strada facendo nel codice con gli interi associati alle label definite con "LABEL COL". 
 	       for (Integer refAdd: labelRef.keySet()) {
 	          code[refAdd]=labelAdd.get(labelRef.get(refAdd));
 		     }
-		   } ;
+		   };
  	 
 /*------------------------------------------------------------------
  * LEXER RULES

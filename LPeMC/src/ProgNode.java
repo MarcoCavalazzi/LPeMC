@@ -19,4 +19,4 @@ public class ProgNode implements Node { // Rappresenta la radice dell'intero alb
 				"halt\n";     //Terminazione del programma
 	}
 
-}  
+}

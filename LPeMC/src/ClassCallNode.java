@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+//Serve quando richiamiamo un metodo della classe, es nomeClasse.metodo().
 public class ClassCallNode implements Node {
 
 	private String id;
@@ -55,8 +55,8 @@ public class ClassCallNode implements Node {
 		
 		return t.getRet();
 	}
-
-
+	
+	
 	public String codeGeneration() {
 		
 		String parCode = "";	
@@ -70,29 +70,27 @@ public class ClassCallNode implements Node {
 		
 		// Recupera valore dell'ID1 (object pointer) dall'AR dove è dichiarato con meccanismo usuale di risalita catena statica		
 		return 
-				"lfp\n"+
+				"lfp\n"+	// FP attuale. Non utilizzato in classCallNode, usato fuori.
 				parCode+	
-				"lfp\n"+
+				"lfp\n"+	// Andiamo a salvare sullo Stack l'object pointer dell'oggetto in questione. Serve dopo, ne fa uso il metodo per ad esempio richiamare un altro metodo della classe che si sta richiamando dall'interno del metodo. Oppure anche per ritrovare il parametro della classe dall'interno del metodo.
+				getAR+		// Trova l'indirizzo dell'AR dove è dichiarato entry e lo mette in Stack.
+				"push "+entry.getOffset()+"\n"+	// troviamo l'object pointer dell'oggetto all'interno dell'AR
+				"add\n"+
+				"lw\n"+		// troviamo l'object pointer e lo mettiamo sullo Stack.
+				"lfp\n"+	// da qui le istruzioni vanno a ritrovare l'object pointer dell'oggetto (lo rifacciamo)
 				getAR+
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+
-				"lw\n"+
-				"lfp\n"+
-				getAR+
-				"push "+entry.getOffset()+"\n"+
-				"add\n"+
-				"lw\n"+	
-				"push "+methodEntry.getOffset()+"\n"+		  		
+				"lw\n"+		// Ora abbiamo l'object pointer.
+				"push "+methodEntry.getOffset()+"\n"+	// gli aggiungiamo l'offset del metodo 
 				"add\n"+
 				"lw\n"+
-				"js\n";
-
+				"js\n";		// e andiamo a quell'indirizzo.
+	
 	}
-
+	
 	public String getClassName(){
 		return ((ClassNode)((ArrowTypeNode)entry.getType()).getRet()).getName();
-
 	}
-
 
 }

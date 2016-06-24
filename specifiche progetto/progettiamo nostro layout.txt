@@ -1,11 +1,11 @@
 LAYOUT AR FUNZIONI IN SLIDES:
 
-CL:address (fp) di AR chiamante
+CL: address (fp) di AR chiamante
 valore ultimo (m-esimo) parametro         [offset m-1]
 .
 .
 valore primo parametro                    [offset   1]
-AL: address (fp) di AR dichiarazione (cioè di dove la funzione è dichiarata)	   <- $fp in codice body della funz
+AL: address (fp) di AR dichiarazione (cioè di dove la funzione è dichiarata)  <- $fp in codice body della funz
 Return Address                           
 Valore prima var dichiarata 		  	  [offset -2]
 Valore seconda var 			  			  [offset -3]

@@ -4,7 +4,7 @@ public class NewNode implements Node{
 
 	private String id;
 	private CTentry entry;
-	private ArrayList<Node> parlist; 
+	private ArrayList<Node> parlist; // parametri passati in input
 
 	public NewNode(String i, CTentry ct, ArrayList<Node> p ) {
 		id = i;
@@ -38,12 +38,12 @@ public class NewNode implements Node{
 		
 		// Per ogni parametro controlliamo che il tipo passato sia tipo o sottotipo di quello specificato nei parametri formali
 		for (int i=0; i<parlist.size(); i++) 
-		{ 
+		{
 			if (!(FOOLlib.isSubtype(parlist.get(i).typeCheck(), entry.getFields().get(i).typeCheck())) ) {
 				
 				System.out.println("Wrong type for "+(i+1)+"-th parameter in the invocation of: "+id+"  The parameter is: "+parlist.get(i));
 				System.exit(0);
-			} 
+			}
 		}
 		return entry.getDec().typeCheck();
 	}
@@ -76,13 +76,12 @@ public class NewNode implements Node{
 		{
 			code += parlist.get(i).codeGeneration();			
 			code +=
-					"lhp\n"+ //codice per aggiornare l'heap, in pratica mettiamo l'hp nello stack, tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell' heap
+					"lhp\n"+ //codice per aggiornare l'HEAP, in pratica mettiamo l'hp nello stack e tramite sw andiamo nell'indirizzo di memoria di hp e, facendo un'ulteriore pop dallo stack, aggiungiamo quest'ultimo valore nel suddetto indirizzo dell'heap
 					"sw\n" +					
 					"lhp\n"+ //carico l'heap pointer corrente
-					"push 1\n"+ 
+					"push 1\n"+ // e lo incremento
 					"add\n"+
 					"shp\n";
-					
 		}
 		return code;
 	}
@@ -99,7 +98,7 @@ public class NewNode implements Node{
 					"lhp\n"+
 					"sw\n" +
 					"lhp\n"+ //carico l'heap pointer corrente	
-					"push 1\n"+								 					 
+					"push 1\n"+	// e lo incremento
 					"add\n"+
 					"shp\n";
 		}

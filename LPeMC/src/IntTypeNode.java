@@ -16,4 +16,4 @@ public class IntTypeNode implements Node {
 		return "";
 	}
 
-}  
+}

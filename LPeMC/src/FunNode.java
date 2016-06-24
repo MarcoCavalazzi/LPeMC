@@ -5,7 +5,7 @@ public class FunNode implements Node, DecNode {
 	private String id;
 	private Node type; 
 	private ArrayList<Node> parlist = new ArrayList<Node>(); 
-	private ArrayList<Node> declist; 
+	private ArrayList<Node> declist; // le variabili dichiarate all'interno della funzione.
 	private Node body;
 	
 	public FunNode (String i, Node t) {
@@ -107,7 +107,6 @@ public class FunNode implements Node, DecNode {
 				"lra\n"+
 				"js\n"      // js salta all'indirizzo che è in cima allo stack e salva la prossima istruzione in ra.
 				);
-
 
 		return "lfp\npush "+funl+"\n";
 	}

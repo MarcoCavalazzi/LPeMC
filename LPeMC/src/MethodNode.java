@@ -53,20 +53,20 @@ public class MethodNode implements Node, DecNode {
 			{
 				if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
 				{
-					popPar += "pop\n" + "pop\n" ;
+					popPar += "pop\n" ;// tolto un "pop" extra. Dovrebbe essere sbagliato metterne 2 extra.
 				}
 			}
 		}
 		FOOLlib.putCode(
 				"\n"+label+":\n"+
-						"cfp\n" + //setta $fp
-						"lra\n" + 
+						"cfp\n" + //setta $fp. Copy stack pointer into frame pointer.
+						"lra\n" + // load from ra sullo stack
 						body.codeGeneration()+ //body della funzione
 						"srv\n" + //salvo il risultato in un registro 			 
 						"sra\n" + //salvo il return address
 						"pop\n" + //pop dell'AL
 						popPar  + //pop dei parametri che ho in parlist
-						"sfp\n" + //ripristino l'$fp al control link (CL) 
+						"sfp\n" + //ripristino l'$fp al control link (CL). Store top into frame pointer. 
 						"lrv\n" +
 						"lra\n" +
 						"js\n"    //js salta all'indirizzo che è in cima allo stack

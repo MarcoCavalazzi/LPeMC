@@ -25,7 +25,7 @@ public class CallNode implements Node {
 	}
 	
 	public Node typeCheck () {  // Check dei tipi
-		// Controlliamo che l'entry sia effettivamente un ArrowTypNode
+		// Controlliamo che l'entry sia effettivamente un ArrowTypeNode
 		ArrowTypeNode t=null;
 		if (entry.getType() instanceof ArrowTypeNode) 
 			t = (ArrowTypeNode) entry.getType(); 
@@ -63,20 +63,20 @@ public class CallNode implements Node {
 		}
 
 		return    
-				"lfp\n"+	
+				"lfp\n"+
 				parCode+
-				"lfp\n"+	
-				getAR+		
+				"lfp\n"+
+				getAR+	// trova l'indirizzo dell'AR giusto
 				"push "+entry.getOffset()+"\n"+
 				"add\n"+
 				"lw\n"+
-				"lfp\n"+	  			
-				getAR+
+				"lfp\n"+
+				getAR+	// recupera il CL del chiamante
 				"push "+entry.getOffset()+"\n"+
 				"push 1\n"+
 				"sub\n"+
 				"add\n"+
-				"lw\n"+		
+				"lw\n"+
 				"js\n";
 	}
 

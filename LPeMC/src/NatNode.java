@@ -18,4 +18,4 @@ public class NatNode implements Node { // Rappresenta un valore intero
 		return "push "+val+"\n";	// aggiungiamo un'istruzione che dirà di fare push sullo stack del valore (e andiamo a capo).
 	}
 
-}  
+}

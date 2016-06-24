@@ -76,6 +76,7 @@ public class ClassNode implements Node{
 			// ...check if the parent methods have been implemented (or overridden).
 
 			superEntry.getLocals().retainAll(classEntry.getLocals()); // Considero solo i metodi/field con overriding (retainAll fa una unione degli elementi di locals di superEntry e classEntry)
+			// Otteniamo i soli offset presenti in entrambi i 'locals' e su quelli andiamo a fare i confronti.
 			
 			List<Integer> overOffset = new ArrayList<Integer>(superEntry.getLocals());
 			int val = 0;

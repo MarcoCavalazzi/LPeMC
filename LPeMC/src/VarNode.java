@@ -21,7 +21,7 @@ public class VarNode implements Node, DecNode { //Rappresenta una variabile
 		if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){     // Controlla se exp e' effettivamente tipo o sottotipo di quello dichiarato
 			System.out.println("incompatible value for variable: "+id);
 			System.exit(0);
-		}     
+		}
 		return null;
 	}
 

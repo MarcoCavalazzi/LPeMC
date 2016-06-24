@@ -39,12 +39,12 @@ prog	returns [Node ast]
 
 
 cllist returns [ArrayList<Node> astlist]  
-   : { 
+   : {
 	     $astlist = new ArrayList<Node>() ;	     
-	   } 
-	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe 
+	   }
+	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe
 	   {
-         ClassNode classItem = new ClassNode($cid.text);               
+         ClassNode classItem = new ClassNode($cid.text);
          $astlist.add(classItem);
          // Initializing local variables
          CTentry extendedEntry = null;
@@ -546,7 +546,7 @@ value	returns [Node ast]
 		     )*
 	     )? 
 	     {
-	        $ast = new ClassCallNode($cmid.text, entry,entryM, mArgList, nestingLevel);
+	        $ast = new ClassCallNode($cmid.text, entry, entryM, mArgList, nestingLevel);
 	     }
 	     RPAR    
 	    )?

@@ -29,7 +29,7 @@ public class LessOrEqualNode implements Node {
 	public String codeGeneration(){ //bless per <=
 		String l1=FOOLlib.freshLabel();
 		String l2=FOOLlib.freshLabel();
-		return left.codeGeneration()+
+		return  left.codeGeneration()+
 				right.codeGeneration()+
 				"bless "+l1+"\n"+
 				"push 0\n"+
