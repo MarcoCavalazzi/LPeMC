@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+// Usato per le funzioni, quando vengono richiamate.
 public class CallNode implements Node {
 
 	private String id;
@@ -7,7 +7,7 @@ public class CallNode implements Node {
 	private ArrayList<Node> parlist; 
 	private int nl;
 	
-	// Contructor
+	// Constructor
 	public CallNode (String i, STentry e, ArrayList<Node> p, int n) {
 		id=i;
 		entry=e;
@@ -56,13 +56,13 @@ public class CallNode implements Node {
 		for(int i=parlist.size()-1; i>=0; i--){
 			parCode += parlist.get(i).codeGeneration();
 		}
-
+		
 		String getAR = "";
 		for(int i=0; i<nl-entry.getNestinglevel(); i++){
 			getAR += "lw\n";
 		}
-
-		return    
+		
+		return 
 				"lfp\n"+
 				parCode+
 				"lfp\n"+

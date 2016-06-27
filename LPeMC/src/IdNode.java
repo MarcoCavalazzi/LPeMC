@@ -71,13 +71,13 @@ public class IdNode implements Node {
 			 * [a offset messo in symbol table  ] FP ad AR dichiarazione funzione
 			 * [a offset messo in symbol table-1] indir funzione (per invocazione suo codice)
 			 */
-			return  // Salviamo sullo Stack l'FP ad AR dichiarazione funzione
+			return  // Salviamo sullo Stack l'FP ad AR dichiarazione funzione. FP del frame dove è dichiarata la funzione.
 					"lfp\n"+
 					getAR+		// Andiamo nel suo AR. getAR ci da l'AL.
 					"push "+entry.getOffset()+"\n"+
 					"add\n"+
 					"lw\n"+
-					// Salviamo ora sullo Stack l'indir della funzione (per invocazione del suo codice)
+					// Salviamo ora sullo Stack l'indir della funzione (per invocazione del suo codice). La sua label.
 					"lfp\n"+
 					getAR+		// Andiamo nel suo AR. getAR ci da l'AL.
 					"push "+entry.getOffset()+"\n"+

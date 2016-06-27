@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class FunNode implements Node, DecNode {
 
 	private String id;
-	private Node type; 
+	private Node type;
 	private ArrayList<Node> parlist = new ArrayList<Node>(); 
 	private ArrayList<Node> declist; // le variabili dichiarate all'interno della funzione.
 	private Node body;
@@ -92,16 +92,16 @@ public class FunNode implements Node, DecNode {
 		}
 
 		FOOLlib.putCode(
-				"\n"+funl+":\n"+		
+				"\n"+funl+":\n"+
 				"cfp\n"+	// setta il registro $fp / copy stack pointer into frame pointer
 				"lra\n"+    // load from ra sullo stack
 				decCode+	// codice delle dichiarazioni
 				body.codeGeneration()+
-				"srv\n"+	// salvo il risultato in un registro 	
+				"srv\n"+	// salvo il risultato in un registro
 				popDec+		// devo svuotare lo stack, e faccio pop tanti quanti sono le var/fun dichiarate
-				"sra\n"+    // salvo il return address				
-				"pop\n"+	// pop dell'AL (access link)	
-				popPar+     // pop dei parametri che ho in parlist		
+				"sra\n"+    // salvo il return address
+				"pop\n"+	// pop dell'AL (access link)
+				popPar+     // pop dei parametri che ho in parlist
 				"sfp\n"+	// ripristino il registro $fp al CL, in maniera che sia l'fp dell'AR del chiamante.
 				"lrv\n"+
 				"lra\n"+

@@ -5,7 +5,7 @@ import org.antlr.runtime.*;
 public class Test {
     public static void main(String[] args) throws Exception {
     	
-        String fileName = "quicksort.fool";//"prova.fool"
+        String fileName = "prova.fool";//"quicksort.fool"
         
         ANTLRFileStream input = new ANTLRFileStream(fileName);
         FOOLLexer lexer = new FOOLLexer(input);
@@ -42,7 +42,7 @@ public class Test {
         
         System.out.println("\n--- Code execution ---");
         ExecuteVM vm = new ExecuteVM(parserVM.code);
-        vm.cpu();  
+        vm.cpu();
         
     }
 }

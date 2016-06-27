@@ -158,7 +158,7 @@ lhp
 push 1
 add
 shp
-push 3
+push -3
 lhp
 sw
 lhp

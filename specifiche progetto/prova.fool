@@ -19,7 +19,7 @@ let
     fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
       then {new TradingAcc(loan.getMon(),loan.getInv())} 
       else {null};
-  } 
+  }
     
   var bl:BankLoan = new MyBankLoan(new TradingAcc(50000,40000));
   var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);

@@ -38,9 +38,9 @@ prog	returns [Node ast]
 	;
 
 
-cllist returns [ArrayList<Node> astlist]  
+cllist returns [ArrayList<Node> astlist]
    : {
-	     $astlist = new ArrayList<Node>() ;	     
+	     $astlist = new ArrayList<Node>();
 	   }
 	   (CLASS cid=ID  //metto in symbol table level 0 l'ID della classe
 	   {
@@ -119,7 +119,7 @@ cllist returns [ArrayList<Node> astlist]
            
            // Check anche su allFields e gestione della lista stessa ('allFields')
            if(ctentry.setFieldAndCheck(objField,$p1.text))
-               tempEntry.setOffset(ctentry.getFieldOffset());//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)    
+               tempEntry.setOffset( tmpField.getOffset() );//controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)    
            
            ctentry.addLocals(ctentry.getFieldOffset()); // Aggiungo l'offset del field in caso non sia stato ancora dichiarato
            ctentry.decFieldOffset();  // Decrementiamo il fieldOffset per il prossimo field
@@ -130,7 +130,7 @@ cllist returns [ArrayList<Node> astlist]
            constrPar.add($tn.ast);
            // Aggiungiamo il field alla classe
            FieldNode objFieldN = new FieldNode($pn.text,$tn.ast,$cid.text);
-           classItem.addField(objFieldN);      
+           classItem.addField(objFieldN);
            // Aggiungiamo il field alla virtual table della ctentry della classe
            STentry tmpSTentry = new STentry(objFieldN,nestingLevel,$tn.ast,ctentry.getFieldOffset());
            STentry tmpFieldN = ctentry.getVirtualTable().put($pn.text,tmpSTentry);
@@ -139,14 +139,14 @@ cllist returns [ArrayList<Node> astlist]
               if(ctentry.checkLocals(tmpFieldN.getOffset())){
                  System.out.println("Parameter id "+$p1.text+" at line "+$p1.line+" already declared!");
                  System.exit(0);
-              }           
-           }         
+              }
+           }
            
            // Check anche su allFields e gestione della lista stessa ('allFields')
-           if(ctentry.setFieldAndCheck(objFieldN,$pn.text)) //controlla in allFields se c'Ã¨ giÃ  come campo, in caso positivo sovrascrive (overriding)
-              tmpSTentry.setOffset(ctentry.getFieldOffset());
+           if(ctentry.setFieldAndCheck(objFieldN,$pn.text)) //controlla in allFields se c'è già come campo, in caso positivo sovrascrive (overriding)
+              tmpSTentry.setOffset( tmpFieldN.getOffset() );
            
-           ctentry.addLocals(ctentry.getFieldOffset()); // Aggiungo l'offset del field in caso non sia stato ancora dichiarato
+           ctentry.addLocals( ctentry.getFieldOffset() ); // Aggiungo l'offset del field in caso non sia stato ancora dichiarato
            ctentry.decFieldOffset();  // Decrementiamo il fieldOffset per il prossimo field
 	     }
 	     )* )? RPAR
@@ -175,7 +175,7 @@ cllist returns [ArrayList<Node> astlist]
                 ctentry.addLocals(ctentry.getMethodOffset()); // Aggiungiamo semplicemente il nuovo offset tra quelli memorizzati in 'locals'. 
              
              if( ctentry.setMethodAndCheck(mNode,$mid.text) ) // Se c'è stato un override
-                entry.setOffset(ctentry.getMethodOffset());   // Memorizziamo l'offset del metodo  
+                entry.setOffset( tmpMethod.getOffset() );   // Memorizziamo l'offset del metodo  
              
              ctentry.incMethodOffset();     // Incrementiamo l'offset per il prossimo metodo    
              
@@ -226,15 +226,15 @@ cllist returns [ArrayList<Node> astlist]
 	       }
 	       (LET 
 	       {
-	           int innerOffset = 0; 
+	           int innerOffset = 0;
 	           nestingLevel++;
+	           HashMap<String,STentry> varhm = new HashMap<String,STentry>();
 	       }
 	       (VAR vid=ID COLON vt=type ASS ve=exp // Se aggiungiamo var nel metodo, siamo in uno scope sintattico maggiore (per via del LET), per cui si crea una nuova hashmap, si aumenta il nestingLevel e poi si aggiunge a symTable
 	       {
 	           VarNode v = new VarNode($vid.text,$vt.ast,$ve.ast);
              $astlist.add(v);
              
-             HashMap<String,STentry> varhm =  new HashMap<String,STentry>(); 
              symTable.add(varhm);
              if ( varhm.put($vid.text,new STentry(v,nestingLevel,$vt.ast,innerOffset++)) != null  )
              {
@@ -261,7 +261,7 @@ cllist returns [ArrayList<Node> astlist]
 declist	returns [ArrayList<Node> astlist]
 	: {
 	    $astlist = new ArrayList<Node>() ;
-	    int offset = -2;   // Partiamo da -2 perché il nostro stack il nostro stack parte da 9998 anziché da 10000.
+	    int offset = -2;   // Partiamo da -2 perché il nostro stack parte da 9998 anziché da 10000.
 	  }
     ( // Possiamo trovarci a dichiarare VAR o FUNzioni
      (
@@ -485,7 +485,7 @@ value	returns [Node ast]
 		    }
 		    
 		    // Definiamo l'IdNode
-		    if( classEntry != null )	        
+		    if( classEntry != null )
 		       $ast = new IdNode($i.text,classEntry,nestingLevel); // Usiamo questo approccio (con tipi diversi in input) per distinguere i nome di classe e id generico
 		    else
 		       $ast = new IdNode($i.text,entry,nestingLevel);

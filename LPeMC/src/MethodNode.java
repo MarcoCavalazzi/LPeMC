@@ -53,7 +53,7 @@ public class MethodNode implements Node, DecNode {
 			{
 				if(((DecNode)parlist.get(i)).getSymType() instanceof ArrowTypeNode)
 				{
-					popPar += "pop\n" ;// tolto un "pop" extra. Dovrebbe essere sbagliato metterne 2 extra.
+					popPar += "pop\n" ;
 				}
 			}
 		}
@@ -73,7 +73,6 @@ public class MethodNode implements Node, DecNode {
 				);
 		
 		return "";
-
 	}
 
 	public Node typeCheck () {

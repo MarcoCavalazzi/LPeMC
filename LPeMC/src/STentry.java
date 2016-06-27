@@ -4,7 +4,7 @@ public class STentry {
 	private int nl;		// nesting level
 	private Node type;
 	private String className = null;
-	private boolean isMethod = false;	// Variabile usata per identificare i metodi (se Ã¨ un metodo -> isMethod=true).
+	private boolean isMethod = false;	// Variabile usata per identificare i metodi (se è un metodo -> isMethod=true).
 	private String methodName= null;
 	private int offset;	// per poter leggere il valore scelto a partire dal fp.
 	private Node dec;

@@ -92,7 +92,6 @@ public class NewNode implements Node{
 		String mLabel="";
 		for(int i = 0; i < entry.allMethods.size(); i++)
 		{
-
 			mLabel += "push "+((MethodNode)entry.allMethods.get(i)).getLabel()+"\n";		
 			mLabel += 
 					"lhp\n"+
