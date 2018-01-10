@@ -1,21 +1,216 @@
-let 
-  var x:int = 2;
-  var b:bool = true;
+let
+
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  class TradingAcc extends Account (invested:int) {
+    fun getInv:int () invested;
+  }
+  
+  class BankLoan (loan: Account) {
+    fun getLoan:Account () loan;
+    fun openLoan:Account (m:TradingAcc) if ((m.getMon()+m.getInv())>=30000) 
+      then {new Account(loan.getMon())} 
+      else {null};
+  } 
+  
+  class MyBankLoan extends BankLoan (loan: TradingAcc) {
+    fun openLoan:TradingAcc (l:Account) if (l.getMon()>=20000) 
+      then {new TradingAcc(loan.getMon(),loan.getInv())} 
+      else {null};
+  } 
+  
+  var bl:BankLoan = new MyBankLoan(new TradingAcc(50000,40000));
+  var myTradingAcc:TradingAcc = new TradingAcc(20000,5000);
+  var myLoan:Account = bl.openLoan(myTradingAcc);
+  
+in print(if (myLoan==null) then {0} else {myLoan.getMon()});
+
+
+/*
+let
+	class A(){
+		fun methodA: int () 1;
+	}
+
+	class B extends A(){
+		fun methodB: int () 2;
+	}
+
+	class C extends B(){
+		fun methodC: int () 3;
+	}
+	class E extends C(){
+		fun methodC: int () 33;
+	}
+	
+	class D extends B(){
+		fun methodD: int () 4;
+	}
+	class F extends D(){
+		fun methodD: int () 55;
+		fun methodF: int () 66;
+		
+	}
+	
+	var objA:A = new A();
+	var objB:B = new B();
+	var objC:C = new C();
+	var objD:D = new D();
+	var objE:E = new E();
+	var objF:F = new F();
+
 in
- 
-   if( (5 - x / 2) == 4)
-   	then{
-   		print (x && b);
-   		print (x || b);
-   		print (x - 1);
-   		print (not(x)); 
-   		}
-   		
-   		
+print(if(objE==objF) then {objE.methodC()} else {objF.methodD()});
+
+
+let
+	class A(){
+		fun methodA: int () 1;
+	}
+
+	class B extends A(){
+		fun methodB: int () 2;
+	}
+
+	class C extends A(){
+		fun methodC: int () 3;
+	}
+	
+	class D extends C(){
+		fun methodD: int () 4;
+	}
+	
+	var objA:A = new A();
+	var objB:B = new B();
+	var objC:C = new C();
+	var objD:D = new D();
+
+in
+print(if(objB==objD) then {0} else {777});
+
+
+let
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  var loan:Account = new Account(2000);
+  fun loa:int () 88;
+  
+in 
+  if(null==loa) then {print(0)} else {print(1)};
+
+
+let
+  class Account (money:int) {
+    fun getMon:int () money;
+  }
+  
+  var acc:Account = new Account(20000);
+  
+in
+	if(acc==null) then {print(0)} else {print(1)};
 
 
 
-/* SERBATOIO ESEMPI
+
+
+let 
+	class Account (money:int)  {
+    fun getMon:int() money;	
+	fun getPippo:int () 2;
+   } 
+   
+	class TradingAcc extends Account (invested:int) {
+		fun getInv:int () 123;
+		fun getMon:int() 999;	
+    }
+
+	var x:Account = new Account(111);
+in 
+	print(x.getPippo());
+
+let 
+	
+    fun getMon:int (money:int) money;
+  
+in 
+	
+	print(1);
+
+let 
+	class Account (money:int) {
+    fun getMon:int () money;
+  }
+in 
+	
+	print(1);
+
+
+
+
+let
+  fun g:int(i:int,j:int) i+j;
+  fun h:int(i:int)i+2;
+  fun f:int (n:int, z:(int,int)->int, x:(int,int)->int, y:(int,int)->int, h:(int)->int) z(n,2)+2+h(2);
+  class I () {
+  }
+in
+  print (f(2,g,g,g,h));
+
+
+let
+	var i:int = 1;
+	fun z:int(n:int) n+i+1;
+in
+	print(z(5));
+	
+
+let
+	fun z:int(i:int, j:int)  print(i+j);
+ in
+ 	z(3, 2);
+
+
+let
+    fun f:int (z:(int)->int)  z(2);
+	fun z:int(i:int)  print(i);
+ in
+ 	print (f(z));
+
+
+
+let
+ 	fun g:int(i:int,j:int) i+j;
+	fun h:int(i:int)i+2;
+	fun f:int (n:int, z:(int,int)->int, h:(int)->int) z(n,2)+2+h(2);
+ in
+ 	print (f(2,g,h));
+
+let 
+	fun fact:int(n:int) 
+		if(n==0)
+			then {1}
+			else {n*fact(n-1)};
+			
+in
+	print(fact(5));
+
+
+
+let
+ 	fun g:int(i:int,j:int) i+j;
+	fun h:int(i:int)i+2;
+	fun f:int (n:int, z:(int,int)->int, h:(int)->int) z(n,2)+2+h(2);
+ in
+ 	print (f(2,g,h));
+
+	
+in print(test2(10,test,6));
+
+ SERBATOIO ESEMPI
 let 
   var x:int = 1;
   var b:bool = true;

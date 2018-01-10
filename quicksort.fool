@@ -10,20 +10,20 @@ let
       fun printL:List (l:List)    
         if (l == null) then {null}
                        else {makeList(printL(l.rest()),print(l.first()))};
-    in  printL(l);                 
+    in  printL(l);
   
   fun append:List (l1:List, l2:List)
       if (l1 == null)
         then {l2}
         else {new List(l1.first(), append(l1.rest(),l2))} ;  
-    
+  
   fun filter:List (l:List,check:(int)->bool) 
       if (l == null) 
         then {null}
         else {if (check(l.first()))
               then {new List(l.first(),filter(l.rest(),check))}
               else {filter(l.rest(),check)}};
-       
+  
   fun quicksort:List (l:List, rel:(int,int)->bool)    
       let
         var pivot:int = if (l==null) then {0} else {l.first()}; 
@@ -34,7 +34,7 @@ let
            then {null}
            else {append( quicksort(filter(l,prec),rel),
                          new List(pivot, quicksort(filter(l,succ),rel)) )};
-           
+  
   fun increasing:List(l:List) 
     let fun inc:bool (x:int,y:int) not(y<=x);
     in quicksort(l,inc);
@@ -42,11 +42,11 @@ let
   fun decreasing:List(l:List) 
     let fun dec:bool (x:int,y:int) not(x<=y);
     in quicksort(l,dec);   
-  var l:List = new List (3, 
+  var l:List = new List (-3, 
                     new List(4,
                         new List(6,
                             new List (1, 
                                 new List(2,
                                     new List(5,null))))));
   
-in printList(decreasing(l));
+in printList(increasing(l));
