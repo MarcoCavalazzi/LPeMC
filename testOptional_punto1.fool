@@ -1,0 +1,24 @@
+let
+	class A(){
+		fun methodA: int () 1;
+	}
+
+	class B extends A(){
+		fun methodB: int () 2;
+	}
+
+	class C extends A(){
+		fun methodC: int () 3;
+	}
+	
+	class D extends C(){
+		fun methodD: int () 4;
+	}
+	
+	var objA:A = new A();
+	var objB:B = new B();
+	var objC:C = new C();
+	var objD:D = new D();
+
+in
+print(if(objD==objB) then {objB.methodB()} else {objD.methodD()});
